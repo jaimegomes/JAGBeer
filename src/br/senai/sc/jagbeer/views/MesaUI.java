@@ -1,8 +1,8 @@
 package br.senai.sc.jagbeer.views;
 
-
-
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -11,10 +11,10 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.border.TitledBorder;
+
+import br.senai.sc.jagbeer.model.Mesa;
 
 public class MesaUI extends JInternalFrame {
 	private JTextField textField;
@@ -73,12 +73,15 @@ public class MesaUI extends JInternalFrame {
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Mesa mesa = new Mesa();
+				
 			}
 		});
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {				
+				dispose();
 			}
 		});
 		
