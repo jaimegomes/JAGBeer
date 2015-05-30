@@ -1,20 +1,18 @@
-package br.senai.sc.jagbeer.controller;
+package br.senai.sc.jagbeer.abstracts;
 
 import java.util.List;
 
 import javax.swing.JTable;
 
-import br.senai.sc.jagbeer.model.Entidade;
+public abstract class GenericDAO {
 
-public abstract class AController {
-	
 	/**
 	 * Método responsável por persistir a entidade no banco
 	 * 
 	 * @param Entidade
 	 *            entidade
 	 */
-	public abstract void salvar(Entidade entidade);
+	public abstract void salvar(Entidade entidade) throws Exception;
 
 	/**
 	 * Método responsável por excluir a entidade no banco
@@ -22,7 +20,7 @@ public abstract class AController {
 	 * @param Entidade
 	 *            entidade
 	 */
-	public abstract void excluir(Entidade entidade);
+	public abstract void excluir(Entidade entidade) throws Exception;
 
 	/**
 	 * Método responsável por editar a entidade no banco
@@ -30,7 +28,7 @@ public abstract class AController {
 	 * @param Entidade
 	 *            entidade
 	 */
-	public abstract void editar(Entidade entidade);
+	public abstract void editar(Entidade entidade) throws Exception;
 
 	/**
 	 * Método que retorna uma lista de entidade
@@ -40,7 +38,7 @@ public abstract class AController {
 	 * 
 	 * @return List<Entidade>
 	 */
-	public abstract List<Entidade> listar();
+	public abstract List<Entidade> listar() throws Exception;
 
 	/**
 	 * Método que retorna a entidade referente ao id passado como parâmetro
@@ -48,7 +46,7 @@ public abstract class AController {
 	 * @param Entidade
 	 *            entidade
 	 */
-	public abstract Entidade getPorId(int id);
+	public abstract Entidade getPorId(int id) throws Exception;
 
 	/**
 	 * Método responsável por atualizar a tabela passada como parâmetro.
@@ -56,7 +54,6 @@ public abstract class AController {
 	 * @param Entidade
 	 *            entidade
 	 */
-	public abstract void atualizaTabela(JTable table);
-
+	public abstract void atualizaTabela(JTable table) throws Exception;
 
 }

@@ -1,4 +1,4 @@
-package br.senai.sc.jagbeer.model;
+package br.senai.sc.jagbeer.abstracts;
 
 public abstract class Entidade {
 

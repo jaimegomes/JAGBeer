@@ -1,5 +1,7 @@
 package br.senai.sc.jagbeer.model;
 
+import br.senai.sc.jagbeer.abstracts.Entidade;
+
 public class Produto extends Entidade {
 
 	private int id;
@@ -23,6 +25,15 @@ public class Produto extends Entidade {
 		this.classificacao = classificacao;
 	}
 
+	public Produto(int id, String nome, Double precoCusto, Double precoVenda,
+			String classificacao) {
+		this.id = id;
+		this.nome = nome;
+		this.precoCusto = precoCusto;
+		this.precoVenda = precoVenda;
+		this.classificacao = classificacao;
+	}
+
 	@Override
 	public int getId() {
 		return this.id;
@@ -35,6 +46,8 @@ public class Produto extends Entidade {
 	}
 
 	/**
+	 * Retorna o nome do produto.
+	 * 
 	 * @return the nome
 	 */
 	public String getNome() {
@@ -42,6 +55,8 @@ public class Produto extends Entidade {
 	}
 
 	/**
+	 * Atribui valor ao produto
+	 * 
 	 * @param nome
 	 *            the nome to set
 	 */

@@ -1,12 +1,18 @@
-package br.senai.sc.jagbeer.dao;
+package br.senai.sc.jagbeer.interfaces;
 
 import java.util.List;
 
 import javax.swing.JTable;
 
-import br.senai.sc.jagbeer.model.Entidade;
+import br.senai.sc.jagbeer.abstracts.Entidade;
 
-public abstract class GenericDAO {
+/**
+ * Interface Controller
+ * 
+ * @author Jaime Gomes
+ * 
+ */
+public interface IController {
 
 	/**
 	 * Método responsável por persistir a entidade no banco
@@ -14,7 +20,7 @@ public abstract class GenericDAO {
 	 * @param Entidade
 	 *            entidade
 	 */
-	public abstract void salvar(Entidade entidade);
+	public void salvar(Entidade entidade);
 
 	/**
 	 * Método responsável por excluir a entidade no banco
@@ -22,7 +28,7 @@ public abstract class GenericDAO {
 	 * @param Entidade
 	 *            entidade
 	 */
-	public abstract void excluir(Entidade entidade);
+	public void excluir(Entidade entidade);
 
 	/**
 	 * Método responsável por editar a entidade no banco
@@ -30,7 +36,7 @@ public abstract class GenericDAO {
 	 * @param Entidade
 	 *            entidade
 	 */
-	public abstract void editar(Entidade entidade);
+	public void editar(Entidade entidade);
 
 	/**
 	 * Método que retorna uma lista de entidade
@@ -40,7 +46,7 @@ public abstract class GenericDAO {
 	 * 
 	 * @return List<Entidade>
 	 */
-	public abstract List<Entidade> listar();
+	public List<Entidade> listar();
 
 	/**
 	 * Método que retorna a entidade referente ao id passado como parâmetro
@@ -48,7 +54,7 @@ public abstract class GenericDAO {
 	 * @param Entidade
 	 *            entidade
 	 */
-	public abstract Entidade getPorId(int id);
+	public Entidade getPorId(int id);
 
 	/**
 	 * Método responsável por atualizar a tabela passada como parâmetro.
@@ -56,6 +62,6 @@ public abstract class GenericDAO {
 	 * @param Entidade
 	 *            entidade
 	 */
-	public abstract void atualizaTabela(JTable table);
+	public void atualizaTabela(JTable table);
 
 }
