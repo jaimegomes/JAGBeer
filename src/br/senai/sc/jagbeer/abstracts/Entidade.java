@@ -9,13 +9,13 @@ package br.senai.sc.jagbeer.abstracts;
 public abstract class Entidade {
 
 	/**
-	 * M√©todo que retorna o id da entidade.
+	 * MÈtodo que retorna o id da entidade.
 	 * 
 	 */
 	public abstract int getId();
 
 	/**
-	 * M√©todo respons√°vel por atribuir valor ao id da entidade.
+	 * MÈtodo respons·vel°vel por atribuir valor ao id da entidade.
 	 * 
 	 * @param int id
 	 */
