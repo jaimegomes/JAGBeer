@@ -4,25 +4,77 @@ import java.util.Date;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
 
+/**
+ * Classe Pedido. Atributos: int id, Mesa mesa, Cliente cliente, Date
+ * dataPedido, boolean status;
+ * 
+ * @author Jaime Gomes
+ * 
+ */
 public class Pedido extends Entidade {
 
 	private int id;
-	private Integer idMesa;
-	private Integer idCliente;
+	private Mesa mesa;
+	private Cliente cliente;
 	private Date dataPedido;
 	private boolean status;
 
+	/**
+	 * Construtor padrão.
+	 * 
+	 * 
+	 */
 	public Pedido() {
 	}
 
+	/**
+	 * Construtor que recebe como parâmetro o id.
+	 * 
+	 * @param int id
+	 * 
+	 */
 	public Pedido(int id) {
 		this.id = id;
 	}
 
-	public Pedido(Integer idMesa, Integer idCliente, Date dataPedido,
+	/**
+	 * Construtor que recebe como parâmetro a mesa, o cliente, a data do pedido
+	 * e o status.
+	 * 
+	 * @param Mesa
+	 *            mesa
+	 * @param Cliente
+	 *            cliente
+	 * @param Date
+	 *            dataPedido
+	 * @param boolean Status
+	 * 
+	 */
+	public Pedido(Mesa mesa, Cliente cliente, Date dataPedido, boolean status) {
+		this.mesa = mesa;
+		this.cliente = cliente;
+		this.dataPedido = dataPedido;
+		this.status = status;
+	}
+
+	/**
+	 * Construtor que recebe todos os atributos como parâmetros.
+	 * 
+	 * @param int id
+	 * @param Mesa
+	 *            mesa
+	 * @param Cliente
+	 *            cliente
+	 * @param Date
+	 *            dataPedido
+	 * @param boolean Status
+	 * 
+	 */
+	public Pedido(int id, Mesa mesa, Cliente cliente, Date dataPedido,
 			boolean status) {
-		this.idMesa = idMesa;
-		this.idCliente = idCliente;
+		this.id = id;
+		this.mesa = mesa;
+		this.cliente = cliente;
 		this.dataPedido = dataPedido;
 		this.status = status;
 	}
@@ -41,31 +93,31 @@ public class Pedido extends Entidade {
 	/**
 	 * @return the idMesa
 	 */
-	public Integer getIdMesa() {
-		return idMesa;
+	public Mesa getMesa() {
+		return mesa;
 	}
 
 	/**
 	 * @param idMesa
 	 *            the idMesa to set
 	 */
-	public void setIdMesa(Integer idMesa) {
-		this.idMesa = idMesa;
+	public void setMesa(Mesa mesa) {
+		this.mesa = mesa;
 	}
 
 	/**
 	 * @return the idCliente
 	 */
-	public Integer getIdCliente() {
-		return idCliente;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
 	/**
 	 * @param idCliente
 	 *            the idCliente to set
 	 */
-	public void setIdCliente(Integer idCliente) {
-		this.idCliente = idCliente;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	/**

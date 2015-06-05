@@ -1,22 +1,32 @@
 package br.senai.sc.jagbeer.tests;
 
-import java.sql.SQLException;
+import java.util.Date;
 
-import br.senai.sc.jagbeer.dao.ProdutoDAO;
-import br.senai.sc.jagbeer.model.Produto;
+import br.senai.sc.jagbeer.dao.PedidoDAO;
+import br.senai.sc.jagbeer.model.Cliente;
+import br.senai.sc.jagbeer.model.Mesa;
+import br.senai.sc.jagbeer.model.Pedido;
 
 public class TesteDAO {
 
 	public static void main(String[] args) {
 
-		ProdutoDAO dao = new ProdutoDAO();
+		PedidoDAO dao = new PedidoDAO();
 
-		Produto produto = new Produto("cerveja", 5.50, 10.0, "bebida");
-		// Produto produto = (Produto) dao.getPorId(1);
+		// Produto produto = new Produto("cerveja", 5.50, 10.0, "bebida");
+
+		Mesa mesa = new Mesa();
+		mesa.setId(1);
+
+		Cliente cliente = new Cliente();
+		cliente.setId(1);
 
 		try {
-			dao.salvar(produto);
-		} catch (SQLException e) {
+
+			Pedido pedido = new Pedido(mesa, cliente, new Date(), true);
+			dao.salvar(pedido);
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

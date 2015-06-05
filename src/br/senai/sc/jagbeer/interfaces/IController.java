@@ -7,7 +7,8 @@ import javax.swing.JTable;
 import br.senai.sc.jagbeer.abstracts.Entidade;
 
 /**
- * Interface Controller
+ * Interface Controller, a classe que estender esta interface deve sobrescrever
+ * todos os métodos que forem usados.
  * 
  * @author Jaime Gomes
  * 

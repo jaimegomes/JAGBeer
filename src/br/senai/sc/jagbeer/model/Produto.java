@@ -2,6 +2,15 @@ package br.senai.sc.jagbeer.model;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
 
+/**
+ * Classe Produto.
+ * Atributos:
+ * int id, String nome, Double precoCusto, Double
+ * precoVenda, Stirng classificacao;
+ * 
+ * @author Jaime Gomes
+ * 
+ */
 public class Produto extends Entidade {
 
 	private int id;

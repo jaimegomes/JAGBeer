@@ -15,6 +15,12 @@ import br.senai.sc.jagbeer.conexao.Conexao;
 import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
+/**
+ * Classe DAO, responsável pela manipulação dos dados dos Produtos no banco.
+ * 
+ * @author Jaime Gomes
+ * 
+ */
 public class ProdutoDAO extends GenericDAO {
 
 	private Connection con = Conexao.getConnection();
@@ -40,7 +46,7 @@ public class ProdutoDAO extends GenericDAO {
 
 		} catch (SQLException e) {
 			con.rollback();
-			System.out.println("Erro ao salvar produto.\n" + e.getMessage());
+			System.out.println("[ProdutoDAO] - Erro ao salvar produto.\n" + e.getMessage());
 		}
 	}
 
@@ -60,7 +66,7 @@ public class ProdutoDAO extends GenericDAO {
 
 		} catch (SQLException e) {
 			con.rollback();
-			System.out.println("Erro ao excluir produto.\n" + e.getMessage());
+			System.out.println("[ProdutoDAO] - Erro ao excluir produto.\n" + e.getMessage());
 		}
 
 	}
@@ -84,7 +90,7 @@ public class ProdutoDAO extends GenericDAO {
 
 		} catch (SQLException e) {
 			con.rollback();
-			System.out.println("Erro ao alterar produto.\n" + e.getMessage());
+			System.out.println("[ProdutoDAO] - Erro ao alterar produto.\n" + e.getMessage());
 		}
 
 	}
@@ -116,7 +122,7 @@ public class ProdutoDAO extends GenericDAO {
 			pstm.close();
 
 		} catch (SQLException e) {
-			System.out.println("Erro ao listar aluno.\n" + e.getMessage());
+			System.out.println("[ProdutoDAO] - Erro ao listar produtos.\n" + e.getMessage());
 		}
 		return listaProdutos;
 	}
@@ -147,7 +153,8 @@ public class ProdutoDAO extends GenericDAO {
 			pstm.close();
 
 		} catch (SQLException e) {
-			System.out.println("Erro ao alterar aluno.\n" + e.getMessage());
+			System.out.println("[ProdutoDAO] - Erro ao buscar produto por id.\n"
+					+ e.getMessage());
 		}
 
 		return produto;

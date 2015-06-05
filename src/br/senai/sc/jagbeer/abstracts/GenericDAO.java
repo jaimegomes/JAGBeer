@@ -4,6 +4,13 @@ import java.util.List;
 
 import javax.swing.JTable;
 
+/**
+ * Classe abstrata DAO que contém os métodos necessários para a manipulação das
+ * Entidades no banco de dados.
+ * 
+ * @author Jaime Gomes
+ * 
+ */
 public abstract class GenericDAO {
 
 	/**
@@ -11,6 +18,8 @@ public abstract class GenericDAO {
 	 * 
 	 * @param Entidade
 	 *            entidade
+	 * 
+	 * @throws Exception
 	 */
 	public abstract void salvar(Entidade entidade) throws Exception;
 
@@ -19,6 +28,8 @@ public abstract class GenericDAO {
 	 * 
 	 * @param Entidade
 	 *            entidade
+	 * 
+	 * @throws Exception
 	 */
 	public abstract void excluir(Entidade entidade) throws Exception;
 
@@ -27,6 +38,8 @@ public abstract class GenericDAO {
 	 * 
 	 * @param Entidade
 	 *            entidade
+	 * 
+	 * @throws Exception
 	 */
 	public abstract void editar(Entidade entidade) throws Exception;
 
@@ -36,6 +49,8 @@ public abstract class GenericDAO {
 	 * @param Entidade
 	 *            entidade
 	 * 
+	 * @throws Exception
+	 * 
 	 * @return List<Entidade>
 	 */
 	public abstract List<Entidade> listar() throws Exception;
@@ -43,8 +58,11 @@ public abstract class GenericDAO {
 	/**
 	 * Método que retorna a entidade referente ao id passado como parâmetro
 	 * 
-	 * @param Entidade
-	 *            entidade
+	 * @param int id
+	 * 
+	 * @return Entidade
+	 * 
+	 * @throws Exception
 	 */
 	public abstract Entidade getPorId(int id) throws Exception;
 
@@ -53,6 +71,8 @@ public abstract class GenericDAO {
 	 * 
 	 * @param Entidade
 	 *            entidade
+	 * 
+	 * @throws Exception
 	 */
 	public abstract void atualizaTabela(JTable table) throws Exception;
 
