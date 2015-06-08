@@ -15,7 +15,7 @@ public class Conexao {
 	static Connection con = null;
 
 	/**
-	 * M√©todo que inicia uma conex√£o com o banco de dados.
+	 * Metodo que inicia uma conexao com o banco de dados.
 	 * 
 	 * @return
 	 */
@@ -23,11 +23,18 @@ public class Conexao {
 
 		try {
 
-			Class.forName("org.postgresql.Driver");
-			con = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/jagbeer", "postgres",
-					"postgres");
+			// Conex„oMySQLWorkbench
+			Class.forName("com.mysql.jdbc.Driver");
+			String url = "jdbc:mysql://localhost:3306/poo";
+			con = DriverManager.getConnection(url, "mysql", "mysql");
 			con.setAutoCommit(false);
+
+			//Conex„o Postgres
+//			Class.forName("org.postgresql.Driver");
+//			con = DriverManager.getConnection(
+//					"jdbc:postgresql://localhost:5432/jagbeer", "postgres",
+//					"postgres");
+//			con.setAutoCommit(false);
 			System.out.println("Conectado com sucesso.");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -41,7 +48,7 @@ public class Conexao {
 	}
 
 	/**
-	 * M√©todo que encerra a conex√£o com o banco de dados
+	 * MÈtodo que encerra a conex„o com o banco de dados
 	 * 
 	 * @throws SQLException
 	 */
