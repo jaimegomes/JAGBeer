@@ -25,8 +25,8 @@ public class Conexao {
 
 			// ConexãoMySQLWorkbench
 			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://localhost:3306/poo";
-			con = DriverManager.getConnection(url, "mysql", "mysql");
+			String url = "jdbc:mysql://localhost:3306/jagbeer";
+			con = DriverManager.getConnection(url, "root","2905"); //alexandre "root","2905"
 			con.setAutoCommit(false);
 
 			//Conexão Postgres

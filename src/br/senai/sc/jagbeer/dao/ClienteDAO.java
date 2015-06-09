@@ -26,7 +26,7 @@ public class ClienteDAO extends GenericDAO {
 	@Override
 	public void salvar(Entidade entidade) throws Exception {
 
-		String sql = "INSERT TO cliente (nome, telefone, email) VALUES (?,?,?)";
+		String sql = "INSERT INTO cliente (nome, telefone, email) VALUES (?,?,?)";
 		try {
 			// transforma a entidade passada no parâmetro para o objeto Produto
 
@@ -90,7 +90,7 @@ public class ClienteDAO extends GenericDAO {
 	@Override
 	public List<Entidade> listar() throws Exception {
 		List<Entidade> listaClientes = new ArrayList<Entidade>();
-		String sql = "SELECT * FROM produto";
+		String sql = "SELECT * FROM cliente";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			// para executar consulta utilizar executeQuery() pois retorna um
