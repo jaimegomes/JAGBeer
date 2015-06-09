@@ -12,6 +12,7 @@ public class TestController {
 		Produto produto = new Produto("cerveja", 5.50, 10.0, "bebida");
 		
 		controller.salvar(produto);
+		//teste
 	}
 
 }
