@@ -106,8 +106,10 @@ public class ClienteController implements IController {
 		try {
 			dao.atualizaTabela(table);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("[ClienteController] - Erro ao Listar Clientes."
+					+ e.getMessage());
+			JOptionPane.showMessageDialog(null,
+					"[ClienteController] - Erro ao Listar Clientes.");
 		}
 	}
 
