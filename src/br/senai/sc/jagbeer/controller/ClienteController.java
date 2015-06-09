@@ -17,7 +17,7 @@ public class ClienteController implements IController {
 	@Override
 	public void salvar(Entidade entidade) {
 
-		// Fazer a verificação se há numeros no nome na view
+		// Fazer a verificação se foi digitado numeros no nome na classe view
 		try {
 			Cliente cliente = (Cliente) entidade;
 
@@ -97,8 +97,23 @@ public class ClienteController implements IController {
 
 	@Override
 	public Entidade getPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Cliente cliente = null;
+
+		try {
+			if (id < 0)
+				throw new Exception("Id não pode ser menor que zero");
+
+			cliente = (Cliente) dao.getPorId(id);
+
+		} catch (Exception e) {
+			System.out
+					.println("[ClienteController] - Erro ao bucar Cliente por ID."
+							+ e.getMessage());
+			JOptionPane.showMessageDialog(null,
+					"[ClienteController] - Erro ao buscar Cliente por ID.");
+		}
+
+		return cliente;
 	}
 
 	@Override
