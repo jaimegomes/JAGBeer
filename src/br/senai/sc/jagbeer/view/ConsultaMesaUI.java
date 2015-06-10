@@ -1,4 +1,4 @@
-package br.senai.sc.jagbeer.views;
+package br.senai.sc.jagbeer.view;
 
 import java.awt.EventQueue;
 

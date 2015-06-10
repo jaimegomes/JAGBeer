@@ -19,7 +19,6 @@ public class Mesa extends Entidade {
 	}	
 
 	public Mesa(int numeroMesa, int numeroLugares) {
-		super();
 		this.numeroMesa = numeroMesa;
 		this.numeroLugares = numeroLugares;
 	}

@@ -1,4 +1,4 @@
-package br.senai.sc.jagbeer.views;
+package br.senai.sc.jagbeer.view;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -15,7 +15,7 @@ import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.model.Mesa;
 
-public class MesaUI extends JInternalFrame {
+public class CadastroMesaUI extends JInternalFrame {
 	private JTextField mesaNumero;
 	private JTextField mesaLugares;
 	
@@ -28,7 +28,7 @@ public class MesaUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MesaUI frame = new MesaUI();
+					CadastroMesaUI frame = new CadastroMesaUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +40,7 @@ public class MesaUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MesaUI() {
+	public CadastroMesaUI() {
 		setTitle("Cadastro de Mesa");
 		setClosable(true);
 		setBounds(100, 100, 306, 219);
