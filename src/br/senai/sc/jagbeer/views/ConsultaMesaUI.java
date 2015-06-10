@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 public class ConsultaMesaUI extends JInternalFrame {
 	private JTextField textField;
 	private JTable table;
-
+	//ATUALIZAÇAO
 	/**
 	 * Launch the application.
 	 */

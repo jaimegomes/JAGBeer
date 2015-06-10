@@ -16,7 +16,7 @@ import br.senai.sc.jagbeer.model.Mesa;
 public class MesaDAO extends GenericDAO {
 
 	private Connection con = Conexao.getConnection();
-	
+	//ATUALIZAÇAO
 	@Override
 	public void salvar(Entidade entidade) throws Exception {
 		

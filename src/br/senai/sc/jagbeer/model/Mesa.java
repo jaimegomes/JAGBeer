@@ -7,7 +7,7 @@ public class Mesa extends Entidade {
 	public int id;
 	public int numeroMesa;
 	public int numeroLugares;
-	
+	//ATUALIZAÇAO
 	public Mesa() {
 
 	}
