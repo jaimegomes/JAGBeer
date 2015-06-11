@@ -60,6 +60,7 @@ public class CadastroClienteUI extends JInternalFrame {
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,
 				null, null), "Cadastro Cliente", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
+		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
 				Alignment.LEADING).addGroup(

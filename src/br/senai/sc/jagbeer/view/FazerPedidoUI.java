@@ -1,29 +1,29 @@
 package br.senai.sc.jagbeer.view;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.EventQueue;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.model.Cliente;
-import br.senai.sc.jagbeer.model.Mesa;
-import br.senai.sc.jagbeer.model.Pedido;
-import br.senai.sc.jagbeer.model.Produto;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.SpinnerNumberModel;
 
 /**
  * Classe View FazerPedidoUI
@@ -34,347 +34,207 @@ import br.senai.sc.jagbeer.model.Produto;
 public class FazerPedidoUI extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
-
-	// conteudo da janela
 	private JPanel panel;
 	private GroupLayout groupLayout;
-
-	// itens do topo
-	private JComboBox<Pedido> cbxPedido;
-	private JLabel lblPedido;
-	private JComboBox<Cliente> cbxCliente;
-	private JLabel lblCliente;
-	private JLabel lblMesa;
-	private JComboBox<Mesa> cbxMesa;
-
-	// itens do grupo Produto
-	private JPanel panelProduto;
-	private GroupLayout glPanelProduto;
-	private JComboBox<String> cbxTipo;
-	private JLabel lblTipo;
-	private JComboBox<Produto> cbxProduto;
-	private JLabel lblProduto;
-	private JComboBox<Integer> cbxQtde;
-	private JLabel lblQtde;
-	private JButton btnAdicionarProduto;
-
-	// tabela
-	private JTable tableItemPedido;
-
-	// botoes
-	private JButton btnCancelar;
 	private JButton btnSalvar;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FazerPedidoUI frame = new FazerPedidoUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JButton btnCancelar;
+	private JButton btnLimpar;
+	private JComboBox cmbPedido;
+	private JLabel lblPedido;
+	private GroupLayout groupLayoutProduto;
+	private JLabel lblCliente;
+	private JComboBox comboBox;
+	private JPanel panelProduto;
+	private JComboBox comboBox_1;
+	private JLabel lblClassificao;
+	private JLabel lblProduto;
+	private JComboBox comboBox_2;
+	private JLabel lblQuantidade;
+	private JTable table;
 
 	public FazerPedidoUI() {
 
 		setTitle("Fazer Pedido");
 		setClosable(true);
+		setBounds(100, 100, 628, 489);
 
-		// conteudo geral da janela
 		panel = new JPanel();
-
-		// Itens do topo
-		cbxPedido = new JComboBox<Pedido>();
-		lblPedido = new JLabel("Pedido:");
-		lblCliente = new JLabel("Cliente:");
-		cbxCliente = new JComboBox<Cliente>();
-		lblMesa = new JLabel("Mesa:");
-		cbxMesa = new JComboBox<Mesa>();
-
-		// itens do grupo Produto
-		panelProduto = new JPanel();
-		panelProduto.setBorder(new TitledBorder(new EtchedBorder(
-				EtchedBorder.LOWERED, null, null), "Produto",
-				TitledBorder.LEADING, TitledBorder.TOP, null,
-				new Color(0, 0, 0)));
-
-		// tabela ItemPedido
-		tableItemPedido = new JTable();
-		// tableItemPedido.setModel(new ItemPedidoTableModel());
-
-		cbxTipo = new JComboBox<String>();
-		lblTipo = new JLabel("Tipo:");
-		lblTipo.setVerticalAlignment(SwingConstants.TOP);
-		cbxProduto = new JComboBox<Produto>();
-		lblProduto = new JLabel("Produto:");
-		cbxQtde = new JComboBox<Integer>();
-		lblQtde = new JLabel("Qtde:");
-		btnAdicionarProduto = new JButton("Adicionar Produto");
-
-		btnCancelar = new JButton("Cancelar");
-		btnSalvar = new JButton("Salvar");
-
-		glPanelProduto = new GroupLayout(panelProduto);
-		glPanelProduto.setHorizontalGroup(glPanelProduto.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				glPanelProduto
-						.createSequentialGroup()
-						.addGroup(
-								glPanelProduto
-										.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblProduto)
-										.addComponent(lblTipo))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(
-								glPanelProduto
-										.createParallelGroup(
-												Alignment.TRAILING, false)
-										.addComponent(cbxProduto,
-												Alignment.LEADING, 0,
-												GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addComponent(cbxTipo,
-												Alignment.LEADING, 0, 121,
-												Short.MAX_VALUE))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblQtde)
-						.addGap(10)
-						.addComponent(cbxQtde, GroupLayout.PREFERRED_SIZE, 55,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 43,
-								Short.MAX_VALUE)
-						.addComponent(btnAdicionarProduto).addContainerGap()));
-		glPanelProduto
-				.setVerticalGroup(glPanelProduto
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								glPanelProduto
-										.createSequentialGroup()
-										.addGroup(
-												glPanelProduto
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																cbxTipo,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(lblTipo))
-										.addPreferredGap(
-												ComponentPlacement.RELATED, 12,
-												Short.MAX_VALUE)
-										.addGroup(
-												glPanelProduto
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																cbxProduto,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																lblProduto)
-														.addComponent(
-																cbxQtde,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(lblQtde)
-														.addComponent(
-																btnAdicionarProduto))
-										.addContainerGap()));
-		panelProduto.setLayout(glPanelProduto);
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,
+				null, null), "", TitledBorder.LEADING,
+				TitledBorder.TOP, null, new Color(0, 0, 0)));
 
 		groupLayout = new GroupLayout(getContentPane());
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addGroup(
-																								groupLayout
-																										.createSequentialGroup()
-																										.addGap(12)
-																										.addComponent(
-																												lblPedido))
-																						.addGroup(
-																								groupLayout
-																										.createSequentialGroup()
-																										.addContainerGap()
-																										.addComponent(
-																												lblMesa)))
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.LEADING,
-																								false)
-																						.addComponent(
-																								cbxMesa,
-																								0,
-																								GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								cbxPedido,
-																								0,
-																								63,
-																								Short.MAX_VALUE))
-																		.addGap(42)
-																		.addComponent(
-																				lblCliente,
-																				GroupLayout.PREFERRED_SIZE,
-																				57,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				cbxCliente,
-																				0,
-																				294,
-																				Short.MAX_VALUE))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				btnSalvar,
-																				GroupLayout.PREFERRED_SIZE,
-																				95,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(18)
-																		.addComponent(
-																				btnCancelar))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addComponent(
-																				tableItemPedido,
-																				GroupLayout.DEFAULT_SIZE,
-																				529,
-																				Short.MAX_VALUE))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addComponent(
-																				panelProduto,
-																				GroupLayout.DEFAULT_SIZE,
-																				529,
-																				Short.MAX_VALUE)))
-										.addContainerGap()));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addGap(17)
-																		.addComponent(
-																				lblPedido))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								cbxCliente,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								lblCliente)))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addComponent(
-																				cbxPedido,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addGap(18)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(lblMesa)
-														.addComponent(
-																cbxMesa,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(15)
-										.addComponent(panelProduto,
-												GroupLayout.PREFERRED_SIZE, 96,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addComponent(tableItemPedido,
-												GroupLayout.PREFERRED_SIZE,
-												155, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																btnCancelar)
-														.addComponent(btnSalvar))
-										.addContainerGap(
-												GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 
-		getContentPane().setLayout(groupLayout);
+		btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 
-	}
-
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
 		});
+
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+
+		btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+			}
+		});
+
+		cmbPedido = new JComboBox();
+		cmbPedido.setMaximumRowCount(2);
+
+		lblPedido = new JLabel("Pedido:");
+		
+		lblCliente = new JLabel("Cliente:");
+		
+		comboBox = new JComboBox();
+		
+		panelProduto = new JPanel();
+		panelProduto.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,
+				null, null), "Produto", TitledBorder.LEADING,
+				TitledBorder.TOP, null, new Color(0, 0, 0)));
+		
+		JLabel lblNewLabel = new JLabel("Mesa:");
+		
+		JComboBox comboBox_3 = new JComboBox();
+		
+		table = new JTable();
+		groupLayoutProduto = new GroupLayout(panel);
+		groupLayoutProduto.setHorizontalGroup(
+			groupLayoutProduto.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, groupLayoutProduto.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayoutProduto.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayoutProduto.createSequentialGroup()
+							.addComponent(panelProduto, GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+							.addContainerGap())
+						.addGroup(groupLayoutProduto.createSequentialGroup()
+							.addGroup(groupLayoutProduto.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblPedido)
+								.addComponent(lblNewLabel))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayoutProduto.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(comboBox_3, Alignment.LEADING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(cmbPedido, Alignment.LEADING, 0, 71, Short.MAX_VALUE))
+							.addGap(30)
+							.addComponent(lblCliente)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(comboBox, 0, 248, Short.MAX_VALUE)
+							.addGap(96))))
+				.addGroup(groupLayoutProduto.createSequentialGroup()
+					.addGap(182)
+					.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnLimpar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnCancelar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addContainerGap())
+				.addGroup(Alignment.LEADING, groupLayoutProduto.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(table, GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		groupLayoutProduto.setVerticalGroup(
+			groupLayoutProduto.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayoutProduto.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayoutProduto.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPedido)
+						.addComponent(cmbPedido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblCliente)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayoutProduto.createParallelGroup(Alignment.BASELINE)
+						.addComponent(comboBox_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(panelProduto, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(table, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayoutProduto.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnCancelar)
+						.addComponent(btnLimpar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnSalvar))
+					.addContainerGap())
+		);
+		
+		comboBox_1 = new JComboBox();
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Alimentos", "Bebidas"}));
+		comboBox_1.setMaximumRowCount(2);
+		
+		lblClassificao = new JLabel("Classificação:");
+		
+		lblProduto = new JLabel("Produto:");
+		
+		comboBox_2 = new JComboBox();
+		
+		lblQuantidade = new JLabel("Quantidade:");
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		
+		JButton btnAdicionarProduto = new JButton("Adicionar Produto");
+		GroupLayout gl_panelProduto = new GroupLayout(panelProduto);
+		gl_panelProduto.setHorizontalGroup(
+			gl_panelProduto.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelProduto.createSequentialGroup()
+					.addGroup(gl_panelProduto.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblClassificao)
+						.addComponent(lblProduto))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panelProduto.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(comboBox_2, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(comboBox_1, 0, 130, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panelProduto.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelProduto.createSequentialGroup()
+							.addComponent(lblQuantidade)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnAdicionarProduto))
+					.addContainerGap(77, Short.MAX_VALUE))
+		);
+		gl_panelProduto.setVerticalGroup(
+			gl_panelProduto.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelProduto.createSequentialGroup()
+					.addGroup(gl_panelProduto.createParallelGroup(Alignment.BASELINE)
+						.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblClassificao)
+						.addComponent(lblQuantidade)
+						.addComponent(spinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_panelProduto.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblProduto)
+						.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnAdicionarProduto))
+					.addContainerGap(43, Short.MAX_VALUE))
+		);
+		panelProduto.setLayout(gl_panelProduto);
+		
+		
+		panel.setLayout(groupLayoutProduto);
+		getContentPane().setLayout(groupLayout);
+
 	}
 }

@@ -75,6 +75,7 @@ public class PrincipalUI extends JFrame {
 				cadClienteUI.moveToFront();
 				getContentPane().add(cadClienteUI, 0);
 				cadClienteUI.setVisible(true);
+				
 			}
 		});
 		mnCliente.add(mntmCadastroCliente);
