@@ -8,19 +8,19 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
-
+import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.model.Mesa;
 
 public class CadastroMesaUI extends JInternalFrame {
-	private JTextField mesaNumero;
-	private JTextField mesaLugares;
 	
+	private JTextField mesaNumero;
+	private JTextField mesaLugares;	
 	private Mesa mesa;
-	//ATUALIZAÇAO
+
 	/**
 	 * Launch the application.
 	 */
@@ -75,9 +75,18 @@ public class CadastroMesaUI extends JInternalFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Mesa mesa = new Mesa();
-				//mesa.setNumero(mesaNumero.getInteger);
-				//mesa.setLugares(mesaLugares.getInteger);
 				
+				mesa.setNumeroMesa(Integer.parseInt(mesaNumero.getText()));
+				mesa.setLugares(Integer.parseInt(mesaLugares.getText()));
+				
+				try{
+					new MesaController().salvar(mesa);
+					JOptionPane.showMessageDialog(null, "Mesa cadastrada com sucesso!");
+					dispose();
+					
+				}catch(Exception e){
+					JOptionPane.showMessageDialog(null, e.getMessage());
+				}
 				
 			}
 		});

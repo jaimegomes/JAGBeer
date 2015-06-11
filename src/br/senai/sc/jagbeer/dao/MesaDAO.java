@@ -16,19 +16,19 @@ import br.senai.sc.jagbeer.model.Mesa;
 public class MesaDAO extends GenericDAO {
 
 	private Connection con = Conexao.getConnection();
-	//ATUALIZAÇAO
+
 	@Override
 	public void salvar(Entidade entidade) throws Exception {
-		
-		String query = "INSERT TO mesa (numero, numeroLugares) VALUES (?, ?)";
-		
+
+		String query = "INSERT INTO mesa (numeroMesa, lugares) VALUES (?,?)";
+
 		try {
 			// transforma a entidade passada no parÃ¢metro para o objeto Produto
 
 			Mesa mesa = (Mesa) entidade;
 
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, mesa.getNumero());
+			pstmt.setInt(1, mesa.getNumeroMesa());
 			pstmt.setInt(2, mesa.getLugares());
 
 			pstmt.execute();
@@ -43,13 +43,13 @@ public class MesaDAO extends GenericDAO {
 
 	@Override
 	public void excluir(Entidade entidade) throws Exception {
-		
+
 		String query = "DELETE FROM mesa WHERE id = ? ";
-		
+
 		try {
 			Mesa mesa = (Mesa) entidade;
 			PreparedStatement pstmt = con.prepareStatement(query);
-			
+
 			pstmt.setInt(1, mesa.getId());
 
 			pstmt.execute();
@@ -60,20 +60,19 @@ public class MesaDAO extends GenericDAO {
 			con.rollback();
 			System.out.println("Erro ao excluir Mesa.\n" + se.getMessage());
 		}
-		
 
 	}
 
 	@Override
 	public void editar(Entidade entidade) throws Exception {
-		
+
 		String query = "UPDATE mesa SET numero = ?, numeroLugares = ? WHERE id = ? ";
-		
+
 		try {
 			Mesa mesa = (Mesa) entidade;
-			
+
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, mesa.getNumero());
+			pstmt.setInt(1, mesa.getNumeroMesa());
 			pstmt.setInt(2, mesa.getLugares());
 			pstmt.setInt(4, mesa.getId());
 
@@ -95,11 +94,11 @@ public class MesaDAO extends GenericDAO {
 
 	@Override
 	public Entidade getPorId(int id) throws Exception {
-		
+
 		Mesa mesa = null;
-		
+
 		String query = "SELECT * FROM mesa WHERE id = ?";
-		
+
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, id);
@@ -107,10 +106,8 @@ public class MesaDAO extends GenericDAO {
 			ResultSet result = pstmt.executeQuery();
 
 			while (result.next()) {
-				mesa = new Mesa
-						(result.getInt("id"), 
-						 result.getInt("numero"), 
-						 result.getInt("lugares"));
+				mesa = new Mesa(result.getInt("id"), result.getInt("numero"),
+						result.getInt("lugares"));
 			}
 
 			pstmt.close();
@@ -125,6 +122,39 @@ public class MesaDAO extends GenericDAO {
 	@Override
 	public void atualizaTabela(JTable table) throws Exception {
 
+	}
+
+	public boolean verificarNumeroMesa(int numeroMesa) {
+
+		String query = "SELECT * FROM mesa WHERE numero = ?";
+
+		Mesa mesa = null;
+
+		try {
+
+			PreparedStatement pstmt = con.prepareStatement(query);
+
+			pstmt.setInt(1, numeroMesa);
+
+			ResultSet result = pstmt.executeQuery();
+
+			while (result.next()) {
+				mesa = new Mesa(result.getInt("numero"));
+
+				if (numeroMesa == mesa.numeroMesa) {
+
+				}
+				return true;
+			}
+
+			pstmt.close();
+
+		} catch (SQLException se) {
+			System.out.println("Erro ao verificar número da Mesa"
+					+ se.getMessage());
+		}
+
+		return false;
 	}
 
 }

@@ -7,7 +7,7 @@ public class Mesa extends Entidade {
 	public int id;
 	public int numeroMesa;
 	public int numeroLugares;
-	//ATUALIZAÇAO
+	
 	public Mesa() {
 
 	}
@@ -23,6 +23,10 @@ public class Mesa extends Entidade {
 		this.numeroLugares = numeroLugares;
 	}
 
+	public Mesa(int numeroMesa) {
+		this.numeroMesa = numeroMesa;
+	}
+
 	@Override
 	public int getId() {		
 		return this.id;
@@ -33,11 +37,11 @@ public class Mesa extends Entidade {
 		this.id = id;
 	}
 
-	public int getNumero() {
+	public int getNumeroMesa() {
 		return numeroMesa;
 	}
 
-	public void setNumero(int numeroMesa) {
+	public void setNumeroMesa(int numeroMesa) {
 		this.numeroMesa = numeroMesa;
 	}
 
@@ -48,7 +52,5 @@ public class Mesa extends Entidade {
 	public void setLugares(int numeroLugares) {
 		this.numeroLugares = numeroLugares;
 	}
-	
-	
 
 }
