@@ -21,7 +21,7 @@ public interface IController {
 	 * @param Entidade
 	 *            entidade
 	 */
-	public void salvar(Entidade entidade);
+	public void salvar(Entidade entidade) throws Exception;
 
 	/**
 	 * Método responsável por excluir a entidade no banco
@@ -29,7 +29,7 @@ public interface IController {
 	 * @param Entidade
 	 *            entidade
 	 */
-	public void excluir(Entidade entidade);
+	public void excluir(Entidade entidade) throws Exception;
 
 	/**
 	 * Método responsável por editar a entidade no banco
@@ -37,7 +37,7 @@ public interface IController {
 	 * @param Entidade
 	 *            entidade
 	 */
-	public void editar(Entidade entidade);
+	public void editar(Entidade entidade) throws Exception;
 
 	/**
 	 * Método que retorna uma lista de entidade
@@ -47,7 +47,7 @@ public interface IController {
 	 * 
 	 * @return List<Entidade>
 	 */
-	public List<Entidade> listar();
+	public List<Entidade> listar() throws Exception;
 
 	/**
 	 * Método que retorna a entidade referente ao id passado como parâmetro
@@ -55,7 +55,7 @@ public interface IController {
 	 * @param Entidade
 	 *            entidade
 	 */
-	public Entidade getPorId(int id);
+	public Entidade getPorId(int id) throws Exception;
 
 	/**
 	 * Método responsável por atualizar a tabela passada como parâmetro.
@@ -63,6 +63,6 @@ public interface IController {
 	 * @param Entidade
 	 *            entidade
 	 */
-	public void atualizaTabela(JTable table);
+	public void atualizaTabela(JTable table) throws Exception;
 
 }
