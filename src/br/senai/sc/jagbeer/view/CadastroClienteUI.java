@@ -1,5 +1,6 @@
 package br.senai.sc.jagbeer.view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,19 +14,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.model.Cliente;
 
-import java.awt.Color;
-
 public class CadastroClienteUI extends JInternalFrame {
+
+	private static final long serialVersionUID = 1L;
+
 	private JTextField JtfNomeCliente;
 
-//	private Cliente clienteEdicao;
-	
+	// private Cliente clienteEdicao;
+
 	private JTextField JtfEmailCliente;
 	private JTextField JtfTelefoneCliente;
 
@@ -49,8 +51,7 @@ public class CadastroClienteUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public CadastroClienteUI() {
-		
-		
+
 		setTitle("Cadastro de Cliente");
 		setClosable(true);
 		setBounds(100, 100, 425, 241);

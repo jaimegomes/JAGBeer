@@ -50,12 +50,10 @@ public class CadastroProdutoUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					
-					System.out.println("entrou");
+
 					CadastroProdutoUI frame = new CadastroProdutoUI();
 					frame.setVisible(true);
-					
-					System.out.println("fim");
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -65,7 +63,6 @@ public class CadastroProdutoUI extends JInternalFrame {
 
 	public CadastroProdutoUI() {
 
-		System.out.println("oi");
 		setTitle("Cadastro de Produtos");
 		setClosable(true);
 
@@ -120,17 +117,18 @@ public class CadastroProdutoUI extends JInternalFrame {
 
 					new ProdutoController().salvar(produto);
 					JOptionPane.showMessageDialog(null,
-							"Produto salvo com sucesso.");
+							"Produto cadastrado com sucesso.");
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null,
-							"Erro ao salvar produto. " + e1.getMessage());
+							"Erro ao cadastrar produto. " + e1.getMessage());
 				}
 			}
 
 		});
+
 		groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout
-				.createParallelGroup(Alignment.TRAILING)
+				.createParallelGroup(Alignment.LEADING)
 				.addGroup(
 						groupLayout
 								.createSequentialGroup()
@@ -172,6 +170,7 @@ public class CadastroProdutoUI extends JInternalFrame {
 
 		lblNome = new JLabel("Nome:");
 		jtfNome = new JTextField();
+		jtfNome.setColumns(10);
 
 		lblValor = new JLabel("Valor:");
 		jtfValor = new JTextField();
@@ -188,49 +187,132 @@ public class CadastroProdutoUI extends JInternalFrame {
 		cbxClassificacao = new JComboBox<String>();
 
 		grouLayoutItensForm = new GroupLayout(panel);
-		grouLayoutItensForm.setHorizontalGroup(
-			grouLayoutItensForm.createParallelGroup(Alignment.LEADING)
-				.addGroup(grouLayoutItensForm.createSequentialGroup()
-					.addGroup(grouLayoutItensForm.createParallelGroup(Alignment.LEADING)
-						.addGroup(grouLayoutItensForm.createSequentialGroup()
-							.addGroup(grouLayoutItensForm.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblValor)
-								.addComponent(lblNome))
-							.addGap(59)
-							.addGroup(grouLayoutItensForm.createParallelGroup(Alignment.LEADING)
-								.addComponent(jtfNome, GroupLayout.PREFERRED_SIZE, 323, GroupLayout.PREFERRED_SIZE)
-								.addGroup(grouLayoutItensForm.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(grouLayoutItensForm.createParallelGroup(Alignment.LEADING, false)
-										.addGroup(grouLayoutItensForm.createParallelGroup(Alignment.TRAILING, false)
-											.addComponent(jtfValorCusto, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-											.addComponent(jtfValor, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
-										.addComponent(cbxClassificacao, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)))))
-						.addComponent(lblValorCusto)
-						.addComponent(lblClassificacao))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		grouLayoutItensForm.setVerticalGroup(
-			grouLayoutItensForm.createParallelGroup(Alignment.LEADING)
-				.addGroup(grouLayoutItensForm.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(grouLayoutItensForm.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNome)
-						.addComponent(jtfNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(grouLayoutItensForm.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblValor)
-						.addComponent(jtfValor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(grouLayoutItensForm.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblValorCusto)
-						.addComponent(jtfValorCusto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(grouLayoutItensForm.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblClassificacao)
-						.addComponent(cbxClassificacao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(23, Short.MAX_VALUE))
-		);
+		grouLayoutItensForm
+				.setHorizontalGroup(grouLayoutItensForm
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								grouLayoutItensForm
+										.createSequentialGroup()
+										.addGroup(
+												grouLayoutItensForm
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																grouLayoutItensForm
+																		.createSequentialGroup()
+																		.addGroup(
+																				grouLayoutItensForm
+																						.createParallelGroup(
+																								Alignment.LEADING)
+																						.addComponent(
+																								lblValor)
+																						.addComponent(
+																								lblNome))
+																		.addGap(59)
+																		.addGroup(
+																				grouLayoutItensForm
+																						.createParallelGroup(
+																								Alignment.LEADING)
+																						.addComponent(
+																								jtfNome,
+																								GroupLayout.PREFERRED_SIZE,
+																								323,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addGroup(
+																								grouLayoutItensForm
+																										.createSequentialGroup()
+																										.addPreferredGap(
+																												ComponentPlacement.RELATED)
+																										.addGroup(
+																												grouLayoutItensForm
+																														.createParallelGroup(
+																																Alignment.LEADING,
+																																false)
+																														.addGroup(
+																																grouLayoutItensForm
+																																		.createParallelGroup(
+																																				Alignment.TRAILING,
+																																				false)
+																																		.addComponent(
+																																				jtfValorCusto,
+																																				Alignment.LEADING,
+																																				0,
+																																				0,
+																																				Short.MAX_VALUE)
+																																		.addComponent(
+																																				jtfValor,
+																																				Alignment.LEADING,
+																																				GroupLayout.DEFAULT_SIZE,
+																																				88,
+																																				Short.MAX_VALUE))
+																														.addComponent(
+																																cbxClassificacao,
+																																GroupLayout.PREFERRED_SIZE,
+																																118,
+																																GroupLayout.PREFERRED_SIZE)))))
+														.addComponent(
+																lblValorCusto)
+														.addComponent(
+																lblClassificacao))
+										.addContainerGap(
+												GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
+		grouLayoutItensForm
+				.setVerticalGroup(grouLayoutItensForm
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								grouLayoutItensForm
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												grouLayoutItensForm
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(lblNome)
+														.addComponent(
+																jtfNome,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												ComponentPlacement.UNRELATED)
+										.addGroup(
+												grouLayoutItensForm
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(lblValor)
+														.addComponent(
+																jtfValor,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												ComponentPlacement.UNRELATED)
+										.addGroup(
+												grouLayoutItensForm
+														.createParallelGroup(
+																Alignment.TRAILING)
+														.addComponent(
+																lblValorCusto)
+														.addComponent(
+																jtfValorCusto,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												ComponentPlacement.UNRELATED)
+										.addGroup(
+												grouLayoutItensForm
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																lblClassificacao)
+														.addComponent(
+																cbxClassificacao,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addContainerGap(23, Short.MAX_VALUE)));
 		panel.setLayout(grouLayoutItensForm);
 
 		getContentPane().setLayout(groupLayout);

@@ -41,6 +41,7 @@ public class PrincipalUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
 					PrincipalUI frame = new PrincipalUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
