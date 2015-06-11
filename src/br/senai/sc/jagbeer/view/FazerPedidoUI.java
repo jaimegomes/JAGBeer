@@ -16,37 +16,45 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.Pedido;
+import br.senai.sc.jagbeer.model.Produto;
 
+/**
+ * Classe View FazerPedidoUI
+ * 
+ * @author Jaime Gomes
+ *
+ */
 public class FazerPedidoUI extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 
 	// conteudo da janela
-	private final JPanel panel;
+	private JPanel panel;
 	private GroupLayout groupLayout;
 
 	// itens do topo
-	private JComboBox cbxPedido;
+	private JComboBox<Pedido> cbxPedido;
 	private JLabel lblPedido;
-	private JComboBox cbxCliente;
+	private JComboBox<Cliente> cbxCliente;
 	private JLabel lblCliente;
 	private JLabel lblMesa;
-	private JComboBox cbxMesa;
+	private JComboBox<Mesa> cbxMesa;
 
 	// itens do grupo Produto
 	private JPanel panelProduto;
 	private GroupLayout glPanelProduto;
-	private JComboBox cbxTipo;
+	private JComboBox<String> cbxTipo;
 	private JLabel lblTipo;
-	private JComboBox cbxProduto;
+	private JComboBox<Produto> cbxProduto;
 	private JLabel lblProduto;
-	private JComboBox cbxQtde;
+	private JComboBox<Integer> cbxQtde;
 	private JLabel lblQtde;
 	private JButton btnAdicionarProduto;
 
@@ -83,10 +91,10 @@ public class FazerPedidoUI extends JInternalFrame {
 
 		// Itens do topo
 		cbxPedido = new JComboBox<Pedido>();
-		lblPedido = new JLabel("Pedido");
-		lblCliente = new JLabel("Cliente");
+		lblPedido = new JLabel("Pedido:");
+		lblCliente = new JLabel("Cliente:");
 		cbxCliente = new JComboBox<Cliente>();
-		lblMesa = new JLabel("Mesa");
+		lblMesa = new JLabel("Mesa:");
 		cbxMesa = new JComboBox<Mesa>();
 
 		// itens do grupo Produto
@@ -100,66 +108,48 @@ public class FazerPedidoUI extends JInternalFrame {
 		tableItemPedido = new JTable();
 		// tableItemPedido.setModel(new ItemPedidoTableModel());
 
-		cbxTipo = new JComboBox();
-		lblTipo = new JLabel("Tipo");
-		cbxProduto = new JComboBox();
-		lblProduto = new JLabel("Produto");
-		cbxQtde = new JComboBox();
-		lblQtde = new JLabel("Qtde");
+		cbxTipo = new JComboBox<String>();
+		lblTipo = new JLabel("Tipo:");
+		lblTipo.setVerticalAlignment(SwingConstants.TOP);
+		cbxProduto = new JComboBox<Produto>();
+		lblProduto = new JLabel("Produto:");
+		cbxQtde = new JComboBox<Integer>();
+		lblQtde = new JLabel("Qtde:");
 		btnAdicionarProduto = new JButton("Adicionar Produto");
 
 		btnCancelar = new JButton("Cancelar");
 		btnSalvar = new JButton("Salvar");
 
 		glPanelProduto = new GroupLayout(panelProduto);
-		glPanelProduto
-				.setHorizontalGroup(glPanelProduto
-						.createParallelGroup(Alignment.LEADING)
+		glPanelProduto.setHorizontalGroup(glPanelProduto.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				glPanelProduto
+						.createSequentialGroup()
 						.addGroup(
 								glPanelProduto
-										.createSequentialGroup()
-										.addGroup(
-												glPanelProduto
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																glPanelProduto
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addComponent(
-																				lblTipo))
-														.addComponent(
-																lblProduto))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												glPanelProduto
-														.createParallelGroup(
-																Alignment.TRAILING,
-																false)
-														.addComponent(
-																cbxProduto,
-																Alignment.LEADING,
-																0,
-																GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																cbxTipo,
-																Alignment.LEADING,
-																0, 121,
-																Short.MAX_VALUE))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addComponent(lblQtde)
-										.addGap(10)
-										.addComponent(cbxQtde,
-												GroupLayout.PREFERRED_SIZE, 55,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												ComponentPlacement.RELATED, 23,
+										.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblProduto)
+										.addComponent(lblTipo))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(
+								glPanelProduto
+										.createParallelGroup(
+												Alignment.TRAILING, false)
+										.addComponent(cbxProduto,
+												Alignment.LEADING, 0,
+												GroupLayout.DEFAULT_SIZE,
 												Short.MAX_VALUE)
-										.addComponent(btnAdicionarProduto)
-										.addContainerGap()));
+										.addComponent(cbxTipo,
+												Alignment.LEADING, 0, 121,
+												Short.MAX_VALUE))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblQtde)
+						.addGap(10)
+						.addComponent(cbxQtde, GroupLayout.PREFERRED_SIZE, 55,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 43,
+								Short.MAX_VALUE)
+						.addComponent(btnAdicionarProduto).addContainerGap()));
 		glPanelProduto
 				.setVerticalGroup(glPanelProduto
 						.createParallelGroup(Alignment.LEADING)
@@ -177,7 +167,7 @@ public class FazerPedidoUI extends JInternalFrame {
 																GroupLayout.PREFERRED_SIZE)
 														.addComponent(lblTipo))
 										.addPreferredGap(
-												ComponentPlacement.RELATED, 13,
+												ComponentPlacement.RELATED, 12,
 												Short.MAX_VALUE)
 										.addGroup(
 												glPanelProduto
@@ -211,7 +201,7 @@ public class FazerPedidoUI extends JInternalFrame {
 										.addGroup(
 												groupLayout
 														.createParallelGroup(
-																Alignment.LEADING)
+																Alignment.TRAILING)
 														.addGroup(
 																groupLayout
 																		.createSequentialGroup()
@@ -248,20 +238,20 @@ public class FazerPedidoUI extends JInternalFrame {
 																								0,
 																								63,
 																								Short.MAX_VALUE))
-																		.addGap(52)
+																		.addGap(42)
 																		.addComponent(
 																				lblCliente,
 																				GroupLayout.PREFERRED_SIZE,
 																				57,
 																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(2)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
 																		.addComponent(
 																				cbxCliente,
 																				0,
 																				294,
 																				Short.MAX_VALUE))
 														.addGroup(
-																Alignment.TRAILING,
 																groupLayout
 																		.createSequentialGroup()
 																		.addComponent(
@@ -310,18 +300,18 @@ public class FazerPedidoUI extends JInternalFrame {
 														.addGroup(
 																groupLayout
 																		.createSequentialGroup()
-																		.addGap(17)
-																		.addComponent(
-																				lblCliente))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
 																		.addContainerGap()
-																		.addComponent(
-																				cbxCliente,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE))
+																		.addGroup(
+																				groupLayout
+																						.createParallelGroup(
+																								Alignment.BASELINE)
+																						.addComponent(
+																								cbxCliente,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								lblCliente)))
 														.addGroup(
 																groupLayout
 																		.createSequentialGroup()
