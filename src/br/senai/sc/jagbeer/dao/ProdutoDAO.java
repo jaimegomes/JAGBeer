@@ -24,6 +24,7 @@ import br.senai.sc.jagbeer.model.ProdutoTableModel;
 public class ProdutoDAO extends GenericDAO {
 
 	private Connection con = Conexao.getConnection();
+	private Produto produto = null;
 
 	@Override
 	public void salvar(Entidade entidade) throws SQLException {
@@ -32,17 +33,17 @@ public class ProdutoDAO extends GenericDAO {
 
 		try {
 
-			// transforma a entidade passada no parâmetro para o objeto Produto
-			Produto produto = (Produto) entidade;
+			produto = (Produto) entidade;
 
-			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setString(1, produto.getNome());
-			pstm.setDouble(2, produto.getPrecoCusto());
-			pstm.setDouble(3, produto.getPrecoVenda());
-			pstm.setString(4, produto.getClassificacao());
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, produto.getNome());
+			pstmt.setDouble(2, produto.getPrecoCusto());
+			pstmt.setDouble(3, produto.getPrecoVenda());
+			pstmt.setString(4, produto.getClassificacao());
 
-			pstm.execute();
+			pstmt.execute();
 			con.commit();
+			pstmt.close();
 
 		} catch (SQLException e) {
 			con.rollback();
@@ -57,7 +58,7 @@ public class ProdutoDAO extends GenericDAO {
 		String sql = "DELETE FROM produto WHERE id=?";
 		try {
 
-			Produto produto = (Produto) entidade;
+			produto = (Produto) entidade;
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setInt(1, produto.getId());
 
@@ -78,7 +79,7 @@ public class ProdutoDAO extends GenericDAO {
 
 		String sql = "UPDATE produto SET nomeproduto = ? , precocusto = ?, precovenda = ?, classificacao = ? WHERE id=?";
 		try {
-			Produto produto = (Produto) entidade;
+			produto = (Produto) entidade;
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setString(1, produto.getNome());
 			pstm.setDouble(2, produto.getPrecoCusto());
@@ -107,19 +108,17 @@ public class ProdutoDAO extends GenericDAO {
 
 			PreparedStatement pstm = con.prepareStatement(sql);
 
-			// para executar consulta utilizar executeQuery() pois retorna um
-			// resultSet
 			ResultSet result = pstm.executeQuery();
 
 			while (result.next()) {
 
-				Produto p = new Produto(result.getInt("id"),
+				produto = new Produto(result.getInt("id"),
 						result.getString("nomeProduto"),
 						result.getDouble("precoCusto"),
 						result.getDouble("precoVenda"),
 						result.getString("classificacao"));
 
-				listaProdutos.add(p);
+				listaProdutos.add(produto);
 			}
 
 			pstm.close();
@@ -133,8 +132,6 @@ public class ProdutoDAO extends GenericDAO {
 
 	@Override
 	public Entidade getPorId(int id) {
-
-		Produto produto = null;
 
 		String sql = "SELECT * FROM produto WHERE id = ?";
 		try {

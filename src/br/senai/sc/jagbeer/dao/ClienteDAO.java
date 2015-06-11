@@ -28,7 +28,6 @@ public class ClienteDAO extends GenericDAO {
 
 		String sql = "INSERT INTO cliente (nome, telefone, email) VALUES (?,?,?)";
 		try {
-			// transforma a entidade passada no parâmetro para o objeto Produto
 
 			Cliente cliente = (Cliente) entidade;
 
@@ -40,8 +39,6 @@ public class ClienteDAO extends GenericDAO {
 			pstmt.execute();
 			con.commit();
 
-			System.out.println("Novo Cliente " + cliente.getNome()
-					+ " Cadastrado com sucesso no SGBD.");
 		} catch (SQLException se) {
 			con.rollback();
 			System.out.println("Erro ao salvar Cliente\n" + se.getMessage());
@@ -140,8 +137,7 @@ public class ClienteDAO extends GenericDAO {
 
 	@Override
 	public void atualizaTabela(JTable table) throws Exception {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

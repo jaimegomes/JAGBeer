@@ -29,6 +29,7 @@ public class PedidoDAO extends GenericDAO {
 	private Connection con = Conexao.getConnection();
 	private MesaDAO mesaDAO = null;
 	private ClienteDAO clienteDAO = null;
+	private Pedido pedido = null;
 
 	@Override
 	public void salvar(Entidade entidade) throws SQLException {
@@ -37,16 +38,16 @@ public class PedidoDAO extends GenericDAO {
 
 		try {
 
-			// transforma a entidade passada no parâmetro para o objeto Produto
-			Pedido pedido = (Pedido) entidade;
-			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setInt(1, pedido.getMesa().getId());
-			pstm.setInt(2, pedido.getCliente().getId());
-			pstm.setDate(3, new java.sql.Date(System.currentTimeMillis()));
-			pstm.setBoolean(4, pedido.isStatus());
+			pedido = (Pedido) entidade;
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pedido.getMesa().getId());
+			pstmt.setInt(2, pedido.getCliente().getId());
+			pstmt.setDate(3, new java.sql.Date(System.currentTimeMillis()));
+			pstmt.setBoolean(4, pedido.isStatus());
 
-			pstm.execute();
+			pstmt.execute();
 			con.commit();
+			pstmt.close();
 
 		} catch (SQLException e) {
 			con.rollback();
@@ -61,7 +62,7 @@ public class PedidoDAO extends GenericDAO {
 		String sql = "DELETE FROM pedido WHERE id=?";
 		try {
 
-			Pedido pedido = (Pedido) entidade;
+			pedido = (Pedido) entidade;
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setInt(1, pedido.getId());
 
@@ -82,7 +83,7 @@ public class PedidoDAO extends GenericDAO {
 
 		String sql = "UPDATE pedido SET idMesa = ?, idCliente = ?, dataPedido = ?, estado = ?  WHERE id= ?";
 		try {
-			Pedido pedido = (Pedido) entidade;
+			pedido = (Pedido) entidade;
 			Date dataAtual = new Date();
 
 			PreparedStatement pstm = con.prepareStatement(sql);
@@ -117,8 +118,6 @@ public class PedidoDAO extends GenericDAO {
 
 			PreparedStatement pstm = con.prepareStatement(sql);
 
-			// para executar consulta utilizar executeQuery() pois retorna um
-			// resultSet
 			ResultSet result = pstm.executeQuery();
 
 			while (result.next()) {
@@ -153,8 +152,6 @@ public class PedidoDAO extends GenericDAO {
 
 	@Override
 	public Entidade getPorId(int id) {
-
-		Pedido pedido = null;
 
 		String sql = "SELECT * FROM pedido WHERE id = ?";
 		try {
