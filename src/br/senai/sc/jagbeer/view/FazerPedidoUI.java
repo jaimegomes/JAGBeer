@@ -75,6 +75,9 @@ public class FazerPedidoUI extends JInternalFrame {
 
 	public FazerPedidoUI() {
 
+		setTitle("Fazer Pedido");
+		setClosable(true);
+
 		// conteudo geral da janela
 		panel = new JPanel();
 

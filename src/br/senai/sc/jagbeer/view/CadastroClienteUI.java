@@ -110,7 +110,7 @@ public class CadastroClienteUI extends JInternalFrame {
 			}
 		});
 
-		JLabel lblQtdLugares = new JLabel("Telefone:");
+		JLabel lblTelefone = new JLabel("Telefone:");
 
 		JLabel lblEmail = new JLabel("E-mail:");
 
@@ -146,7 +146,7 @@ public class CadastroClienteUI extends JInternalFrame {
 																				.addComponent(
 																						lblNome)
 																				.addComponent(
-																						lblQtdLugares)
+																						lblTelefone)
 																				.addComponent(
 																						lblEmail))
 																.addPreferredGap(
@@ -207,7 +207,7 @@ public class CadastroClienteUI extends JInternalFrame {
 								.addGroup(
 										gl_panel.createParallelGroup(
 												Alignment.BASELINE)
-												.addComponent(lblQtdLugares)
+												.addComponent(lblTelefone)
 												.addComponent(
 														JtfTelefoneCliente,
 														GroupLayout.PREFERRED_SIZE,
