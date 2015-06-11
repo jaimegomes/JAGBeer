@@ -29,7 +29,6 @@ public class CadastroClienteUI extends JInternalFrame {
 	private JTextField JtfEmailCliente;
 	private JTextField JtfTelefoneCliente;
 
-	// ATUALIZAÇAO
 	/**
 	 * Launch the application.
 	 */
@@ -78,7 +77,7 @@ public class CadastroClienteUI extends JInternalFrame {
 								GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(14, Short.MAX_VALUE)));
 
-		JLabel lblNmero = new JLabel("Nome:");
+		JLabel lblNome = new JLabel("Nome:");
 
 		JtfNomeCliente = new JTextField();
 		JtfNomeCliente.setColumns(10);
@@ -145,7 +144,7 @@ public class CadastroClienteUI extends JInternalFrame {
 																		gl_panel.createParallelGroup(
 																				Alignment.TRAILING)
 																				.addComponent(
-																						lblNmero)
+																						lblNome)
 																				.addComponent(
 																						lblQtdLugares)
 																				.addComponent(
@@ -198,7 +197,7 @@ public class CadastroClienteUI extends JInternalFrame {
 								.addGroup(
 										gl_panel.createParallelGroup(
 												Alignment.BASELINE)
-												.addComponent(lblNmero)
+												.addComponent(lblNome)
 												.addComponent(
 														JtfNomeCliente,
 														GroupLayout.PREFERRED_SIZE,
