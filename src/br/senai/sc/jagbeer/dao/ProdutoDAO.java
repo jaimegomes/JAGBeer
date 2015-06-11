@@ -46,7 +46,8 @@ public class ProdutoDAO extends GenericDAO {
 
 		} catch (SQLException e) {
 			con.rollback();
-			System.out.println("[ProdutoDAO] - Erro ao salvar produto.\n" + e.getMessage());
+			System.out.println("[ProdutoDAO] - Erro ao salvar produto.\n"
+					+ e.getMessage());
 		}
 	}
 
@@ -66,7 +67,8 @@ public class ProdutoDAO extends GenericDAO {
 
 		} catch (SQLException e) {
 			con.rollback();
-			System.out.println("[ProdutoDAO] - Erro ao excluir produto.\n" + e.getMessage());
+			System.out.println("[ProdutoDAO] - Erro ao excluir produto.\n"
+					+ e.getMessage());
 		}
 
 	}
@@ -90,7 +92,8 @@ public class ProdutoDAO extends GenericDAO {
 
 		} catch (SQLException e) {
 			con.rollback();
-			System.out.println("[ProdutoDAO] - Erro ao alterar produto.\n" + e.getMessage());
+			System.out.println("[ProdutoDAO] - Erro ao alterar produto.\n"
+					+ e.getMessage());
 		}
 
 	}
@@ -122,7 +125,8 @@ public class ProdutoDAO extends GenericDAO {
 			pstm.close();
 
 		} catch (SQLException e) {
-			System.out.println("[ProdutoDAO] - Erro ao listar produtos.\n" + e.getMessage());
+			System.out.println("[ProdutoDAO] - Erro ao listar produtos.\n"
+					+ e.getMessage());
 		}
 		return listaProdutos;
 	}
@@ -153,8 +157,9 @@ public class ProdutoDAO extends GenericDAO {
 			pstm.close();
 
 		} catch (SQLException e) {
-			System.out.println("[ProdutoDAO] - Erro ao buscar produto por id.\n"
-					+ e.getMessage());
+			System.out
+					.println("[ProdutoDAO] - Erro ao buscar produto por id.\n"
+							+ e.getMessage());
 		}
 
 		return produto;
@@ -163,6 +168,45 @@ public class ProdutoDAO extends GenericDAO {
 	@Override
 	public void atualizaTabela(JTable table) {
 		table.setModel(new ProdutoTableModel(listar()));
+	}
+
+	public List<Entidade> getPorClassificacao(String classificacao) {
+
+		List<Entidade> listProduto = null;
+
+		String sql = "SELECT * FROM produto WHERE classificacao = ?";
+
+		try {
+			if (classificacao == null || classificacao == "")
+				throw new Exception(
+						"[ProdutoDAO] - Classificação nula ou em branco.");
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, classificacao);
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				Produto produto = new Produto(result.getInt("id"),
+						result.getString("nomeProduto"),
+						result.getDouble("precoCusto"),
+						result.getDouble("precoVenda"),
+						result.getString("classificacao"));
+
+				listProduto.add(produto);
+
+			}
+
+			pstm.close();
+		} catch (Exception e) {
+			System.out
+					.println("[ProdutoDAO] - Erro ao buscar produto por classificação.\n"
+							+ e.getMessage());
+		}
+
+		return listProduto;
+
 	}
 
 }
