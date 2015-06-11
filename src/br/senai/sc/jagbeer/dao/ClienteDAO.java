@@ -1,6 +1,5 @@
 package br.senai.sc.jagbeer.dao;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +13,7 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.abstracts.GenericDAO;
 import br.senai.sc.jagbeer.conexao.Conexao;
 import br.senai.sc.jagbeer.model.Cliente;
+
 /**
  * 
  * @author Bazzi
@@ -40,6 +40,8 @@ public class ClienteDAO extends GenericDAO {
 			pstmt.execute();
 			con.commit();
 
+			System.out.println("Novo Cliente " + cliente.getNome()
+					+ " Cadastrado com sucesso no SGBD.");
 		} catch (SQLException se) {
 			con.rollback();
 			System.out.println("Erro ao salvar Cliente\n" + se.getMessage());

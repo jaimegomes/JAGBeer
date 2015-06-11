@@ -9,11 +9,11 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
-
 import javax.swing.border.EtchedBorder;
 
 import br.senai.sc.jagbeer.controller.ClienteController;
@@ -24,7 +24,8 @@ import java.awt.Color;
 public class CadastroClienteUI extends JInternalFrame {
 	private JTextField JtfNomeCliente;
 
-	private Cliente cliente;
+//	private Cliente clienteEdicao;
+	
 	private JTextField JtfEmailCliente;
 	private JTextField JtfTelefoneCliente;
 
@@ -49,6 +50,8 @@ public class CadastroClienteUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public CadastroClienteUI() {
+		
+		
 		setTitle("Cadastro de Cliente");
 		setClosable(true);
 		setBounds(100, 100, 425, 241);
@@ -84,15 +87,20 @@ public class CadastroClienteUI extends JInternalFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				// Falta Try Catch
 				Cliente cliente = new Cliente();
 
 				cliente.setNome(JtfNomeCliente.getText());
 				cliente.setTelefone(JtfTelefoneCliente.getText());
 				cliente.setEmail(JtfEmailCliente.getText());
 
-				new ClienteController().salvar(cliente);
-
+				try {
+					new ClienteController().salvar(cliente);
+					JOptionPane.showMessageDialog(null,
+							"Cliente Cadastrado com Sucesso!");
+					dispose();
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+				}
 			}
 		});
 

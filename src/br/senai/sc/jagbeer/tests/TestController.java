@@ -19,26 +19,26 @@ public class TestController {
 		// teste
 
 		ClienteController clienteControl = new ClienteController();
-		 Cliente c1 = new Cliente("Zacarias", "048 9999-0001",
-		 "zacarias@trapalhoes.com.br");
+		 //Cliente c1 = new Cliente("Zacarias", "048 9999-0001",
+		 //"zacarias@trapalhoes.com.br");
 		// Cliente c2 = new Cliente("Mussum", "048 9999-0002",
 		// "mussum@trapalhoes.com.br");
 		// Cliente c3 = new Cliente("Didi", "048 9999-0003",
 		// "didi@trapalhoes.com.br");
 
 		
-		// Cliente c4 = (Cliente) clienteControl.getPorId(4);
+		 //Cliente c4 = (Cliente) clienteControl.getPorId(10);
 		// Cliente c5 = (Cliente) clienteControl.getPorId(5);
 		// Cliente c6 = (Cliente) clienteControl.getPorId(6);
 		// Cliente c7 = (Cliente) clienteControl.getPorId(7);
 		// Cliente c8 = (Cliente) clienteControl.getPorId(8);
 
-		clienteControl.salvar(c1);
+		//clienteControl.salvar(c1);
 		// clienteControl.salvar(c2);
 		// clienteControl.salvar(c3);
 		// clienteControl.editar(c3);
 
-		// clienteControl.excluir(c4);
+		 //clienteControl.excluir(c4);
 		// clienteControl.excluir(c5);
 		// clienteControl.excluir(c6);
 		// clienteControl.excluir(c7);
