@@ -3,8 +3,10 @@ package br.senai.sc.jagbeer.tests;
 import javax.swing.JOptionPane;
 
 import br.senai.sc.jagbeer.controller.ClienteController;
+import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.model.Cliente;
+import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.Produto;
 
 public class TestController {
@@ -18,9 +20,9 @@ public class TestController {
 		// controller.salvar(produto);
 		// teste
 
-		ClienteController clienteControl = new ClienteController();
-		 Cliente c1 = new Cliente("Zacarias", "048 9999-0001",
-		 "zacarias@trapalhoes.com.br");
+		//ClienteController clienteControl = new ClienteController();
+		// Cliente c1 = new Cliente("Zacarias", "048 9999-0001",
+		// "zacarias@trapalhoes.com.br");
 		// Cliente c2 = new Cliente("Mussum", "048 9999-0002",
 		// "mussum@trapalhoes.com.br");
 		// Cliente c3 = new Cliente("Didi", "048 9999-0003",
@@ -33,7 +35,7 @@ public class TestController {
 		// Cliente c7 = (Cliente) clienteControl.getPorId(7);
 		// Cliente c8 = (Cliente) clienteControl.getPorId(8);
 
-		clienteControl.salvar(c1);
+		//clienteControl.salvar(c1);
 		// clienteControl.salvar(c2);
 		// clienteControl.salvar(c3);
 		// clienteControl.editar(c3);
@@ -48,6 +50,17 @@ public class TestController {
 		 * Métodos salvar e excluir funcionando 
 		 */
 
+		
+//		Mesa m1 = new Mesa();
+//		m1.setNumeroMesa(6);
+//		m1.setLugares(4);
+		//MesaController mesacontrol = new MesaController();
+//		mesacontrol.salvar(m1);
+		
+		//Mesa mexcluir = (Mesa) mesacontrol.getPorId(1);
+		//mesacontrol.excluir(mexcluir);
+		
+		//mesacontrol.excluir(mexcluir);		
 	}
 
 }
