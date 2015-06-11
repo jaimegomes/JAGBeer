@@ -1,26 +1,25 @@
 package br.senai.sc.jagbeer.view;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
-import javax.swing.JMenuBar;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.border.TitledBorder;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * 
@@ -30,8 +29,8 @@ import java.awt.event.ActionEvent;
 public class PrincipalUI extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField_1;
-	private JTextField textField;
+	private JTextField jtfPedido;
+	private JTextField jtfCliente;
 	private JTable table;
 
 	/**
@@ -85,9 +84,36 @@ public class PrincipalUI extends JFrame {
 		menuBar.add(mnProduto);
 
 		JMenuItem mntmCadastroProduto = new JMenuItem("Cadastro Produto");
+		mntmCadastroProduto.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CadastroProdutoUI cadProdutoUI = new CadastroProdutoUI();
+				cadProdutoUI.requestFocus(true);
+				cadProdutoUI.setFocusable(true);
+				cadProdutoUI.moveToFront();
+				getContentPane().add(cadProdutoUI, 0);
+				cadProdutoUI.setVisible(true);
+
+			}
+		});
 		mnProduto.add(mntmCadastroProduto);
 
 		JMenuItem mntmConsultaProduto = new JMenuItem("Consulta Produto");
+		mntmConsultaProduto.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ConsultaProdutoUI conProdutoUI = new ConsultaProdutoUI();
+				conProdutoUI.requestFocus(true);
+				conProdutoUI.setFocusable(true);
+				conProdutoUI.moveToFront();
+				getContentPane().add(conProdutoUI, 0);
+				conProdutoUI.setVisible(true);
+
+			}
+		});
+
 		mnProduto.add(mntmConsultaProduto);
 
 		JMenu mnMesa = new JMenu("Mesa");
@@ -110,15 +136,15 @@ public class PrincipalUI extends JFrame {
 
 		JLabel lblNome = new JLabel("Cliente:");
 
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		jtfPedido = new JTextField();
+		jtfPedido.setColumns(10);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Pedidos", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 
-		textField = new JTextField();
-		textField.setColumns(10);
+		jtfCliente = new JTextField();
+		jtfCliente.setColumns(10);
 
 		JLabel lblPedido = new JLabel("Pedido:");
 
@@ -134,141 +160,51 @@ public class PrincipalUI extends JFrame {
 
 		JButton btnEncerrar = new JButton("Encerrar Pedido");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane
-				.setHorizontalGroup(gl_contentPane
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_contentPane
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												gl_contentPane
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_contentPane
-																		.createSequentialGroup()
-																		.addComponent(
-																				panel,
-																				GroupLayout.PREFERRED_SIZE,
-																				524,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(18)
-																		.addGroup(
-																				gl_contentPane
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addComponent(
-																								btnNovo,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								btnEncerrar,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								btnAlterar,
-																								GroupLayout.PREFERRED_SIZE,
-																								133,
-																								GroupLayout.PREFERRED_SIZE)))
-														.addGroup(
-																gl_contentPane
-																		.createSequentialGroup()
-																		.addComponent(
-																				lblPedido,
-																				GroupLayout.PREFERRED_SIZE,
-																				45,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				textField_1,
-																				GroupLayout.PREFERRED_SIZE,
-																				158,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(18)
-																		.addComponent(
-																				lblNome)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				textField,
-																				GroupLayout.PREFERRED_SIZE,
-																				158,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(18)
-																		.addComponent(
-																				btnPesquisar)))
-										.addContainerGap(99, Short.MAX_VALUE)));
-		gl_contentPane
-				.setVerticalGroup(gl_contentPane
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								Alignment.TRAILING,
-								gl_contentPane
-										.createSequentialGroup()
-										.addGroup(
-												gl_contentPane
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addGroup(
-																Alignment.LEADING,
-																gl_contentPane
-																		.createSequentialGroup()
-																		.addGap(64)
-																		.addComponent(
-																				btnAlterar,
-																				GroupLayout.PREFERRED_SIZE,
-																				31,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(18)
-																		.addComponent(
-																				btnNovo,
-																				GroupLayout.PREFERRED_SIZE,
-																				31,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED,
-																				358,
-																				Short.MAX_VALUE)
-																		.addComponent(
-																				btnEncerrar,
-																				GroupLayout.PREFERRED_SIZE,
-																				31,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																gl_contentPane
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addGroup(
-																				gl_contentPane
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								lblNome)
-																						.addComponent(
-																								textField,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								btnPesquisar)
-																						.addComponent(
-																								lblPedido)
-																						.addComponent(
-																								textField_1,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE))
-																		.addGap(18)
-																		.addComponent(
-																				panel,
-																				GroupLayout.DEFAULT_SIZE,
-																				481,
-																				Short.MAX_VALUE)))
-										.addContainerGap()));
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 524, GroupLayout.PREFERRED_SIZE)
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addComponent(lblPedido, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jtfPedido, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+							.addGap(45)
+							.addComponent(lblNome)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jtfCliente, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)))
+					.addGap(18)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnNovo, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+						.addComponent(btnAlterar, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+						.addComponent(btnPesquisar, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+						.addComponent(btnEncerrar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPedido)
+						.addComponent(btnPesquisar)
+						.addComponent(jtfPedido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNome)
+						.addComponent(jtfCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(18)
+							.addComponent(panel, GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(27)
+							.addComponent(btnAlterar, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(btnNovo, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+							.addGap(113)
+							.addComponent(btnEncerrar, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
 
 		JScrollPane scrollPane = new JScrollPane();
 		GroupLayout gl_panel = new GroupLayout(panel);

@@ -25,8 +25,6 @@ public class CadastroProdutoUI extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private ProdutoController controller;
-
 	// conteudo geral da janela
 	private JPanel panel;
 	private GroupLayout groupLayout;
@@ -79,6 +77,18 @@ public class CadastroProdutoUI extends JInternalFrame {
 		});
 
 		btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				jtfNome.setText("");
+				jtfValor.setText("");
+				jtfValorCusto.setText("");
+				cbxClassificacao.setSelectedIndex(-1);
+			}
+
+		});
+
 		btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 
@@ -87,22 +97,28 @@ public class CadastroProdutoUI extends JInternalFrame {
 
 				String classificacao = "";
 
-				if (cbxClassificacao.getSelectedIndex() == 0)
-					classificacao = "Alimentos";
-
-				else if (cbxClassificacao.getSelectedIndex() == 1)
-					classificacao = "Bebidas";
-
-				Produto produto = new Produto(jtfNome.getText(), Double
-						.parseDouble(jtfValor.getText()), Double
-						.parseDouble(jtfValorCusto.getText()), classificacao);
 				try {
+
+					if (cbxClassificacao.getSelectedIndex() == -1)
+						throw new Exception("A classificacao e obrigatoria.");
+
+					else if (cbxClassificacao.getSelectedIndex() == 0)
+						classificacao = "Alimentos";
+
+					else if (cbxClassificacao.getSelectedIndex() == 1)
+						classificacao = "Bebidas";
+
+					Produto produto = new Produto(jtfNome.getText(), Double
+							.parseDouble(jtfValor.getText()), Double
+							.parseDouble(jtfValorCusto.getText()),
+							classificacao);
+
 					new ProdutoController().salvar(produto);
 					JOptionPane.showMessageDialog(null,
 							"Produto salvo com sucesso.");
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null,
-							"Erro ao salvar produto");
+							"Erro ao salvar produto. " + e1.getMessage());
 				}
 			}
 
