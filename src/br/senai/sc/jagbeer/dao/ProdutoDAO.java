@@ -24,6 +24,7 @@ import br.senai.sc.jagbeer.model.ProdutoTableModel;
 public class ProdutoDAO extends GenericDAO {
 
 	private Connection con = Conexao.getConnection();
+	private Produto produto = null;
 
 	@Override
 	public void salvar(Entidade entidade) throws SQLException {
@@ -32,21 +33,22 @@ public class ProdutoDAO extends GenericDAO {
 
 		try {
 
-			// transforma a entidade passada no parâmetro para o objeto Produto
-			Produto produto = (Produto) entidade;
+			produto = (Produto) entidade;
 
-			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setString(1, produto.getNome());
-			pstm.setDouble(2, produto.getPrecoCusto());
-			pstm.setDouble(3, produto.getPrecoVenda());
-			pstm.setString(4, produto.getClassificacao());
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, produto.getNome());
+			pstmt.setDouble(2, produto.getPrecoCusto());
+			pstmt.setDouble(3, produto.getPrecoVenda());
+			pstmt.setString(4, produto.getClassificacao());
 
-			pstm.execute();
+			pstmt.execute();
 			con.commit();
+			pstmt.close();
 
 		} catch (SQLException e) {
 			con.rollback();
-			System.out.println("[ProdutoDAO] - Erro ao salvar produto.\n" + e.getMessage());
+			System.out.println("[ProdutoDAO] - Erro ao salvar produto.\n"
+					+ e.getMessage());
 		}
 	}
 
@@ -56,7 +58,7 @@ public class ProdutoDAO extends GenericDAO {
 		String sql = "DELETE FROM produto WHERE id=?";
 		try {
 
-			Produto produto = (Produto) entidade;
+			produto = (Produto) entidade;
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setInt(1, produto.getId());
 
@@ -66,7 +68,8 @@ public class ProdutoDAO extends GenericDAO {
 
 		} catch (SQLException e) {
 			con.rollback();
-			System.out.println("[ProdutoDAO] - Erro ao excluir produto.\n" + e.getMessage());
+			System.out.println("[ProdutoDAO] - Erro ao excluir produto.\n"
+					+ e.getMessage());
 		}
 
 	}
@@ -76,7 +79,7 @@ public class ProdutoDAO extends GenericDAO {
 
 		String sql = "UPDATE produto SET nomeproduto = ? , precocusto = ?, precovenda = ?, classificacao = ? WHERE id=?";
 		try {
-			Produto produto = (Produto) entidade;
+			produto = (Produto) entidade;
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setString(1, produto.getNome());
 			pstm.setDouble(2, produto.getPrecoCusto());
@@ -90,7 +93,8 @@ public class ProdutoDAO extends GenericDAO {
 
 		} catch (SQLException e) {
 			con.rollback();
-			System.out.println("[ProdutoDAO] - Erro ao alterar produto.\n" + e.getMessage());
+			System.out.println("[ProdutoDAO] - Erro ao alterar produto.\n"
+					+ e.getMessage());
 		}
 
 	}
@@ -104,33 +108,30 @@ public class ProdutoDAO extends GenericDAO {
 
 			PreparedStatement pstm = con.prepareStatement(sql);
 
-			// para executar consulta utilizar executeQuery() pois retorna um
-			// resultSet
 			ResultSet result = pstm.executeQuery();
 
 			while (result.next()) {
 
-				Produto p = new Produto(result.getInt("id"),
+				produto = new Produto(result.getInt("id"),
 						result.getString("nomeProduto"),
 						result.getDouble("precoCusto"),
 						result.getDouble("precoVenda"),
 						result.getString("classificacao"));
 
-				listaProdutos.add(p);
+				listaProdutos.add(produto);
 			}
 
 			pstm.close();
 
 		} catch (SQLException e) {
-			System.out.println("[ProdutoDAO] - Erro ao listar produtos.\n" + e.getMessage());
+			System.out.println("[ProdutoDAO] - Erro ao listar produtos.\n"
+					+ e.getMessage());
 		}
 		return listaProdutos;
 	}
 
 	@Override
 	public Entidade getPorId(int id) {
-
-		Produto produto = null;
 
 		String sql = "SELECT * FROM produto WHERE id = ?";
 		try {
@@ -153,8 +154,9 @@ public class ProdutoDAO extends GenericDAO {
 			pstm.close();
 
 		} catch (SQLException e) {
-			System.out.println("[ProdutoDAO] - Erro ao buscar produto por id.\n"
-					+ e.getMessage());
+			System.out
+					.println("[ProdutoDAO] - Erro ao buscar produto por id.\n"
+							+ e.getMessage());
 		}
 
 		return produto;
@@ -163,6 +165,45 @@ public class ProdutoDAO extends GenericDAO {
 	@Override
 	public void atualizaTabela(JTable table) {
 		table.setModel(new ProdutoTableModel(listar()));
+	}
+
+	public List<Entidade> getPorClassificacao(String classificacao) {
+
+		List<Entidade> listProduto = null;
+
+		String sql = "SELECT * FROM produto WHERE classificacao = ?";
+
+		try {
+			if (classificacao == null || classificacao == "")
+				throw new Exception(
+						"[ProdutoDAO] - Classificação nula ou em branco.");
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, classificacao);
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				Produto produto = new Produto(result.getInt("id"),
+						result.getString("nomeProduto"),
+						result.getDouble("precoCusto"),
+						result.getDouble("precoVenda"),
+						result.getString("classificacao"));
+
+				listProduto.add(produto);
+
+			}
+
+			pstm.close();
+		} catch (Exception e) {
+			System.out
+					.println("[ProdutoDAO] - Erro ao buscar produto por classificação.\n"
+							+ e.getMessage());
+		}
+
+		return listProduto;
+
 	}
 
 }

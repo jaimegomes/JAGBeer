@@ -43,7 +43,7 @@ public class CadastroMesaUI extends JInternalFrame {
 	public CadastroMesaUI() {
 		setTitle("Cadastro de Mesa");
 		setClosable(true);
-		setBounds(100, 100, 306, 219);
+		setBounds(100, 100, 344, 226);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Mesa", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -59,8 +59,8 @@ public class CadastroMesaUI extends JInternalFrame {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 173, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(35, Short.MAX_VALUE))
 		);
 		
 		JLabel lblNmero = new JLabel("N\u00FAmero");
@@ -113,9 +113,10 @@ public class CadastroMesaUI extends JInternalFrame {
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 								.addComponent(mesaNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(mesaLugares, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE))
-					.addGap(8)
-					.addComponent(btnCancelar)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+							.addGap(122)
+							.addComponent(btnCancelar)))
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
@@ -133,7 +134,7 @@ public class CadastroMesaUI extends JInternalFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnCancelar)
 						.addComponent(btnSalvar))
-					.addContainerGap(25, Short.MAX_VALUE))
+					.addContainerGap(15, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);

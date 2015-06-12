@@ -14,7 +14,7 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
  */
 public class ClienteTableModel extends AbstractTableModel {
 
-	private static final long seriaVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	private static final int COL_NOME = 0;
 	private static final int COL_TELEFONE = 1;
 	private static final int COL_EMAIL = 2;

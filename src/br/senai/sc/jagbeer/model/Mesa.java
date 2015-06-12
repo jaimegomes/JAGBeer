@@ -4,9 +4,9 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
 
 public class Mesa extends Entidade {
 	
-	public int id;
-	public int numeroMesa;
-	public int numeroLugares;
+	private int id;
+	private int numeroMesa;
+	private int numeroLugares;
 	
 	public Mesa() {
 

@@ -1,6 +1,5 @@
 package br.senai.sc.jagbeer.dao;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +13,7 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.abstracts.GenericDAO;
 import br.senai.sc.jagbeer.conexao.Conexao;
 import br.senai.sc.jagbeer.model.Cliente;
+
 /**
  * 
  * @author Bazzi
@@ -28,7 +28,6 @@ public class ClienteDAO extends GenericDAO {
 
 		String sql = "INSERT INTO cliente (nome, telefone, email) VALUES (?,?,?)";
 		try {
-			// transforma a entidade passada no parâmetro para o objeto Produto
 
 			Cliente cliente = (Cliente) entidade;
 
@@ -138,8 +137,7 @@ public class ClienteDAO extends GenericDAO {
 
 	@Override
 	public void atualizaTabela(JTable table) throws Exception {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

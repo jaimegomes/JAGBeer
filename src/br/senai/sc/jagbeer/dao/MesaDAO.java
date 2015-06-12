@@ -16,6 +16,7 @@ import br.senai.sc.jagbeer.model.Mesa;
 public class MesaDAO extends GenericDAO {
 
 	private Connection con = Conexao.getConnection();
+	private Mesa mesa = null;
 
 	@Override
 	public void salvar(Entidade entidade) throws Exception {
@@ -25,7 +26,7 @@ public class MesaDAO extends GenericDAO {
 		try {
 			// transforma a entidade passada no parÃ¢metro para o objeto Produto
 
-			Mesa mesa = (Mesa) entidade;
+			mesa = (Mesa) entidade;
 
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, mesa.getNumeroMesa());
@@ -33,6 +34,7 @@ public class MesaDAO extends GenericDAO {
 
 			pstmt.execute();
 			con.commit();
+			pstmt.close();
 
 		} catch (SQLException se) {
 			con.rollback();
@@ -47,7 +49,7 @@ public class MesaDAO extends GenericDAO {
 		String query = "DELETE FROM mesa WHERE id = ? ";
 
 		try {
-			Mesa mesa = (Mesa) entidade;
+			mesa = (Mesa) entidade;
 			PreparedStatement pstmt = con.prepareStatement(query);
 
 			pstmt.setInt(1, mesa.getId());
@@ -69,7 +71,7 @@ public class MesaDAO extends GenericDAO {
 		String query = "UPDATE mesa SET numero = ?, numeroLugares = ? WHERE id = ? ";
 
 		try {
-			Mesa mesa = (Mesa) entidade;
+			mesa = (Mesa) entidade;
 
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, mesa.getNumeroMesa());
@@ -95,8 +97,6 @@ public class MesaDAO extends GenericDAO {
 	@Override
 	public Entidade getPorId(int id) throws Exception {
 
-		Mesa mesa = null;
-
 		String query = "SELECT * FROM mesa WHERE id = ?";
 
 		try {
@@ -121,14 +121,13 @@ public class MesaDAO extends GenericDAO {
 
 	@Override
 	public void atualizaTabela(JTable table) throws Exception {
-
+		// table.setModel(new MesaTableModel(listar()));
 	}
 
+	
 	public boolean verificarNumeroMesa(int numeroMesa) {
 
 		String query = "SELECT * FROM mesa WHERE numero = ?";
-
-		Mesa mesa = null;
 
 		try {
 
@@ -138,19 +137,13 @@ public class MesaDAO extends GenericDAO {
 
 			ResultSet result = pstmt.executeQuery();
 
-			while (result.next()) {
-				mesa = new Mesa(result.getInt("numero"));
-
-				if (numeroMesa == mesa.numeroMesa) {
-
-				}
+			if (result.next())
 				return true;
-			}
 
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("Erro ao verificar número da Mesa"
+			System.out.println("Erro ao verificar numero da Mesa. "
 					+ se.getMessage());
 		}
 
