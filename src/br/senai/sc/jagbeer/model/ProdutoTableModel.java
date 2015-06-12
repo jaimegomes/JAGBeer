@@ -17,7 +17,6 @@ public class ProdutoTableModel extends AbstractTableModel {
 
 	private List<Entidade> valores;
 
-	// Esse é um construtor, que recebe a nossa lista de clientes
 	public ProdutoTableModel(List<Entidade> list) {
 		this.valores = new ArrayList<Entidade>(list);
 	}
@@ -28,19 +27,16 @@ public class ProdutoTableModel extends AbstractTableModel {
 	 * @return valores.size();
 	 */
 	public int getRowCount() {
-		// Quantas linhas tem sua tabela? Uma para cada item da lista.
 		return valores.size();
 	}
 
 	/**
 	 * Retorna a quantidade de colunas, deve ser setado manualmente.
 	 * 
-	 * @return 3
+	 * @return 4
 	 */
 	public int getColumnCount() {
-		// Quantas colunas tem a tabela? Nesse exemplo, s� 3. adicionar
-		// manualmente a quantidade de colunas
-		return 3;
+		return 4;
 	}
 
 	/**
@@ -90,9 +86,7 @@ public class ProdutoTableModel extends AbstractTableModel {
 	 */
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		Produto produto = (Produto) valores.get(rowIndex);
-		// Vamos alterar o valor da coluna columnIndex na linha rowIndex com o
-		// valor aValue passado no par�metro.
-		// Note que vc poderia alterar 2 campos ao inv�s de um s�.
+
 		if (columnIndex == COL_NOME)
 			produto.setNome(aValue.toString());
 		else if (columnIndex == COL_PRECO_CUSTO)

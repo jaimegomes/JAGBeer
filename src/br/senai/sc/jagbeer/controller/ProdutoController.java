@@ -98,4 +98,61 @@ public class ProdutoController implements IController {
 
 	}
 
+	/**
+	 * Método responsável por buscar todos os produtos de determinada
+	 * classificação passada como parâmetro.
+	 * 
+	 * @param classificacao
+	 * @return dao.getPorClassificacao(classificacao)
+	 * @throws Exception
+	 */
+	public List<Entidade> getPorClassificacao(String classificacao)
+			throws Exception {
+
+		if (classificacao == null || classificacao.equals(""))
+			throw new Exception(
+					"A classificação não pode ser nula ou em branco.");
+
+		return dao.getPorClassificacao(classificacao);
+	}
+
+	/**
+	 * Método responsável por buscar todos os produtos de determinado nome
+	 * passado como parâmetro.
+	 * 
+	 * @param classificacao
+	 * @return dao.getPorNome(nome)
+	 * @throws Exception
+	 */
+	public List<Entidade> getPorNome(String nome) throws Exception {
+
+		if (nome == null || nome.equals(""))
+			throw new Exception("O nome não pode ser nulo ou em branco.");
+
+		return dao.getPorNome(nome);
+	}
+
+	/**
+	 * Método responsável por fazer a busca dos produtos de acordo com o nome e
+	 * a classificação passados como parâmetro.
+	 * 
+	 * @param nome
+	 * @param classificacao
+	 * @return List<Entidade> listProduto
+	 */
+	@SuppressWarnings("null")
+	public List<Entidade> buscaCompleta(String nome, String classificacao)
+			throws Exception {
+
+		if (nome == null || nome.equals(""))
+			throw new Exception("O nome não pode ser nulo ou em branco.");
+
+		if (classificacao == null || classificacao.equals(""))
+			throw new Exception(
+					"A classificação não pode ser nula ou em branco.");
+
+		return dao.buscaCompleta(nome, classificacao);
+
+	}
+
 }

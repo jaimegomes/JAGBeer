@@ -167,6 +167,15 @@ public class ProdutoDAO extends GenericDAO {
 		table.setModel(new ProdutoTableModel(listar()));
 	}
 
+	/**
+	 * Método responsável por buscar todos os produtos de determinada
+	 * classificação passada como parâmetro.
+	 * 
+	 * @param classificacao
+	 * @return List<Entidade> listProduto
+	 * @throws Exception
+	 */
+	@SuppressWarnings("null")
 	public List<Entidade> getPorClassificacao(String classificacao) {
 
 		List<Entidade> listProduto = null;
@@ -174,9 +183,6 @@ public class ProdutoDAO extends GenericDAO {
 		String sql = "SELECT * FROM produto WHERE classificacao = ?";
 
 		try {
-			if (classificacao == null || classificacao == "")
-				throw new Exception(
-						"[ProdutoDAO] - Classificação nula ou em branco.");
 
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setString(1, classificacao);
@@ -205,5 +211,99 @@ public class ProdutoDAO extends GenericDAO {
 		return listProduto;
 
 	}
+
+	/**
+	 * Método responsável por buscar todos os produtos de determinado nome
+	 * passado como parâmetro.
+	 * 
+	 * @param classificacao
+	 * @return List<Entidade> listProduto
+	 * @throws Exception
+	 */
+	@SuppressWarnings("null")
+	public List<Entidade> getPorNome(String nome) {
+
+		List<Entidade> listProduto = null;
+
+		String sql = "SELECT * FROM produto WHERE nome = ?";
+
+		try {
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, nome);
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				Produto produto = new Produto(result.getInt("id"),
+						result.getString("nomeProduto"),
+						result.getDouble("precoCusto"),
+						result.getDouble("precoVenda"),
+						result.getString("classificacao"));
+
+				listProduto.add(produto);
+
+			}
+
+			pstm.close();
+		} catch (Exception e) {
+			System.out
+					.println("[ProdutoDAO] - Erro ao buscar produto por nome.\n"
+							+ e.getMessage());
+		}
+
+		return listProduto;
+
+	}
+
+	/**
+	 * Método responsável por fazer a busca dos produtos de acordo com o nome e
+	 * a classificação passados como parâmetro.
+	 * 
+	 * @param nome
+	 * @param classificacao
+	 * @return List<Entidade> listProduto
+	 */
+	@SuppressWarnings("null")
+	public List<Entidade> buscaCompleta(String nome, String classificacao)
+			throws Exception {
+
+		List<Entidade> listProduto = null;
+
+		String sql = "SELECT * FROM produto WHERE nome = ? AND classificacao = ?";
+
+		try {
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, nome);
+			pstm.setString(2, classificacao);
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				Produto produto = new Produto(result.getInt("id"),
+						result.getString("nomeProduto"),
+						result.getDouble("precoCusto"),
+						result.getDouble("precoVenda"),
+						result.getString("classificacao"));
+
+				listProduto.add(produto);
+
+			}
+
+			pstm.close();
+		} catch (Exception e) {
+			System.out
+					.println("[ProdutoDAO] - Erro ao buscar produto por nome.\n"
+							+ e.getMessage());
+		}
+
+		return listProduto;
+
+	}
+	
+
 
 }
