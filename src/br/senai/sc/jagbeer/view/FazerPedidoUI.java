@@ -3,6 +3,8 @@ package br.senai.sc.jagbeer.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -18,6 +20,12 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+
+import br.senai.sc.jagbeer.abstracts.Entidade;
+import br.senai.sc.jagbeer.dao.ProdutoDAO;
+import br.senai.sc.jagbeer.model.ItemPedido;
+import br.senai.sc.jagbeer.model.ItemPedidoTableModel;
+import br.senai.sc.jagbeer.model.Produto;
 
 /**
  * Classe View FazerPedidoUI
@@ -50,11 +58,13 @@ public class FazerPedidoUI extends JInternalFrame {
 	private JButton btnAdicionarProduto;
 	private GroupLayout gl_panelProduto;
 
+	private List<Entidade> listItensPedido = new ArrayList<Entidade>();;
+
 	public FazerPedidoUI() {
 
 		setTitle("Fazer Pedido");
 		setClosable(true);
-		setBounds(100, 100, 497, 479);
+		setBounds(100, 0, 497, 479);
 
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,
@@ -113,6 +123,7 @@ public class FazerPedidoUI extends JInternalFrame {
 		cmbMesa = new JComboBox();
 
 		table = new JTable();
+
 		groupLayoutProduto = new GroupLayout(panel);
 		groupLayoutProduto
 				.setHorizontalGroup(groupLayoutProduto
@@ -269,6 +280,20 @@ public class FazerPedidoUI extends JInternalFrame {
 		lblProduto = new JLabel("Produto:");
 
 		cmbProduto = new JComboBox();
+		cmbProduto.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				ProdutoDAO dao = new ProdutoDAO();
+
+				if (cmbClassificacao.getSelectedIndex() == 1) {
+//					DefaultComboBoxModel modeloProduto = new DefaultComboBoxModel(
+//							dao.getPorClassificacao("alimento"));
+//					cmbClassificacao.setModel(modeloProduto);
+				}
+			}
+		});
 
 		lblQuantidade = new JLabel("Quantidade:");
 
@@ -277,6 +302,19 @@ public class FazerPedidoUI extends JInternalFrame {
 				new Integer(0), null, new Integer(1)));
 
 		btnAdicionarProduto = new JButton("Adicionar Produto");
+		btnAdicionarProduto.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				ItemPedido itemPedido = new ItemPedido((Produto) cmbProduto
+						.getSelectedItem(), Integer.parseInt(spinnerQtde
+						.getValue().toString()));
+
+				listItensPedido.add(itemPedido);
+			}
+		});
+
 		gl_panelProduto = new GroupLayout(panelProduto);
 		gl_panelProduto
 				.setHorizontalGroup(gl_panelProduto
@@ -323,12 +361,12 @@ public class FazerPedidoUI extends JInternalFrame {
 																				ComponentPlacement.RELATED)
 																		.addComponent(
 																				spinnerQtde,
-																				GroupLayout.PREFERRED_SIZE,
-																				42,
-																				GroupLayout.PREFERRED_SIZE))
+																				GroupLayout.DEFAULT_SIZE,
+																				61,
+																				Short.MAX_VALUE))
 														.addComponent(
 																btnAdicionarProduto))
-										.addContainerGap(77, Short.MAX_VALUE)));
+										.addContainerGap()));
 		gl_panelProduto
 				.setVerticalGroup(gl_panelProduto
 						.createParallelGroup(Alignment.LEADING)
@@ -367,11 +405,27 @@ public class FazerPedidoUI extends JInternalFrame {
 																GroupLayout.PREFERRED_SIZE)
 														.addComponent(
 																btnAdicionarProduto))
-										.addContainerGap(43, Short.MAX_VALUE)));
+										.addContainerGap(17, Short.MAX_VALUE)));
 		panelProduto.setLayout(gl_panelProduto);
 
+		table.setModel(new ItemPedidoTableModel(listItensPedido));
 		panel.setLayout(groupLayoutProduto);
 		getContentPane().setLayout(groupLayout);
 
+	}
+
+	/**
+	 * @return the listItensPedido
+	 */
+	public List<Entidade> getListItensPedido() {
+		return listItensPedido;
+	}
+
+	/**
+	 * @param listItensPedido
+	 *            the listItensPedido to set
+	 */
+	public void setListItensPedido(List<Entidade> listItensPedido) {
+		this.listItensPedido = listItensPedido;
 	}
 }
