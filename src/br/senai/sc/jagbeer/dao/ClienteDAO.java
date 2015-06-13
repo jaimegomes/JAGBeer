@@ -130,7 +130,8 @@ public class ClienteDAO extends GenericDAO {
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("Erro ao listar Cliente por ID " + se.getMessage());
+			System.out.println("Erro ao listar Cliente por ID "
+					+ se.getMessage());
 		}
 
 		return cliente;
@@ -139,14 +140,12 @@ public class ClienteDAO extends GenericDAO {
 	@Override
 	public void atualizaTabela(JTable table) throws Exception {
 
-		
-		
 	}
 
 	public List<Entidade> getPorNome(String clientePesquisar) {
 		Cliente cliente = null;
-		List<Entidade> listCliente = new  ArrayList<Entidade>();
-		String sql = "SELECT * FROM cliente LIKE '%"+clientePesquisar+"%'";
+		List<Entidade> listCliente = new ArrayList<Entidade>();
+		String sql = "SELECT * FROM cliente WHERE nome LIKE '%" + clientePesquisar + "%'";
 
 		try {
 			Statement pstmt = con.createStatement();
@@ -160,13 +159,13 @@ public class ClienteDAO extends GenericDAO {
 			}
 
 			pstmt.close();
-			
+
 		} catch (SQLException se) {
-			System.out.println("Erro ao listar Cliente por Nome "+se.getMessage());
+			System.out.println("Erro ao listar Cliente por Nome "
+					+ se.getMessage());
 		}
-		
+
 		return listCliente;
 	}
-	
 
 }
