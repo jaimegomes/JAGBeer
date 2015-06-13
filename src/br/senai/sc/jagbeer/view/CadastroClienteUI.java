@@ -24,12 +24,11 @@ public class CadastroClienteUI extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private JTextField JtfNomeCliente;
+	private JTextField jtfNomeCliente;
+	private JTextField jtfEmailCliente;
+	private JTextField jtfTelefoneCliente;
 
-	// private Cliente clienteEdicao;
-
-	private JTextField JtfEmailCliente;
-	private JTextField JtfTelefoneCliente;
+	private Cliente clienteEdicao;
 
 	/**
 	 * Launch the application.
@@ -38,7 +37,7 @@ public class CadastroClienteUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroClienteUI frame = new CadastroClienteUI();
+					CadastroClienteUI frame = new CadastroClienteUI(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,7 +49,7 @@ public class CadastroClienteUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroClienteUI() {
+	public CadastroClienteUI(Cliente c) {
 
 		setTitle("Cadastro de Cliente");
 		setClosable(true);
@@ -60,7 +59,7 @@ public class CadastroClienteUI extends JInternalFrame {
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,
 				null, null), "Cadastro Cliente", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
-		
+
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
 				Alignment.LEADING).addGroup(
@@ -81,26 +80,41 @@ public class CadastroClienteUI extends JInternalFrame {
 
 		JLabel lblNome = new JLabel("Nome:");
 
-		JtfNomeCliente = new JTextField();
-		JtfNomeCliente.setColumns(10);
+		jtfNomeCliente = new JTextField();
+		jtfNomeCliente.setColumns(10);
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				if (clienteEdicao == null) {
+					Cliente cliente = new Cliente();
 
-				Cliente cliente = new Cliente();
+					cliente.setNome(jtfNomeCliente.getText());
+					cliente.setTelefone(jtfTelefoneCliente.getText());
+					cliente.setEmail(jtfEmailCliente.getText());
 
-				cliente.setNome(JtfNomeCliente.getText());
-				cliente.setTelefone(JtfTelefoneCliente.getText());
-				cliente.setEmail(JtfEmailCliente.getText());
+					try {
+						new ClienteController().salvar(cliente);
+						JOptionPane.showMessageDialog(null,
+								"Cliente Cadastrado com Sucesso!");
+						dispose();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, e.getMessage());
+					}
+				} else {
+					clienteEdicao.setNome(jtfNomeCliente.getText());
+					clienteEdicao.setTelefone(jtfTelefoneCliente.getText());
+					clienteEdicao.setEmail(jtfEmailCliente.getText());
 
-				try {
-					new ClienteController().salvar(cliente);
-					JOptionPane.showMessageDialog(null,
-							"Cliente Cadastrado com Sucesso!");
-					dispose();
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, e.getMessage());
+					try {
+						new ClienteController().editar(clienteEdicao);
+						JOptionPane.showMessageDialog(null,
+								"Cliente Editado com Sucesso! ");
+						dispose();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, e.getMessage());
+					}
 				}
 			}
 		});
@@ -116,18 +130,18 @@ public class CadastroClienteUI extends JInternalFrame {
 
 		JLabel lblEmail = new JLabel("E-mail:");
 
-		JtfEmailCliente = new JTextField();
-		JtfEmailCliente.setColumns(10);
+		jtfEmailCliente = new JTextField();
+		jtfEmailCliente.setColumns(10);
 
-		JtfTelefoneCliente = new JTextField();
-		JtfTelefoneCliente.setColumns(10);
+		jtfTelefoneCliente = new JTextField();
+		jtfTelefoneCliente.setColumns(10);
 
 		JButton btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JtfNomeCliente.setText("");
-				JtfTelefoneCliente.setText("");
-				JtfEmailCliente.setText("");
+				jtfNomeCliente.setText("");
+				jtfTelefoneCliente.setText("");
+				jtfEmailCliente.setText("");
 
 			}
 		});
@@ -157,17 +171,17 @@ public class CadastroClienteUI extends JInternalFrame {
 																		gl_panel.createParallelGroup(
 																				Alignment.LEADING)
 																				.addComponent(
-																						JtfTelefoneCliente,
+																						jtfTelefoneCliente,
 																						GroupLayout.PREFERRED_SIZE,
 																						138,
 																						GroupLayout.PREFERRED_SIZE)
 																				.addComponent(
-																						JtfEmailCliente,
+																						jtfEmailCliente,
 																						GroupLayout.DEFAULT_SIZE,
 																						317,
 																						Short.MAX_VALUE)
 																				.addComponent(
-																						JtfNomeCliente,
+																						jtfNomeCliente,
 																						GroupLayout.DEFAULT_SIZE,
 																						317,
 																						Short.MAX_VALUE)))
@@ -201,7 +215,7 @@ public class CadastroClienteUI extends JInternalFrame {
 												Alignment.BASELINE)
 												.addComponent(lblNome)
 												.addComponent(
-														JtfNomeCliente,
+														jtfNomeCliente,
 														GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE,
 														GroupLayout.PREFERRED_SIZE))
@@ -211,7 +225,7 @@ public class CadastroClienteUI extends JInternalFrame {
 												Alignment.BASELINE)
 												.addComponent(lblTelefone)
 												.addComponent(
-														JtfTelefoneCliente,
+														jtfTelefoneCliente,
 														GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE,
 														GroupLayout.PREFERRED_SIZE))
@@ -221,7 +235,7 @@ public class CadastroClienteUI extends JInternalFrame {
 												Alignment.BASELINE)
 												.addComponent(lblEmail)
 												.addComponent(
-														JtfEmailCliente,
+														jtfEmailCliente,
 														GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE,
 														GroupLayout.PREFERRED_SIZE))

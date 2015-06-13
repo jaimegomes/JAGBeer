@@ -70,6 +70,11 @@ public class ClienteController implements IController {
 		return (Cliente) dao.getPorId(id);
 	}
 
+	public List<Entidade> getPorNome(String clientePesquisar) throws Exception {
+
+		return dao.getPorNome(clientePesquisar);
+	}
+
 	@Override
 	public void atualizaTabela(JTable table) throws Exception {
 		dao.atualizaTabela(table);

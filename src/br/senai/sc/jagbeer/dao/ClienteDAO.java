@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,7 +130,7 @@ public class ClienteDAO extends GenericDAO {
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("Erro ao listar Cliente" + se.getMessage());
+			System.out.println("Erro ao listar Cliente por ID " + se.getMessage());
 		}
 
 		return cliente;
@@ -137,7 +138,35 @@ public class ClienteDAO extends GenericDAO {
 
 	@Override
 	public void atualizaTabela(JTable table) throws Exception {
+
+		
 		
 	}
+
+	public List<Entidade> getPorNome(String clientePesquisar) {
+		Cliente cliente = null;
+		List<Entidade> listCliente = new  ArrayList<Entidade>();
+		String sql = "SELECT * FROM cliente LIKE '%"+clientePesquisar+"%'";
+
+		try {
+			Statement pstmt = con.createStatement();
+
+			ResultSet result = pstmt.executeQuery(sql);
+
+			while (result.next()) {
+				cliente = new Cliente(result.getString("nome"),
+						result.getString("telefone"), result.getString("email"));
+				listCliente.add(cliente);
+			}
+
+			pstmt.close();
+			
+		} catch (SQLException se) {
+			System.out.println("Erro ao listar Cliente por Nome "+se.getMessage());
+		}
+		
+		return listCliente;
+	}
+	
 
 }
