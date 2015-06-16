@@ -69,5 +69,10 @@ public class PedidoController implements IController {
 		dao.atualizaTabela(table);
 
 	}
+	
+	public List<Entidade> getPedidosAbertos() {
+		
+		return dao.getPedidosAbertos();
+	}
 
 }

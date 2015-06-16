@@ -1,7 +1,6 @@
 package br.senai.sc.jagbeer.view;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,6 +11,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
@@ -19,6 +19,7 @@ import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.model.Cliente;
+import br.senai.sc.jagbeer.model.ClienteTableModel;
 
 public class CadastroClienteUI extends JInternalFrame {
 
@@ -31,25 +32,11 @@ public class CadastroClienteUI extends JInternalFrame {
 	private Cliente clienteEdicao;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CadastroClienteUI frame = new CadastroClienteUI(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public CadastroClienteUI(Cliente c) {
+	public CadastroClienteUI(Cliente c, final JTable table) {
+
+		clienteEdicao = c;
 
 		setTitle("Cadastro de Cliente");
 		setClosable(true);
@@ -81,15 +68,20 @@ public class CadastroClienteUI extends JInternalFrame {
 		JLabel lblNome = new JLabel("Nome:");
 
 		jtfNomeCliente = new JTextField();
+
+		if (!clienteEdicao.getNome().equals("")
+				|| clienteEdicao.getNome() != null)
+			jtfNomeCliente.setText(clienteEdicao.getNome());
+
 		jtfNomeCliente.setColumns(10);
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				if (clienteEdicao == null) {
-					Cliente cliente = new Cliente();
 
+				if (clienteEdicao == null) {
+
+					Cliente cliente = new Cliente();
 					cliente.setNome(jtfNomeCliente.getText());
 					cliente.setTelefone(jtfTelefoneCliente.getText());
 					cliente.setEmail(jtfEmailCliente.getText());
@@ -98,11 +90,20 @@ public class CadastroClienteUI extends JInternalFrame {
 						new ClienteController().salvar(cliente);
 						JOptionPane.showMessageDialog(null,
 								"Cliente Cadastrado com Sucesso!");
+
+						ConsultaClienteUI consultaClienteUI = new ConsultaClienteUI();
+						consultaClienteUI.requestFocus(true);
+						consultaClienteUI.setFocusable(true);
+						consultaClienteUI.moveToFront();
+						getContentPane().add(consultaClienteUI, 0);
+						consultaClienteUI.setVisible(true);
+
 						dispose();
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
 				} else {
+
 					clienteEdicao.setNome(jtfNomeCliente.getText());
 					clienteEdicao.setTelefone(jtfTelefoneCliente.getText());
 					clienteEdicao.setEmail(jtfEmailCliente.getText());
@@ -111,6 +112,12 @@ public class CadastroClienteUI extends JInternalFrame {
 						new ClienteController().editar(clienteEdicao);
 						JOptionPane.showMessageDialog(null,
 								"Cliente Editado com Sucesso! ");
+
+						if (table != null) {
+							table.setModel(new ClienteTableModel(
+									new ClienteController().listar()));
+						}
+
 						dispose();
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
@@ -133,8 +140,17 @@ public class CadastroClienteUI extends JInternalFrame {
 		jtfEmailCliente = new JTextField();
 		jtfEmailCliente.setColumns(10);
 
+		if (!clienteEdicao.getEmail().equals("")
+				|| clienteEdicao.getEmail() != null) {
+			jtfEmailCliente.setText(clienteEdicao.getEmail());
+		}
+
 		jtfTelefoneCliente = new JTextField();
 		jtfTelefoneCliente.setColumns(10);
+
+		if (!clienteEdicao.getTelefone().equals("")
+				|| clienteEdicao.getTelefone() != null)
+			jtfTelefoneCliente.setText(clienteEdicao.getTelefone());
 
 		JButton btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {

@@ -3,6 +3,8 @@ package br.senai.sc.jagbeer.view;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -19,7 +21,12 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
+
+import br.senai.sc.jagbeer.abstracts.Entidade;
+import br.senai.sc.jagbeer.controller.PedidoController;
+import br.senai.sc.jagbeer.model.Pedido;
+import br.senai.sc.jagbeer.model.PedidoAberto;
+import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
 
 /**
  * 
@@ -32,7 +39,9 @@ public class PrincipalUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField jtfPedido;
 	private JTextField jtfCliente;
-	private JTable table;
+	private JTable tablePedidoAberto;
+
+	private List<Entidade> listPedidoAberto = new ArrayList<Entidade>();
 
 	/**
 	 * Launch the application.
@@ -55,10 +64,11 @@ public class PrincipalUI extends JFrame {
 	 * Create the frame.
 	 */
 	public PrincipalUI() {
+
 		setTitle("JAGBeer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 720, 600);
+		setBounds(100, 100, 900, 600);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -69,7 +79,8 @@ public class PrincipalUI extends JFrame {
 		JMenuItem mntmCadastroCliente = new JMenuItem("Cadastro Cliente");
 		mntmCadastroCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CadastroClienteUI cadClienteUI = new CadastroClienteUI(null);
+				CadastroClienteUI cadClienteUI = new CadastroClienteUI(null,
+						null);
 				cadClienteUI.requestFocus(true);
 				cadClienteUI.setFocusable(true);
 				cadClienteUI.moveToFront();
@@ -334,10 +345,26 @@ public class PrincipalUI extends JFrame {
 						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE,
 								448, Short.MAX_VALUE).addContainerGap()));
 
-		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] {
-				"Pedido", "Nome", "Valor Parcial" }));
-		scrollPane.setViewportView(table);
+		tablePedidoAberto = new JTable();
+
+		List<Entidade> listPedido = new PedidoController().getPedidosAbertos();
+
+		System.out.println(listPedido);
+		for (Entidade ent : listPedido) {
+
+			System.out.println("for");
+			Pedido pedido = (Pedido) ent;
+
+			// alterar valorParcial do pedidoAberto
+			PedidoAberto pedidoAberto = new PedidoAberto(pedido.getId(), pedido
+					.getCliente().getNome(), 0);
+			listPedidoAberto.add(pedidoAberto);
+			System.out.println(listPedidoAberto.size());
+		}
+
+		tablePedidoAberto
+				.setModel(new PedidoAbertoTableModel(listPedidoAberto));
+		scrollPane.setViewportView(tablePedidoAberto);
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
 	}

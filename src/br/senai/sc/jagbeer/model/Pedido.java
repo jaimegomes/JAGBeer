@@ -17,7 +17,7 @@ public class Pedido extends Entidade {
 	private Mesa mesa;
 	private Cliente cliente;
 	private Date dataPedido;
-	private boolean status;
+	private int status;
 
 	/**
 	 * Construtor padrão.
@@ -50,7 +50,7 @@ public class Pedido extends Entidade {
 	 * @param boolean Status
 	 * 
 	 */
-	public Pedido(Mesa mesa, Cliente cliente, Date dataPedido, boolean status) {
+	public Pedido(Mesa mesa, Cliente cliente, Date dataPedido, int status) {
 		this.mesa = mesa;
 		this.cliente = cliente;
 		this.dataPedido = dataPedido;
@@ -71,7 +71,7 @@ public class Pedido extends Entidade {
 	 * 
 	 */
 	public Pedido(int id, Mesa mesa, Cliente cliente, Date dataPedido,
-			boolean status) {
+			int status) {
 		this.id = id;
 		this.mesa = mesa;
 		this.cliente = cliente;
@@ -138,7 +138,7 @@ public class Pedido extends Entidade {
 	/**
 	 * @return the status
 	 */
-	public boolean isStatus() {
+	public int getStatus() {
 		return status;
 	}
 
@@ -146,7 +146,7 @@ public class Pedido extends Entidade {
 	 * @param status
 	 *            the status to set
 	 */
-	public void setStatus(boolean status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

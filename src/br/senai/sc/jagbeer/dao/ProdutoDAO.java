@@ -223,14 +223,14 @@ public class ProdutoDAO extends GenericDAO {
 	@SuppressWarnings("null")
 	public List<Entidade> getPorNome(String nome) {
 
-		List<Entidade> listProduto = null;
+		List<Entidade> listProduto = new ArrayList<Entidade>();
 
-		String sql = "SELECT * FROM produto WHERE nome = ?";
+		String sql = "SELECT * FROM produto WHERE nomeProduto LIKE  '%" + nome
+				+ "%'";
 
 		try {
 
 			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setString(1, nome);
 
 			ResultSet result = pstm.executeQuery();
 
@@ -258,26 +258,24 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * Método responsável por fazer a busca dos produtos de acordo com o nome e
-	 * a classificação passados como parâmetro.
+	 * Método responsável por fazer a busca dos produtos de acordo com o nome
+	 * e a classificação passados como parâmetro.
 	 * 
 	 * @param nome
 	 * @param classificacao
 	 * @return List<Entidade> listProduto
 	 */
 	@SuppressWarnings("null")
-	public List<Entidade> buscaCompleta(String nome, String classificacao)
+	public List<Entidade> buscaCompleta()
 			throws Exception {
 
 		List<Entidade> listProduto = null;
 
-		String sql = "SELECT * FROM produto WHERE nome = ? AND classificacao = ?";
+		String sql = "SELECT * FROM produto";
 
 		try {
 
 			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setString(1, nome);
-			pstm.setString(2, classificacao);
 
 			ResultSet result = pstm.executeQuery();
 
@@ -303,7 +301,5 @@ public class ProdutoDAO extends GenericDAO {
 		return listProduto;
 
 	}
-	
-
 
 }

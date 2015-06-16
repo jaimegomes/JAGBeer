@@ -52,7 +52,7 @@ public class ClienteController implements IController {
 		if (cliente.getNome().trim().equals(""))
 			throw new Exception("Nome do Cliente obrigatorio");
 
-		dao.salvar(cliente);
+		dao.editar(cliente);
 
 	}
 

@@ -36,7 +36,7 @@ public class ProdutoTableModel extends AbstractTableModel {
 	 * @return 4
 	 */
 	public int getColumnCount() {
-		return 4;
+		return 3;
 	}
 
 	/**
@@ -48,11 +48,11 @@ public class ProdutoTableModel extends AbstractTableModel {
 		if (column == COL_NOME)
 			return "Nome";
 		if (column == COL_PRECO_CUSTO)
-			return "Preço Custo";
+			return "Preco Custo";
 		if (column == COL_PRECO_VENDA)
-			return "Preço Venda";
+			return "Preco Venda";
 		if (column == COL_CLASSIFICACAO)
-			return "Classificação";
+			return "Classificacao";
 		return "";
 	}
 

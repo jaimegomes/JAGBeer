@@ -141,17 +141,10 @@ public class ProdutoController implements IController {
 	 * @return List<Entidade> listProduto
 	 */
 	@SuppressWarnings("null")
-	public List<Entidade> buscaCompleta(String nome, String classificacao)
+	public List<Entidade> buscaCompleta()
 			throws Exception {
 
-		if (nome == null || nome.equals(""))
-			throw new Exception("O nome não pode ser nulo ou em branco.");
-
-		if (classificacao == null || classificacao.equals(""))
-			throw new Exception(
-					"A classificação não pode ser nula ou em branco.");
-
-		return dao.buscaCompleta(nome, classificacao);
+		return dao.buscaCompleta();
 
 	}
 

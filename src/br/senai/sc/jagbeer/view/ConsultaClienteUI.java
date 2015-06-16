@@ -1,6 +1,5 @@
 package br.senai.sc.jagbeer.view;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,30 +17,15 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.controller.ClienteController;
-import br.senai.sc.jagbeer.dao.ClienteDAO;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.ClienteTableModel;
 
-//essa caralha que não funcionar
 public class ConsultaClienteUI extends JInternalFrame {
+
+	private static final long serialVersionUID = 1L;
 	private JTextField jtfNomeCliente;
 	private JTable tableConsultaCliente;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ConsultaClienteUI frame = new ConsultaClienteUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JScrollPane scrollPane;
 
 	/**
 	 * Create the frame.
@@ -84,7 +68,12 @@ public class ConsultaClienteUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					new ClienteController().getPorNome(jtfNomeCliente.getText());
+					// new
+					// ClienteController().getPorNome(jtfNomeCliente.getText());
+
+					tableConsultaCliente.setModel(new ClienteTableModel(
+							new ClienteController().getPorNome(jtfNomeCliente
+									.getText())));
 
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null,
@@ -93,7 +82,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 			}
 		});
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 
 		JButton btnFechar = new JButton("Fechar");
 		btnFechar.addActionListener(new ActionListener() {
@@ -106,29 +95,22 @@ public class ConsultaClienteUI extends JInternalFrame {
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				Cliente clienteEditar = null;
 				try {
-					clienteEditar = new ClienteTableModel(new ClienteDAO()
-							.listar()).get(tableConsultaCliente
-							.getSelectedRow());
+					Cliente clienteEditar = new ClienteTableModel(
+							new ClienteController().listar())
+							.get(tableConsultaCliente.getSelectedRow());
+
+					CadastroClienteUI cadClienteUI = new CadastroClienteUI(
+							clienteEditar, tableConsultaCliente);
+
+					getContentPane().add(cadClienteUI, 0);
+					cadClienteUI.setVisible(true);
+
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(
 							null,
 							"[ConsultaClienteUI - Erro Editar] "
 									+ e1.getMessage());
-				}
-				CadastroClienteUI cadClienteUI = new CadastroClienteUI(
-						clienteEditar);
-				cadClienteUI.setVisible(true);
-
-				try {
-					// Atualiza tabela
-					tableConsultaCliente.setModel(new ClienteTableModel(
-							new ClienteDAO().listar()));
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null,
-							"[ConsultaClienteUI - Erro Atualizar após Editar] "
-									+ e2.getMessage());
 				}
 
 			}
@@ -143,16 +125,16 @@ public class ConsultaClienteUI extends JInternalFrame {
 					try {
 
 						Cliente clienteExcluir = new ClienteTableModel(
-								new ClienteDAO().listar())
+								new ClienteController().listar())
 								.get(tableConsultaCliente.getSelectedRow());
 
 						new ClienteController().excluir(clienteExcluir);
 						JOptionPane.showMessageDialog(null,
-								"Aluno excluído com Sucesso! ");
+								"Aluno exclui�do com Sucesso! ");
 
 						// Atualiza tabela
 						tableConsultaCliente.setModel(new ClienteTableModel(
-								new ClienteDAO().listar()));
+								new ClienteController().listar()));
 
 					} catch (Exception e2) {
 						JOptionPane.showMessageDialog(null, e2.getMessage());
@@ -257,5 +239,9 @@ public class ConsultaClienteUI extends JInternalFrame {
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 
+	}
+
+	public JTable getTableConsultaCliente() {
+		return tableConsultaCliente;
 	}
 }

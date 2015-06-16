@@ -28,12 +28,12 @@ public class ClienteTableModel extends AbstractTableModel {
 	@Override
 	public int getRowCount() {
 		// numero de linhas
-		return 3;
+		return valores.size();
 	}
 
 	public int getColumnCount() {
 		// numero de colunas
-		return 3;
+		return 2;
 	}
 
 	public String getColumnName(int column) {
