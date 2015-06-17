@@ -22,6 +22,7 @@ import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.ClienteTableModel;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.MesaTableModel;
+import javax.swing.table.DefaultTableModel;
 
 
 
@@ -38,6 +39,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 	 * @throws Exception
 	 */
 	public ConsultaMesaUI() {
+		setClosable(true);
 		setTitle("Consulta Mesa");
 		setBounds(100, 100, 510, 360);
 
@@ -85,13 +87,6 @@ public class ConsultaMesaUI extends JInternalFrame {
 		});
 
 		scrollPane = new JScrollPane();
-
-		JButton btnFechar = new JButton("Fechar");
-		btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
 
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
@@ -141,95 +136,64 @@ public class ConsultaMesaUI extends JInternalFrame {
 				}
 			}
 		});
+		
+		JButton btnAdicionar = new JButton("Adicionar");
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		lblNome)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addComponent(
-																		numeroMesa,
-																		GroupLayout.PREFERRED_SIZE,
-																		230,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED,
-																		104,
-																		Short.MAX_VALUE)
-																.addComponent(
-																		btnPesquisar))
-												.addComponent(
-														scrollPane,
-														GroupLayout.PREFERRED_SIZE,
-														449,
-														GroupLayout.PREFERRED_SIZE)
-												.addGroup(
-														Alignment.TRAILING,
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		btnEditar,
-																		GroupLayout.PREFERRED_SIZE,
-																		81,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED,
-																		112,
-																		Short.MAX_VALUE)
-																.addComponent(
-																		btnExcluir,
-																		GroupLayout.PREFERRED_SIZE,
-																		81,
-																		GroupLayout.PREFERRED_SIZE)
-																.addGap(95)
-																.addComponent(
-																		btnFechar,
-																		GroupLayout.PREFERRED_SIZE,
-																		81,
-																		GroupLayout.PREFERRED_SIZE)))
-								.addContainerGap()));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(lblNome)
-												.addComponent(
-														numeroMesa,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(btnPesquisar))
-								.addGap(18)
-								.addComponent(scrollPane,
-										GroupLayout.PREFERRED_SIZE, 188,
-										GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(btnFechar)
-												.addComponent(btnEditar)
-												.addComponent(btnExcluir))
-								.addContainerGap(GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(lblNome)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+							.addComponent(btnPesquisar))
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 449, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
+							.addComponent(btnAdicionar)))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNome)
+						.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnPesquisar))
+					.addGap(18)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnEditar)
+						.addComponent(btnExcluir)
+						.addComponent(btnAdicionar))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 
 		tableMesa = new JTable();
 		try {
-			tableMesa.setModel(new MesaTableModel(
-					new MesaController().listar()));
+			tableMesa.setModel(new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"Numero Mesa", "Quantidade Lugares"
+				}
+			) {
+				boolean[] columnEditables = new boolean[] {
+					false, true
+				};
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
+			});
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

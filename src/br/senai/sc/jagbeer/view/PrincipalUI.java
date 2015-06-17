@@ -27,6 +27,9 @@ import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PedidoAberto;
 import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
+import java.awt.Color;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
 
 /**
  * 
@@ -64,10 +67,10 @@ public class PrincipalUI extends JFrame {
 	 * Create the frame.
 	 */
 	public PrincipalUI() {
+		setForeground(Color.BLUE);
 
 		setTitle("JAGBeer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(false);
 		setBounds(100, 100, 900, 600);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -177,13 +180,35 @@ public class PrincipalUI extends JFrame {
 		mnMesa.add(mntmConsultaMesa);
 
 		
-		JMenu mnRelatorio = new JMenu("Relat\u00F3rio");
+		JMenu mnRelatorio = new JMenu("Relatorio");	
 		menuBar.add(mnRelatorio);
+		
+		JMenuItem mntmFaturamento = new JMenuItem("Faturamento");
+		mntmFaturamento.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					RelatorioFaturamentoUI relFaturamento = new RelatorioFaturamentoUI();
+					relFaturamento.requestFocus(true);
+					relFaturamento.setFocusable(true);
+					relFaturamento.moveToFront();
+					getContentPane().add(relFaturamento, 0);
+					relFaturamento.setVisible(true);
+			}
+		});
+		mnRelatorio.add(mntmFaturamento);
 
 		
 		
 		JMenu mnSair = new JMenu("Sair");
+		mnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		menuBar.add(mnSair);
+		
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
