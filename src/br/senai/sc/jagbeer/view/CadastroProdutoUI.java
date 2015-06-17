@@ -54,7 +54,7 @@ public class CadastroProdutoUI extends JInternalFrame {
 
 		setTitle("Cadastro de Produto");
 		setClosable(true);
-		setBounds(100, 100, 506, 242);
+		setBounds(100, 100, 370, 282);
 
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,
@@ -66,27 +66,71 @@ public class CadastroProdutoUI extends JInternalFrame {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 474, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 339, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(142, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 
+		// Nome
 		lblNome = new JLabel("Nome:");
 
 		jtfNome = new JTextField();
-
-		if (!produtoEdicao.getNome().equals("")
-				|| produtoEdicao.getNome() != null)
-			jtfNome.setText(produtoEdicao.getNome());
-
 		jtfNome.setHorizontalAlignment(SwingConstants.LEFT);
 		jtfNome.setColumns(10);
+
+		// Valor
+		lblValor = new JLabel("Valor:");
+
+		jtfValor = new JTextField();
+		jtfValor.setHorizontalAlignment(SwingConstants.RIGHT);
+		jtfValor.setColumns(10);
+
+		// Valor Custo
+		lblValorCusto = new JLabel("Valor Custo:");
+
+		jtfValorCusto = new JTextField();
+		jtfValorCusto.setHorizontalAlignment(SwingConstants.RIGHT);
+		jtfValorCusto.setColumns(10);
+
+		// Classificacao
+		lblClassificao = new JLabel("Classificação:");
+
+		cmbClassificacao = new JComboBox();
+
+		cmbClassificacao.setModel(new DefaultComboBoxModel(new String[] { "",
+				"Alimento", "Bebida" }));
+		cmbClassificacao.setMaximumRowCount(3);
+
+		// em caso de edição seta os valores nos campos
+		if (produtoEdicao != null) {
+			if (!produtoEdicao.getNome().equals("")
+					|| produtoEdicao.getNome() != null)
+				jtfNome.setText(produtoEdicao.getNome());
+
+			if (!produtoEdicao.getPrecoCusto().equals("")
+					|| produtoEdicao.getPrecoCusto() != null)
+				jtfValorCusto.setText(produtoEdicao.getPrecoCusto().toString());
+
+			if (!produtoEdicao.getPrecoVenda().equals("")
+					|| produtoEdicao.getPrecoVenda() != null)
+				jtfValor.setText(produtoEdicao.getPrecoVenda().toString());
+
+			if (!produtoEdicao.getClassificacao().equals("")
+					|| produtoEdicao.getClassificacao() != null) {
+
+				if (produtoEdicao.getClassificacao().equals("Alimento"))
+					cmbClassificacao.setSelectedIndex(1);
+
+				if (produtoEdicao.getClassificacao().equals("Bebida"))
+					cmbClassificacao.setSelectedIndex(2);
+			}
+		}
 
 		btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -128,11 +172,6 @@ public class CadastroProdutoUI extends JInternalFrame {
 							.parseDouble(jtfValorCusto.getText()));
 					produtoEdicao.setClassificacao(classificacao);
 
-					// if(jtfValorCusto != null &&
-					// !jtfValorCusto.getText().equals("")) {
-					//
-					// }
-
 					try {
 						new ProdutoController().editar(produtoEdicao);
 						JOptionPane.showMessageDialog(null,
@@ -160,47 +199,6 @@ public class CadastroProdutoUI extends JInternalFrame {
 			}
 		});
 
-		lblValor = new JLabel("Valor:");
-
-		lblValorCusto = new JLabel("Valor Custo:");
-
-		jtfValorCusto = new JTextField();
-
-		if (!produtoEdicao.getPrecoCusto().equals("")
-				|| produtoEdicao.getPrecoCusto() != null) {
-			jtfValorCusto.setText(produtoEdicao.getPrecoCusto().toString());
-		}
-		jtfValorCusto.setHorizontalAlignment(SwingConstants.RIGHT);
-		jtfValorCusto.setColumns(10);
-
-		jtfValor = new JTextField();
-
-		if (!produtoEdicao.getPrecoVenda().equals("")
-				|| produtoEdicao.getPrecoVenda() != null) {
-			jtfValor.setText(produtoEdicao.getPrecoVenda().toString());
-		}
-
-		jtfValor.setHorizontalAlignment(SwingConstants.RIGHT);
-		jtfValor.setColumns(10);
-
-		cmbClassificacao = new JComboBox();
-
-		if (!produtoEdicao.getClassificacao().equals("")
-				|| produtoEdicao.getClassificacao() != null) {
-
-			if (produtoEdicao.getClassificacao().equals("Alimento"))
-				cmbClassificacao.setSelectedIndex(1);
-
-			if (produtoEdicao.getClassificacao().equals("Bebida"))
-				cmbClassificacao.setSelectedIndex(2);
-		}
-
-		cmbClassificacao.setModel(new DefaultComboBoxModel(new String[] { "",
-				"Alimento", "Bebida" }));
-		cmbClassificacao.setMaximumRowCount(3);
-
-		lblClassificao = new JLabel("Classificação:");
-
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -218,41 +216,39 @@ public class CadastroProdutoUI extends JInternalFrame {
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblValorCusto)
-								.addComponent(lblNome)
-								.addComponent(lblValor))
-							.addGap(22)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(jtfNome, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(jtfValorCusto)
-									.addComponent(jtfValor))))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblValorCusto)
+						.addComponent(lblNome)
+						.addComponent(lblValor)
+						.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+							.addGroup(gl_panel.createSequentialGroup()
+								.addComponent(lblClassificao)
+								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+									.addComponent(cmbClassificacao, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+									.addComponent(jtfNome, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE)
+									.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+										.addComponent(jtfValor, Alignment.LEADING)
+										.addComponent(jtfValorCusto, Alignment.LEADING))))
+							.addGroup(gl_panel.createSequentialGroup()
 								.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(lblClassificao)
-									.addGap(18)
-									.addComponent(cmbClassificacao, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnLimpar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)))
-					.addGap(266))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(btnLimpar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED))))
+					.addContainerGap(154, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jtfNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNome))
+						.addComponent(lblNome)
+						.addComponent(jtfNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jtfValorCusto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblValorCusto))
+						.addComponent(lblValorCusto)
+						.addComponent(jtfValorCusto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblValor)
@@ -261,7 +257,7 @@ public class CadastroProdutoUI extends JInternalFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(cmbClassificacao, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblClassificao))
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnSalvar)
 						.addComponent(btnLimpar)

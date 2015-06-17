@@ -107,10 +107,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 					cadClienteUI.setVisible(true);
 
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(
-							null,
-							"[ConsultaClienteUI - Erro Editar] "
-									+ e1.getMessage());
+					e1.printStackTrace();
 				}
 
 			}
@@ -130,7 +127,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 
 						new ClienteController().excluir(clienteExcluir);
 						JOptionPane.showMessageDialog(null,
-								"Aluno exclui­do com Sucesso! ");
+								"Aluno excluiï¿½do com Sucesso! ");
 
 						// Atualiza tabela
 						tableConsultaCliente.setModel(new ClienteTableModel(
