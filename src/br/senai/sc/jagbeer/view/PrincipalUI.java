@@ -113,7 +113,8 @@ public class PrincipalUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				CadastroProdutoUI cadProdutoUI = new CadastroProdutoUI();
+				CadastroProdutoUI cadProdutoUI = new CadastroProdutoUI(null,
+						null);
 				cadProdutoUI.requestFocus(true);
 				cadProdutoUI.setFocusable(true);
 				cadProdutoUI.moveToFront();
