@@ -152,13 +152,28 @@ public class CadastroProdutoUI extends JInternalFrame {
 					produto.setNome(jtfNome.getText());
 
 					if (!jtfValor.getText().isEmpty()) {
-						produto.setPrecoVenda(Double.parseDouble(jtfValor
-								.getText().replaceAll(",", ".")));
+						try {
+							produto.setPrecoVenda(Double.parseDouble(jtfValor
+									.getText().replaceAll(",", ".")));
+						} catch (Exception e) {
+							JOptionPane
+									.showMessageDialog(null,
+											"Você deve inserir números no campo Valor.");
+						}
+
 					}
 
 					if (!jtfValorCusto.getText().isEmpty()) {
-						produto.setPrecoCusto(Double.parseDouble(jtfValorCusto
-								.getText().replaceAll(",", ".")));
+						try {
+							produto.setPrecoCusto(Double
+									.parseDouble(jtfValorCusto.getText()
+											.replaceAll(",", ".")));
+						} catch (Exception e) {
+							JOptionPane
+									.showMessageDialog(null,
+											"Você deve inserir números no campo Valor de Custo.");
+						}
+
 					}
 
 					produto.setClassificacao(classificacao);
@@ -204,6 +219,8 @@ public class CadastroProdutoUI extends JInternalFrame {
 							table.setModel(new ProdutoTableModel(
 									new ProdutoController().listar()));
 						}
+
+						dispose();
 
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());

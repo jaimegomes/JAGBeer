@@ -40,7 +40,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 	private JButton btnEditarInserir;
 	private GroupLayout gl_panel;
 	private JButton btnPesquisar;
-	private JButton btnCancelar;
+	private JButton btnExcluir;
 	private JButton btnLimpar;
 	private JTable table;
 
@@ -96,20 +96,16 @@ public class ConsultaProdutoUI extends JInternalFrame {
 						classificacao = "Bebida";
 
 					// tudo em branco
-					if ((cmbClassificacao.getSelectedIndex() == -1 || cmbClassificacao
-							.getSelectedIndex() == 0)
-							&& (jtfNome.getText() == null || jtfNome.getText()
-									.trim().equals(""))) {
+					if (cmbClassificacao.getSelectedIndex() <= 0
+							&& jtfNome.getText().isEmpty()) {
 
 						listProduto = new ProdutoController().listar();
 						table.setModel(new ProdutoTableModel(listProduto));
 					}
 
 					// campo nome preenchido
-					else if (!jtfNome.getText().trim().equals("")
-							|| jtfNome.getText() != null
-							&& (cmbClassificacao.getSelectedIndex() == -1 || cmbClassificacao
-									.getSelectedIndex() == 0)) {
+					else if (!jtfNome.getText().isEmpty()
+							&& cmbClassificacao.getSelectedIndex() <= 0) {
 
 						listProduto = new ProdutoController()
 								.getPorNome(jtfNome.getText());
@@ -117,16 +113,15 @@ public class ConsultaProdutoUI extends JInternalFrame {
 						if (listProduto.size() == 0)
 							JOptionPane
 									.showMessageDialog(null,
-											"NÃ£o existem produtos com este nome cadastrados no banco de dados.");
+											"Não existem produtos com este nome cadastrados no banco de dados.");
 
 						table.setModel(new ProdutoTableModel(listProduto));
 
 					}
 
-					// campo classificaÃ§Ã£o preenchido
+					// campo classificação preenchido
 					else if (cmbClassificacao.getSelectedIndex() > 0
-							&& (jtfNome.getText() == null || jtfNome.getText()
-									.equals(""))) {
+							&& jtfNome.getText().isEmpty()) {
 
 						listProduto = new ProdutoController()
 								.getPorClassificacao(classificacao);
@@ -134,24 +129,25 @@ public class ConsultaProdutoUI extends JInternalFrame {
 						if (listProduto.size() == 0)
 							JOptionPane
 									.showMessageDialog(null,
-											"NÃ£o existem produtos com esta classificaÃ§Ã£o cadastrados no banco de dados.");
+											"Não existem produtos com esta classificação cadastrados no banco de dados.");
 
 						table.setModel(new ProdutoTableModel(listProduto));
 
 					}
 
-					// campos nome e classificaÃ§Ã£o preenchidos
+					// campos nome e classificação preenchidos
 					else if (cmbClassificacao.getSelectedIndex() > 0
-							&& (jtfNome.getText() != null || !jtfNome.getText()
-									.equals(""))) {
+							&& !jtfNome.getText().isEmpty()) {
 
-						listProduto = new ProdutoController().buscaCompleta();
+						listProduto = new ProdutoController()
+								.buscaPorNomeClassificacao(jtfNome.getText(),
+										classificacao);
 
 						if (listProduto.size() == 0)
 							JOptionPane
 									.showMessageDialog(
 											null,
-											"NÃ£o existem produtos com este nome e classificaÃ§Ã£o cadastrados no banco de dados.");
+											"Não existem produtos com este nome e classificação cadastrados no banco de dados.");
 
 						table.setModel(new ProdutoTableModel(listProduto));
 
@@ -163,14 +159,14 @@ public class ConsultaProdutoUI extends JInternalFrame {
 			}
 		});
 
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
+		btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
 
-		lblClassificacao = new JLabel("ClassificaÃ§Ã£o:");
+		lblClassificacao = new JLabel("Classificação:");
 
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
@@ -193,15 +189,28 @@ public class ConsultaProdutoUI extends JInternalFrame {
 				CadastroProdutoUI cadProdutoUI;
 				try {
 
-					if (table.getSelectedRow() > -1) {
+					int linhaSelecionada = table.getSelectedRow();
 
-						Produto produtoEditar = new ProdutoTableModel(
-								new ProdutoController().listar()).get(table
-								.getSelectedRow());
+					if (linhaSelecionada > -1) {
+
+						String nomeProduto = table.getValueAt(linhaSelecionada,
+								0).toString();
+
+						Double precoVenda = Double.parseDouble(table
+								.getValueAt(linhaSelecionada, 2).toString());
+
+						String classificacao = table.getValueAt(
+								linhaSelecionada, 3).toString();
+
+						Produto produtoEditar = (Produto) new ProdutoController()
+								.buscaCompleta(nomeProduto, precoVenda,
+										classificacao);
+
 						cadProdutoUI = new CadastroProdutoUI(produtoEditar,
 								table);
 					} else {
 						cadProdutoUI = new CadastroProdutoUI(null, table);
+						cadProdutoUI.dispose();
 					}
 
 					getContentPane().add(cadProdutoUI, 0);
@@ -256,28 +265,33 @@ public class ConsultaProdutoUI extends JInternalFrame {
 																				.addComponent(
 																						btnPesquisar,
 																						GroupLayout.DEFAULT_SIZE,
-																						173,
+																						133,
 																						Short.MAX_VALUE)
 																				.addComponent(
 																						btnLimpar,
 																						GroupLayout.DEFAULT_SIZE,
-																						173,
+																						133,
 																						Short.MAX_VALUE))
 																.addPreferredGap(
 																		ComponentPlacement.RELATED)
 																.addGroup(
 																		gl_panel.createParallelGroup(
-																				Alignment.TRAILING)
+																				Alignment.LEADING,
+																				false)
+																				.addComponent(
+																						btnExcluir,
+																						GroupLayout.DEFAULT_SIZE,
+																						GroupLayout.DEFAULT_SIZE,
+																						Short.MAX_VALUE)
 																				.addComponent(
 																						btnEditarInserir,
-																						GroupLayout.PREFERRED_SIZE,
-																						167,
-																						GroupLayout.PREFERRED_SIZE)
-																				.addComponent(
-																						btnCancelar,
 																						GroupLayout.DEFAULT_SIZE,
-																						145,
-																						Short.MAX_VALUE)))
+																						144,
+																						Short.MAX_VALUE))
+																.addPreferredGap(
+																		ComponentPlacement.RELATED,
+																		23,
+																		Short.MAX_VALUE))
 												.addGroup(
 														gl_panel.createSequentialGroup()
 																.addGap(10)
@@ -314,10 +328,10 @@ public class ConsultaProdutoUI extends JInternalFrame {
 														GroupLayout.DEFAULT_SIZE,
 														GroupLayout.PREFERRED_SIZE)
 												.addComponent(btnLimpar)
-												.addComponent(btnCancelar))
+												.addComponent(btnExcluir))
 								.addGap(18)
 								.addComponent(scrollPane,
-										GroupLayout.DEFAULT_SIZE, 300,
+										GroupLayout.DEFAULT_SIZE, 282,
 										Short.MAX_VALUE)));
 
 		try {
