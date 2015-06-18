@@ -3,6 +3,8 @@ package br.senai.sc.jagbeer.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +25,12 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
-import br.senai.sc.jagbeer.dao.ProdutoDAO;
+import br.senai.sc.jagbeer.controller.PedidoController;
+import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.model.ItemPedido;
 import br.senai.sc.jagbeer.model.ItemPedidoTableModel;
+import br.senai.sc.jagbeer.model.Mesa;
+import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.Produto;
 
 /**
@@ -57,6 +62,7 @@ public class FazerPedidoUI extends JInternalFrame {
 	private GroupLayout gl_panelProduto;
 
 	private List<Entidade> listItensPedido = new ArrayList<Entidade>();
+	private List<Entidade> listNomesProdutos = new ArrayList<Entidade>();
 	private JTable table;
 
 	public FazerPedidoUI() {
@@ -100,10 +106,25 @@ public class FazerPedidoUI extends JInternalFrame {
 			}
 		});
 
-		cmbPedido = new JComboBox();
-		cmbPedido.setMaximumRowCount(2);
-
 		lblPedido = new JLabel("Pedido:");
+
+		cmbPedido = new JComboBox();
+		cmbPedido.setMaximumRowCount(8);
+
+		try {
+			List<Entidade> listIdPedidos = new PedidoController()
+					.getPedidosAbertos();
+
+			if (listIdPedidos.size() > 0) {
+				for (Entidade e : listIdPedidos) {
+					Pedido pedido = (Pedido) e;
+					cmbPedido.addItem(pedido.getId());
+
+				}
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
 		panelProduto = new JPanel();
 		panelProduto.setBorder(new TitledBorder(new EtchedBorder(
@@ -114,6 +135,22 @@ public class FazerPedidoUI extends JInternalFrame {
 		lblMesa = new JLabel("Mesa:");
 
 		cmbMesa = new JComboBox();
+		cmbMesa.setMaximumRowCount(8);
+
+		try {
+			List<Entidade> listMesas = new PedidoController()
+					.getPedidosAbertos();
+
+			if (listMesas.size() > 0) {
+				for (Entidade e : listMesas) {
+					Mesa mesa = (Mesa) e;
+					cmbMesa.addItem(mesa.getNumeroMesa());
+
+				}
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
 		JScrollPane scrollPane = new JScrollPane();
 
@@ -236,27 +273,50 @@ public class FazerPedidoUI extends JInternalFrame {
 				"Alimentos", "Bebidas" }));
 		cmbClassificacao.setSelectedIndex(0);
 		cmbClassificacao.setMaximumRowCount(3);
+		cmbClassificacao.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				try {
+					if (cmbClassificacao.getSelectedIndex() == 1) {
+
+						System.out.println("entrou");
+						listNomesProdutos = new ProdutoController()
+								.getPorClassificacao("Alimento");
+
+					} else if (cmbClassificacao.getSelectedIndex() == 2) {
+						listNomesProdutos = new ProdutoController()
+								.getPorClassificacao("Bebida");
+					}
+				} catch (Exception e2) {
+					e2.getMessage();
+				}
+
+			}
+		});
 
 		lblClassificao = new JLabel("Classifica\u00E7\u00E3o:");
 
 		lblProduto = new JLabel("Produto:");
 
 		cmbProduto = new JComboBox();
-		cmbProduto.addActionListener(new ActionListener() {
+		cmbProduto.setMaximumRowCount(8);
+		// cmbProduto.setModel(dcbListaProdutos);
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		try {
+			System.out.println("size: " + listNomesProdutos.size());
+			if (listNomesProdutos.size() > 0) {
+				for (Entidade e : listNomesProdutos) {
 
-				ProdutoDAO dao = new ProdutoDAO();
+					Produto produto = (Produto) e;
+					cmbProduto.addItem(produto.getNome());
 
-				if (cmbClassificacao.getSelectedIndex() == 1) {
-					// DefaultComboBoxModel modeloProduto = new
-					// DefaultComboBoxModel(
-					// dao.getPorClassificacao("alimento"));
-					// cmbClassificacao.setModel(modeloProduto);
 				}
 			}
-		});
+
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
 		lblQuantidade = new JLabel("Quantidade:");
 

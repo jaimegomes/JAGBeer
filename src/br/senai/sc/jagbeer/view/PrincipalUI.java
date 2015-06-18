@@ -80,6 +80,7 @@ public class PrincipalUI extends JFrame {
 		JMenuItem mntmCadastroCliente = new JMenuItem("Cadastro Cliente");
 		mntmCadastroCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				CadastroClienteUI cadClienteUI = new CadastroClienteUI(null,
 						null);
 				cadClienteUI.requestFocus(true);

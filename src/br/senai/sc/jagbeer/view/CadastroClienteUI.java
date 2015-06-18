@@ -69,8 +69,7 @@ public class CadastroClienteUI extends JInternalFrame {
 
 		jtfNomeCliente = new JTextField();
 
-		if (!clienteEdicao.getNome().equals("")
-				|| clienteEdicao.getNome() != null)
+		if (clienteEdicao.getNome() != null)
 			jtfNomeCliente.setText(clienteEdicao.getNome());
 
 		jtfNomeCliente.setColumns(10);

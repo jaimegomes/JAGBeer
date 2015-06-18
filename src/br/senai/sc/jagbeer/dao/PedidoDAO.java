@@ -121,7 +121,7 @@ public class PedidoDAO extends GenericDAO {
 		clienteDAO = new ClienteDAO();
 
 		List<Entidade> listaPedidos = new ArrayList<Entidade>();
-		String sql = "SELECT * FROM pedidos";
+		String sql = "SELECT * FROM pedido";
 		try {
 
 			PreparedStatement pstm = con.prepareStatement(sql);
