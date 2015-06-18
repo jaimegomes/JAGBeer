@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -43,28 +44,26 @@ public class FazerPedidoUI extends JInternalFrame {
 	private JComboBox cmbPedido;
 	private JLabel lblPedido;
 	private GroupLayout groupLayoutProduto;
-	private JLabel lblCliente;
-	private JComboBox cmbCliente;
 	private JPanel panelProduto;
 	private JComboBox cmbClassificacao;
 	private JLabel lblClassificao;
 	private JLabel lblProduto;
 	private JComboBox cmbProduto;
 	private JLabel lblQuantidade;
-	private JTable table;
 	private JComboBox cmbMesa;
 	private JLabel lblMesa;
 	private JSpinner spinnerQtde;
 	private JButton btnAdicionarProduto;
 	private GroupLayout gl_panelProduto;
 
-	private List<Entidade> listItensPedido = new ArrayList<Entidade>();;
+	private List<Entidade> listItensPedido = new ArrayList<Entidade>();
+	private JTable table;
 
 	public FazerPedidoUI() {
 
 		setTitle("Fazer Pedido");
 		setClosable(true);
-		setBounds(100, 0, 497, 479);
+		setBounds(100, 0, 535, 472);
 
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,
@@ -77,17 +76,15 @@ public class FazerPedidoUI extends JInternalFrame {
 				groupLayout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 464,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(142, Short.MAX_VALUE)));
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 496,
+								Short.MAX_VALUE)));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
 				Alignment.LEADING).addGroup(
 				groupLayout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addContainerGap()));
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 433,
+								Short.MAX_VALUE)));
 
 		btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -108,10 +105,6 @@ public class FazerPedidoUI extends JInternalFrame {
 
 		lblPedido = new JLabel("Pedido:");
 
-		lblCliente = new JLabel("Cliente:");
-
-		cmbCliente = new JComboBox();
-
 		panelProduto = new JPanel();
 		panelProduto.setBorder(new TitledBorder(new EtchedBorder(
 				EtchedBorder.LOWERED, null, null), "Produto",
@@ -122,96 +115,75 @@ public class FazerPedidoUI extends JInternalFrame {
 
 		cmbMesa = new JComboBox();
 
-		table = new JTable();
+		JScrollPane scrollPane = new JScrollPane();
 
 		groupLayoutProduto = new GroupLayout(panel);
 		groupLayoutProduto
 				.setHorizontalGroup(groupLayoutProduto
-						.createParallelGroup(Alignment.LEADING)
+						.createParallelGroup(Alignment.TRAILING)
 						.addGroup(
-								Alignment.TRAILING,
+								Alignment.LEADING,
 								groupLayoutProduto
 										.createSequentialGroup()
 										.addGroup(
 												groupLayoutProduto
 														.createParallelGroup(
-																Alignment.TRAILING)
-														.addGroup(
-																groupLayoutProduto
-																		.createSequentialGroup()
-																		.addGap(194)
-																		.addComponent(
-																				btnSalvar,
-																				GroupLayout.PREFERRED_SIZE,
-																				126,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(18)
-																		.addComponent(
-																				btnCancelar,
-																				GroupLayout.DEFAULT_SIZE,
-																				133,
-																				Short.MAX_VALUE))
+																Alignment.LEADING)
 														.addGroup(
 																groupLayoutProduto
 																		.createSequentialGroup()
 																		.addContainerGap()
+																		.addComponent(
+																				lblPedido)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				cmbPedido,
+																				GroupLayout.PREFERRED_SIZE,
+																				71,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(39)
+																		.addComponent(
+																				lblMesa)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				cmbMesa,
+																				GroupLayout.PREFERRED_SIZE,
+																				76,
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																groupLayoutProduto
+																		.createParallelGroup(
+																				Alignment.TRAILING)
 																		.addGroup(
 																				groupLayoutProduto
-																						.createParallelGroup(
-																								Alignment.TRAILING)
+																						.createSequentialGroup()
+																						.addContainerGap()
 																						.addComponent(
-																								table,
-																								Alignment.LEADING,
-																								GroupLayout.DEFAULT_SIZE,
-																								436,
-																								Short.MAX_VALUE)
+																								btnSalvar,
+																								GroupLayout.PREFERRED_SIZE,
+																								107,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addGap(18)
+																						.addComponent(
+																								btnCancelar))
+																		.addGroup(
+																				Alignment.LEADING,
+																				groupLayoutProduto
+																						.createParallelGroup(
+																								Alignment.TRAILING,
+																								false)
+																						.addComponent(
+																								scrollPane,
+																								Alignment.LEADING)
 																						.addComponent(
 																								panelProduto,
 																								Alignment.LEADING,
 																								GroupLayout.DEFAULT_SIZE,
-																								482,
-																								Short.MAX_VALUE)
-																						.addGroup(
-																								groupLayoutProduto
-																										.createSequentialGroup()
-																										.addGroup(
-																												groupLayoutProduto
-																														.createParallelGroup(
-																																Alignment.LEADING)
-																														.addComponent(
-																																lblPedido)
-																														.addComponent(
-																																lblMesa))
-																										.addPreferredGap(
-																												ComponentPlacement.RELATED)
-																										.addGroup(
-																												groupLayoutProduto
-																														.createParallelGroup(
-																																Alignment.TRAILING,
-																																false)
-																														.addComponent(
-																																cmbMesa,
-																																Alignment.LEADING,
-																																0,
-																																GroupLayout.DEFAULT_SIZE,
-																																Short.MAX_VALUE)
-																														.addComponent(
-																																cmbPedido,
-																																Alignment.LEADING,
-																																0,
-																																71,
-																																Short.MAX_VALUE))
-																										.addGap(30)
-																										.addComponent(
-																												lblCliente)
-																										.addPreferredGap(
-																												ComponentPlacement.RELATED)
-																										.addComponent(
-																												cmbCliente,
-																												0,
-																												248,
-																												Short.MAX_VALUE)))))
-										.addGap(96)));
+																								495,
+																								Short.MAX_VALUE))))
+										.addContainerGap()));
 		groupLayoutProduto
 				.setVerticalGroup(groupLayoutProduto
 						.createParallelGroup(Alignment.LEADING)
@@ -230,36 +202,23 @@ public class FazerPedidoUI extends JInternalFrame {
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
 														.addComponent(
-																lblCliente)
-														.addComponent(
-																cmbCliente,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												groupLayoutProduto
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
 																cmbMesa,
 																GroupLayout.PREFERRED_SIZE,
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
 														.addComponent(lblMesa))
 										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
+												ComponentPlacement.RELATED)
 										.addComponent(panelProduto,
 												GroupLayout.PREFERRED_SIZE,
 												107, GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addComponent(table,
+												ComponentPlacement.RELATED)
+										.addComponent(scrollPane,
 												GroupLayout.PREFERRED_SIZE,
-												183, GroupLayout.PREFERRED_SIZE)
+												234, GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
+												ComponentPlacement.RELATED)
 										.addGroup(
 												groupLayoutProduto
 														.createParallelGroup(
@@ -269,13 +228,16 @@ public class FazerPedidoUI extends JInternalFrame {
 														.addComponent(btnSalvar))
 										.addContainerGap()));
 
+		table = new JTable();
+		scrollPane.setViewportView(table);
+
 		cmbClassificacao = new JComboBox();
 		cmbClassificacao.setModel(new DefaultComboBoxModel(new String[] { "",
 				"Alimentos", "Bebidas" }));
 		cmbClassificacao.setSelectedIndex(0);
 		cmbClassificacao.setMaximumRowCount(3);
 
-		lblClassificao = new JLabel("Classificação:");
+		lblClassificao = new JLabel("Classifica\u00E7\u00E3o:");
 
 		lblProduto = new JLabel("Produto:");
 
@@ -288,9 +250,10 @@ public class FazerPedidoUI extends JInternalFrame {
 				ProdutoDAO dao = new ProdutoDAO();
 
 				if (cmbClassificacao.getSelectedIndex() == 1) {
-//					DefaultComboBoxModel modeloProduto = new DefaultComboBoxModel(
-//							dao.getPorClassificacao("alimento"));
-//					cmbClassificacao.setModel(modeloProduto);
+					// DefaultComboBoxModel modeloProduto = new
+					// DefaultComboBoxModel(
+					// dao.getPorClassificacao("alimento"));
+					// cmbClassificacao.setModel(modeloProduto);
 				}
 			}
 		});
@@ -351,7 +314,8 @@ public class FazerPedidoUI extends JInternalFrame {
 										.addGroup(
 												gl_panelProduto
 														.createParallelGroup(
-																Alignment.LEADING)
+																Alignment.LEADING,
+																false)
 														.addGroup(
 																gl_panelProduto
 																		.createSequentialGroup()
@@ -361,12 +325,15 @@ public class FazerPedidoUI extends JInternalFrame {
 																				ComponentPlacement.RELATED)
 																		.addComponent(
 																				spinnerQtde,
-																				GroupLayout.DEFAULT_SIZE,
-																				61,
-																				Short.MAX_VALUE))
+																				GroupLayout.PREFERRED_SIZE,
+																				67,
+																				GroupLayout.PREFERRED_SIZE))
 														.addComponent(
-																btnAdicionarProduto))
-										.addContainerGap()));
+																btnAdicionarProduto,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE))
+										.addContainerGap(65, Short.MAX_VALUE)));
 		gl_panelProduto
 				.setVerticalGroup(gl_panelProduto
 						.createParallelGroup(Alignment.LEADING)
@@ -407,9 +374,8 @@ public class FazerPedidoUI extends JInternalFrame {
 																btnAdicionarProduto))
 										.addContainerGap(17, Short.MAX_VALUE)));
 		panelProduto.setLayout(gl_panelProduto);
-
-		table.setModel(new ItemPedidoTableModel(listItensPedido));
 		panel.setLayout(groupLayoutProduto);
+		table.setModel(new ItemPedidoTableModel(listItensPedido));
 		getContentPane().setLayout(groupLayout);
 
 	}
