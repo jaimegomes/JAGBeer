@@ -73,9 +73,14 @@ public class MesaController implements IController {
 
 	@Override
 	public Entidade getPorId(int id) throws Exception{
-		return (Mesa) dao.getPorId(id);
+		return dao.getPorId(id);
 	}
 
+	public List<Entidade> getPorNumeroMesa(String numeroMesa) throws Exception {
+
+		return dao.getPorNumeroMesa(numeroMesa);
+	}
+	
 	@Override
 	public void atualizaTabela(JTable table) throws Exception{
 		dao.atualizaTabela(table);

@@ -13,8 +13,8 @@ public class MesaTableModel extends AbstractTableModel{
 	
 	private List<Entidade> valores;
 	
-	public MesaTableModel(){
-		this.valores = new ArrayList<Entidade>(valores);
+	public MesaTableModel(List<Entidade> list){
+		this.valores = new ArrayList<Entidade>(list);
 	}
 	
 	public int getRowCount() {

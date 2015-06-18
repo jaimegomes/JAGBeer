@@ -104,6 +104,7 @@ public class PrincipalUI extends JFrame {
 		});
 		mnCliente.add(mntmConsulta);
 
+		
 		JMenu mnProduto = new JMenu("Produto");
 		menuBar.add(mnProduto);
 
@@ -139,21 +140,48 @@ public class PrincipalUI extends JFrame {
 
 			}
 		});
-
 		mnProduto.add(mntmConsultaProduto);
 
+		
 		JMenu mnMesa = new JMenu("Mesa");
 		menuBar.add(mnMesa);
 
 		JMenuItem mntmCadastroMesa = new JMenuItem("Cadastro Mesa");
+		mntmCadastroMesa.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CadastroMesaUI cadMesaUI = new CadastroMesaUI(null, null);
+				cadMesaUI.requestFocus(true);
+				cadMesaUI.setFocusable(true);
+				cadMesaUI.moveToFront();
+				getContentPane().add(cadMesaUI, 0);
+				cadMesaUI.setVisible(true);				
+			}
+		});		
 		mnMesa.add(mntmCadastroMesa);
-
+		
 		JMenuItem mntmConsultaMesa = new JMenuItem("Consulta Mesa");
+		mntmConsultaMesa.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ConsultaMesaUI conMesaUI = new ConsultaMesaUI();
+				conMesaUI.requestFocus(true);
+				conMesaUI.setFocusable(true);
+				conMesaUI.moveToFront();
+				getContentPane().add(conMesaUI, 0);
+				conMesaUI.setVisible(true);				
+			}
+		});		
 		mnMesa.add(mntmConsultaMesa);
 
+		
 		JMenu mnRelatorio = new JMenu("Relat\u00F3rio");
 		menuBar.add(mnRelatorio);
 
+		
+		
 		JMenu mnSair = new JMenu("Sair");
 		menuBar.add(mnSair);
 		contentPane = new JPanel();
