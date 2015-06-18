@@ -185,6 +185,11 @@ public class ConsultaProdutoUI extends JInternalFrame {
 										classificacao);
 
 						controller.excluir(produtoExcluir);
+						JOptionPane.showMessageDialog(null,
+								"Produto excluído com sucesso.");
+
+						table.setModel(new ProdutoTableModel(controller
+								.listar()));
 
 					} else {
 						JOptionPane.showMessageDialog(null,
@@ -240,10 +245,11 @@ public class ConsultaProdutoUI extends JInternalFrame {
 
 						cadProdutoUI = new CadastroProdutoUI(produtoEditar,
 								table);
+
+
 					} else {
 
 						cadProdutoUI = new CadastroProdutoUI(null, table);
-						cadProdutoUI.dispose();
 					}
 
 					getContentPane().add(cadProdutoUI, 0);

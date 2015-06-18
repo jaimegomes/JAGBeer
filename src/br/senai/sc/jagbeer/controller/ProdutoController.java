@@ -45,6 +45,7 @@ public class ProdutoController implements IController {
 			throw new Exception("Selecione um produto.");
 
 		dao.excluir(produto);
+		
 
 	}
 
@@ -140,10 +141,25 @@ public class ProdutoController implements IController {
 	 * @param classificacao
 	 * @return List<Entidade> listProduto
 	 */
-	public List<Entidade> buscaCompleta()
-			throws Exception {
+	public List<Entidade> buscaPorNomeClassificacao(String nome,
+			String classificacao) throws Exception {
 
-		return dao.buscaCompleta();
+		return dao.buscaPorNomeClassificacao(nome, classificacao);
+
+	}
+
+	/**
+	 * Método responsável por fazer a busca dos produtos de acordo com o nome, a
+	 * classificação e o valor de venda passados como parâmetro.
+	 * 
+	 * @param nome
+	 * @param classificacao
+	 * @return List<Entidade> listProduto
+	 */
+	public Entidade buscaCompleta(String nome, Double precoVenda,
+			String classificacao) throws Exception {
+
+		return dao.buscaCompleta(nome, precoVenda, classificacao);
 
 	}
 
