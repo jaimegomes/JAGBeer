@@ -1,5 +1,6 @@
 package br.senai.sc.jagbeer.view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,9 +28,6 @@ import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PedidoAberto;
 import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
-import java.awt.Color;
-import java.awt.SystemColor;
-import javax.swing.UIManager;
 
 /**
  * 
@@ -107,7 +105,6 @@ public class PrincipalUI extends JFrame {
 		});
 		mnCliente.add(mntmConsulta);
 
-		
 		JMenu mnProduto = new JMenu("Produto");
 		menuBar.add(mnProduto);
 
@@ -145,13 +142,12 @@ public class PrincipalUI extends JFrame {
 		});
 		mnProduto.add(mntmConsultaProduto);
 
-		
 		JMenu mnMesa = new JMenu("Mesa");
 		menuBar.add(mnMesa);
 
 		JMenuItem mntmCadastroMesa = new JMenuItem("Cadastro Mesa");
 		mntmCadastroMesa.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CadastroMesaUI cadMesaUI = new CadastroMesaUI(null, null);
@@ -159,14 +155,14 @@ public class PrincipalUI extends JFrame {
 				cadMesaUI.setFocusable(true);
 				cadMesaUI.moveToFront();
 				getContentPane().add(cadMesaUI, 0);
-				cadMesaUI.setVisible(true);				
+				cadMesaUI.setVisible(true);
 			}
-		});		
+		});
 		mnMesa.add(mntmCadastroMesa);
-		
+
 		JMenuItem mntmConsultaMesa = new JMenuItem("Consulta Mesa");
 		mntmConsultaMesa.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ConsultaMesaUI conMesaUI = new ConsultaMesaUI();
@@ -174,32 +170,30 @@ public class PrincipalUI extends JFrame {
 				conMesaUI.setFocusable(true);
 				conMesaUI.moveToFront();
 				getContentPane().add(conMesaUI, 0);
-				conMesaUI.setVisible(true);				
+				conMesaUI.setVisible(true);
 			}
-		});		
+		});
 		mnMesa.add(mntmConsultaMesa);
 
-		
-		JMenu mnRelatorio = new JMenu("Relatorio");	
+		JMenu mnRelatorio = new JMenu("Relatorio");
 		menuBar.add(mnRelatorio);
-		
+
 		JMenuItem mntmFaturamento = new JMenuItem("Faturamento");
 		mntmFaturamento.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-//					RelatorioFaturamentoUI relFaturamento = new RelatorioFaturamentoUI();
-//					relFaturamento.requestFocus(true);
-//					relFaturamento.setFocusable(true);
-//					relFaturamento.moveToFront();
-//					getContentPane().add(relFaturamento, 0);
-//					relFaturamento.setVisible(true);
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// RelatorioFaturamentoUI relFaturamento = new
+				// RelatorioFaturamentoUI();
+				// relFaturamento.requestFocus(true);
+				// relFaturamento.setFocusable(true);
+				// relFaturamento.moveToFront();
+				// getContentPane().add(relFaturamento, 0);
+				// relFaturamento.setVisible(true);
 			}
 		});
 		mnRelatorio.add(mntmFaturamento);
 
-		
-		
 		JMenu mnSair = new JMenu("Sair");
 		mnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -207,8 +201,7 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 		menuBar.add(mnSair);
-		
-		
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
