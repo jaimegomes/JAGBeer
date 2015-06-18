@@ -16,7 +16,7 @@ import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
 /**
- * Classe DAO, responsável pela manipulaÃ§Ã£o dos dados dos Produtos no banco.
+ * Classe DAO, responsável pela manipulação dos dados dos Produtos no banco.
  * 
  * @author Jaime Gomes
  * 
@@ -226,8 +226,8 @@ public class ProdutoDAO extends GenericDAO {
 
 		List<Entidade> listProduto = new ArrayList<Entidade>();
 
-		String sql = "SELECT * FROM produto WHERE nomeProduto LIKE  '%" + nome
-				+ "%'";
+		String sql = "SELECT * FROM produto WHERE UPPER(nomeProduto) LIKE  UPPER('%"
+				+ nome + "%')";
 
 		try {
 
@@ -271,8 +271,10 @@ public class ProdutoDAO extends GenericDAO {
 
 		List<Entidade> listProduto = new ArrayList<Entidade>();
 
-		String sql = "SELECT * FROM produto WHERE nomeProduto LIKE '%" + nome
-				+ "%' AND classificacao LIKE '" + classificacao + "'";
+		String sql = "SELECT * FROM produto WHERE UPPER(nomeProduto) LIKE UPPER('%"
+				+ nome
+				+ "%') AND UPPER(classificacao) LIKE UPERR('"
+				+ classificacao + "')";
 
 		try {
 
@@ -309,6 +311,7 @@ public class ProdutoDAO extends GenericDAO {
 	 * 
 	 * @param nome
 	 * @param classificacao
+	 * @param precoVenda
 	 * @return List<Entidade> listProduto
 	 */
 	public Entidade buscaCompleta(String nome, Double precoVenda,
@@ -316,9 +319,10 @@ public class ProdutoDAO extends GenericDAO {
 
 		Produto produto = null;
 
-		String sql = "SELECT * FROM produto WHERE nomeProduto LIKE '%" + nome
-				+ "%' AND classificacao LIKE '%" + classificacao
-				+ "%' AND precoVenda = ?";
+		String sql = "SELECT * FROM produto WHERE UPPER(nomeProduto) LIKE UPPER('%"
+				+ nome
+				+ "%') AND UPPER(classificacao) LIKE UPPER('%"
+				+ classificacao + "%') AND precoVenda = ?";
 
 		try {
 
