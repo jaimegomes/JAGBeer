@@ -162,7 +162,39 @@ public class ConsultaProdutoUI extends JInternalFrame {
 		btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+
+				try {
+
+					ProdutoController controller = new ProdutoController();
+
+					int linhaSelecionada = table.getSelectedRow();
+
+					if (linhaSelecionada > -1) {
+
+						String nomeProduto = table.getValueAt(linhaSelecionada,
+								0).toString();
+
+						Double precoVenda = Double.parseDouble(table
+								.getValueAt(linhaSelecionada, 2).toString());
+
+						String classificacao = table.getValueAt(
+								linhaSelecionada, 3).toString();
+
+						Produto produtoExcluir = (Produto) controller
+								.buscaCompleta(nomeProduto, precoVenda,
+										classificacao);
+
+						controller.excluir(produtoExcluir);
+
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Selecione um produto.");
+					}
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
 			}
 		});
 
@@ -209,6 +241,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 						cadProdutoUI = new CadastroProdutoUI(produtoEditar,
 								table);
 					} else {
+
 						cadProdutoUI = new CadastroProdutoUI(null, table);
 						cadProdutoUI.dispose();
 					}
