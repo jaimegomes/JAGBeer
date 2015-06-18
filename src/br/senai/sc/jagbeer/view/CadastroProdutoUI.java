@@ -54,7 +54,7 @@ public class CadastroProdutoUI extends JInternalFrame {
 
 		setTitle("Cadastro de Produto");
 		setClosable(true);
-		setBounds(100, 100, 370, 282);
+		setBounds(100, 100, 424, 282);
 
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,
@@ -67,16 +67,17 @@ public class CadastroProdutoUI extends JInternalFrame {
 				groupLayout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 339,
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 393,
 								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(142, Short.MAX_VALUE)));
+						.addContainerGap(72, Short.MAX_VALUE)));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
 				Alignment.LEADING).addGroup(
 				groupLayout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 223,
-								Short.MAX_VALUE).addContainerGap()));
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 217,
+								GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(21, Short.MAX_VALUE)));
 
 		// Nome
 		lblNome = new JLabel("Nome:");
@@ -100,7 +101,7 @@ public class CadastroProdutoUI extends JInternalFrame {
 		jtfValorCusto.setColumns(10);
 
 		// Classificacao
-		lblClassificao = new JLabel("Classificação:");
+		lblClassificao = new JLabel("Classifica\u00E7\u00E3o:");
 
 		cmbClassificacao = new JComboBox();
 
@@ -108,7 +109,7 @@ public class CadastroProdutoUI extends JInternalFrame {
 				"Alimento", "Bebida" }));
 		cmbClassificacao.setMaximumRowCount(3);
 
-		// em caso de edição seta os valores nos campos
+		// em caso de edi��oo seta os valores nos campos
 		if (produtoEdicao != null) {
 			if (!produtoEdicao.getNome().equals("")
 					|| produtoEdicao.getNome() != null)
@@ -149,10 +150,17 @@ public class CadastroProdutoUI extends JInternalFrame {
 					Produto produto = new Produto();
 
 					produto.setNome(jtfNome.getText());
-					produto.setPrecoVenda(Double.parseDouble(jtfValor.getText()
-							.replaceAll(",", ".")));
-					produto.setPrecoCusto(Double.parseDouble(jtfValorCusto
-							.getText().replaceAll(",", ".")));
+
+					if (!jtfValor.getText().isEmpty()) {
+						produto.setPrecoVenda(Double.parseDouble(jtfValor
+								.getText().replaceAll(",", ".")));
+					}
+
+					if (!jtfValorCusto.getText().isEmpty()) {
+						produto.setPrecoCusto(Double.parseDouble(jtfValorCusto
+								.getText().replaceAll(",", ".")));
+					}
+
 					produto.setClassificacao(classificacao);
 
 					try {
@@ -171,10 +179,15 @@ public class CadastroProdutoUI extends JInternalFrame {
 				} else {
 
 					produtoEdicao.setNome(jtfNome.getText());
+
+					if (!jtfValorCusto.getText().isEmpty()) {
+						produtoEdicao.setPrecoCusto(Double
+								.parseDouble(jtfValorCusto.getText()));
+					}
+
 					produtoEdicao.setPrecoVenda(Double.parseDouble(jtfValor
 							.getText()));
-					produtoEdicao.setPrecoCusto(Double
-							.parseDouble(jtfValorCusto.getText()));
+
 					produtoEdicao.setClassificacao(classificacao);
 
 					try {
@@ -289,7 +302,7 @@ public class CadastroProdutoUI extends JInternalFrame {
 																						GroupLayout.PREFERRED_SIZE)
 																				.addPreferredGap(
 																						ComponentPlacement.RELATED))))
-								.addContainerGap(154, Short.MAX_VALUE)));
+								.addContainerGap(45, Short.MAX_VALUE)));
 		gl_panel.setVerticalGroup(gl_panel
 				.createParallelGroup(Alignment.LEADING)
 				.addGroup(
@@ -335,13 +348,13 @@ public class CadastroProdutoUI extends JInternalFrame {
 														GroupLayout.PREFERRED_SIZE)
 												.addComponent(lblClassificao))
 								.addPreferredGap(ComponentPlacement.RELATED,
-										69, Short.MAX_VALUE)
+										62, Short.MAX_VALUE)
 								.addGroup(
 										gl_panel.createParallelGroup(
 												Alignment.BASELINE)
-												.addComponent(btnSalvar)
+												.addComponent(btnCancelar)
 												.addComponent(btnLimpar)
-												.addComponent(btnCancelar))));
+												.addComponent(btnSalvar))));
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 
