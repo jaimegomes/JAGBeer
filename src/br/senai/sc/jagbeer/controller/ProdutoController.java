@@ -109,7 +109,7 @@ public class ProdutoController implements IController {
 	public List<Entidade> getPorClassificacao(String classificacao)
 			throws Exception {
 
-		if (classificacao == null || classificacao.equals(""))
+		if (classificacao == null || classificacao.trim().equals(""))
 			throw new Exception(
 					"A classificação não pode ser nula ou em branco.");
 
@@ -126,7 +126,7 @@ public class ProdutoController implements IController {
 	 */
 	public List<Entidade> getPorNome(String nome) throws Exception {
 
-		if (nome == null || nome.equals(""))
+		if (nome == null || nome.trim().equals(""))
 			throw new Exception("O nome não pode ser nulo ou em branco.");
 
 		return dao.getPorNome(nome);
@@ -140,7 +140,6 @@ public class ProdutoController implements IController {
 	 * @param classificacao
 	 * @return List<Entidade> listProduto
 	 */
-	@SuppressWarnings("null")
 	public List<Entidade> buscaCompleta()
 			throws Exception {
 
