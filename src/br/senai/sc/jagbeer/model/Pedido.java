@@ -6,7 +6,7 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
 
 /**
  * Classe Pedido. Atributos: int id, Mesa mesa, Cliente cliente, Date
- * dataPedido, boolean status;
+ * dataPedido, int status;
  * 
  * @author Jaime Gomes
  * 

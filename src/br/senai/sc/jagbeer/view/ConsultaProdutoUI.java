@@ -95,21 +95,18 @@ public class ConsultaProdutoUI extends JInternalFrame {
 					if (cmbClassificacao.getSelectedIndex() == 2)
 						classificacao = "Bebida";
 
-					System.out.println("jtfNome.getText(): "
-							+ jtfNome.getText());
-
 					// tudo em branco
 					if ((cmbClassificacao.getSelectedIndex() == -1 || cmbClassificacao
 							.getSelectedIndex() == 0)
 							&& (jtfNome.getText() == null || jtfNome.getText()
-									.equals(""))) {
+									.trim().equals(""))) {
 
 						listProduto = new ProdutoController().listar();
 						table.setModel(new ProdutoTableModel(listProduto));
 					}
 
 					// campo nome preenchido
-					if (!jtfNome.getText().equals("")
+					else if (!jtfNome.getText().trim().equals("")
 							|| jtfNome.getText() != null
 							&& (cmbClassificacao.getSelectedIndex() == -1 || cmbClassificacao
 									.getSelectedIndex() == 0)) {
@@ -117,27 +114,45 @@ public class ConsultaProdutoUI extends JInternalFrame {
 						listProduto = new ProdutoController()
 								.getPorNome(jtfNome.getText());
 
+						if (listProduto.size() == 0)
+							JOptionPane
+									.showMessageDialog(null,
+											"Não existem produtos com este nome cadastrados no banco de dados.");
+
 						table.setModel(new ProdutoTableModel(listProduto));
 
 					}
 
 					// campo classificação preenchido
-					if (cmbClassificacao.getSelectedIndex() > 0
+					else if (cmbClassificacao.getSelectedIndex() > 0
 							&& (jtfNome.getText() == null || jtfNome.getText()
 									.equals(""))) {
 
 						listProduto = new ProdutoController()
 								.getPorClassificacao(classificacao);
+
+						if (listProduto.size() == 0)
+							JOptionPane
+									.showMessageDialog(null,
+											"Não existem produtos com esta classificação cadastrados no banco de dados.");
+
 						table.setModel(new ProdutoTableModel(listProduto));
 
 					}
 
 					// campos nome e classificação preenchidos
-					if (cmbClassificacao.getSelectedIndex() > 0
+					else if (cmbClassificacao.getSelectedIndex() > 0
 							&& (jtfNome.getText() != null || !jtfNome.getText()
 									.equals(""))) {
 
 						listProduto = new ProdutoController().buscaCompleta();
+
+						if (listProduto.size() == 0)
+							JOptionPane
+									.showMessageDialog(
+											null,
+											"Não existem produtos com este nome e classificação cadastrados no banco de dados.");
+
 						table.setModel(new ProdutoTableModel(listProduto));
 
 					}
@@ -175,13 +190,19 @@ public class ConsultaProdutoUI extends JInternalFrame {
 		btnEditarInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				Produto produtoEditar;
+				CadastroProdutoUI cadProdutoUI;
 				try {
-					produtoEditar = new ProdutoTableModel(
-							new ProdutoController().listar()).get(table
-							.getSelectedRow());
-					CadastroProdutoUI cadProdutoUI = new CadastroProdutoUI(
-							produtoEditar, table);
+
+					if (table.getSelectedRow() > -1) {
+
+						Produto produtoEditar = new ProdutoTableModel(
+								new ProdutoController().listar()).get(table
+								.getSelectedRow());
+						cadProdutoUI = new CadastroProdutoUI(produtoEditar,
+								table);
+					} else {
+						cadProdutoUI = new CadastroProdutoUI(null, table);
+					}
 
 					getContentPane().add(cadProdutoUI, 0);
 					cadProdutoUI.setVisible(true);
