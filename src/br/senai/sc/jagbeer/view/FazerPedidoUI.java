@@ -1,37 +1,21 @@
 package br.senai.sc.jagbeer.view;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
-import br.senai.sc.jagbeer.controller.PedidoController;
-import br.senai.sc.jagbeer.controller.ProdutoController;
-import br.senai.sc.jagbeer.model.ItemPedido;
-import br.senai.sc.jagbeer.model.ItemPedidoTableModel;
-import br.senai.sc.jagbeer.model.Mesa;
-import br.senai.sc.jagbeer.model.Pedido;
-import br.senai.sc.jagbeer.model.Produto;
+
+
+
 
 /**
  * Classe View FazerPedidoUI
@@ -273,11 +257,10 @@ public class FazerPedidoUI extends JInternalFrame {
 				"Alimentos", "Bebidas" }));
 		cmbClassificacao.setSelectedIndex(0);
 		cmbClassificacao.setMaximumRowCount(3);
-		cmbClassificacao.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				try {
+		
+		ItemListener listener = new ItemListener(){  
+		    public void itemStateChanged(ItemEvent e) {  
+		    	try {
 					if (cmbClassificacao.getSelectedIndex() == 1) {
 
 						System.out.println("entrou");
@@ -291,9 +274,10 @@ public class FazerPedidoUI extends JInternalFrame {
 				} catch (Exception e2) {
 					e2.getMessage();
 				}
+		    }  
+		    
+		cmbClassificacao.addItemListener(listener) {
 
-			}
-		});
 
 		lblClassificao = new JLabel("Classifica\u00E7\u00E3o:");
 
@@ -304,7 +288,6 @@ public class FazerPedidoUI extends JInternalFrame {
 		// cmbProduto.setModel(dcbListaProdutos);
 
 		try {
-			System.out.println("size: " + listNomesProdutos.size());
 			if (listNomesProdutos.size() > 0) {
 				for (Entidade e : listNomesProdutos) {
 
