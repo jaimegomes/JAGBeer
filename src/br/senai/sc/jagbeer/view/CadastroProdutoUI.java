@@ -182,10 +182,17 @@ public class CadastroProdutoUI extends JInternalFrame {
 						new ProdutoController().salvar(produto);
 						JOptionPane.showMessageDialog(null,
 								"Produto Cadastrado com Sucesso!");
+
 						jtfNome.setText("");
 						jtfValor.setText("");
 						jtfValorCusto.setText("");
 						cmbClassificacao.setSelectedIndex(0);
+
+						if (table != null) {
+							table.setModel(new ProdutoTableModel(
+									new ProdutoController().listar()));
+							dispose();
+						}
 
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
