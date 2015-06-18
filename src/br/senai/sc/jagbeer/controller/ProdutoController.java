@@ -20,17 +20,17 @@ public class ProdutoController implements IController {
 		produto = (Produto) entidade;
 
 		if (produto == null)
-			throw new Exception("Produto n√£o pode ser nulo.");
+			throw new Exception("Produto n„o pode ser nulo.");
 
 		if (produto.getNome().trim().equals(""))
-			throw new Exception("Nome do produto obrigat√≥rio.");
+			throw new Exception("Nome do produto obrigatÛrio.");
 
 		if (produto.getPrecoVenda() == null || produto.getPrecoVenda() == 0)
 			throw new Exception(
-					"Pre√ßo de venda do produto √© obrigat√≥rio e deve ser maior que zero.");
+					"Valor do produto È obrigatÛrio e deve ser maior que zero.");
 
 		if (produto.getClassificacao().trim().equals(""))
-			throw new Exception("Classifica√ß√£o do produto obrigat√≥rio.");
+			throw new Exception("classificaÁ„o do produto obrigatÛria.");
 
 		dao.salvar(produto);
 
@@ -54,17 +54,17 @@ public class ProdutoController implements IController {
 		produto = (Produto) entidade;
 
 		if (produto == null)
-			throw new Exception("Produto n√£o pode ser nulo.");
+			throw new Exception("Produto n„o pode ser nulo.");
 
 		if (produto.getNome().trim().equals(""))
-			throw new Exception("Nome do produto obrigat√≥rio.");
+			throw new Exception("Nome do produto obrigatÛrio.");
 
 		if (produto.getPrecoVenda() == null || produto.getPrecoVenda() == 0)
 			throw new Exception(
-					"Pre√ßo de venda do produto √© obrigat√≥rio e deve ser maior que zero.");
+					"Valor do produto È obrigatÛrio e deve ser maior que zero.");
 
 		if (produto.getClassificacao().trim().equals(""))
-			throw new Exception("Classifica√ß√£o do produto obrigat√≥rio.");
+			throw new Exception("classificaÁ„o do produto obrigatÛria.");
 
 		dao.editar(produto);
 
@@ -85,7 +85,7 @@ public class ProdutoController implements IController {
 		produto = null;
 
 		if (id < 0)
-			throw new Exception("id n√£o pode ser menor que zero.");
+			throw new Exception("id n„o pode ser menor que zero.");
 
 		produto = (Produto) dao.getPorId(id);
 
@@ -99,8 +99,8 @@ public class ProdutoController implements IController {
 	}
 
 	/**
-	 * M√©todo respons√°vel por buscar todos os produtos de determinada
-	 * classifica√ß√£o passada como par√¢metro.
+	 * MÈtodo respons·vel por buscar todos os produtos de determinada
+	 * classificaÁ„o passada como par‚metro.
 	 * 
 	 * @param classificacao
 	 * @return dao.getPorClassificacao(classificacao)
@@ -111,14 +111,14 @@ public class ProdutoController implements IController {
 
 		if (classificacao == null || classificacao.trim().equals(""))
 			throw new Exception(
-					"A classifica√ß√£o n√£o pode ser nula ou em branco.");
+					"A classificaÁ„o n„o pode ser nula ou em branco.");
 
 		return dao.getPorClassificacao(classificacao);
 	}
 
 	/**
-	 * M√©todo respons√°vel por buscar todos os produtos de determinado nome
-	 * passado como par√¢metro.
+	 * MÈtodo respons·vel por buscar todos os produtos de determinado nome
+	 * passado como par‚metro.
 	 * 
 	 * @param classificacao
 	 * @return dao.getPorNome(nome)
@@ -127,14 +127,14 @@ public class ProdutoController implements IController {
 	public List<Entidade> getPorNome(String nome) throws Exception {
 
 		if (nome == null || nome.trim().equals(""))
-			throw new Exception("O nome n√£o pode ser nulo ou em branco.");
+			throw new Exception("O nome n„o pode ser nulo ou em branco.");
 
 		return dao.getPorNome(nome);
 	}
 
 	/**
-	 * M√©todo respons√°vel por fazer a busca dos produtos de acordo com o nome e
-	 * a classifica√ß√£o passados como par√¢metro.
+	 * MÈtodo respons·vel por fazer a busca dos produtos de acordo com o nome e
+	 * a classificaÁ„o passados como par‚metro.
 	 * 
 	 * @param nome
 	 * @param classificacao
