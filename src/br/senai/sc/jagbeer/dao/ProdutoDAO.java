@@ -16,7 +16,7 @@ import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
 /**
- * Classe DAO, respons√°vel pela manipula√ß√£o dos dados dos Produtos no banco.
+ * Classe DAO, respons·vel pela manipula√ß√£o dos dados dos Produtos no banco.
  * 
  * @author Jaime Gomes
  * 
@@ -34,6 +34,9 @@ public class ProdutoDAO extends GenericDAO {
 		try {
 
 			produto = (Produto) entidade;
+
+			if (produto.getPrecoCusto() == null)
+				produto.setPrecoCusto(0.0);
 
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, produto.getNome());
@@ -168,8 +171,8 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * M√©todo respons√°vel por buscar todos os produtos de determinada
-	 * classifica√ß√£o passada como par√¢metro.
+	 * MÈtodo respons·vel por buscar todos os produtos de determinada
+	 * classificaÁ„o passada como par‚metro.
 	 * 
 	 * @param classificacao
 	 * @return List<Entidade> listProduto
@@ -203,7 +206,7 @@ public class ProdutoDAO extends GenericDAO {
 			pstm.close();
 		} catch (Exception e) {
 			System.out
-					.println("[ProdutoDAO] - Erro ao buscar produto por classifica√ß√£o.\n"
+					.println("[ProdutoDAO] - Erro ao buscar produto por classificaÁ„o.\n"
 							+ e.getMessage());
 		}
 
@@ -212,8 +215,8 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * M√©todo respons√°vel por buscar todos os produtos de determinado nome
-	 * passado como par√¢metro.
+	 * MÈtodo respons·vel por buscar todos os produtos de determinado nome
+	 * passado como par‚metro.
 	 * 
 	 * @param classificacao
 	 * @return List<Entidade> listProduto
@@ -256,18 +259,20 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * M√©todo respons√°vel por fazer a busca dos produtos de acordo com o nome e
-	 * a classifica√ß√£o passados como par√¢metro.
+	 * MÈtodo respons·vel por fazer a busca dos produtos de acordo com o nome e
+	 * a classificaÁ„o passados como par‚metro.
 	 * 
 	 * @param nome
 	 * @param classificacao
 	 * @return List<Entidade> listProduto
 	 */
-	public List<Entidade> buscaCompleta() throws Exception {
+	public List<Entidade> buscaPorNomeClassificacao(String nome,
+			String classificacao) throws Exception {
 
 		List<Entidade> listProduto = new ArrayList<Entidade>();
 
-		String sql = "SELECT * FROM produto";
+		String sql = "SELECT * FROM produto WHERE nomeProduto LIKE '%" + nome
+				+ "%' AND classificacao LIKE '" + classificacao + "'";
 
 		try {
 
@@ -290,11 +295,56 @@ public class ProdutoDAO extends GenericDAO {
 			pstm.close();
 		} catch (Exception e) {
 			System.out
-					.println("[ProdutoDAO] - Erro ao buscar produto por nome.\n"
+					.println("[ProdutoDAO] - Erro ao buscar produto por nome e classificaÁ„o.\n"
 							+ e.getMessage());
 		}
 
 		return listProduto;
+
+	}
+
+	/**
+	 * MÈtodo respons·vel por fazer a busca dos produtos de acordo com o nome e
+	 * a classificaÁ„o passados como par‚metro.
+	 * 
+	 * @param nome
+	 * @param classificacao
+	 * @return List<Entidade> listProduto
+	 */
+	public Entidade buscaCompleta(String nome, Double precoVenda,
+			String classificacao) throws Exception {
+
+		Produto produto = null;
+
+		String sql = "SELECT * FROM produto WHERE nomeProduto LIKE '%" + nome
+				+ "%' AND classificacao LIKE '%" + classificacao
+				+ "%' AND precoVenda = ?";
+
+		try {
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setDouble(1, precoVenda);
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				produto = new Produto(result.getInt("id"),
+						result.getString("nomeProduto"),
+						result.getDouble("precoCusto"),
+						result.getDouble("precoVenda"),
+						result.getString("classificacao"));
+
+			}
+
+			pstm.close();
+		} catch (Exception e) {
+			System.out
+					.println("[ProdutoDAO] - Erro ao buscar produto por nome e classificaÁ„o.\n"
+							+ e.getMessage());
+		}
+
+		return produto;
 
 	}
 
