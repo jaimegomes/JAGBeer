@@ -127,10 +127,10 @@ public class CadastroClienteUI extends JInternalFrame {
 						pedido.setDataPedido(new Date());
 
 						new PedidoController().salvar(pedido);
-//
-//						jtfNomeCliente.setText("");
-//						jtfEmailCliente.setText("");
-//						jtfTelefoneCliente.setText("");
+
+						jtfNomeCliente.setText("");
+						jtfEmailCliente.setText("");
+						jtfTelefoneCliente.setText("");
 
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
