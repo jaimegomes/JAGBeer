@@ -110,7 +110,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 						
 						int numeroMesa = Integer.parseInt(tableMesa.getValueAt(linhaSelecionada, 0).toString());
 						
-						Mesa editarMesa =(Mesa) new MesaController().getPorNumeroMesaEditar(numeroMesa);
+						Mesa editarMesa =(Mesa) new MesaController().getPorNumeroMesa(numeroMesa);
 						
 						cadMesaUI = new CadastroMesaUI(editarMesa, tableMesa);
 						

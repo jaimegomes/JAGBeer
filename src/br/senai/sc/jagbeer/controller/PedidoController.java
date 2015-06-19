@@ -61,6 +61,10 @@ public class PedidoController implements IController {
 
 	@Override
 	public Entidade getPorId(int id) throws Exception {
+
+		if (id == 0)
+			throw new Exception("Id deve ser maior que zero.");
+
 		return (Pedido) dao.getPorId(id);
 	}
 
@@ -69,9 +73,9 @@ public class PedidoController implements IController {
 		dao.atualizaTabela(table);
 
 	}
-	
+
 	public List<Entidade> getPedidosAbertos() {
-		
+
 		return dao.getPedidosAbertos();
 	}
 

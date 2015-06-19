@@ -87,7 +87,4 @@ public class MesaController implements IController {
 		dao.atualizaTabela(table);
 	}
 
-	public Entidade getPorNumeroMesaEditar(int editarPorNumeroMesa) {
-		return dao.getPorNumeroMesaEditar(editarPorNumeroMesa);
-	}
 }

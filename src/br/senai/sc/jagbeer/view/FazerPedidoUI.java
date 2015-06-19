@@ -34,6 +34,7 @@ import br.senai.sc.jagbeer.model.ItemPedidoTableModel;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.Produto;
+import br.senai.sc.jagbeer.model.ProdutoPedido;
 
 /**
  * Classe View FazerPedidoUI
@@ -90,19 +91,40 @@ public class FazerPedidoUI extends JInternalFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				int idPedido = Integer.parseInt(cmbPedido.getSelectedItem()
-						+ "");
+				int idPedido = 0;
+
+				if (cmbPedido.getSelectedItem() != null
+						&& !cmbPedido.getSelectedItem().equals("")) {
+
+					idPedido = Integer.parseInt(cmbPedido.getSelectedItem()
+							+ "");
+
+				} else {
+					cmbCliente.setSelectedIndex(-1);
+					cmbMesa.setSelectedIndex(-1);
+				}
 
 				try {
 
-					Pedido pedido = (Pedido) new PedidoController()
-							.getPorId(idPedido);
+					if (idPedido > 0) {
+						Pedido pedido = (Pedido) new PedidoController()
+								.getPorId(idPedido);
 
-					if (pedido != null)
-						cmbCliente.setSelectedItem(pedido.getCliente()
-								.getNome());
+						if (pedido != null) {
+							cmbCliente.setSelectedItem(pedido.getCliente()
+									.getNome());
+
+							if (pedido.getMesa() != null) {
+								cmbMesa.setSelectedItem(pedido.getMesa()
+										.getNumeroMesa());
+							}
+
+						}
+
+					}
 
 				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
 					e1.printStackTrace();
 				}
 
@@ -122,6 +144,7 @@ public class FazerPedidoUI extends JInternalFrame {
 				}
 			}
 		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		}
 
@@ -166,12 +189,28 @@ public class FazerPedidoUI extends JInternalFrame {
 
 				Cliente cliente = null;
 				try {
-					cliente = (Cliente) new ClienteController()
-							.getPorNome(nomeCliente);
 
-					if (cliente != null) {
-						int idPedido = cliente.getId();
-						cmbPedido.setSelectedItem(idPedido);
+					if (!nomeCliente.equals("") && nomeCliente != null) {
+
+						cliente = (Cliente) new ClienteController()
+								.getPorNome(nomeCliente);
+
+						if (cliente != null) {
+							int idCliente = cliente.getId();
+
+							Pedido pedido = (Pedido) new PedidoController()
+									.getPorId(idCliente);
+							cmbPedido.setSelectedItem(pedido.getId());
+
+							if (pedido.getMesa() != null) {
+								cmbMesa.setSelectedItem(pedido.getMesa()
+										.getNumeroMesa());
+							}
+
+						}
+					} else {
+						cmbPedido.setSelectedIndex(-1);
+						cmbMesa.setSelectedIndex(-1);
 					}
 
 				} catch (Exception e1) {
@@ -283,6 +322,7 @@ public class FazerPedidoUI extends JInternalFrame {
 
 				Pedido pedido = null;
 				Mesa mesa = null;
+
 				try {
 
 					if (cmbPedido.getSelectedIndex() > 0) {
@@ -297,15 +337,17 @@ public class FazerPedidoUI extends JInternalFrame {
 						pedido = new Pedido();
 					}
 
-					if (cmbMesa.getSelectedIndex() > 0) {
+					for (Entidade e : listItensPedido) {
+						ItemPedido itemPedido = (ItemPedido) e;
 
-						int numMesa = Integer.parseInt(cmbMesa
-								.getSelectedItem() + "");
-
-						mesa = (Mesa) new MesaController()
-								.getPorNumeroMesa(numMesa);
-
+						ProdutoPedido produtoPedido = new ProdutoPedido();
+						produtoPedido.setIdPedido(pedido.getId());
+						produtoPedido.setIdProduto(itemPedido.getProduto()
+								.getId());
+						
+						new ProdutoPe
 					}
+
 				} catch (Exception e) {
 
 				}

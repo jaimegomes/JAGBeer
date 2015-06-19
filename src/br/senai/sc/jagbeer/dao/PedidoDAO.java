@@ -221,14 +221,17 @@ public class PedidoDAO extends GenericDAO {
 
 		Date data = new Date();
 
+		mesaDAO = new MesaDAO();
+
 		List<Entidade> listPedidos = new ArrayList<Entidade>();
 
 		// Pedido aberto estado = 1, pedido fechado estado = 0
-		String sql = "SELECT * FROM pedido WHERE dataPedido = '"
-				+ new java.sql.Date(data.getTime()) + "' AND status = 1";
+		String sql = "SELECT * FROM pedido WHERE dataPedido = ? AND status = 1";
+
 		try {
 
 			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setDate(1, new java.sql.Date(data.getTime()));
 
 			ResultSet result = pstm.executeQuery();
 
@@ -237,9 +240,9 @@ public class PedidoDAO extends GenericDAO {
 				try {
 					Mesa mesa = null;
 					if (result.getInt("idMesa") > 0) {
+
 						mesa = (Mesa) mesaDAO.getPorId(result.getInt("idMesa"));
 
-						System.out.println("idMesa: " + mesa.getId());
 					}
 
 					Cliente cliente = null;
@@ -251,10 +254,9 @@ public class PedidoDAO extends GenericDAO {
 
 					}
 
-					Date dataPedido = result.getDate("dataPedido");
-
 					pedido = new Pedido(result.getInt("id"), mesa, cliente,
-							dataPedido, result.getInt("status"));
+							result.getDate("dataPedido"),
+							result.getInt("status"));
 
 					listPedidos.add(pedido);
 
@@ -269,9 +271,8 @@ public class PedidoDAO extends GenericDAO {
 			pstm.close();
 
 		} catch (SQLException e) {
-			System.out
-					.println("[PedidoDAO] - Erro ao buscar pedido por id.bbbb\n"
-							+ e.getMessage());
+			System.out.println("[PedidoDAO] - Erro ao buscar pedido aberto.\n"
+					+ e.getMessage());
 		}
 
 		return listPedidos;
