@@ -227,6 +227,8 @@ public class PrincipalUI extends JFrame {
 		jtfCliente = new JTextField();
 		jtfCliente.setColumns(10);
 
+		tablePedidoAberto = new JTable();
+
 		JLabel lblPedido = new JLabel("Pedido:");
 
 		JButton btnPesquisar = new JButton("Pesquisar");
@@ -262,7 +264,7 @@ public class PrincipalUI extends JFrame {
 						&& !jtfPedido.getText().isEmpty()) {
 
 					try {
-
+						System.out.println("id: " + jtfPedido.getText());
 						Pedido pedido = (Pedido) new PedidoController()
 								.getPorId(Integer.parseInt(jtfPedido.getText()));
 
@@ -335,6 +337,37 @@ public class PrincipalUI extends JFrame {
 		});
 
 		JButton btnEncerrar = new JButton("Encerrar Pedido");
+		btnEncerrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+
+					int linhaSelecionada = tablePedidoAberto.getSelectedRow();
+
+					if (linhaSelecionada > -1) {
+
+						int idPedido = Integer.parseInt(tablePedidoAberto
+								.getValueAt(linhaSelecionada, 0).toString());
+
+						Pedido pedido = (Pedido) new PedidoController()
+								.getPorId(idPedido);
+
+						pedido.setStatus(0);
+
+						new PedidoController().editar(pedido);
+
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Selecione um produto.");
+					}
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane
 				.setHorizontalGroup(gl_contentPane
@@ -461,11 +494,6 @@ public class PrincipalUI extends JFrame {
 
 		JScrollPane scrollPane = new JScrollPane();
 
-		tablePedidoAberto = new JTable();
-
-		tablePedidoAberto
-				.setModel(new PedidoAbertoTableModel(listPedidoAberto));
-
 		scrollPane.setViewportView(tablePedidoAberto);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(
@@ -508,6 +536,9 @@ public class PrincipalUI extends JFrame {
 
 			listPedidoAberto.add(pedidoAberto);
 		}
+
+		tablePedidoAberto
+				.setModel(new PedidoAbertoTableModel(listPedidoAberto));
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
 	}

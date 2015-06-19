@@ -54,7 +54,7 @@ public class PedidoDAO extends GenericDAO {
 				pstmt.close();
 
 			} else {
-				String sql = "INSERT INTO pedido (idMesa, idCliente, dataPedido, status) values(?,?,?)";
+				String sql = "INSERT INTO pedido (idMesa, idCliente, dataPedido, status) values(?,?,?,?)";
 
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setObject(1, pedido.getMesa().getId());
@@ -100,7 +100,7 @@ public class PedidoDAO extends GenericDAO {
 	@Override
 	public void editar(Entidade entidade) throws SQLException {
 
-		String sql = "UPDATE pedido SET idMesa = ?, idCliente = ?, dataPedido = ?, estado = ?  WHERE id= ?";
+		String sql = "UPDATE pedido SET idMesa = ?, idCliente = ?, dataPedido = ?, status = ?  WHERE id= ?";
 		try {
 			pedido = (Pedido) entidade;
 			Date dataAtual = new Date();
@@ -109,7 +109,7 @@ public class PedidoDAO extends GenericDAO {
 
 			pstm.setInt(1, pedido.getMesa().getId());
 			pstm.setInt(2, pedido.getCliente().getId());
-			pstm.setDate(3, (java.sql.Date) dataAtual);
+			pstm.setDate(3, new java.sql.Date(dataAtual.getTime()));
 			pstm.setInt(4, pedido.getStatus());
 			pstm.setInt(5, pedido.getId());
 
@@ -146,7 +146,7 @@ public class PedidoDAO extends GenericDAO {
 
 					Pedido p = new Pedido(result.getInt("id"), mesa, cliente,
 							result.getDate("dataPedido"),
-							result.getInt("estado"));
+							result.getInt("status"));
 
 					listaPedidos.add(p);
 
@@ -219,7 +219,7 @@ public class PedidoDAO extends GenericDAO {
 
 		List<Entidade> listPedidos = new ArrayList<Entidade>();
 
-		// Pedido aberto estado = 1, pedido fechado estado = 0
+		// Pedido aberto status = 1, pedido fechado status = 0
 		String sql = "SELECT * FROM pedido WHERE dataPedido = ? AND status = 1";
 
 		try {
