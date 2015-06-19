@@ -15,6 +15,7 @@ import br.senai.sc.jagbeer.abstracts.GenericDAO;
 import br.senai.sc.jagbeer.conexao.Conexao;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.Mesa;
+import br.senai.sc.jagbeer.model.Pedido;
 
 public class MesaDAO extends GenericDAO {
 
@@ -94,7 +95,27 @@ public class MesaDAO extends GenericDAO {
 
 	@Override
 	public List<Entidade> listar() throws Exception {
-		return null;
+		
+		List<Entidade> listaMesas = new ArrayList<Entidade>();
+		
+		String query = "SELECT * FROM mesa";
+		
+		try{
+			PreparedStatement pstmt = con.prepareStatement(query);
+			ResultSet result = pstmt.executeQuery();
+			
+			while (result.next()) {
+				Mesa m = new Mesa(result.getInt("id"),
+						result.getInt("numeroMesa"), result.getInt("lugares"));
+				listaMesas.add(m);
+			}
+			pstmt.close();
+			
+		}catch (SQLException se){
+			System.out.println("Erro ao listar Mesa.\n" + se.getMessage());
+		}
+		
+		return listaMesas;
 	}
 
 	@Override
@@ -124,7 +145,7 @@ public class MesaDAO extends GenericDAO {
 
 	@Override
 	public void atualizaTabela(JTable table) throws Exception {
-		// table.setModel(new MesaTableModel(listar()));
+		
 	}
 
 	
@@ -153,19 +174,20 @@ public class MesaDAO extends GenericDAO {
 		return false;
 	}
 	
-	public List<Entidade> getPorNumeroMesa(String numeroMesa) {
+	public List<Entidade> getPorNumeroMesa(int numeroMesa) {
 		Mesa mesa = null;
 		List<Entidade> listMesa = new ArrayList<Entidade>();
-		String sql = "SELECT * FROM mesa WHERE numeroMesa LIKE '%"
-				+ numeroMesa + "%'";
+		String sql = "SELECT * FROM mesa WHERE numeroMesa = ?";
 
 		try {
-			Statement pstmt = con.createStatement();
-
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, numeroMesa);
+			
 			ResultSet result = pstmt.executeQuery(sql);
+			
 
 			while (result.next()) {
-				mesa = new Mesa(result.getInt("numero"), result.getInt("lugares"));
+				mesa = new Mesa(result.getInt("numeroMesa"), result.getInt("lugares"));
 				listMesa.add(mesa);
 			}
 
