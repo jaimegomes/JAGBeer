@@ -1,9 +1,7 @@
 package br.senai.sc.jagbeer.controller;
 
 import java.util.List;
-
 import javax.swing.JTable;
-
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.dao.MesaDAO;
 import br.senai.sc.jagbeer.interfaces.IController;
@@ -16,23 +14,24 @@ public class MesaController implements IController {
 	@Override
 	public void salvar(Entidade entidade) throws Exception {
 
-		Mesa mesa = (Mesa) entidade;
+		Mesa mesa = (Mesa) entidade;		
 
 		if (mesa == null) {
-			throw new Exception("Mesa nao pode ser nula.");
+			throw new Exception("Mesa não pode ser nula.");
+		}
+		
+		if(mesa.getNumeroMesa().equals("")){
+			throw new Exception("Número da mesa obrigatório.");
 		}
 
-		if (mesa.getNumeroMesa() < 0 && mesa.getNumeroMesa() == 0) {
-			throw new Exception(
-					"Numero da mesa nao pode ser menor ou igual a zero.");
+		if (mesa.getNumeroMesa() < 0 || mesa.getNumeroMesa() == 0) {
+			throw new Exception("Número da mesa não pode ser menor ou igual a zero.");
 		}
 
-		// if(dao.verificarNumeroMesa(mesa.getNumeroMesa()) ){
-		// throw new Exception("Nï¿½mero da mesa jï¿½ cadastrado.");
-		// }
-		//
+		if (dao.verificarNumeroMesa(mesa.getNumeroMesa())) {
+			throw new Exception("Número da mesa ja cadastrado.");
+		}
 		dao.salvar(mesa);
-
 	}
 
 	@Override
@@ -45,7 +44,6 @@ public class MesaController implements IController {
 		}
 
 		dao.excluir(mesa);
-
 	}
 
 	@Override
@@ -53,19 +51,20 @@ public class MesaController implements IController {
 
 		Mesa mesa = (Mesa) entidade;
 
-		if (mesa == null)
-			throw new Exception("Mesa nao pode ser nula.");
-
-		if (mesa.getNumeroMesa() < 0 && mesa.getNumeroMesa() == 0)
+		if (mesa == null){
+			throw new Exception("Mesa não pode ser nula.");
+		}
+		
+		if (mesa.getNumeroMesa() < 0 || mesa.getNumeroMesa() == 0){
 			throw new Exception(
-					"Numero da mesa nao pode ser menor ou igual a zero");
-
+					"Número da mesa não pode ser menor ou igual a zero");
+		}
+		
 		if (dao.verificarNumeroMesa(mesa.getNumeroMesa())) {
-			throw new Exception("Numero da mesa ja cadastrado.");
+			throw new Exception("Número da mesa já cadastrado.");
 		}
 
 		dao.editar(mesa);
-
 	}
 
 	@Override
@@ -78,10 +77,10 @@ public class MesaController implements IController {
 		return dao.getPorId(id);
 	}
 
-	public List<Entidade> getPorNumeroMesa(int numeroMesa) throws Exception {
+	public Entidade getPorNumeroMesa(int numeroMesa) throws Exception {
 		return dao.getPorNumeroMesa(numeroMesa);
 	}
-
+	
 	@Override
 	public void atualizaTabela(JTable table) throws Exception {
 		dao.atualizaTabela(table);
