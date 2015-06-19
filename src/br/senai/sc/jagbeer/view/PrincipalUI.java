@@ -70,6 +70,7 @@ public class PrincipalUI extends JFrame {
 		setTitle("JAGBeer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -257,7 +258,7 @@ public class PrincipalUI extends JFrame {
 										.addGroup(
 												gl_contentPane
 														.createParallelGroup(
-																Alignment.LEADING,
+																Alignment.TRAILING,
 																false)
 														.addComponent(
 																panel,
@@ -265,7 +266,6 @@ public class PrincipalUI extends JFrame {
 																524,
 																GroupLayout.PREFERRED_SIZE)
 														.addGroup(
-																Alignment.TRAILING,
 																gl_contentPane
 																		.createSequentialGroup()
 																		.addComponent(
@@ -294,28 +294,28 @@ public class PrincipalUI extends JFrame {
 										.addGroup(
 												gl_contentPane
 														.createParallelGroup(
-																Alignment.LEADING)
+																Alignment.LEADING,
+																false)
+														.addComponent(
+																btnEncerrar, 0,
+																0,
+																Short.MAX_VALUE)
 														.addComponent(
 																btnNovo,
 																GroupLayout.DEFAULT_SIZE,
-																147,
+																GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE)
 														.addComponent(
 																btnAlterar,
 																GroupLayout.DEFAULT_SIZE,
-																147,
+																GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE)
 														.addComponent(
 																btnPesquisar,
 																GroupLayout.DEFAULT_SIZE,
-																147,
-																Short.MAX_VALUE)
-														.addComponent(
-																btnEncerrar,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
+																143,
 																Short.MAX_VALUE))
-										.addContainerGap()));
+										.addContainerGap(187, Short.MAX_VALUE)));
 		gl_contentPane
 				.setVerticalGroup(gl_contentPane
 						.createParallelGroup(Alignment.TRAILING)

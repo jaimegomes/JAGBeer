@@ -1,6 +1,7 @@
 package br.senai.sc.jagbeer.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.PedidoController;
+import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.model.ItemPedido;
 import br.senai.sc.jagbeer.model.ItemPedidoTableModel;
 import br.senai.sc.jagbeer.model.Mesa;
@@ -140,26 +142,44 @@ public class FazerPedidoUI extends JInternalFrame {
 				"Alimentos", "Bebidas" }));
 		cmbClassificacao.setSelectedIndex(0);
 		cmbClassificacao.setMaximumRowCount(3);
+		cmbClassificacao.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+
+					cmbProduto.removeAllItems();
+
+					if (cmbClassificacao.getSelectedIndex() == 1) {
+						listNomesProdutos = new ProdutoController()
+								.getPorClassificacao("Alimento");
+
+					} else if (cmbClassificacao.getSelectedIndex() == 2) {
+						listNomesProdutos = new ProdutoController()
+								.getPorClassificacao("Bebida");
+					}
+
+					if (listNomesProdutos.size() > 0) {
+						for (Entidade ent : listNomesProdutos) {
+
+							Produto produto = (Produto) ent;
+							cmbProduto.addItem(produto.getNome());
+
+						}
+					}
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		});
 
 		lblProduto = new JLabel("Produto:");
 
 		cmbProduto = new JComboBox();
 		cmbProduto.setMaximumRowCount(8);
-		// cmbProduto.setModel(dcbListaProdutos);
-
-		try {
-			if (listNomesProdutos.size() > 0) {
-				for (Entidade e : listNomesProdutos) {
-
-					Produto produto = (Produto) e;
-					cmbProduto.addItem(produto.getNome());
-
-				}
-			}
-
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
 
 		lblQuantidade = new JLabel("Quantidade:");
 
@@ -410,6 +430,7 @@ public class FazerPedidoUI extends JInternalFrame {
 		getContentPane().setLayout(groupLayout);
 
 	}
+
 
 	/**
 	 * @return the listItensPedido
