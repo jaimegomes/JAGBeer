@@ -72,8 +72,9 @@ public class ConsultaClienteUI extends JInternalFrame {
 					// ClienteController().getPorNome(jtfNomeCliente.getText());
 
 					tableConsultaCliente.setModel(new ClienteTableModel(
-							new ClienteController().getListClientesPorNome(jtfNomeCliente
-									.getText())));
+							new ClienteController()
+									.getListClientesPorNome(jtfNomeCliente
+											.getText())));
 
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null,
@@ -95,6 +96,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				// COLOCAR DO JEITO NOVO
 				try {
 					Cliente clienteEditar = new ClienteTableModel(
 							new ClienteController().listar())
