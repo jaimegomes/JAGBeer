@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -24,9 +25,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
+import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
+import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PedidoAberto;
 import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
@@ -227,10 +230,91 @@ public class PrincipalUI extends JFrame {
 		JLabel lblPedido = new JLabel("Pedido:");
 
 		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.addActionListener(new ActionListener() {
 
-		JButton btnAlterar = new JButton("Editar Pedido");
-		btnAlterar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				// campo cliente preenchido
+				if (!jtfCliente.getText().isEmpty()
+						&& jtfPedido.getText().isEmpty()) {
+
+					Cliente cliente = (Cliente) new ClienteController()
+							.getPorNome(jtfCliente.getText());
+
+					Pedido pedido = (Pedido) new PedidoController()
+							.getPorIdCliente(cliente.getId());
+
+					listPedidoAberto.add(new ProdutoPedidoController()
+							.getPorIdPedido(pedido.getId()));
+
+					if (listPedidoAberto.isEmpty()) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Não foram encontrados pedidos abertos para esse número de pedido.");
+					} else {
+						tablePedidoAberto.setModel(new PedidoAbertoTableModel(
+								listPedidoAberto));
+					}
+
+					// campo pedido preenchido
+				} else if (jtfCliente.getText().isEmpty()
+						&& !jtfPedido.getText().isEmpty()) {
+
+					try {
+
+						Pedido pedido = (Pedido) new PedidoController()
+								.getPorId(Integer.parseInt(jtfPedido.getText()));
+
+						listPedidoAberto.add(new ProdutoPedidoController()
+								.getPorIdPedido(pedido.getId()));
+
+						if (listPedidoAberto.isEmpty()) {
+							JOptionPane
+									.showMessageDialog(null,
+											"Não foram encontrados pedidos abertos para esse cliente.");
+							tablePedidoAberto
+									.setModel(new PedidoAbertoTableModel(
+											listPedidoAberto));
+						}
+
+					} catch (NumberFormatException e1) {
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+
+				} else if (jtfCliente.getText().isEmpty()
+						&& jtfPedido.getText().isEmpty()) {
+
+					try {
+
+						Cliente cliente = (Cliente) new ClienteController()
+								.getPorNome(jtfCliente.getText());
+
+						Pedido pedido = (Pedido) new PedidoController()
+								.getPorId(Integer.parseInt(jtfPedido.getText()));
+
+						if (cliente.getId() == pedido.getCliente().getId()) {
+							listPedidoAberto.add(new ProdutoPedidoController()
+									.getPorIdPedido(pedido.getId()));
+
+							tablePedidoAberto
+									.setModel(new PedidoAbertoTableModel(
+											listPedidoAberto));
+						} else {
+							JOptionPane
+									.showMessageDialog(null,
+											"Não existem pedidos abertos com os campos utilizados no filtro.");
+						}
+
+					} catch (NumberFormatException e1) {
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+
+				}
 
 			}
 		});
@@ -262,65 +346,62 @@ public class PrincipalUI extends JFrame {
 										.addGroup(
 												gl_contentPane
 														.createParallelGroup(
-																Alignment.TRAILING,
-																false)
-														.addComponent(
-																panel,
-																GroupLayout.PREFERRED_SIZE,
-																524,
-																GroupLayout.PREFERRED_SIZE)
+																Alignment.LEADING)
 														.addGroup(
 																gl_contentPane
 																		.createSequentialGroup()
 																		.addComponent(
-																				lblPedido,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				Short.MAX_VALUE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
+																				lblPedido)
+																		.addGap(4)
 																		.addComponent(
 																				jtfPedido,
 																				GroupLayout.PREFERRED_SIZE,
-																				87,
+																				GroupLayout.DEFAULT_SIZE,
 																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(45)
+																		.addGap(40)
 																		.addComponent(
 																				lblNome)
 																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
+																				ComponentPlacement.RELATED,
+																				GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE)
 																		.addComponent(
 																				jtfCliente,
 																				GroupLayout.PREFERRED_SIZE,
 																				259,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addGap(18)
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(27))
+														.addGroup(
+																gl_contentPane
+																		.createSequentialGroup()
+																		.addComponent(
+																				panel,
+																				GroupLayout.PREFERRED_SIZE,
+																				546,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)))
 										.addGroup(
 												gl_contentPane
 														.createParallelGroup(
 																Alignment.LEADING,
 																false)
 														.addComponent(
-																btnNovo,
+																btnEncerrar,
 																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																btnAlterar,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
+																169,
 																Short.MAX_VALUE)
 														.addComponent(
 																btnPesquisar,
-																GroupLayout.DEFAULT_SIZE,
-																143,
-																Short.MAX_VALUE)
-														.addComponent(
-																btnEncerrar,
 																GroupLayout.PREFERRED_SIZE,
-																160,
-																GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(642, Short.MAX_VALUE)));
+																163,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																btnNovo,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE))
+										.addContainerGap(610, Short.MAX_VALUE)));
 		gl_contentPane
 				.setVerticalGroup(gl_contentPane
 						.createParallelGroup(Alignment.TRAILING)
@@ -333,73 +414,70 @@ public class PrincipalUI extends JFrame {
 														.createParallelGroup(
 																Alignment.BASELINE)
 														.addComponent(lblPedido)
-														.addComponent(
-																btnPesquisar)
+														.addComponent(lblNome)
 														.addComponent(
 																jtfPedido,
 																GroupLayout.PREFERRED_SIZE,
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
-														.addComponent(lblNome)
 														.addComponent(
 																jtfCliente,
 																GroupLayout.PREFERRED_SIZE,
 																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																btnPesquisar))
 										.addGroup(
 												gl_contentPane
 														.createParallelGroup(
 																Alignment.LEADING)
 														.addGroup(
-																Alignment.TRAILING,
 																gl_contentPane
 																		.createSequentialGroup()
-																		.addGap(18)
-																		.addComponent(
-																				panel,
-																				GroupLayout.DEFAULT_SIZE,
-																				618,
-																				Short.MAX_VALUE)
-																		.addContainerGap())
-														.addGroup(
-																gl_contentPane
-																		.createSequentialGroup()
-																		.addGap(27)
-																		.addComponent(
-																				btnAlterar,
-																				GroupLayout.PREFERRED_SIZE,
-																				31,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(18)
+																		.addGap(30)
 																		.addComponent(
 																				btnNovo,
 																				GroupLayout.PREFERRED_SIZE,
 																				31,
 																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(113)
+																		.addPreferredGap(
+																				ComponentPlacement.UNRELATED)
 																		.addComponent(
 																				btnEncerrar,
 																				GroupLayout.PREFERRED_SIZE,
 																				31,
-																				GroupLayout.PREFERRED_SIZE)))));
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																gl_contentPane
+																		.createSequentialGroup()
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				panel,
+																				GroupLayout.PREFERRED_SIZE,
+																				452,
+																				GroupLayout.PREFERRED_SIZE)))
+										.addContainerGap(190, Short.MAX_VALUE)));
 
 		JScrollPane scrollPane = new JScrollPane();
+
+		tablePedidoAberto = new JTable();
+
+		tablePedidoAberto
+				.setModel(new PedidoAbertoTableModel(listPedidoAberto));
+
+		scrollPane.setViewportView(tablePedidoAberto);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(
+				Alignment.TRAILING).addComponent(scrollPane,
+				GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
 				Alignment.LEADING).addGroup(
 				gl_panel.createSequentialGroup()
 						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE,
-								514, GroupLayout.PREFERRED_SIZE)
+								435, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(GroupLayout.DEFAULT_SIZE,
 								Short.MAX_VALUE)));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
-				Alignment.TRAILING).addGroup(
-				Alignment.LEADING,
-				gl_panel.createSequentialGroup()
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE,
-								448, Short.MAX_VALUE).addContainerGap()));
-
-		tablePedidoAberto = new JTable();
 
 		List<Entidade> listPedido = new PedidoController().getPedidosAbertos();
 
@@ -430,11 +508,6 @@ public class PrincipalUI extends JFrame {
 
 			listPedidoAberto.add(pedidoAberto);
 		}
-
-		tablePedidoAberto
-				.setModel(new PedidoAbertoTableModel(listPedidoAberto));
-
-		scrollPane.setViewportView(tablePedidoAberto);
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
 	}

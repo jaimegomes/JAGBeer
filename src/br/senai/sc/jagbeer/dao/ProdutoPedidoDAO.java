@@ -150,4 +150,32 @@ public class ProdutoPedidoDAO extends GenericDAO {
 
 	}
 
+	public Entidade getPorIdPedido(int idPedido) {
+
+		String sql = "SELECT * FROM produtopedido WHERE idpedido = ?";
+		try {
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, idPedido);
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				produtoPedido = new ProdutoPedido(result.getInt("id"),
+						result.getInt("idproduto"), result.getInt("idpedido"));
+
+			}
+
+			pstm.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("[ProdutoPedidoDAO] - Erro ao buscar produto do pedido por id do pedido.\n"
+							+ e.getMessage());
+		}
+
+		return produtoPedido;
+	}
+
 }

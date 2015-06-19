@@ -79,4 +79,9 @@ public class PedidoController implements IController {
 		return dao.getPedidosAbertos();
 	}
 
+	public Entidade getPorIdCliente(int idCliente) {
+		
+		return dao.getPorIdCliente(idCliente);
+	}
+
 }

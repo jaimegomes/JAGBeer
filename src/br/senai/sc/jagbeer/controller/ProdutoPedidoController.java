@@ -46,5 +46,10 @@ public class ProdutoPedidoController implements IController {
 
 	}
 	
+	public Entidade getPorIdPedido(int idPedido) {
+		return dao.getPorIdPedido(idPedido);
+	}
+
+	
 
 }

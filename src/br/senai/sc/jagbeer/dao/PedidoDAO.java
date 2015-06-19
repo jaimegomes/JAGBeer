@@ -15,13 +15,14 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.abstracts.GenericDAO;
 import br.senai.sc.jagbeer.conexao.Conexao;
 import br.senai.sc.jagbeer.controller.ClienteController;
+import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
 /**
- * Classe DAO, respons√°vel pela manipula√ß√£o dos dados dos Pedidos no banco.
+ * Classe DAO, respons·vel pela manipulaÁ„o dos dados dos Pedidos no banco.
  * 
  * @author Jaime Gomes
  * 
@@ -29,7 +30,6 @@ import br.senai.sc.jagbeer.model.ProdutoTableModel;
 public class PedidoDAO extends GenericDAO {
 
 	private Connection con = Conexao.getConnection();
-	private MesaDAO mesaDAO = null;
 	private Pedido pedido = null;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -128,8 +128,6 @@ public class PedidoDAO extends GenericDAO {
 	@Override
 	public List<Entidade> listar() {
 
-		mesaDAO = new MesaDAO();
-
 		List<Entidade> listaPedidos = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM pedido";
 		try {
@@ -141,8 +139,8 @@ public class PedidoDAO extends GenericDAO {
 			while (result.next()) {
 
 				try {
-					Mesa mesa = (Mesa) mesaDAO
-							.getPorId(result.getInt("idMesa"));
+					Mesa mesa = (Mesa) new MesaController().getPorId(result
+							.getInt("idMesa"));
 					Cliente cliente = (Cliente) new ClienteController()
 							.getPorId(result.getInt("idCliente"));
 
@@ -171,8 +169,6 @@ public class PedidoDAO extends GenericDAO {
 	@Override
 	public Entidade getPorId(int id) {
 
-		mesaDAO = new MesaDAO();
-
 		String sql = "SELECT * FROM pedido WHERE id = ?";
 		try {
 
@@ -184,8 +180,8 @@ public class PedidoDAO extends GenericDAO {
 			while (result.next()) {
 
 				try {
-					Mesa mesa = (Mesa) mesaDAO
-							.getPorId(result.getInt("idMesa"));
+					Mesa mesa = (Mesa) new MesaController().getPorId(result
+							.getInt("idMesa"));
 
 					Cliente cliente = (Cliente) new ClienteController()
 							.getPorId(result.getInt("idCliente"));
@@ -221,8 +217,6 @@ public class PedidoDAO extends GenericDAO {
 
 		Date data = new Date();
 
-		mesaDAO = new MesaDAO();
-
 		List<Entidade> listPedidos = new ArrayList<Entidade>();
 
 		// Pedido aberto estado = 1, pedido fechado estado = 0
@@ -241,7 +235,8 @@ public class PedidoDAO extends GenericDAO {
 					Mesa mesa = null;
 					if (result.getInt("idMesa") > 0) {
 
-						mesa = (Mesa) mesaDAO.getPorId(result.getInt("idMesa"));
+						mesa = (Mesa) new MesaController().getPorId(result
+								.getInt("idMesa"));
 
 					}
 
@@ -276,5 +271,48 @@ public class PedidoDAO extends GenericDAO {
 		}
 
 		return listPedidos;
+	}
+
+	public Entidade getPorIdCliente(int idCliente) {
+
+		String sql = "SELECT * FROM pedido WHERE idcliente = ?";
+		try {
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, idCliente);
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				try {
+					Mesa mesa = (Mesa) new MesaController().getPorId(result
+							.getInt("idMesa"));
+
+					Cliente cliente = (Cliente) new ClienteController()
+							.getPorId(result.getInt("idCliente"));
+
+					pedido = new Pedido(result.getInt("id"), mesa, cliente,
+							result.getDate("dataPedido"),
+							result.getInt("status"));
+
+				} catch (Exception e) {
+					System.out
+							.println("[PedidoDAO] - Erro ao buscar pedido por id do cliente.  "
+									+ e.getMessage());
+				}
+
+			}
+
+			pstm.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("[PedidoDAO] - Erro ao buscar pedido por id do cliente.\n"
+							+ e.getMessage());
+		}
+
+		return pedido;
+
 	}
 }
