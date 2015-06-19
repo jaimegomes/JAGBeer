@@ -37,7 +37,7 @@ public class CadastroClienteUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroClienteUI(Cliente c, final JTable table) {
+	public CadastroClienteUI(final Cliente c, final JTable table) {
 
 		clienteEdicao = c;
 
@@ -81,32 +81,21 @@ public class CadastroClienteUI extends JInternalFrame {
 		jtfEmailCliente = new JTextField();
 		jtfEmailCliente.setColumns(10);
 
-		if (clienteEdicao != null) {
-
-			if (clienteEdicao.getNome() != null) {
-				jtfNomeCliente.setText(clienteEdicao.getNome());
-
-			}
-
-			if (!clienteEdicao.getEmail().equals("")
-					|| clienteEdicao.getEmail() != null) {
-				jtfEmailCliente.setText(clienteEdicao.getEmail());
-			}
-
-			if (!clienteEdicao.getTelefone().equals("")
-					|| clienteEdicao.getTelefone() != null) {
-				jtfTelefoneCliente.setText(clienteEdicao.getTelefone());
-			}
-		}
-
 		jtfTelefoneCliente = new JTextField();
 		jtfTelefoneCliente.setColumns(10);
+
+		if (c != null) {
+
+			jtfNomeCliente.setText(clienteEdicao.getNome());
+			jtfEmailCliente.setText(clienteEdicao.getEmail());
+			jtfTelefoneCliente.setText(clienteEdicao.getTelefone());
+		}
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (clienteEdicao == null) {
+				if (c == null) {
 
 					Cliente cliente = new Cliente();
 					cliente.setNome(jtfNomeCliente.getText());
@@ -125,6 +114,7 @@ public class CadastroClienteUI extends JInternalFrame {
 						pedido.setCliente(c);
 						pedido.setStatus(1);
 						pedido.setDataPedido(new Date());
+						pedido.setMesa(null);
 
 						new PedidoController().salvar(pedido);
 

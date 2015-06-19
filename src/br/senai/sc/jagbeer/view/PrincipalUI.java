@@ -253,7 +253,7 @@ public class PrincipalUI extends JFrame {
 					if (listPedidoAberto.isEmpty()) {
 						JOptionPane
 								.showMessageDialog(null,
-										"Não foram encontrados pedidos abertos para esse número de pedido.");
+										"NÃ£o foram encontrados pedidos abertos para esse nÃºmero de pedido..");
 					} else {
 						tablePedidoAberto.setModel(new PedidoAbertoTableModel(
 								listPedidoAberto));
@@ -274,7 +274,7 @@ public class PrincipalUI extends JFrame {
 						if (listPedidoAberto.isEmpty()) {
 							JOptionPane
 									.showMessageDialog(null,
-											"Não foram encontrados pedidos abertos para esse cliente.");
+											"NÃ£o foram encontrados pedidos abertos para esse cliente.");
 							tablePedidoAberto
 									.setModel(new PedidoAbertoTableModel(
 											listPedidoAberto));
@@ -289,39 +289,15 @@ public class PrincipalUI extends JFrame {
 				} else if (jtfCliente.getText().isEmpty()
 						&& jtfPedido.getText().isEmpty()) {
 
-					try {
-
-						Cliente cliente = (Cliente) new ClienteController()
-								.getPorNome(jtfCliente.getText());
-
-						Pedido pedido = (Pedido) new PedidoController()
-								.getPorId(Integer.parseInt(jtfPedido.getText()));
-
-						if (cliente.getId() == pedido.getCliente().getId()) {
-							listPedidoAberto.add(new ProdutoPedidoController()
-									.getPorIdPedido(pedido.getId()));
-
-							tablePedidoAberto
-									.setModel(new PedidoAbertoTableModel(
-											listPedidoAberto));
-						} else {
-							JOptionPane
-									.showMessageDialog(null,
-											"Não existem pedidos abertos com os campos utilizados no filtro.");
-						}
-
-					} catch (NumberFormatException e1) {
-						e1.printStackTrace();
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
+					tablePedidoAberto.setModel(new PedidoAbertoTableModel(
+							new PedidoController().getPedidosAbertos()));
 
 				}
 
 			}
 		});
 
-		JButton btnNovo = new JButton("Novo Pedido");
+		JButton btnNovo = new JButton("Fazer Pedido");
 		btnNovo.addActionListener(new ActionListener() {
 
 			@Override
@@ -509,10 +485,11 @@ public class PrincipalUI extends JFrame {
 
 		List<Entidade> listPedido = new PedidoController().getPedidosAbertos();
 
+		double valorParcial = 0;
+
 		for (Entidade ent : listPedido) {
 
 			Pedido pedido = (Pedido) ent;
-			double valorParcial = 0;
 
 			try {
 				List<Entidade> listProdutosPedido = new ProdutoPedidoController()
@@ -520,11 +497,19 @@ public class PrincipalUI extends JFrame {
 				for (Entidade e : listProdutosPedido) {
 					ProdutoPedido produtoPedido = (ProdutoPedido) e;
 
-					if (produtoPedido.getIdPedido() == pedido.getId()) {
-						Produto p = (Produto) new ProdutoController()
+					Pedido p = (Pedido) new PedidoController()
+							.getPorId(produtoPedido.getIdPedido());
+
+					Cliente cliente = p.getCliente();
+
+					if (produtoPedido.getIdPedido() == pedido.getId()
+							&& cliente.getId() == pedido.getCliente().getId()) {
+						Produto prod = (Produto) new ProdutoController()
 								.getPorId(produtoPedido.getIdProduto());
 
-						valorParcial += p.getPrecoVenda();
+						valorParcial += prod.getPrecoVenda()
+								* produtoPedido.getQtde();
+
 					}
 				}
 			} catch (Exception e1) {

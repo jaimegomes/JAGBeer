@@ -345,6 +345,7 @@ public class FazerPedidoUI extends JInternalFrame {
 						produtoPedido.setIdPedido(pedido.getId());
 						produtoPedido.setIdProduto(itemPedido.getProduto()
 								.getId());
+						produtoPedido.setQtde(itemPedido.getQtde());
 
 						new ProdutoPedidoController().salvar(produtoPedido);
 					}

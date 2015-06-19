@@ -22,7 +22,7 @@ import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
 /**
- * Classe DAO, responsável pela manipulação dos dados dos Pedidos no banco.
+ * Classe DAO, responsï¿½vel pela manipulaï¿½ï¿½o dos dados dos Pedidos no banco.
  * 
  * @author Jaime Gomes
  * 
@@ -42,18 +42,20 @@ public class PedidoDAO extends GenericDAO {
 			pedido = (Pedido) entidade;
 
 			if (pedido.getMesa() == null) {
-				String sql = "INSERT INTO pedido (idCliente, dataPedido, status) values(?,?,?)";
+				String sql = "INSERT INTO pedido (idCliente, dataPedido, status, idMesa) values(?,?,?,?)";
 
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setObject(1, pedido.getCliente().getId());
 				pstmt.setDate(2, new java.sql.Date(data.getTime()));
 				pstmt.setInt(3, pedido.getStatus());
+				pstmt.setNull(4, java.sql.Types.NULL);
 
 				pstmt.execute();
 				con.commit();
 				pstmt.close();
 
 			} else {
+				
 				String sql = "INSERT INTO pedido (idMesa, idCliente, dataPedido, status) values(?,?,?,?)";
 
 				PreparedStatement pstmt = con.prepareStatement(sql);

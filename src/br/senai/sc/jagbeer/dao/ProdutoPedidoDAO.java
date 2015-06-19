@@ -22,7 +22,7 @@ public class ProdutoPedidoDAO extends GenericDAO {
 	@Override
 	public void salvar(Entidade entidade) throws Exception {
 
-		String sql = "INSERT INTO produtopedido (idproduto, idpedido) values(?,?)";
+		String sql = "INSERT INTO produtopedido (idproduto, idpedido, quantidade) values(?,?,?)";
 
 		try {
 
@@ -31,6 +31,7 @@ public class ProdutoPedidoDAO extends GenericDAO {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, produtoPedido.getIdProduto());
 			pstmt.setInt(2, produtoPedido.getIdPedido());
+			pstmt.setInt(3, produtoPedido.getQtde());
 
 			pstmt.execute();
 			con.commit();
@@ -68,12 +69,13 @@ public class ProdutoPedidoDAO extends GenericDAO {
 
 	@Override
 	public void editar(Entidade entidade) throws Exception {
-		String sql = "UPDATE produtopedido SET idproduto = ? , idpedido = ? WHERE id=?";
+		String sql = "UPDATE produtopedido SET idproduto = ? , idpedido = ?, quantidade = ? WHERE id=?";
 		try {
 			produtoPedido = (ProdutoPedido) entidade;
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setInt(1, produtoPedido.getIdProduto());
 			pstm.setInt(2, produtoPedido.getIdProduto());
+			pstm.setInt(3, produtoPedido.getQtde());
 
 			pstm.execute();
 			con.commit();
@@ -102,7 +104,8 @@ public class ProdutoPedidoDAO extends GenericDAO {
 			while (result.next()) {
 
 				produtoPedido = new ProdutoPedido(result.getInt("id"),
-						result.getInt("idproduto"), result.getInt("idpedido"));
+						result.getInt("idproduto"), result.getInt("idpedido"),
+						result.getInt("quantidade"));
 
 				listaProdutosPedido.add(produtoPedido);
 			}
@@ -130,7 +133,8 @@ public class ProdutoPedidoDAO extends GenericDAO {
 			while (result.next()) {
 
 				produtoPedido = new ProdutoPedido(result.getInt("id"),
-						result.getInt("idproduto"), result.getInt("idpedido"));
+						result.getInt("idproduto"), result.getInt("idpedido"),
+						result.getInt("quantidade"));
 
 			}
 
@@ -163,7 +167,8 @@ public class ProdutoPedidoDAO extends GenericDAO {
 			while (result.next()) {
 
 				produtoPedido = new ProdutoPedido(result.getInt("id"),
-						result.getInt("idproduto"), result.getInt("idpedido"));
+						result.getInt("idproduto"), result.getInt("idpedido"),
+						result.getInt("quantidade"));
 
 			}
 
