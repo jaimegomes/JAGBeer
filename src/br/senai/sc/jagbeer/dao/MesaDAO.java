@@ -80,7 +80,7 @@ public class MesaDAO extends GenericDAO {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, mesa.getNumeroMesa());
 			pstmt.setInt(2, mesa.getLugares());
-			pstmt.setInt(4, mesa.getId());
+			pstmt.setInt(3, mesa.getId());
 
 			pstmt.execute();
 			con.commit();
@@ -106,7 +106,7 @@ public class MesaDAO extends GenericDAO {
 			
 			while (result.next()) {
 				Mesa m = new Mesa(result.getInt("id"),
-						result.getInt("numeroMesa"), result.getInt("lugares"));
+								  result.getInt("numeroMesa"), result.getInt("lugares"));
 				listaMesas.add(m);
 			}
 			pstmt.close();
@@ -183,11 +183,11 @@ public class MesaDAO extends GenericDAO {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, numeroMesa);
 			
-			ResultSet result = pstmt.executeQuery(sql);
+			ResultSet result = pstmt.executeQuery();
 			
 
 			while (result.next()) {
-				mesa = new Mesa(result.getInt("numeroMesa"), result.getInt("lugares"));
+				mesa = new Mesa(result.getInt("id"), result.getInt("numeroMesa"), result.getInt("lugares"));
 				listMesa.add(mesa);
 			}
 

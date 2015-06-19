@@ -22,7 +22,7 @@ public class MesaController implements IController {
 				throw new Exception("Mesa nao pode ser nula.");
 			}
 			
-			if(mesa.getNumeroMesa() < 0 & mesa.getNumeroMesa() == 0){
+			if(mesa.getNumeroMesa() < 0 && mesa.getNumeroMesa() == 0){
 				throw new Exception("Numero da mesa nao pode ser menor ou igual a zero.");
 			}	
 			
@@ -53,9 +53,9 @@ public class MesaController implements IController {
 			Mesa mesa = (Mesa) entidade;
 
 			if (mesa == null)
-				throw new Exception("Mesa n�o pode ser nula.");
+				throw new Exception("Mesa nao pode ser nula.");
 
-			if (mesa.getNumeroMesa() < 0 & mesa.getNumeroMesa() == 0)
+			if (mesa.getNumeroMesa() < 0 && mesa.getNumeroMesa() == 0)
 				throw new Exception("Numero da mesa nao pode ser menor ou igual a zero");
 			
 			if(dao.verificarNumeroMesa(mesa.getNumeroMesa()) ){
@@ -76,8 +76,7 @@ public class MesaController implements IController {
 		return dao.getPorId(id);
 	}
 
-	public List<Entidade> getPorNumeroMesa(String numeroMesa) throws Exception {
-
+	public List<Entidade> getPorNumeroMesa(int numeroMesa) throws Exception {	
 		return dao.getPorNumeroMesa(numeroMesa);
 	}
 	
