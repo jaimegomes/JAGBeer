@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -18,7 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.model.Mesa;
@@ -78,13 +76,14 @@ public class ConsultaMesaUI extends JInternalFrame {
 
 				try {
 						
-					if(numeroMesa.getText().isEmpty()){
+					if(numeroMesa.getText().isEmpty() || numeroMesa.getText() == null){
 						listaMesa = new MesaController().listar();
 						tableMesa.setModel(new MesaTableModel(listaMesa));
 					}
 					
-					if(!numeroMesa.getText().isEmpty() ){
-						listaMesa = new MesaController().getPorNumeroMesa(Integer.parseInt(numeroMesa.getText()));
+					if(!numeroMesa.getText().isEmpty()){
+						Mesa mesa = (Mesa) new MesaController().getPorNumeroMesa(Integer.parseInt(numeroMesa.getText()));
+						listaMesa.add(mesa);
 						tableMesa.setModel(new MesaTableModel(listaMesa));
 					}
 					
@@ -233,6 +232,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 
 		
 		scrollPane.setViewportView(tableMesa);
+		//tableMesa.isCe
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 

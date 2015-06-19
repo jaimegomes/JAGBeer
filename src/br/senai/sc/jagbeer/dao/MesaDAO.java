@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JTable;
-
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.abstracts.GenericDAO;
 import br.senai.sc.jagbeer.conexao.Conexao;
@@ -147,7 +145,7 @@ public class MesaDAO extends GenericDAO {
 
 	public boolean verificarNumeroMesa(int numeroMesa) {
 
-		String query = "SELECT * FROM mesa WHERE numero = ?";
+		String query = "SELECT * FROM mesa WHERE numeroMesa = ?";
 
 		try {
 
@@ -170,9 +168,8 @@ public class MesaDAO extends GenericDAO {
 		return false;
 	}
 
-	public List<Entidade> getPorNumeroMesa(int numeroMesa) {
+	public Entidade getPorNumeroMesa(int numeroMesa) {
 		Mesa mesa = null;
-		List<Entidade> listMesa = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM mesa WHERE numeroMesa = ?";
 
 		try {
@@ -184,7 +181,6 @@ public class MesaDAO extends GenericDAO {
 			while (result.next()) {
 				mesa = new Mesa(result.getInt("id"),
 						result.getInt("numeroMesa"), result.getInt("lugares"));
-				listMesa.add(mesa);
 			}
 
 			pstmt.close();
@@ -194,7 +190,7 @@ public class MesaDAO extends GenericDAO {
 					+ se.getMessage());
 		}
 
-		return listMesa;
+		return mesa;
 	}
 
 

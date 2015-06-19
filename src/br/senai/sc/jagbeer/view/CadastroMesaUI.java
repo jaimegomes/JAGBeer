@@ -39,27 +39,45 @@ public class CadastroMesaUI extends JInternalFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Mesa", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		
+	
+
+		//Botão salvar
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Mesa mesa = new Mesa();
-				
-				mesa.setNumeroMesa(Integer.parseInt(mesaNumero.getText()));
-				mesa.setLugares(Integer.parseInt(qtdLugares.getText()));
-				
-				try{
-					new MesaController().salvar(mesa);
-					JOptionPane.showMessageDialog(null, "Mesa cadastrada com sucesso!");
-					dispose();
+									
+				//Verifica se o objeto é nulo
+				if(mesaEdicao == null ){
+					Mesa mesa = new Mesa();
+					mesa.setNumeroMesa(Integer.parseInt(mesaNumero.getText()));
+					mesa.setLugares(Integer.parseInt(qtdLugares.getText()));
 					
-				}catch(Exception e){
-					JOptionPane.showMessageDialog(null, e.getMessage());
-				}
-				
+					try{
+						new MesaController().salvar(mesa);
+						JOptionPane.showMessageDialog(null, "Mesa cadastrada com sucesso!");
+						dispose();
+						
+					}catch(Exception e){
+						JOptionPane.showMessageDialog(null, e.getMessage());
+					}
+					
+				}else{
+					//Se não for nulo ele edita
+					mesaEdicao.setNumeroMesa(Integer.parseInt(mesaNumero.getText()));
+					mesaEdicao.setLugares(Integer.parseInt(qtdLugares.getText()));
+					try{
+						new MesaController().editar(mesaEdicao);
+						JOptionPane.showMessageDialog(null, "Mesa editada com sucesso!");
+						dispose();
+						
+					}catch(Exception e){
+						JOptionPane.showMessageDialog(null, e.getMessage());
+					}
+				}				
 			}
 		});
 		
+		//Botão limpar
 		JButton btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -67,9 +85,8 @@ public class CadastroMesaUI extends JInternalFrame {
 				qtdLugares.setText("");
 			}
 		});
-		
-		
-		
+				
+		//Botão cancelar
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
