@@ -143,8 +143,8 @@ public class PedidoDAO extends GenericDAO {
 				try {
 					Mesa mesa = (Mesa) mesaDAO
 							.getPorId(result.getInt("idMesa"));
-					Cliente cliente = (Cliente) new ClienteController().getPorId(result
-							.getInt("idCliente"));
+					Cliente cliente = (Cliente) new ClienteController()
+							.getPorId(result.getInt("idCliente"));
 
 					Pedido p = new Pedido(result.getInt("id"), mesa, cliente,
 							result.getDate("dataPedido"),
@@ -187,14 +187,12 @@ public class PedidoDAO extends GenericDAO {
 					Mesa mesa = (Mesa) mesaDAO
 							.getPorId(result.getInt("idMesa"));
 
-					Cliente cliente = (Cliente) new ClienteController().getPorId(result
-							.getInt("idCliente"));
+					Cliente cliente = (Cliente) new ClienteController()
+							.getPorId(result.getInt("idCliente"));
 
 					pedido = new Pedido(result.getInt("id"), mesa, cliente,
 							result.getDate("dataPedido"),
 							result.getInt("status"));
-
-					System.out.println("pedido: " + pedido.getId());
 
 				} catch (Exception e) {
 					System.out
@@ -248,7 +246,8 @@ public class PedidoDAO extends GenericDAO {
 
 					if (result.getInt("idCliente") > 0) {
 
-						cliente = (Cliente) new ClienteController().getPorId(result.getInt("idCliente"));
+						cliente = (Cliente) new ClienteController()
+								.getPorId(result.getInt("idCliente"));
 
 					}
 

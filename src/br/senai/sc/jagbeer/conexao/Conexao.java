@@ -24,23 +24,23 @@ public class Conexao {
 		try {
 
 			// Conex„oMySQLWorkbench
-			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://localhost:3306/jagbeer";
-			con = DriverManager.getConnection(url, "root","root"); //alexandre "root","2905"
-			con.setAutoCommit(false);
+			// Class.forName("com.mysql.jdbc.Driver");
+			// String url = "jdbc:mysql://localhost:3306/jagbeer";
+			// con = DriverManager.getConnection(url, "root","root");
+			// //alexandre "root","2905"
+			// con.setAutoCommit(false);
 
-			//Conex„o Postgres
-//			Class.forName("org.postgresql.Driver");
-//			con = DriverManager.getConnection(
-//					"jdbc:postgresql://localhost:5432/jagbeer", "postgres",
-//					"postgres");
-//			con.setAutoCommit(false);
-			System.out.println("Conectado com sucesso.");
+			// Conex„o Postgres
+			Class.forName("org.postgresql.Driver");
+			con = DriverManager.getConnection(
+					"jdbc:postgresql://localhost:5432/jagbeer", "postgres",
+					"postgres");
+			con.setAutoCommit(false);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 
 		} catch (SQLException e) {
-			System.out.println("Driver n√£o encontrado.");
+			System.out.println("Driver n„o encontrado.");
 			throw new RuntimeException(e);
 		}
 		return con;
