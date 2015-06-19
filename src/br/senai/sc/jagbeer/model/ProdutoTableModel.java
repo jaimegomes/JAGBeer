@@ -40,7 +40,7 @@ public class ProdutoTableModel extends AbstractTableModel {
 	}
 
 	/**
-	 * Retorna o nome da coluna passada como par√¢metro.
+	 * Retorna o nome da coluna passada como par‚metro.
 	 * 
 	 * @param int colunm
 	 */
@@ -57,7 +57,7 @@ public class ProdutoTableModel extends AbstractTableModel {
 	}
 
 	/**
-	 * Retorna o objeto que est√° na linha e coluna indicada como par√¢metros.
+	 * Retorna o objeto que est· na linha e coluna indicada como par‚metros.
 	 * 
 	 * @param int row
 	 * @param int column
@@ -76,8 +76,8 @@ public class ProdutoTableModel extends AbstractTableModel {
 	}
 
 	/**
-	 * Atribui valor ao objeto que est√° na linha e coluna que s√£o passados como
-	 * par√¢metros.
+	 * Atribui valor ao objeto que est· na linha e coluna que s√£o passados como
+	 * par‚metros.
 	 * 
 	 * @param Object
 	 *            aValue
@@ -98,8 +98,8 @@ public class ProdutoTableModel extends AbstractTableModel {
 	}
 
 	/**
-	 * Retorna a classe da coluna passada como par√¢metro, caso tenha mais de um
-	 * tipo de par√¢metro fazer um if como em setValueAt para verificar qual a
+	 * Retorna a classe da coluna passada como par‚metro, caso tenha mais de um
+	 * tipo de par‚metro fazer um if como em setValueAt para verificar qual a
 	 * columnIndex se trata e retornar o tipo da classe.
 	 * 
 	 * @param int columnIndex
@@ -110,7 +110,7 @@ public class ProdutoTableModel extends AbstractTableModel {
 	}
 
 	/**
-	 * Verifica se a c√©lula passada como par√¢metro √© edit√°vel.
+	 * Verifica se a cÈlula passada como par‚metro È edit·vel.
 	 * 
 	 * @param int rowIndex
 	 * @param int columnIndex
@@ -121,7 +121,7 @@ public class ProdutoTableModel extends AbstractTableModel {
 	}
 
 	/**
-	 * Retorna o objeto que est√° na linha passada como par√¢metro.
+	 * Retorna o objeto que est· na linha passada como par‚metro.
 	 * 
 	 * @param int row
 	 * @return Aluno valores.get(row)

@@ -45,5 +45,6 @@ public class ProdutoPedidoController implements IController {
 	public void atualizaTabela(JTable table) throws Exception {
 
 	}
+	
 
 }

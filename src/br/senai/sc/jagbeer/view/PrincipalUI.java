@@ -25,8 +25,13 @@ import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.PedidoController;
+import br.senai.sc.jagbeer.controller.ProdutoController;
+import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
 import br.senai.sc.jagbeer.model.Pedido;
+import br.senai.sc.jagbeer.model.PedidoAberto;
 import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
+import br.senai.sc.jagbeer.model.Produto;
+import br.senai.sc.jagbeer.model.ProdutoPedido;
 
 /**
  * 
@@ -398,20 +403,37 @@ public class PrincipalUI extends JFrame {
 
 		List<Entidade> listPedido = new PedidoController().getPedidosAbertos();
 
-		System.out.println(listPedido);
 		for (Entidade ent : listPedido) {
 
 			Pedido pedido = (Pedido) ent;
+			double valorParcial = 0;
 
-			// alterar valorParcial do pedidoAberto
-			// PedidoAberto pedidoAberto = new PedidoAberto(pedido.getId(),
-			// pedido
-			// .getCliente().getNome(), 0);
-			// listPedidoAberto.add(pedidoAberto);
+			try {
+				List<Entidade> listProdutosPedido = new ProdutoPedidoController()
+						.listar();
+				for (Entidade e : listProdutosPedido) {
+					ProdutoPedido produtoPedido = (ProdutoPedido) e;
+
+					if (produtoPedido.getIdPedido() == pedido.getId()) {
+						Produto p = (Produto) new ProdutoController()
+								.getPorId(produtoPedido.getIdProduto());
+
+						valorParcial += p.getPrecoVenda();
+					}
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+
+			PedidoAberto pedidoAberto = new PedidoAberto(pedido.getId(), pedido
+					.getCliente().getNome(), valorParcial);
+
+			listPedidoAberto.add(pedidoAberto);
 		}
 
 		tablePedidoAberto
 				.setModel(new PedidoAbertoTableModel(listPedidoAberto));
+
 		scrollPane.setViewportView(tablePedidoAberto);
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
