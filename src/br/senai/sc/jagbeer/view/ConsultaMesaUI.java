@@ -102,16 +102,26 @@ public class ConsultaMesaUI extends JInternalFrame {
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				CadastroMesaUI cadMesaUI;
 				try {
 					int linhaSelecionada = tableMesa.getSelectedRow();
 					
 					if(linhaSelecionada > -1){
 						
-						int numeroMesa = Integer.parseInt(tableMesa.getValueAt(linhaSelecionada, 0));
+						int numeroMesa = Integer.parseInt(tableMesa.getValueAt(linhaSelecionada, 0).toString());
 						
-						int qtdade = Integer.parseInt(tableMesa.getValueAt(linhaSelecionada, 0));
+						Mesa editarMesa =(Mesa) new MesaController().getPorNumeroMesaEditar(numeroMesa);
+						
+						cadMesaUI = new CadastroMesaUI(editarMesa, tableMesa);
+						
+						getContentPane().add(cadMesaUI, 0);
+						cadMesaUI.setVisible(true);
+					}else{
+						cadMesaUI = new CadastroMesaUI(null, tableMesa);
 					}
 					
+					getContentPane().add(cadMesaUI, 0);
+					cadMesaUI.setVisible(true);
 
 
 				} catch (Exception e1) {
@@ -153,17 +163,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					Mesa mesa = new MesaTableModel(
-							new MesaController().listar())
-							.get(tableMesa.getSelectedRow());
-
-					CadastroMesaUI cadMesaUI = new CadastroMesaUI(
-							mesa, tableMesa);
-
-					getContentPane().add(cadMesaUI, 0);
-					cadMesaUI.setVisible(true);
 					CadastroMesaUI cadMesa = new CadastroMesaUI(null, tableMesa);
-
 
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -212,25 +212,26 @@ public class ConsultaMesaUI extends JInternalFrame {
 		);
 
 		tableMesa = new JTable();
-		try {
-			tableMesa.setModel(new DefaultTableModel(
-				new Object[][] {
-				},
-				new String[] {
-					"Numero Mesa", "Quantidade Lugares"
-				}
-			) {
-				boolean[] columnEditables = new boolean[] {
-					false, true
-				};
-				public boolean isCellEditable(int row, int column) {
-					return columnEditables[column];
-				}
-			});
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+//		try {
+//			tableMesa.setModel(new DefaultTableModel(
+//				new Object[][] {
+//				},
+//				new String[] {
+//					"Numero Mesa", "Quantidade Lugares"
+//				}
+//			) {
+//				boolean[] columnEditables = new boolean[] {
+//					false, true
+//				};
+//				public boolean isCellEditable(int row, int column) {
+//					return columnEditables[column];
+//				}
+//			});
+//		} catch (Exception e1) {
+//			e1.printStackTrace();
+//		}
 
+		
 		scrollPane.setViewportView(tableMesa);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);

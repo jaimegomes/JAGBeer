@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +12,7 @@ import javax.swing.JTable;
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.abstracts.GenericDAO;
 import br.senai.sc.jagbeer.conexao.Conexao;
-import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.Mesa;
-import br.senai.sc.jagbeer.model.Pedido;
 
 public class MesaDAO extends GenericDAO {
 
@@ -199,6 +196,31 @@ public class MesaDAO extends GenericDAO {
 		}
 
 		return listMesa;
+	}
+	
+	public Entidade getPorNumeroMesaEditar(int numeroMesa) {
+		Mesa mesa = null;
+						
+		String sql = "SELECT * FROM mesa WHERE numeroMesa = ?";
+
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, numeroMesa);
+			
+			ResultSet result = pstmt.executeQuery();
+			
+			while (result.next()) {
+				mesa = new Mesa(result.getInt("id"), result.getInt("numeroMesa"), result.getInt("lugares"));
+			}
+
+			pstmt.close();
+
+		} catch (SQLException se) {
+			System.out.println("Erro ao listar Mesa por Numero "
+					+ se.getMessage());
+		}
+
+		return mesa;
 	}
 
 }

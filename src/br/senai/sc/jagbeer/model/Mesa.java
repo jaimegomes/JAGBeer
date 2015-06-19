@@ -4,26 +4,26 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
 
 public class Mesa extends Entidade {
 	
-	private int id;
-	private int numeroMesa;
-	private int numeroLugares;
+	private Integer id;
+	private Integer numeroMesa;
+	private Integer numeroLugares;
 	
 	public Mesa() {
 
 	}
 
-	public Mesa(int id, int numeroMesa, int numeroLugares) {
+	public Mesa(Integer id, Integer numeroMesa, Integer numeroLugares) {
 		this.id = id;
 		this.numeroMesa = numeroMesa;
 		this.numeroLugares = numeroLugares;
 	}	
 
-	public Mesa(int numeroMesa, int numeroLugares) {
+	public Mesa(Integer numeroMesa, Integer numeroLugares) {
 		this.numeroMesa = numeroMesa;
 		this.numeroLugares = numeroLugares;
 	}
 
-	public Mesa(int numeroMesa) {
+	public Mesa(Integer numeroMesa) {
 		this.numeroMesa = numeroMesa;
 	}
 
@@ -37,19 +37,19 @@ public class Mesa extends Entidade {
 		this.id = id;
 	}
 
-	public int getNumeroMesa() {
+	public Integer getNumeroMesa() {
 		return numeroMesa;
 	}
 
-	public void setNumeroMesa(int numeroMesa) {
+	public void setNumeroMesa(Integer numeroMesa) {
 		this.numeroMesa = numeroMesa;
 	}
 
-	public int getLugares() {
+	public Integer getLugares() {
 		return numeroLugares;
 	}
 
-	public void setLugares(int numeroLugares) {
+	public void setLugares(Integer numeroLugares) {
 		this.numeroLugares = numeroLugares;
 	}
 

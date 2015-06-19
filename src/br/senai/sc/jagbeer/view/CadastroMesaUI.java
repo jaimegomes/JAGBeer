@@ -143,5 +143,12 @@ public class CadastroMesaUI extends JInternalFrame {
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 
+		
+		if(m != null){
+			mesaNumero.setText(m.getNumeroMesa().toString());
+			qtdLugares.setText(m.getLugares().toString());
+		}
 	}
+	
+	
 }
