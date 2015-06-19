@@ -3,6 +3,7 @@ package br.senai.sc.jagbeer.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -18,8 +19,10 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.controller.ClienteController;
+import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.ClienteTableModel;
+import br.senai.sc.jagbeer.model.Pedido;
 
 public class CadastroClienteUI extends JInternalFrame {
 
@@ -69,10 +72,35 @@ public class CadastroClienteUI extends JInternalFrame {
 
 		jtfNomeCliente = new JTextField();
 
-		if (clienteEdicao.getNome() != null)
-			jtfNomeCliente.setText(clienteEdicao.getNome());
-
 		jtfNomeCliente.setColumns(10);
+
+		JLabel lblTelefone = new JLabel("Telefone:");
+
+		JLabel lblEmail = new JLabel("E-mail:");
+
+		jtfEmailCliente = new JTextField();
+		jtfEmailCliente.setColumns(10);
+
+		if (clienteEdicao != null) {
+
+			if (clienteEdicao.getNome() != null) {
+				jtfNomeCliente.setText(clienteEdicao.getNome());
+
+			}
+
+			if (!clienteEdicao.getEmail().equals("")
+					|| clienteEdicao.getEmail() != null) {
+				jtfEmailCliente.setText(clienteEdicao.getEmail());
+			}
+
+			if (!clienteEdicao.getTelefone().equals("")
+					|| clienteEdicao.getTelefone() != null) {
+				jtfTelefoneCliente.setText(clienteEdicao.getTelefone());
+			}
+		}
+
+		jtfTelefoneCliente = new JTextField();
+		jtfTelefoneCliente.setColumns(10);
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -85,10 +113,17 @@ public class CadastroClienteUI extends JInternalFrame {
 					cliente.setTelefone(jtfTelefoneCliente.getText());
 					cliente.setEmail(jtfEmailCliente.getText());
 
+					Pedido pedido = new Pedido();
+					pedido.setCliente(cliente);
+					pedido.setStatus(1);
+					pedido.setDataPedido(new Date());
+
 					try {
 						new ClienteController().salvar(cliente);
 						JOptionPane.showMessageDialog(null,
 								"Cliente Cadastrado com Sucesso!");
+
+						new PedidoController().salvar(pedido);
 
 						ConsultaClienteUI consultaClienteUI = new ConsultaClienteUI();
 						consultaClienteUI.requestFocus(true);
@@ -131,25 +166,6 @@ public class CadastroClienteUI extends JInternalFrame {
 				dispose();
 			}
 		});
-
-		JLabel lblTelefone = new JLabel("Telefone:");
-
-		JLabel lblEmail = new JLabel("E-mail:");
-
-		jtfEmailCliente = new JTextField();
-		jtfEmailCliente.setColumns(10);
-
-		if (!clienteEdicao.getEmail().equals("")
-				|| clienteEdicao.getEmail() != null) {
-			jtfEmailCliente.setText(clienteEdicao.getEmail());
-		}
-
-		jtfTelefoneCliente = new JTextField();
-		jtfTelefoneCliente.setColumns(10);
-
-		if (!clienteEdicao.getTelefone().equals("")
-				|| clienteEdicao.getTelefone() != null)
-			jtfTelefoneCliente.setText(clienteEdicao.getTelefone());
 
 		JButton btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
