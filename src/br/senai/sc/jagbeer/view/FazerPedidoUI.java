@@ -1,7 +1,6 @@
 package br.senai.sc.jagbeer.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -24,8 +24,11 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
+import br.senai.sc.jagbeer.controller.ClienteController;
+import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.controller.ProdutoController;
+import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.ItemPedido;
 import br.senai.sc.jagbeer.model.ItemPedidoTableModel;
 import br.senai.sc.jagbeer.model.Mesa;
@@ -59,40 +62,49 @@ public class FazerPedidoUI extends JInternalFrame {
 	private JSpinner spinnerQtde;
 	private JButton btnAdicionarProduto;
 	private GroupLayout gl_panelProduto;
-
 	private List<Entidade> listItensPedido = new ArrayList<Entidade>();
 	private List<Entidade> listNomesProdutos = new ArrayList<Entidade>();
+	private List<Entidade> listClientes = new ArrayList<Entidade>();
 	private JTable table;
+	private JButton btnExcluir;
+	private JComboBox cmbCliente;
 
 	public FazerPedidoUI() {
 
 		setTitle("Fazer Pedido");
 		setClosable(true);
-		setBounds(100, 0, 535, 472);
+		setBounds(100, 0, 625, 471);
 
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,
 				null, null), "", TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
 
-		btnSalvar = new JButton("Salvar");
-		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-			}
-		});
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-
 		lblPedido = new JLabel("Pedido:");
 
 		cmbPedido = new JComboBox();
 		cmbPedido.setMaximumRowCount(8);
+		cmbPedido.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				int idPedido = Integer.parseInt(cmbPedido.getSelectedItem()
+						+ "");
+
+				try {
+					Pedido pedido = (Pedido) new PedidoController()
+							.getPorId(idPedido);
+
+					cmbCliente.setSelectedItem(pedido.getCliente().getNome());
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+			}
+
+		});
 
 		try {
 			List<Entidade> listIdPedidos = new PedidoController()
@@ -133,6 +145,50 @@ public class FazerPedidoUI extends JInternalFrame {
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
+		}
+
+		JLabel lblCliente = new JLabel("Cliente:");
+
+		cmbCliente = new JComboBox();
+		cmbCliente.setMaximumRowCount(8);
+		cmbCliente.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				String nomeCliente = cmbCliente.getSelectedItem() + "";
+
+				Cliente cliente;
+				try {
+					cliente = (Cliente) new ClienteController()
+							.getListClientesPorNome(nomeCliente);
+					int idPedido = cliente.getId();
+
+					cmbPedido.setSelectedItem(idPedido);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
+		try {
+			List<Entidade> listClientes = new ArrayList<Entidade>();
+
+			for (Entidade ent : new PedidoController().getPedidosAbertos()) {
+				Pedido pedido = (Pedido) ent;
+
+				listClientes.add(new ClienteController().getPorId(pedido
+						.getCliente().getId()));
+			}
+
+			for (Entidade en : listClientes) {
+				Cliente cliente = (Cliente) en;
+				cmbCliente.addItem(cliente.getNome());
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		lblClassificao = new JLabel("Classifica\u00E7\u00E3o:");
@@ -193,11 +249,88 @@ public class FazerPedidoUI extends JInternalFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				ItemPedido itemPedido = new ItemPedido((Produto) cmbProduto
-						.getSelectedItem(), Integer.parseInt(spinnerQtde
-						.getValue().toString()));
+				String nomeProduto = cmbProduto.getSelectedItem() + "";
 
-				listItensPedido.add(itemPedido);
+				try {
+					Produto produto = (Produto) new ProdutoController()
+							.getPorNome(nomeProduto);
+
+					ItemPedido itemPedido = new ItemPedido(produto, Integer
+							.parseInt(spinnerQtde.getValue().toString()));
+
+					listItensPedido.add(itemPedido);
+					table.setModel(new ItemPedidoTableModel(listItensPedido));
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
+		btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				Pedido pedido = null;
+				Mesa mesa = null;
+				try {
+
+					if (cmbPedido.getSelectedIndex() > 0) {
+
+						int idPedido = Integer.parseInt(cmbPedido
+								.getSelectedItem() + "");
+
+						pedido = (Pedido) new PedidoController()
+								.getPorId(idPedido);
+
+					} else {
+						pedido = new Pedido();
+					}
+
+					if (cmbMesa.getSelectedIndex() > 0) {
+
+						int numMesa = Integer.parseInt(cmbMesa
+								.getSelectedItem() + "");
+
+						mesa = (Mesa) new MesaController()
+								.getPorNumeroMesa(numMesa);
+
+					}
+				} catch (Exception e) {
+
+				}
+			}
+		});
+
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+
+		btnExcluir = new JButton("Excluir Produto");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				try {
+
+					int linhaSelecionada = table.getSelectedRow();
+
+					if (linhaSelecionada > -1) {
+
+						listItensPedido.remove(linhaSelecionada);
+
+						table.setModel(new ItemPedidoTableModel(listItensPedido));
+
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Selecione um item do pedido.");
+					}
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -207,15 +340,15 @@ public class FazerPedidoUI extends JInternalFrame {
 				groupLayout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 496,
-								Short.MAX_VALUE)));
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 591,
+								Short.MAX_VALUE).addContainerGap()));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
 				Alignment.LEADING).addGroup(
 				groupLayout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 433,
-								Short.MAX_VALUE)));
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 424,
+								Short.MAX_VALUE).addContainerGap()));
 
 		JScrollPane scrollPane = new JScrollPane();
 
@@ -232,54 +365,66 @@ public class FazerPedidoUI extends JInternalFrame {
 																Alignment.LEADING)
 														.addGroup(
 																groupLayoutProduto
-																		.createSequentialGroup()
-																		.addGap(6)
-																		.addComponent(
-																				lblPedido)
-																		.addGap(4)
-																		.addComponent(
-																				cmbPedido,
-																				GroupLayout.PREFERRED_SIZE,
-																				71,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(53)
-																		.addComponent(
-																				lblMesa)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				cmbMesa,
-																				GroupLayout.PREFERRED_SIZE,
-																				76,
-																				GroupLayout.PREFERRED_SIZE))
+																		.createParallelGroup(
+																				Alignment.TRAILING)
+																		.addGroup(
+																				groupLayoutProduto
+																						.createSequentialGroup()
+																						.addComponent(
+																								btnSalvar,
+																								GroupLayout.PREFERRED_SIZE,
+																								107,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addPreferredGap(
+																								ComponentPlacement.RELATED)
+																						.addComponent(
+																								btnCancelar))
+																		.addGroup(
+																				groupLayoutProduto
+																						.createSequentialGroup()
+																						.addGap(6)
+																						.addComponent(
+																								lblPedido)
+																						.addGap(4)
+																						.addComponent(
+																								cmbPedido,
+																								GroupLayout.PREFERRED_SIZE,
+																								71,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addPreferredGap(
+																								ComponentPlacement.UNRELATED)
+																						.addComponent(
+																								lblMesa)
+																						.addGap(3)
+																						.addComponent(
+																								cmbMesa,
+																								GroupLayout.PREFERRED_SIZE,
+																								76,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addPreferredGap(
+																								ComponentPlacement.UNRELATED)
+																						.addComponent(
+																								lblCliente)
+																						.addGap(4)
+																						.addComponent(
+																								cmbCliente,
+																								GroupLayout.PREFERRED_SIZE,
+																								210,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addGap(5)))
+														.addComponent(
+																panelProduto,
+																GroupLayout.PREFERRED_SIZE,
+																575,
+																Short.MAX_VALUE)
 														.addGroup(
 																groupLayoutProduto
 																		.createSequentialGroup()
 																		.addContainerGap()
 																		.addComponent(
-																				btnSalvar,
-																				GroupLayout.PREFERRED_SIZE,
-																				107,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(18)
-																		.addComponent(
-																				btnCancelar))
-														.addGroup(
-																groupLayoutProduto
-																		.createParallelGroup(
-																				Alignment.TRAILING,
-																				false)
-																		.addComponent(
 																				scrollPane,
-																				Alignment.LEADING,
-																				GroupLayout.PREFERRED_SIZE,
 																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				panelProduto,
-																				Alignment.LEADING,
-																				GroupLayout.DEFAULT_SIZE,
-																				495,
+																				575,
 																				Short.MAX_VALUE)))
 										.addContainerGap()));
 		groupLayoutProduto
@@ -293,15 +438,22 @@ public class FazerPedidoUI extends JInternalFrame {
 												groupLayoutProduto
 														.createParallelGroup(
 																Alignment.BASELINE)
+														.addComponent(lblPedido)
+														.addComponent(
+																cmbPedido,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(lblMesa)
 														.addComponent(
 																cmbMesa,
 																GroupLayout.PREFERRED_SIZE,
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
-														.addComponent(lblMesa)
-														.addComponent(lblPedido)
 														.addComponent(
-																cmbPedido,
+																lblCliente)
+														.addComponent(
+																cmbCliente,
 																GroupLayout.PREFERRED_SIZE,
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE))
@@ -365,8 +517,7 @@ public class FazerPedidoUI extends JInternalFrame {
 										.addGroup(
 												gl_panelProduto
 														.createParallelGroup(
-																Alignment.LEADING,
-																false)
+																Alignment.LEADING)
 														.addGroup(
 																gl_panelProduto
 																		.createSequentialGroup()
@@ -379,12 +530,18 @@ public class FazerPedidoUI extends JInternalFrame {
 																				GroupLayout.PREFERRED_SIZE,
 																				67,
 																				GroupLayout.PREFERRED_SIZE))
-														.addComponent(
-																btnAdicionarProduto,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE))
-										.addContainerGap(65, Short.MAX_VALUE)));
+														.addGroup(
+																gl_panelProduto
+																		.createSequentialGroup()
+																		.addComponent(
+																				btnAdicionarProduto)
+																		.addGap(18)
+																		.addComponent(
+																				btnExcluir,
+																				GroupLayout.PREFERRED_SIZE,
+																				128,
+																				Short.MAX_VALUE)))
+										.addContainerGap()));
 		gl_panelProduto
 				.setVerticalGroup(gl_panelProduto
 						.createParallelGroup(Alignment.LEADING)
@@ -422,7 +579,9 @@ public class FazerPedidoUI extends JInternalFrame {
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
 														.addComponent(
-																btnAdicionarProduto))
+																btnAdicionarProduto)
+														.addComponent(
+																btnExcluir))
 										.addContainerGap(17, Short.MAX_VALUE)));
 		panelProduto.setLayout(gl_panelProduto);
 		panel.setLayout(groupLayoutProduto);
@@ -430,7 +589,6 @@ public class FazerPedidoUI extends JInternalFrame {
 		getContentPane().setLayout(groupLayout);
 
 	}
-
 
 	/**
 	 * @return the listItensPedido

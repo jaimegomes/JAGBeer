@@ -108,7 +108,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 							&& cmbClassificacao.getSelectedIndex() <= 0) {
 
 						listProduto = new ProdutoController()
-								.getPorNome(jtfNome.getText());
+								.getListNomesProdutos(jtfNome.getText());
 
 						if (listProduto.size() == 0)
 							JOptionPane

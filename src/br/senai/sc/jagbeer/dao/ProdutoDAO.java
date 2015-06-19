@@ -215,14 +215,14 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * Método responsável por buscar todos os produtos de determinado nome
+	 * Método responsável por buscar todos os produtos que contenham o nome
 	 * passado como parâmetro.
 	 * 
-	 * @param classificacao
+	 * @param String nome
 	 * @return List<Entidade> listProduto
 	 * @throws Exception
 	 */
-	public List<Entidade> getPorNome(String nome) {
+	public List<Entidade> getListNomesProdutos(String nome) {
 
 		List<Entidade> listProduto = new ArrayList<Entidade>();
 
@@ -345,6 +345,46 @@ public class ProdutoDAO extends GenericDAO {
 		} catch (Exception e) {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por nome e classificação.\n"
+							+ e.getMessage());
+		}
+
+		return produto;
+
+	}
+
+	/**
+	 * Método responsável por buscar o produto com o nome passado como
+	 * parâmetro.
+	 * 
+	 * @return String nome
+	 * @throws Exception
+	 */
+	public Entidade getPorNome(String nome) throws Exception {
+
+		Produto produto = null;
+		String sql = "SELECT * FROM produto WHERE UPPER(nomeProduto) LIKE  UPPER('"
+				+ nome + "')";
+
+		try {
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				produto = new Produto(result.getInt("id"),
+						result.getString("nomeProduto"),
+						result.getDouble("precoCusto"),
+						result.getDouble("precoVenda"),
+						result.getString("classificacao"));
+
+			}
+
+			pstm.close();
+		} catch (Exception e) {
+			System.out
+					.println("[ProdutoDAO] - Erro ao buscar produto por nome.\n"
 							+ e.getMessage());
 		}
 

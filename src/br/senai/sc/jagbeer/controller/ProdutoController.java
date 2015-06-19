@@ -45,7 +45,6 @@ public class ProdutoController implements IController {
 			throw new Exception("Selecione um produto.");
 
 		dao.excluir(produto);
-		
 
 	}
 
@@ -125,12 +124,12 @@ public class ProdutoController implements IController {
 	 * @return dao.getPorNome(nome)
 	 * @throws Exception
 	 */
-	public List<Entidade> getPorNome(String nome) throws Exception {
+	public List<Entidade> getListNomesProdutos(String nome) throws Exception {
 
 		if (nome == null || nome.trim().equals(""))
 			throw new Exception("O nome não pode ser nulo ou em branco.");
 
-		return dao.getPorNome(nome);
+		return dao.getListNomesProdutos(nome);
 	}
 
 	/**
@@ -161,6 +160,18 @@ public class ProdutoController implements IController {
 
 		return dao.buscaCompleta(nome, precoVenda, classificacao);
 
+	}
+
+	/**
+	 * Método responsável por buscar o produto com o nome passado como
+	 * parâmetro.
+	 * 
+	 * @param String nome
+	 * @throws Exception
+	 */
+	public Entidade getPorNome(String nome) throws Exception {
+
+		return dao.getPorNome(nome);
 	}
 
 }

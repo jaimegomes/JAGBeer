@@ -110,7 +110,7 @@ public class ClienteDAO extends GenericDAO {
 		return listaClientes;
 	}
 
-	public List<Entidade> getPorNome(String clientePesquisar) {
+	public List<Entidade> getListClientesPorNome(String clientePesquisar) {
 		Cliente cliente = null;
 		List<Entidade> listCliente = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM cliente WHERE nome LIKE '%"
@@ -122,8 +122,9 @@ public class ClienteDAO extends GenericDAO {
 			ResultSet result = pstmt.executeQuery(sql);
 
 			while (result.next()) {
-				cliente = new Cliente(result.getString("nome"),
-						result.getString("telefone"), result.getString("email"));
+				cliente = new Cliente(result.getInt("id"),
+						result.getString("nome"), result.getString("telefone"),
+						result.getString("email"));
 				listCliente.add(cliente);
 			}
 
@@ -166,7 +167,32 @@ public class ClienteDAO extends GenericDAO {
 
 	@Override
 	public void atualizaTabela(JTable table) throws Exception {
+	}
 
+	public Entidade getPorNome(String clientePesquisar) {
+		Cliente cliente = null;
+		String sql = "SELECT * FROM cliente WHERE nome LIKE '"
+				+ clientePesquisar + "'";
+
+		try {
+			Statement pstmt = con.createStatement();
+
+			ResultSet result = pstmt.executeQuery(sql);
+
+			while (result.next()) {
+				cliente = new Cliente(result.getInt("id"),
+						result.getString("nome"), result.getString("telefone"),
+						result.getString("email"));
+			}
+
+			pstmt.close();
+
+		} catch (SQLException se) {
+			System.out.println("Erro ao listar Cliente por Nome "
+					+ se.getMessage());
+		}
+
+		return cliente;
 	}
 
 }

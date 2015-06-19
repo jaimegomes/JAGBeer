@@ -70,9 +70,14 @@ public class ClienteController implements IController {
 		return (Cliente) dao.getPorId(id);
 	}
 
-	public List<Entidade> getPorNome(String clientePesquisar) throws Exception {
+	public List<Entidade> getListClientesPorNome(String clientePesquisar)
+			throws Exception {
 
-		return dao.getPorNome(clientePesquisar);
+		return dao.getListClientesPorNome(clientePesquisar);
+	}
+
+	public Entidade getPorNome(String nome) {
+		return dao.getPorNome(nome);
 	}
 
 	@Override

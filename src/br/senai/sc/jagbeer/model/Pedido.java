@@ -20,7 +20,7 @@ public class Pedido extends Entidade {
 	private int status;
 
 	/**
-	 * Construtor padr√£o.
+	 * Construtor padr„o.
 	 * 
 	 * 
 	 */
@@ -28,7 +28,7 @@ public class Pedido extends Entidade {
 	}
 
 	/**
-	 * Construtor que recebe como par√¢metro o id.
+	 * Construtor que recebe como par‚metro o id.
 	 * 
 	 * @param int id
 	 * 
@@ -38,7 +38,7 @@ public class Pedido extends Entidade {
 	}
 
 	/**
-	 * Construtor que recebe como par√¢metro a mesa, o cliente, a data do pedido
+	 * Construtor que recebe como par‚metro a mesa, o cliente, a data do pedido
 	 * e o status.
 	 * 
 	 * @param Mesa
@@ -58,7 +58,7 @@ public class Pedido extends Entidade {
 	}
 
 	/**
-	 * Construtor que recebe todos os atributos como par√¢metros.
+	 * Construtor que recebe todos os atributos como par‚metros.
 	 * 
 	 * @param int id
 	 * @param Mesa

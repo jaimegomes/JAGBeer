@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,24 +37,36 @@ public class PedidoDAO extends GenericDAO {
 	@Override
 	public void salvar(Entidade entidade) throws SQLException {
 
-		String sql = "INSERT INTO pedido (idMesa, idCliente, dataPedido, estado) values(?,?,?,?)";
-
 		try {
-			String data = sdf.format(new Date());
+			Date data = new Date();
 			pedido = (Pedido) entidade;
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, pedido.getMesa().getId());
-			pstmt.setInt(2, pedido.getCliente().getId());
-			try {
-				pstmt.setDate(3, (java.sql.Date) sdf.parse(data));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			pstmt.setInt(4, pedido.getStatus());
 
-			pstmt.execute();
-			con.commit();
-			pstmt.close();
+			if (pedido.getMesa() == null) {
+				String sql = "INSERT INTO pedido (idCliente, dataPedido, status) values(?,?,?)";
+
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setObject(1, pedido.getCliente().getId());
+				pstmt.setDate(2,  new java.sql.Date(data.getTime()));
+				pstmt.setInt(3, pedido.getStatus());
+
+				pstmt.execute();
+				con.commit();
+				pstmt.close();
+
+			} else {
+				String sql = "INSERT INTO pedido (idMesa, idCliente, dataPedido, status) values(?,?,?)";
+
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setObject(1, pedido.getMesa().getId());
+				pstmt.setObject(2, pedido.getCliente().getId());
+				pstmt.setDate(3, new java.sql.Date(data.getTime()));
+				pstmt.setInt(4, pedido.getStatus());
+				pstmt.execute();
+
+				con.commit();
+				pstmt.close();
+
+			}
 
 		} catch (SQLException e) {
 			con.rollback();

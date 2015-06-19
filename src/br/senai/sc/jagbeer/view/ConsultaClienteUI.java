@@ -72,7 +72,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 					// ClienteController().getPorNome(jtfNomeCliente.getText());
 
 					tableConsultaCliente.setModel(new ClienteTableModel(
-							new ClienteController().getPorNome(jtfNomeCliente
+							new ClienteController().getListClientesPorNome(jtfNomeCliente
 									.getText())));
 
 				} catch (Exception e) {

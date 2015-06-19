@@ -188,11 +188,6 @@ public class CadastroProdutoUI extends JInternalFrame {
 						jtfValorCusto.setText("");
 						cmbClassificacao.setSelectedIndex(0);
 
-						if (table != null) {
-							table.setModel(new ProdutoTableModel(
-									new ProdutoController().listar()));
-							dispose();
-						}
 
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
@@ -222,15 +217,21 @@ public class CadastroProdutoUI extends JInternalFrame {
 						jtfValorCusto.setText("");
 						cmbClassificacao.setSelectedIndex(0);
 
-						if (table != null) {
-							table.setModel(new ProdutoTableModel(
-									new ProdutoController().listar()));
-						}
+						
 
 						dispose();
 
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
+					}
+					
+					if (table != null) {
+						try {
+							table.setModel(new ProdutoTableModel(
+									new ProdutoController().listar()));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 
 				}

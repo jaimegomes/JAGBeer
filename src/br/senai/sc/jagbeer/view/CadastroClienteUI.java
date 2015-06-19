@@ -113,26 +113,25 @@ public class CadastroClienteUI extends JInternalFrame {
 					cliente.setTelefone(jtfTelefoneCliente.getText());
 					cliente.setEmail(jtfEmailCliente.getText());
 
-					Pedido pedido = new Pedido();
-					pedido.setCliente(cliente);
-					pedido.setStatus(1);
-					pedido.setDataPedido(new Date());
-
 					try {
 						new ClienteController().salvar(cliente);
 						JOptionPane.showMessageDialog(null,
 								"Cliente Cadastrado com Sucesso!");
 
+						Cliente c = (Cliente) new ClienteController()
+								.getPorNome(jtfNomeCliente.getText());
+
+						Pedido pedido = new Pedido();
+						pedido.setCliente(c);
+						pedido.setStatus(1);
+						pedido.setDataPedido(new Date());
+
 						new PedidoController().salvar(pedido);
+//
+//						jtfNomeCliente.setText("");
+//						jtfEmailCliente.setText("");
+//						jtfTelefoneCliente.setText("");
 
-						ConsultaClienteUI consultaClienteUI = new ConsultaClienteUI();
-						consultaClienteUI.requestFocus(true);
-						consultaClienteUI.setFocusable(true);
-						consultaClienteUI.moveToFront();
-						getContentPane().add(consultaClienteUI, 0);
-						consultaClienteUI.setVisible(true);
-
-						dispose();
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
@@ -147,14 +146,18 @@ public class CadastroClienteUI extends JInternalFrame {
 						JOptionPane.showMessageDialog(null,
 								"Cliente Editado com Sucesso! ");
 
-						if (table != null) {
-							table.setModel(new ClienteTableModel(
-									new ClienteController().listar()));
-						}
-
 						dispose();
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
+					}
+				}
+
+				if (table != null) {
+					try {
+						table.setModel(new ClienteTableModel(
+								new ClienteController().listar()));
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
 			}
