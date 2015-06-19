@@ -84,6 +84,7 @@ public class FazerPedidoUI extends JInternalFrame {
 
 		cmbPedido = new JComboBox();
 		cmbPedido.setMaximumRowCount(8);
+		cmbPedido.addItem("");
 		cmbPedido.addActionListener(new ActionListener() {
 
 			@Override
@@ -93,10 +94,13 @@ public class FazerPedidoUI extends JInternalFrame {
 						+ "");
 
 				try {
+
 					Pedido pedido = (Pedido) new PedidoController()
 							.getPorId(idPedido);
 
-					cmbCliente.setSelectedItem(pedido.getCliente().getNome());
+					if (pedido != null)
+						cmbCliente.setSelectedItem(pedido.getCliente()
+								.getNome());
 
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -131,14 +135,15 @@ public class FazerPedidoUI extends JInternalFrame {
 
 		cmbMesa = new JComboBox();
 		cmbMesa.setMaximumRowCount(8);
+		cmbMesa.addItem("");
 
 		try {
-			List<Entidade> listMesas = new PedidoController()
-					.getPedidosAbertos();
+			List<Entidade> listMesas = new MesaController().listar();
 
 			if (listMesas.size() > 0) {
 				for (Entidade e : listMesas) {
 					Mesa mesa = (Mesa) e;
+
 					cmbMesa.addItem(mesa.getNumeroMesa());
 
 				}
@@ -151,6 +156,7 @@ public class FazerPedidoUI extends JInternalFrame {
 
 		cmbCliente = new JComboBox();
 		cmbCliente.setMaximumRowCount(8);
+		cmbCliente.addItem("");
 		cmbCliente.addActionListener(new ActionListener() {
 
 			@Override
@@ -158,13 +164,16 @@ public class FazerPedidoUI extends JInternalFrame {
 
 				String nomeCliente = cmbCliente.getSelectedItem() + "";
 
-				Cliente cliente;
+				Cliente cliente = null;
 				try {
 					cliente = (Cliente) new ClienteController()
-							.getListClientesPorNome(nomeCliente);
-					int idPedido = cliente.getId();
+							.getPorNome(nomeCliente);
 
-					cmbPedido.setSelectedItem(idPedido);
+					if (cliente != null) {
+						int idPedido = cliente.getId();
+						cmbPedido.setSelectedItem(idPedido);
+					}
+
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -236,6 +245,7 @@ public class FazerPedidoUI extends JInternalFrame {
 
 		cmbProduto = new JComboBox();
 		cmbProduto.setMaximumRowCount(8);
+		cmbProduto.addItem("");
 
 		lblQuantidade = new JLabel("Quantidade:");
 
