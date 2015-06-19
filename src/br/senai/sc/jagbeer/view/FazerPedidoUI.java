@@ -28,6 +28,7 @@ import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.controller.ProdutoController;
+import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.ItemPedido;
 import br.senai.sc.jagbeer.model.ItemPedidoTableModel;
@@ -344,12 +345,18 @@ public class FazerPedidoUI extends JInternalFrame {
 						produtoPedido.setIdPedido(pedido.getId());
 						produtoPedido.setIdProduto(itemPedido.getProduto()
 								.getId());
-						
-						new ProdutoPe
+
+						new ProdutoPedidoController().salvar(produtoPedido);
 					}
 
-				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null,
+							"Produtos inseridos com sucesso.");
 
+					dispose();
+
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+					e.printStackTrace();
 				}
 			}
 		});
