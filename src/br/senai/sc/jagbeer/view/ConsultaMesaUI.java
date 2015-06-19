@@ -2,6 +2,8 @@ package br.senai.sc.jagbeer.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -15,14 +17,12 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
-import br.senai.sc.jagbeer.controller.ClienteController;
+import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.MesaController;
-import br.senai.sc.jagbeer.model.Cliente;
-import br.senai.sc.jagbeer.model.ClienteTableModel;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.MesaTableModel;
-import javax.swing.table.DefaultTableModel;
 
 
 
@@ -32,6 +32,8 @@ public class ConsultaMesaUI extends JInternalFrame {
 	private JTextField numeroMesa;
 	private JTable tableMesa;
 	private JScrollPane scrollPane;
+	
+	private List<Entidade> listaMesa = new ArrayList<Entidade>();
 
 	/**
 	 * Create the frame.
@@ -75,11 +77,19 @@ public class ConsultaMesaUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-									
-					//tableMesa.setModel(new MesaTableModel(
-							//new MesaController().getPorId(numeroMesa).getText()));
-
+						
+					if(numeroMesa.getText().isEmpty()){
+						listaMesa = new MesaController().listar();
+						tableMesa.setModel(new MesaTableModel(listaMesa));
+					}
+					
+					if(!numeroMesa.getText().isEmpty() ){
+						listaMesa = new MesaController().getPorNumeroMesa(Integer.parseInt(numeroMesa.getText()));
+						tableMesa.setModel(new MesaTableModel(listaMesa));
+					}
+					
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null,
 							"Erro ao pesquisar mesas. ");
 				}
@@ -93,15 +103,16 @@ public class ConsultaMesaUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					Mesa mesaEditar = new MesaTableModel(
-							new MesaController().listar())
-							.get(tableMesa.getSelectedRow());
+					int linhaSelecionada = tableMesa.getSelectedRow();
+					
+					if(linhaSelecionada > -1){
+						
+						int numeroMesa = Integer.parseInt(tableMesa.getValueAt(linhaSelecionada, 0));
+						
+						int qtdade = Integer.parseInt(tableMesa.getValueAt(linhaSelecionada, 0));
+					}
+					
 
-					CadastroMesaUI cadMesaUI = new CadastroMesaUI(
-							mesaEditar, tableMesa);
-
-					getContentPane().add(cadMesaUI, 0);
-					cadMesaUI.setVisible(true);
 
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -138,6 +149,28 @@ public class ConsultaMesaUI extends JInternalFrame {
 		});
 		
 		JButton btnAdicionar = new JButton("Adicionar");
+		btnAdicionar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					Mesa mesa = new MesaTableModel(
+							new MesaController().listar())
+							.get(tableMesa.getSelectedRow());
+
+					CadastroMesaUI cadMesaUI = new CadastroMesaUI(
+							mesa, tableMesa);
+
+					getContentPane().add(cadMesaUI, 0);
+					cadMesaUI.setVisible(true);
+					CadastroMesaUI cadMesa = new CadastroMesaUI(null, tableMesa);
+
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		});
 
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
