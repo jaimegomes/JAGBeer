@@ -45,7 +45,13 @@ public class CadastroMesaUI extends JInternalFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Mesa", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-	
+			
+		
+		if(m != null){
+			mesaNumero.setText(mesaEdicao.getNumeroMesa().toString());
+			qtdLugares.setText(mesaEdicao.getLugares().toString());
+		}		
+		
 		//Botão salvar
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -54,14 +60,17 @@ public class CadastroMesaUI extends JInternalFrame {
 				//Verifica se o objeto é nulo
 				if(mesaEdicao == null ){
 					Mesa mesa = new Mesa();
-					mesa.setNumeroMesa(Integer.parseInt(qtdLugares.getText()));
+					mesa.setNumeroMesa(Integer.parseInt(mesaNumero.getText()));
 					mesa.setLugares(Integer.parseInt(qtdLugares.getText()));
 					
 					try{
 						new MesaController().salvar(mesa);
 						JOptionPane.showMessageDialog(null, "Mesa cadastrada com sucesso!");
 						
-						dispose();
+						Mesa m = (Mesa) new MesaController().getPorNumeroMesa(Integer.parseInt(mesaNumero.getText()));
+						
+						mesaNumero.setText(null);
+						qtdLugares.setText(null);
 						
 					}catch(Exception e){
 						JOptionPane.showMessageDialog(null, e.getMessage());
@@ -96,8 +105,8 @@ public class CadastroMesaUI extends JInternalFrame {
 		JButton btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				mesaNumero.setText("");
-				qtdLugares.setText("");
+				mesaNumero.setText(null);
+				qtdLugares.setText(null);
 			}
 		});
 				
@@ -138,6 +147,7 @@ public class CadastroMesaUI extends JInternalFrame {
 		
 		JLabel lblNmero = new JLabel("N\u00FAmero");
 		
+		//Apenas permite digitar numero no campo mesa numero
 		mesaNumero = new JTextField();
 		mesaNumero.addKeyListener(new KeyAdapter() {
 			@Override
@@ -154,6 +164,7 @@ public class CadastroMesaUI extends JInternalFrame {
 		
 		mesaNumero.setColumns(10);
 		
+		//Apenas permite digitar numero no campo quantidade lugares
 		qtdLugares = new JTextField();
 		qtdLugares.addKeyListener(new KeyAdapter() {
 			@Override
@@ -198,11 +209,5 @@ public class CadastroMesaUI extends JInternalFrame {
 		);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
-
-		
-		if(m != null){
-			mesaNumero.setText(m.getNumeroMesa().toString());
-			qtdLugares.setText(m.getLugares().toString());
-		}
 	}	
 }

@@ -20,7 +20,7 @@ public class MesaController implements IController {
 			//throw new Exception("Mesa não pode ser nula.");
 		//}		
 		
-		if(mesa.getNumeroMesa().equals("") || mesa.getNumeroMesa() == null){
+		if(mesa.getNumeroMesa().equals(null) || mesa.getNumeroMesa() == null){
 			throw new Exception("Número da mesa obrigatório.");
 		}
 

@@ -82,6 +82,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 		jtfNome.setColumns(10);
 
 		btnPesquisar = new JButton("Pesquisar");
+
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 

@@ -132,9 +132,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int opcao = JOptionPane.showConfirmDialog(null,
-						"Deseja excluir?");
-				if (opcao == 0) {
+
 					try {
 
 						Mesa excluirMesa = new MesaTableModel(
@@ -152,11 +150,18 @@ public class ConsultaMesaUI extends JInternalFrame {
 					} catch (Exception ex) {
 						JOptionPane.showMessageDialog(null, ex.getMessage());
 					}
-				}
+
 			}
 		});
 		
 		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				numeroMesa.setText(null);
+			}
+		});
 
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
