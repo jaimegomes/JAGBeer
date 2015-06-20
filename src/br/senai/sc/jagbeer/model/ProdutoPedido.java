@@ -7,6 +7,7 @@ public class ProdutoPedido extends Entidade {
 	private int id;
 	private Integer idProduto;
 	private Integer idPedido;
+	private Integer qtde;
 
 	public ProdutoPedido() {
 	}
@@ -15,15 +16,18 @@ public class ProdutoPedido extends Entidade {
 		this.id = id;
 	}
 
-	public ProdutoPedido(Integer idProduto, Integer idPedido) {
+	public ProdutoPedido(Integer idProduto, Integer idPedido, Integer qtde) {
 		this.idProduto = idProduto;
 		this.idPedido = idPedido;
+		this.qtde = qtde;
 	}
 
-	public ProdutoPedido(int id, Integer idProduto, Integer idPedido) {
+	public ProdutoPedido(int id, Integer idProduto, Integer idPedido,
+			Integer qtde) {
 		this.id = id;
 		this.idProduto = idProduto;
 		this.idPedido = idPedido;
+		this.qtde = qtde;
 	}
 
 	@Override
@@ -65,6 +69,21 @@ public class ProdutoPedido extends Entidade {
 	 */
 	public void setIdPedido(Integer idPedido) {
 		this.idPedido = idPedido;
+	}
+
+	/**
+	 * @return the qtde
+	 */
+	public Integer getQtde() {
+		return qtde;
+	}
+
+	/**
+	 * @param qtde
+	 *            the qtde to set
+	 */
+	public void setQtde(Integer qtde) {
+		this.qtde = qtde;
 	}
 
 }

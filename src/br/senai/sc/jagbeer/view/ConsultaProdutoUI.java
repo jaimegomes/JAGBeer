@@ -113,13 +113,13 @@ public class ConsultaProdutoUI extends JInternalFrame {
 						if (listProduto.size() == 0)
 							JOptionPane
 									.showMessageDialog(null,
-											"Não existem produtos com este nome cadastrados no banco de dados.");
+											"Nï¿½o existem produtos com este nome cadastrados no banco de dados.");
 
 						table.setModel(new ProdutoTableModel(listProduto));
 
 					}
 
-					// campo classificação preenchido
+					// campo classificaï¿½ï¿½o preenchido
 					else if (cmbClassificacao.getSelectedIndex() > 0
 							&& jtfNome.getText().isEmpty()) {
 
@@ -129,13 +129,13 @@ public class ConsultaProdutoUI extends JInternalFrame {
 						if (listProduto.size() == 0)
 							JOptionPane
 									.showMessageDialog(null,
-											"Não existem produtos com esta classificação cadastrados no banco de dados.");
+											"Nï¿½o existem produtos com esta classificaï¿½ï¿½o cadastrados no banco de dados.");
 
 						table.setModel(new ProdutoTableModel(listProduto));
 
 					}
 
-					// campos nome e classificação preenchidos
+					// campos nome e classificaï¿½ï¿½o preenchidos
 					else if (cmbClassificacao.getSelectedIndex() > 0
 							&& !jtfNome.getText().isEmpty()) {
 
@@ -147,7 +147,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 							JOptionPane
 									.showMessageDialog(
 											null,
-											"Não existem produtos com este nome e classificação cadastrados no banco de dados.");
+											"Nï¿½o existem produtos com este nome e classificaï¿½ï¿½o cadastrados no banco de dados.");
 
 						table.setModel(new ProdutoTableModel(listProduto));
 
@@ -186,7 +186,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 
 						controller.excluir(produtoExcluir);
 						JOptionPane.showMessageDialog(null,
-								"Produto excluído com sucesso.");
+								"Produto excluï¿½do com sucesso.");
 
 						table.setModel(new ProdutoTableModel(controller
 								.listar()));
@@ -203,7 +203,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 			}
 		});
 
-		lblClassificacao = new JLabel("Classificação:");
+		lblClassificacao = new JLabel("Classificaï¿½ï¿½o:");
 
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
@@ -252,7 +252,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 						cadProdutoUI = new CadastroProdutoUI(null, table);
 					}
 
-					getContentPane().add(cadProdutoUI, 0);
+					PrincipalUI.obterInstancia().getContentPane().add(cadProdutoUI, 0);
 					cadProdutoUI.setVisible(true);
 
 				} catch (Exception e) {

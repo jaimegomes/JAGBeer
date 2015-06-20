@@ -72,8 +72,9 @@ public class ConsultaClienteUI extends JInternalFrame {
 					// ClienteController().getPorNome(jtfNomeCliente.getText());
 
 					tableConsultaCliente.setModel(new ClienteTableModel(
-							new ClienteController().getListClientesPorNome(jtfNomeCliente
-									.getText())));
+							new ClienteController()
+									.getListClientesPorNome(jtfNomeCliente
+											.getText())));
 
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null,
@@ -95,6 +96,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				// COLOCAR DO JEITO NOVO
 				try {
 					Cliente clienteEditar = new ClienteTableModel(
 							new ClienteController().listar())
@@ -103,7 +105,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 					CadastroClienteUI cadClienteUI = new CadastroClienteUI(
 							clienteEditar, tableConsultaCliente);
 
-					getContentPane().add(cadClienteUI, 0);
+					PrincipalUI.obterInstancia().getContentPane().add(cadClienteUI, 0);
 					cadClienteUI.setVisible(true);
 
 				} catch (Exception e1) {
@@ -127,7 +129,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 
 						new ClienteController().excluir(clienteExcluir);
 						JOptionPane.showMessageDialog(null,
-								"Aluno exclui�do com Sucesso! ");
+								"Aluno excluído com Sucesso! ");
 
 						// Atualiza tabela
 						tableConsultaCliente.setModel(new ClienteTableModel(

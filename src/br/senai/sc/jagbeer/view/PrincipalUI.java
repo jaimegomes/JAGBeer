@@ -49,6 +49,17 @@ public class PrincipalUI extends JFrame {
 	private JTextField jtfCliente;
 	private JTable tablePedidoAberto;
 
+	private static PrincipalUI instancia;
+
+	public static PrincipalUI obterInstancia() {
+
+		if (instancia == null) {
+			instancia = new PrincipalUI();
+
+		}
+		return instancia;
+	}
+
 	private List<Entidade> listPedidoAberto = new ArrayList<Entidade>();
 
 	/**
@@ -59,7 +70,7 @@ public class PrincipalUI extends JFrame {
 			public void run() {
 				try {
 
-					PrincipalUI frame = new PrincipalUI();
+					PrincipalUI frame = obterInstancia();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -72,6 +83,7 @@ public class PrincipalUI extends JFrame {
 	 * Create the frame.
 	 */
 	public PrincipalUI() {
+
 		setForeground(Color.BLUE);
 
 		setTitle("JAGBeer");
@@ -253,7 +265,7 @@ public class PrincipalUI extends JFrame {
 					if (listPedidoAberto.isEmpty()) {
 						JOptionPane
 								.showMessageDialog(null,
-										"Não foram encontrados pedidos abertos para esse número de pedido.");
+										"NÃ£o foram encontrados pedidos abertos para esse nÃºmero de pedido..");
 					} else {
 						tablePedidoAberto.setModel(new PedidoAbertoTableModel(
 								listPedidoAberto));
@@ -274,7 +286,7 @@ public class PrincipalUI extends JFrame {
 						if (listPedidoAberto.isEmpty()) {
 							JOptionPane
 									.showMessageDialog(null,
-											"Não foram encontrados pedidos abertos para esse cliente.");
+											"NÃ£o foram encontrados pedidos abertos para esse cliente.");
 							tablePedidoAberto
 									.setModel(new PedidoAbertoTableModel(
 											listPedidoAberto));
@@ -289,39 +301,15 @@ public class PrincipalUI extends JFrame {
 				} else if (jtfCliente.getText().isEmpty()
 						&& jtfPedido.getText().isEmpty()) {
 
-					try {
-
-						Cliente cliente = (Cliente) new ClienteController()
-								.getPorNome(jtfCliente.getText());
-
-						Pedido pedido = (Pedido) new PedidoController()
-								.getPorId(Integer.parseInt(jtfPedido.getText()));
-
-						if (cliente.getId() == pedido.getCliente().getId()) {
-							listPedidoAberto.add(new ProdutoPedidoController()
-									.getPorIdPedido(pedido.getId()));
-
-							tablePedidoAberto
-									.setModel(new PedidoAbertoTableModel(
-											listPedidoAberto));
-						} else {
-							JOptionPane
-									.showMessageDialog(null,
-											"Não existem pedidos abertos com os campos utilizados no filtro.");
-						}
-
-					} catch (NumberFormatException e1) {
-						e1.printStackTrace();
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
+					tablePedidoAberto.setModel(new PedidoAbertoTableModel(
+							new PedidoController().getPedidosAbertos()));
 
 				}
 
 			}
 		});
 
-		JButton btnNovo = new JButton("Novo Pedido");
+		JButton btnNovo = new JButton("Fazer Pedido");
 		btnNovo.addActionListener(new ActionListener() {
 
 			@Override
@@ -369,128 +357,50 @@ public class PrincipalUI extends JFrame {
 		});
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane
-				.setHorizontalGroup(gl_contentPane
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_contentPane
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												gl_contentPane
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_contentPane
-																		.createSequentialGroup()
-																		.addComponent(
-																				lblPedido)
-																		.addGap(4)
-																		.addComponent(
-																				jtfPedido,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(40)
-																		.addComponent(
-																				lblNome)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED,
-																				GroupLayout.DEFAULT_SIZE,
-																				Short.MAX_VALUE)
-																		.addComponent(
-																				jtfCliente,
-																				GroupLayout.PREFERRED_SIZE,
-																				259,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(27))
-														.addGroup(
-																gl_contentPane
-																		.createSequentialGroup()
-																		.addComponent(
-																				panel,
-																				GroupLayout.PREFERRED_SIZE,
-																				546,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)))
-										.addGroup(
-												gl_contentPane
-														.createParallelGroup(
-																Alignment.LEADING,
-																false)
-														.addComponent(
-																btnEncerrar,
-																GroupLayout.DEFAULT_SIZE,
-																169,
-																Short.MAX_VALUE)
-														.addComponent(
-																btnPesquisar,
-																GroupLayout.PREFERRED_SIZE,
-																163,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																btnNovo,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE))
-										.addContainerGap(610, Short.MAX_VALUE)));
-		gl_contentPane
-				.setVerticalGroup(gl_contentPane
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								gl_contentPane
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												gl_contentPane
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(lblPedido)
-														.addComponent(lblNome)
-														.addComponent(
-																jtfPedido,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																jtfCliente,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																btnPesquisar))
-										.addGroup(
-												gl_contentPane
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_contentPane
-																		.createSequentialGroup()
-																		.addGap(30)
-																		.addComponent(
-																				btnNovo,
-																				GroupLayout.PREFERRED_SIZE,
-																				31,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.UNRELATED)
-																		.addComponent(
-																				btnEncerrar,
-																				GroupLayout.PREFERRED_SIZE,
-																				31,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																gl_contentPane
-																		.createSequentialGroup()
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				panel,
-																				GroupLayout.PREFERRED_SIZE,
-																				452,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap(190, Short.MAX_VALUE)));
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblPedido)
+							.addGap(4)
+							.addComponent(jtfPedido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(40)
+							.addComponent(lblNome)
+							.addPreferredGap(ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+							.addComponent(jtfCliente, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)
+							.addGap(27))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 546, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(btnEncerrar, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+						.addComponent(btnNovo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnPesquisar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(143, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPedido)
+						.addComponent(lblNome)
+						.addComponent(jtfPedido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jtfCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnPesquisar))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(30)
+							.addComponent(btnNovo, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnEncerrar, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 452, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(39, Short.MAX_VALUE))
+		);
 
 		JScrollPane scrollPane = new JScrollPane();
 
@@ -509,10 +419,11 @@ public class PrincipalUI extends JFrame {
 
 		List<Entidade> listPedido = new PedidoController().getPedidosAbertos();
 
+		double valorParcial = 0;
+
 		for (Entidade ent : listPedido) {
 
 			Pedido pedido = (Pedido) ent;
-			double valorParcial = 0;
 
 			try {
 				List<Entidade> listProdutosPedido = new ProdutoPedidoController()
@@ -520,11 +431,19 @@ public class PrincipalUI extends JFrame {
 				for (Entidade e : listProdutosPedido) {
 					ProdutoPedido produtoPedido = (ProdutoPedido) e;
 
-					if (produtoPedido.getIdPedido() == pedido.getId()) {
-						Produto p = (Produto) new ProdutoController()
+					Pedido p = (Pedido) new PedidoController()
+							.getPorId(produtoPedido.getIdPedido());
+
+					Cliente cliente = p.getCliente();
+
+					if (produtoPedido.getIdPedido() == pedido.getId()
+							&& cliente.getId() == pedido.getCliente().getId()) {
+						Produto prod = (Produto) new ProdutoController()
 								.getPorId(produtoPedido.getIdProduto());
 
-						valorParcial += p.getPrecoVenda();
+						valorParcial += prod.getPrecoVenda()
+								* produtoPedido.getQtde();
+
 					}
 				}
 			} catch (Exception e1) {
@@ -541,5 +460,13 @@ public class PrincipalUI extends JFrame {
 				.setModel(new PedidoAbertoTableModel(listPedidoAberto));
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
+	}
+
+	public static PrincipalUI getInstancia() {
+		return instancia;
+	}
+
+	public static void setInstancia(PrincipalUI instancia) {
+		PrincipalUI.instancia = instancia;
 	}
 }
