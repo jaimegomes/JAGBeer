@@ -61,7 +61,7 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 					.addContainerGap())
 		);
 		
-		JLabel lblPerodo = new JLabel("Período:");
+		JLabel lblPerodo = new JLabel("Periodo:");
 		
 		JScrollPane scrollPane = new JScrollPane();
 		

@@ -18,6 +18,8 @@ import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.model.Mesa;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class CadastroMesaUI extends JInternalFrame {
 	
@@ -124,9 +126,33 @@ public class CadastroMesaUI extends JInternalFrame {
 		JLabel lblNmero = new JLabel("N\u00FAmero");
 		
 		mesaNumero = new JTextField();
+		mesaNumero.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent kv) {
+				
+				String caracteres= "0987654321";
+				
+				if(!caracteres.contains(kv.getKeyChar()+""))
+				{
+					kv.consume();
+				}
+			}
+		});
+		
 		mesaNumero.setColumns(10);
 		
 		qtdLugares = new JTextField();
+		qtdLugares.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				String caracteres= "0987654321";
+				
+				if(!caracteres.contains(e.getKeyChar()+""))
+				{
+					e.consume();
+				}
+			}
+		});
 		qtdLugares.setColumns(10);
 		
 		JLabel lblQtdLugares = new JLabel("Qtd Lugares");

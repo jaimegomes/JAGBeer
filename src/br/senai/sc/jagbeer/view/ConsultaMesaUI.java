@@ -21,6 +21,8 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.MesaTableModel;
+import javax.swing.UIManager;
+import java.awt.Color;
 
 
 
@@ -40,30 +42,26 @@ public class ConsultaMesaUI extends JInternalFrame {
 	 */
 	public ConsultaMesaUI() {
 		setClosable(true);
-		setTitle("Consulta Mesa");
-		setBounds(100, 100, 510, 360);
+		setTitle("Consulta de Mesas");
+		setBounds(100, 100, 652, 449);
 
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Consulta Mesa",
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Consulta de Mesa", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 482,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(12, Short.MAX_VALUE)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(16, Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 
 		JLabel lblNome = new JLabel("Numero Mesa:");
 
@@ -97,7 +95,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 
 		scrollPane = new JScrollPane();
 
-		JButton btnEditar = new JButton("Editar");
+		JButton btnEditar = new JButton("Editar/Inserir");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -156,40 +154,25 @@ public class ConsultaMesaUI extends JInternalFrame {
 				}
 			}
 		});
-		
-		JButton btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				try {
-					CadastroMesaUI cadMesa = new CadastroMesaUI(null, tableMesa);
-
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-
-			}
-		});
 
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(lblNome)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-							.addComponent(btnPesquisar))
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 449, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
-							.addComponent(btnAdicionar)))
+							.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+							.addGap(12)))
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
@@ -199,37 +182,15 @@ public class ConsultaMesaUI extends JInternalFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNome)
 						.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnPesquisar))
-					.addGap(18)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnPesquisar)
 						.addComponent(btnEditar)
-						.addComponent(btnExcluir)
-						.addComponent(btnAdicionar))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(btnExcluir))
+					.addGap(18)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 
 		tableMesa = new JTable();
-//		try {
-//			tableMesa.setModel(new DefaultTableModel(
-//				new Object[][] {
-//				},
-//				new String[] {
-//					"Numero Mesa", "Quantidade Lugares"
-//				}
-//			) {
-//				boolean[] columnEditables = new boolean[] {
-//					false, true
-//				};
-//				public boolean isCellEditable(int row, int column) {
-//					return columnEditables[column];
-//				}
-//			});
-//		} catch (Exception e1) {
-//			e1.printStackTrace();
-//		}
-
 		
 		scrollPane.setViewportView(tableMesa);
 		//tableMesa.isCe
