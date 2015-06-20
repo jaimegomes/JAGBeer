@@ -43,7 +43,7 @@ public class CadastroClienteUI extends JInternalFrame {
 
 		setTitle("Cadastro de Cliente");
 		setClosable(true);
-		setBounds(100, 100, 425, 241);
+		setBounds(100, 100, 425, 275);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,
@@ -51,22 +51,20 @@ public class CadastroClienteUI extends JInternalFrame {
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 336,
-								Short.MAX_VALUE).addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(14, Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 
 		JLabel lblNome = new JLabel("Nome:");
 
@@ -180,107 +178,51 @@ public class CadastroClienteUI extends JInternalFrame {
 			}
 		});
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.TRAILING)
-																				.addComponent(
-																						lblNome)
-																				.addComponent(
-																						lblTelefone)
-																				.addComponent(
-																						lblEmail))
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING)
-																				.addComponent(
-																						jtfTelefoneCliente,
-																						GroupLayout.PREFERRED_SIZE,
-																						138,
-																						GroupLayout.PREFERRED_SIZE)
-																				.addComponent(
-																						jtfEmailCliente,
-																						GroupLayout.DEFAULT_SIZE,
-																						317,
-																						Short.MAX_VALUE)
-																				.addComponent(
-																						jtfNomeCliente,
-																						GroupLayout.DEFAULT_SIZE,
-																						317,
-																						Short.MAX_VALUE)))
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		btnSalvar,
-																		GroupLayout.PREFERRED_SIZE,
-																		79,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED,
-																		70,
-																		Short.MAX_VALUE)
-																.addComponent(
-																		btnLimpar,
-																		GroupLayout.PREFERRED_SIZE,
-																		79,
-																		GroupLayout.PREFERRED_SIZE)
-																.addGap(62)
-																.addComponent(
-																		btnCancelar)))
-								.addContainerGap()));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGap(22)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(lblNome)
-												.addComponent(
-														jtfNomeCliente,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(lblTelefone)
-												.addComponent(
-														jtfTelefoneCliente,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(lblEmail)
-												.addComponent(
-														jtfEmailCliente,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE))
-								.addGap(32)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(btnSalvar)
-												.addComponent(btnCancelar)
-												.addComponent(btnLimpar))
-								.addContainerGap(20, Short.MAX_VALUE)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblTelefone)
+								.addComponent(lblNome)
+								.addComponent(lblEmail))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(jtfTelefoneCliente, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jtfEmailCliente, GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+								.addComponent(jtfNomeCliente, GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(btnLimpar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(22)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jtfNomeCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNome))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblTelefone)
+						.addComponent(jtfTelefoneCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jtfEmailCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblEmail))
+					.addGap(47)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnSalvar)
+						.addComponent(btnLimpar)
+						.addComponent(btnCancelar))
+					.addGap(27))
+		);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 
