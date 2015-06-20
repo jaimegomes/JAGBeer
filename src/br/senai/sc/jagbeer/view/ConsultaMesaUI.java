@@ -80,6 +80,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 					}
 					
 					if(!numeroMesa.getText().isEmpty()){
+						listaMesa.clear();
 						Mesa mesa = (Mesa) new MesaController().getPorNumeroMesa(Integer.parseInt(numeroMesa.getText()));
 						listaMesa.add(mesa);
 						tableMesa.setModel(new MesaTableModel(listaMesa));
@@ -95,7 +96,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 
 		scrollPane = new JScrollPane();
 
-		JButton btnEditar = new JButton("Editar/Inserir");
+		JButton btnEditar = new JButton("Editar / Inserir");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -154,43 +155,61 @@ public class ConsultaMesaUI extends JInternalFrame {
 				}
 			}
 		});
+		
+		JButton btnLimpar = new JButton("Limpar");
 
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(lblNome)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+							.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
-							.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-							.addGap(12)))
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnPesquisar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnLimpar, GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+								.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE))
+							.addGap(38)))
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNome)
-						.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnPesquisar)
-						.addComponent(btnEditar)
-						.addComponent(btnExcluir))
-					.addGap(18)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblNome)
+								.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnEditar)
+								.addComponent(btnPesquisar))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnLimpar)
+								.addComponent(btnExcluir))))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 
 		tableMesa = new JTable();
+		tableMesa.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Numero da Mesa", "Quantidade de Lugares"
+			}
+		));
 		
 		scrollPane.setViewportView(tableMesa);
 		//tableMesa.isCe

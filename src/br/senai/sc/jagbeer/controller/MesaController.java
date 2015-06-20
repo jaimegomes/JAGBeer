@@ -16,11 +16,11 @@ public class MesaController implements IController {
 
 		Mesa mesa = (Mesa) entidade;		
 
-		if (mesa == null) {
-			throw new Exception("Mesa não pode ser nula.");
-		}
+		//if (mesa == null) {
+			//throw new Exception("Mesa não pode ser nula.");
+		//}		
 		
-		if(mesa.getNumeroMesa().equals("")){
+		if(mesa.getNumeroMesa().equals("") || mesa.getNumeroMesa() == null){
 			throw new Exception("Número da mesa obrigatório.");
 		}
 
@@ -31,6 +31,7 @@ public class MesaController implements IController {
 		if (dao.verificarNumeroMesa(mesa.getNumeroMesa())) {
 			throw new Exception("Número da mesa ja cadastrado.");
 		}
+		
 		dao.salvar(mesa);
 	}
 

@@ -17,7 +17,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.controller.MesaController;
+import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.model.Mesa;
+import br.senai.sc.jagbeer.model.MesaTableModel;
+import br.senai.sc.jagbeer.model.ProdutoTableModel;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -50,12 +54,13 @@ public class CadastroMesaUI extends JInternalFrame {
 				//Verifica se o objeto é nulo
 				if(mesaEdicao == null ){
 					Mesa mesa = new Mesa();
-					mesa.setNumeroMesa(Integer.parseInt(mesaNumero.getText()));
+					mesa.setNumeroMesa(Integer.parseInt(qtdLugares.getText()));
 					mesa.setLugares(Integer.parseInt(qtdLugares.getText()));
 					
 					try{
 						new MesaController().salvar(mesa);
 						JOptionPane.showMessageDialog(null, "Mesa cadastrada com sucesso!");
+						
 						dispose();
 						
 					}catch(Exception e){
@@ -74,7 +79,16 @@ public class CadastroMesaUI extends JInternalFrame {
 					}catch(Exception e){
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
-				}				
+				}
+				
+				if (table != null) {
+					try {
+						table.setModel(new MesaTableModel(
+								new MesaController().listar()));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		});
 		
@@ -190,7 +204,5 @@ public class CadastroMesaUI extends JInternalFrame {
 			mesaNumero.setText(m.getNumeroMesa().toString());
 			qtdLugares.setText(m.getLugares().toString());
 		}
-	}
-	
-	
+	}	
 }
