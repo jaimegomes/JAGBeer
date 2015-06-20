@@ -49,6 +49,17 @@ public class PrincipalUI extends JFrame {
 	private JTextField jtfCliente;
 	private JTable tablePedidoAberto;
 
+	private static PrincipalUI instancia;
+
+	public static PrincipalUI obterInstancia() {
+
+		if (instancia == null) {
+			instancia = new PrincipalUI();
+
+		}
+		return instancia;
+	}
+
 	private List<Entidade> listPedidoAberto = new ArrayList<Entidade>();
 
 	/**
@@ -59,7 +70,7 @@ public class PrincipalUI extends JFrame {
 			public void run() {
 				try {
 
-					PrincipalUI frame = new PrincipalUI();
+					PrincipalUI frame = obterInstancia();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -72,6 +83,7 @@ public class PrincipalUI extends JFrame {
 	 * Create the frame.
 	 */
 	public PrincipalUI() {
+
 		setForeground(Color.BLUE);
 
 		setTitle("JAGBeer");
@@ -526,5 +538,13 @@ public class PrincipalUI extends JFrame {
 				.setModel(new PedidoAbertoTableModel(listPedidoAberto));
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
+	}
+
+	public static PrincipalUI getInstancia() {
+		return instancia;
+	}
+
+	public static void setInstancia(PrincipalUI instancia) {
+		PrincipalUI.instancia = instancia;
 	}
 }
