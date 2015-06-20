@@ -16,7 +16,7 @@ import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
 /**
- * Classe DAO, responsável pela manipulação dos dados dos Produtos no banco.
+ * Classe DAO, responsï¿½vel pela manipulaï¿½ï¿½o dos dados dos Produtos no banco.
  * 
  * @author Jaime Gomes
  * 
@@ -171,8 +171,8 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * Método responsável por buscar todos os produtos de determinada
-	 * classificação passada como parâmetro.
+	 * Mï¿½todo responsï¿½vel por buscar todos os produtos de determinada
+	 * classificaï¿½ï¿½o passada como parï¿½metro.
 	 * 
 	 * @param classificacao
 	 * @return List<Entidade> listProduto
@@ -206,7 +206,7 @@ public class ProdutoDAO extends GenericDAO {
 			pstm.close();
 		} catch (Exception e) {
 			System.out
-					.println("[ProdutoDAO] - Erro ao buscar produto por classificação.\n"
+					.println("[ProdutoDAO] - Erro ao buscar produto por classificaï¿½ï¿½o.\n"
 							+ e.getMessage());
 		}
 
@@ -215,8 +215,8 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * Método responsável por buscar todos os produtos que contenham o nome
-	 * passado como parâmetro.
+	 * Mï¿½todo responsï¿½vel por buscar todos os produtos que contenham o nome
+	 * passado como parï¿½metro.
 	 * 
 	 * @param String nome
 	 * @return List<Entidade> listProduto
@@ -259,8 +259,8 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * Método responsável por fazer a busca dos produtos de acordo com o nome e
-	 * a classificação passados como parâmetro.
+	 * Mï¿½todo responsï¿½vel por fazer a busca dos produtos de acordo com o nome e
+	 * a classificaï¿½ï¿½o passados como parï¿½metro.
 	 * 
 	 * @param nome
 	 * @param classificacao
@@ -273,7 +273,7 @@ public class ProdutoDAO extends GenericDAO {
 
 		String sql = "SELECT * FROM produto WHERE UPPER(nomeProduto) LIKE UPPER('%"
 				+ nome
-				+ "%') AND UPPER(classificacao) LIKE UPERR('"
+				+ "%') AND UPPER(classificacao) LIKE UPPER('"
 				+ classificacao + "')";
 
 		try {
@@ -297,7 +297,7 @@ public class ProdutoDAO extends GenericDAO {
 			pstm.close();
 		} catch (Exception e) {
 			System.out
-					.println("[ProdutoDAO] - Erro ao buscar produto por nome e classificação.\n"
+					.println("[ProdutoDAO] - Erro ao buscar produto por nome e classificaï¿½ï¿½o.\n"
 							+ e.getMessage());
 		}
 
@@ -306,8 +306,8 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * Método responsável por fazer a busca dos produtos de acordo com o nome e
-	 * a classificação passados como parâmetro.
+	 * Mï¿½todo responsï¿½vel por fazer a busca dos produtos de acordo com o nome e
+	 * a classificaï¿½ï¿½o passados como parï¿½metro.
 	 * 
 	 * @param nome
 	 * @param classificacao
@@ -344,7 +344,7 @@ public class ProdutoDAO extends GenericDAO {
 			pstm.close();
 		} catch (Exception e) {
 			System.out
-					.println("[ProdutoDAO] - Erro ao buscar produto por nome e classificação.\n"
+					.println("[ProdutoDAO] - Erro ao buscar produto por nome e classificaï¿½ï¿½o.\n"
 							+ e.getMessage());
 		}
 
@@ -353,8 +353,8 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * Método responsável por buscar o produto com o nome passado como
-	 * parâmetro.
+	 * Mï¿½todo responsï¿½vel por buscar o produto com o nome passado como
+	 * parï¿½metro.
 	 * 
 	 * @return String nome
 	 * @throws Exception
