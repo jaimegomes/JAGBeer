@@ -33,6 +33,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 	 * @throws Exception
 	 */
 	public ConsultaClienteUI() {
+		setClosable(true);
 		setTitle("Consulta Cliente");
 		setBounds(100, 100, 510, 360);
 
