@@ -255,6 +255,8 @@ public class PrincipalUI extends JFrame {
 				if (!jtfCliente.getText().isEmpty()
 						&& jtfPedido.getText().isEmpty()) {
 
+					listPedidoAberto = new ArrayList<Entidade>();
+
 					Pedido pedido;
 					try {
 						List<Entidade> listClientes = new ClienteController()
@@ -266,8 +268,14 @@ public class PrincipalUI extends JFrame {
 							pedido = (Pedido) new PedidoController()
 									.getPorIdCliente(cliente.getId());
 
-							listPedidoAberto.add(new ProdutoPedidoController()
-									.getPorIdPedido(pedido.getId()));
+							for (Entidade en : getListaPedidosAbertosTableModel()) {
+								PedidoAberto pedidoAberto = (PedidoAberto) en;
+
+								if (pedidoAberto.getPedido() == pedido.getId()) {
+									listPedidoAberto.add(pedidoAberto);
+								}
+							}
+
 						}
 
 					} catch (Exception e2) {
@@ -287,22 +295,29 @@ public class PrincipalUI extends JFrame {
 				} else if (jtfCliente.getText().isEmpty()
 						&& !jtfPedido.getText().isEmpty()) {
 
+					listPedidoAberto = new ArrayList<Entidade>();
+
 					try {
-						System.out.println("id: " + jtfPedido.getText());
 						Pedido pedido = (Pedido) new PedidoController()
 								.getPorId(Integer.parseInt(jtfPedido.getText()));
 
-						listPedidoAberto.add(new ProdutoPedidoController()
-								.getPorIdPedido(pedido.getId()));
+						for (Entidade en : getListaPedidosAbertosTableModel()) {
+							PedidoAberto pedidoAberto = (PedidoAberto) en;
+
+							if (pedidoAberto.getPedido() == pedido.getId()) {
+								listPedidoAberto.add(pedidoAberto);
+							}
+						}
 
 						if (listPedidoAberto.isEmpty()) {
 							JOptionPane
 									.showMessageDialog(null,
 											"Não foram encontrados pedidos abertos para esse cliente.");
-							tablePedidoAberto
-									.setModel(new PedidoAbertoTableModel(
-											listPedidoAberto));
+
 						}
+
+						tablePedidoAberto.setModel(new PedidoAbertoTableModel(
+								listPedidoAberto));
 
 					} catch (NumberFormatException e1) {
 						e1.printStackTrace();
@@ -310,20 +325,19 @@ public class PrincipalUI extends JFrame {
 						e1.printStackTrace();
 					}
 
+					// em branco
 				} else if (jtfCliente.getText().isEmpty()
 						&& jtfPedido.getText().isEmpty()) {
 
-					try {
-						tablePedidoAberto.setModel(new PedidoAbertoTableModel(
-								new PedidoController().getPedidosAbertos()));
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					listPedidoAberto = new ArrayList<Entidade>();
+
+					tablePedidoAberto.setModel(new PedidoAbertoTableModel(
+							getListaPedidosAbertosTableModel()));
 
 				}
 
 			}
+
 		});
 
 		JButton btnNovo = new JButton("Fazer Pedido");
@@ -506,47 +520,8 @@ public class PrincipalUI extends JFrame {
 						.addContainerGap(GroupLayout.DEFAULT_SIZE,
 								Short.MAX_VALUE)));
 
-		List<Entidade> listPedido = new PedidoController().getPedidosAbertos();
-
-		double valorParcial = 0;
-
-		for (Entidade ent : listPedido) {
-
-			Pedido pedido = (Pedido) ent;
-
-			try {
-				List<Entidade> listProdutosPedido = new ProdutoPedidoController()
-						.listar();
-				for (Entidade e : listProdutosPedido) {
-					ProdutoPedido produtoPedido = (ProdutoPedido) e;
-
-					Pedido p = (Pedido) new PedidoController()
-							.getPorId(produtoPedido.getIdPedido());
-
-					Cliente cliente = p.getCliente();
-
-					if (produtoPedido.getIdPedido() == pedido.getId()
-							&& cliente.getId() == pedido.getCliente().getId()) {
-						Produto prod = (Produto) new ProdutoController()
-								.getPorId(produtoPedido.getIdProduto());
-
-						valorParcial += prod.getPrecoVenda()
-								* produtoPedido.getQtde();
-
-					}
-				}
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-
-			PedidoAberto pedidoAberto = new PedidoAberto(pedido.getId(), pedido
-					.getCliente().getNome(), valorParcial);
-
-			listPedidoAberto.add(pedidoAberto);
-		}
-
-		tablePedidoAberto
-				.setModel(new PedidoAbertoTableModel(listPedidoAberto));
+		tablePedidoAberto.setModel(new PedidoAbertoTableModel(
+				getListaPedidosAbertosTableModel()));
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
 	}
@@ -557,5 +532,58 @@ public class PrincipalUI extends JFrame {
 
 	public static void setInstancia(PrincipalUI instancia) {
 		PrincipalUI.instancia = instancia;
+	}
+
+	private List<Entidade> getListaPedidosAbertosTableModel() {
+
+		List<Entidade> listRetorno = new ArrayList<Entidade>();
+
+		try {
+
+			List<Entidade> listPedido = new PedidoController()
+					.getPedidosAbertos();
+
+			double valorParcial = 0;
+
+			for (Entidade ent : listPedido) {
+
+				Pedido pedido = (Pedido) ent;
+
+				try {
+					List<Entidade> listProdutosPedido = new ProdutoPedidoController()
+							.listar();
+					for (Entidade e : listProdutosPedido) {
+						ProdutoPedido produtoPedido = (ProdutoPedido) e;
+
+						Pedido p = (Pedido) new PedidoController()
+								.getPorId(produtoPedido.getIdPedido());
+
+						Cliente cliente = p.getCliente();
+
+						if (produtoPedido.getIdPedido() == pedido.getId()
+								&& cliente.getId() == pedido.getCliente()
+										.getId()) {
+							Produto prod = (Produto) new ProdutoController()
+									.getPorId(produtoPedido.getIdProduto());
+
+							valorParcial += prod.getPrecoVenda()
+									* produtoPedido.getQtde();
+
+						}
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+				PedidoAberto pedidoAberto = new PedidoAberto(pedido.getId(),
+						pedido.getCliente().getNome(), valorParcial);
+
+				listRetorno.add(pedidoAberto);
+			}
+
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		return listRetorno;
 	}
 }
