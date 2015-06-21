@@ -257,16 +257,19 @@ public class PrincipalUI extends JFrame {
 
 					Pedido pedido;
 					try {
-						// ve se essa porra carregou
-						List<Entidade> listClientes =  new ClienteController()
+						List<Entidade> listClientes = new ClienteController()
 								.getListClientesPorNome(jtfCliente.getText());
 
-						//percorrer a lista for(Entidade ent: listClientes) e fazer o que tem aqui em baixo.
-						pedido = (Pedido) new PedidoController()
-								.getPorIdCliente(cliente.getId());
+						for (Entidade ent : listClientes) {
+							Cliente cliente = (Cliente) ent;
 
-						listPedidoAberto.add(new ProdutoPedidoController()
-								.getPorIdPedido(pedido.getId()));
+							pedido = (Pedido) new PedidoController()
+									.getPorIdCliente(cliente.getId());
+
+							listPedidoAberto.add(new ProdutoPedidoController()
+									.getPorIdPedido(pedido.getId()));
+						}
+
 					} catch (Exception e2) {
 						e2.printStackTrace();
 					}
@@ -274,7 +277,7 @@ public class PrincipalUI extends JFrame {
 					if (listPedidoAberto.isEmpty()) {
 						JOptionPane
 								.showMessageDialog(null,
-										"NÃ£o foram encontrados pedidos abertos para esse nÃºmero de pedido..");
+										"Não foram encontrados pedidos abertos para esse número de pedido.");
 					} else {
 						tablePedidoAberto.setModel(new PedidoAbertoTableModel(
 								listPedidoAberto));
@@ -295,7 +298,7 @@ public class PrincipalUI extends JFrame {
 						if (listPedidoAberto.isEmpty()) {
 							JOptionPane
 									.showMessageDialog(null,
-											"NÃ£o foram encontrados pedidos abertos para esse cliente.");
+											"Não foram encontrados pedidos abertos para esse cliente.");
 							tablePedidoAberto
 									.setModel(new PedidoAbertoTableModel(
 											listPedidoAberto));
