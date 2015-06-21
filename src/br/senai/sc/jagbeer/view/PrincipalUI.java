@@ -305,26 +305,33 @@ public class PrincipalUI extends JFrame {
 					listPedidoAberto = new ArrayList<Entidade>();
 
 					try {
-						Pedido pedido = (Pedido) new PedidoController()
-								.getPorId(Integer.parseInt(jtfPedido.getText()));
+						try {
+							Pedido pedido = (Pedido) new PedidoController()
+									.getPorId(Integer.parseInt(jtfPedido
+											.getText()));
 
-						for (Entidade en : getListaPedidosAbertosTableModel()) {
-							PedidoAberto pedidoAberto = (PedidoAberto) en;
+							for (Entidade en : getListaPedidosAbertosTableModel()) {
+								PedidoAberto pedidoAberto = (PedidoAberto) en;
 
-							if (pedidoAberto.getPedido() == pedido.getId()) {
-								listPedidoAberto.add(pedidoAberto);
+								if (pedidoAberto.getPedido() == pedido.getId()) {
+									listPedidoAberto.add(pedidoAberto);
+								}
 							}
+						} catch (NumberFormatException nf2) {
+							JOptionPane.showMessageDialog(null,
+									"Você deve inserir um número inteiro.");
 						}
 
 						if (listPedidoAberto.isEmpty()) {
 							JOptionPane
 									.showMessageDialog(null,
-											"Não foram encontrados pedidos abertos para esse cliente.");
+											"Não foram encontrados pedidos abertos para esse pedido.");
 
+						} else {
+							tablePedidoAberto
+									.setModel(new PedidoAbertoTableModel(
+											listPedidoAberto));
 						}
-
-						tablePedidoAberto.setModel(new PedidoAbertoTableModel(
-								listPedidoAberto));
 
 					} catch (NumberFormatException e1) {
 						e1.printStackTrace();
@@ -568,29 +575,20 @@ public class PrincipalUI extends JFrame {
 
 		try {
 
-			List<Entidade> listPedido = new PedidoController()
-					.getPedidosAbertos();
+			for (Entidade ent : new PedidoController().getPedidosAbertos()) {
 
-			double valorParcial = 0;
-
-			for (Entidade ent : listPedido) {
+				double valorParcial = 0;
 
 				Pedido pedido = (Pedido) ent;
 
 				try {
-					List<Entidade> listProdutosPedido = new ProdutoPedidoController()
-							.listar();
-					for (Entidade e : listProdutosPedido) {
+
+					for (Entidade e : new ProdutoPedidoController().listar()) {
+
 						ProdutoPedido produtoPedido = (ProdutoPedido) e;
 
-						Pedido p = (Pedido) new PedidoController()
-								.getPorId(produtoPedido.getIdPedido());
+						if (produtoPedido.getIdPedido() == pedido.getId()) {
 
-						Cliente cliente = p.getCliente();
-
-						if (produtoPedido.getIdPedido() == pedido.getId()
-								&& cliente.getId() == pedido.getCliente()
-										.getId()) {
 							Produto prod = (Produto) new ProdutoController()
 									.getPorId(produtoPedido.getIdProduto());
 
@@ -607,7 +605,8 @@ public class PrincipalUI extends JFrame {
 					pedidoAberto = new PedidoAberto(pedido.getId(), pedido
 							.getCliente().getNome(), valorParcial);
 				} else {
-					pedidoAberto = new PedidoAberto(pedido.getId(), null, valorParcial);
+					pedidoAberto = new PedidoAberto(pedido.getId(), null,
+							valorParcial);
 				}
 
 				listRetorno.add(pedidoAberto);
