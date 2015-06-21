@@ -43,6 +43,8 @@ public class ClienteDAO extends GenericDAO {
 		} catch (SQLException se) {
 			con.rollback();
 			System.out.println("Erro ao salvar Cliente\n" + se.getMessage());
+		} finally {
+			con.close();
 		}
 	}
 
@@ -62,6 +64,8 @@ public class ClienteDAO extends GenericDAO {
 		} catch (SQLException se) {
 			con.rollback();
 			System.out.println("Erro ao excluir Cliente.\n" + se.getMessage());
+		} finally {
+			con.close();
 		}
 	}
 
@@ -84,6 +88,8 @@ public class ClienteDAO extends GenericDAO {
 		} catch (SQLException se) {
 			con.rollback();
 			System.out.println("Erro ao alterar Cliente.\n" + se.getMessage());
+		} finally {
+			con.close();
 		}
 	}
 
@@ -106,11 +112,13 @@ public class ClienteDAO extends GenericDAO {
 
 		} catch (SQLException se) {
 			System.out.println("Erro ao listar Cliente.\n" + se.getMessage());
+		} finally {
+			con.close();
 		}
 		return listaClientes;
 	}
 
-	public List<Entidade> getListClientesPorNome(String clientePesquisar) {
+	public List<Entidade> getListClientesPorNome(String clientePesquisar) throws Exception{
 		Cliente cliente = null;
 		List<Entidade> listCliente = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM cliente WHERE nome LIKE '%"
@@ -133,6 +141,8 @@ public class ClienteDAO extends GenericDAO {
 		} catch (SQLException se) {
 			System.out.println("Erro ao listar Cliente por Nome "
 					+ se.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return listCliente;
@@ -160,6 +170,8 @@ public class ClienteDAO extends GenericDAO {
 		} catch (SQLException se) {
 			System.out.println("Erro ao listar Cliente por ID "
 					+ se.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return cliente;
@@ -169,7 +181,7 @@ public class ClienteDAO extends GenericDAO {
 	public void atualizaTabela(JTable table) throws Exception {
 	}
 
-	public Entidade getPorNome(String clientePesquisar) {
+	public Entidade getPorNome(String clientePesquisar) throws Exception {
 		Cliente cliente = null;
 		String sql = "SELECT * FROM cliente WHERE nome LIKE '"
 				+ clientePesquisar + "'";
@@ -190,6 +202,8 @@ public class ClienteDAO extends GenericDAO {
 		} catch (SQLException se) {
 			System.out.println("Erro ao listar Cliente por Nome "
 					+ se.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return cliente;

@@ -82,7 +82,8 @@ public class PrincipalUI extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	public PrincipalUI() throws Exception {
 
@@ -254,16 +255,16 @@ public class PrincipalUI extends JFrame {
 				if (!jtfCliente.getText().isEmpty()
 						&& jtfPedido.getText().isEmpty()) {
 
-					Cliente cliente = (Cliente) new ClienteController()
-							.getPorNome(jtfCliente.getText());
-
 					Pedido pedido;
 					try {
+						Cliente cliente = (Cliente) new ClienteController()
+								.getPorNome(jtfCliente.getText());
+
 						pedido = (Pedido) new PedidoController()
 								.getPorIdCliente(cliente.getId());
-						
+
 						listPedidoAberto.add(new ProdutoPedidoController()
-						.getPorIdPedido(pedido.getId()));
+								.getPorIdPedido(pedido.getId()));
 					} catch (Exception e2) {
 						e2.printStackTrace();
 					}

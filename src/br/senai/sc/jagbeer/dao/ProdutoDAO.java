@@ -52,6 +52,9 @@ public class ProdutoDAO extends GenericDAO {
 			con.rollback();
 			System.out.println("[ProdutoDAO] - Erro ao salvar produto.\n"
 					+ e.getMessage());
+		} finally {
+			con.close();
+
 		}
 	}
 
@@ -73,6 +76,9 @@ public class ProdutoDAO extends GenericDAO {
 			con.rollback();
 			System.out.println("[ProdutoDAO] - Erro ao excluir produto.\n"
 					+ e.getMessage());
+		}finally {
+			con.close();
+
 		}
 
 	}
@@ -98,12 +104,15 @@ public class ProdutoDAO extends GenericDAO {
 			con.rollback();
 			System.out.println("[ProdutoDAO] - Erro ao alterar produto.\n"
 					+ e.getMessage());
+		}finally {
+			con.close();
+
 		}
 
 	}
 
 	@Override
-	public List<Entidade> listar() {
+	public List<Entidade> listar() throws Exception{
 
 		List<Entidade> listaProdutos = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM produto";
@@ -129,12 +138,15 @@ public class ProdutoDAO extends GenericDAO {
 		} catch (SQLException e) {
 			System.out.println("[ProdutoDAO] - Erro ao listar produtos.\n"
 					+ e.getMessage());
+		}finally {
+			con.close();
+
 		}
 		return listaProdutos;
 	}
 
 	@Override
-	public Entidade getPorId(int id) {
+	public Entidade getPorId(int id) throws Exception{
 
 		String sql = "SELECT * FROM produto WHERE id = ?";
 		try {
@@ -160,13 +172,16 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por id.\n"
 							+ e.getMessage());
+		}finally {
+			con.close();
+
 		}
 
 		return produto;
 	}
 
 	@Override
-	public void atualizaTabela(JTable table) {
+	public void atualizaTabela(JTable table) throws Exception{
 		table.setModel(new ProdutoTableModel(listar()));
 	}
 
@@ -178,7 +193,7 @@ public class ProdutoDAO extends GenericDAO {
 	 * @return List<Entidade> listProduto
 	 * @throws Exception
 	 */
-	public List<Entidade> getPorClassificacao(String classificacao) {
+	public List<Entidade> getPorClassificacao(String classificacao) throws Exception {
 
 		List<Entidade> listProduto = new ArrayList<Entidade>();
 
@@ -208,6 +223,9 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por classifica��o.\n"
 							+ e.getMessage());
+		}finally {
+			con.close();
+
 		}
 
 		return listProduto;
@@ -218,11 +236,13 @@ public class ProdutoDAO extends GenericDAO {
 	 * M�todo respons�vel por buscar todos os produtos que contenham o nome
 	 * passado como par�metro.
 	 * 
-	 * @param String nome
+	 * @param String
+	 *            nome
 	 * @return List<Entidade> listProduto
+	 * @throws Exception 
 	 * @throws Exception
 	 */
-	public List<Entidade> getListNomesProdutos(String nome) {
+	public List<Entidade> getListNomesProdutos(String nome) throws Exception {
 
 		List<Entidade> listProduto = new ArrayList<Entidade>();
 
@@ -252,6 +272,9 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por nome.\n"
 							+ e.getMessage());
+		}finally {
+			con.close();
+
 		}
 
 		return listProduto;
@@ -299,6 +322,9 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por nome e classifica��o.\n"
 							+ e.getMessage());
+		}finally {
+			con.close();
+
 		}
 
 		return listProduto;
@@ -346,6 +372,9 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por nome e classifica��o.\n"
 							+ e.getMessage());
+		}finally {
+			con.close();
+
 		}
 
 		return produto;
@@ -386,6 +415,9 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por nome.\n"
 							+ e.getMessage());
+		}finally {
+			con.close();
+
 		}
 
 		return produto;

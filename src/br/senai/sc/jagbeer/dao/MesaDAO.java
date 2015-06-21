@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JTable;
+
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.abstracts.GenericDAO;
 import br.senai.sc.jagbeer.conexao.Conexao;
@@ -38,6 +40,8 @@ public class MesaDAO extends GenericDAO {
 		} catch (SQLException se) {
 			con.rollback();
 			System.out.println("Erro ao salvar Mesa\n" + se.getMessage());
+		} finally {
+			con.close();
 		}
 
 	}
@@ -60,6 +64,8 @@ public class MesaDAO extends GenericDAO {
 		} catch (SQLException se) {
 			con.rollback();
 			System.out.println("Erro ao excluir Mesa.\n" + se.getMessage());
+		} finally {
+			con.close();
 		}
 
 	}
@@ -84,6 +90,8 @@ public class MesaDAO extends GenericDAO {
 		} catch (SQLException se) {
 			con.rollback();
 			System.out.println("Erro ao alterar Mesa.\n" + se.getMessage());
+		} finally {
+			con.close();
 		}
 
 	}
@@ -108,6 +116,8 @@ public class MesaDAO extends GenericDAO {
 
 		} catch (SQLException se) {
 			System.out.println("Erro ao listar Mesa.\n" + se.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return listaMesas;
@@ -133,6 +143,8 @@ public class MesaDAO extends GenericDAO {
 
 		} catch (SQLException se) {
 			System.out.println("Erro ao pegar mesa por id." + se.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return mesa;
@@ -143,7 +155,7 @@ public class MesaDAO extends GenericDAO {
 
 	}
 
-	public boolean verificarNumeroMesa(int numeroMesa) {
+	public boolean verificarNumeroMesa(int numeroMesa) throws Exception {
 
 		String query = "SELECT * FROM mesa WHERE numeroMesa = ?";
 
@@ -163,12 +175,14 @@ public class MesaDAO extends GenericDAO {
 		} catch (SQLException se) {
 			System.out.println("Erro ao verificar numero da Mesa. "
 					+ se.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return false;
 	}
 
-	public Entidade getPorNumeroMesa(int numeroMesa) {
+	public Entidade getPorNumeroMesa(int numeroMesa) throws Exception {
 		Mesa mesa = null;
 		String sql = "SELECT * FROM mesa WHERE numeroMesa = ?";
 
@@ -188,11 +202,11 @@ public class MesaDAO extends GenericDAO {
 		} catch (SQLException se) {
 			System.out.println("Erro ao listar Mesa por Numero "
 					+ se.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return mesa;
 	}
-
-
 
 }
