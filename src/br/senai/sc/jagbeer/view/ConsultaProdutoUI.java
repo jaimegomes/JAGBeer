@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -26,7 +27,6 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
-import javax.swing.ListSelectionModel;
 
 public class ConsultaProdutoUI extends JInternalFrame {
 
@@ -165,43 +165,46 @@ public class ConsultaProdutoUI extends JInternalFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				try {
+				int opcao = JOptionPane.showConfirmDialog(null,
+						"Deseja excluir?");
 
-					ProdutoController controller = new ProdutoController();
+				if (opcao == 0) {
+					try {
 
-					int linhaSelecionada = table.getSelectedRow();
+						int linhaSelecionada = table.getSelectedRow();
 
-					if (linhaSelecionada > -1) {
+						if (linhaSelecionada > -1) {
 
-						String nomeProduto = table.getValueAt(linhaSelecionada,
-								0).toString();
+							String nomeProduto = table.getValueAt(
+									linhaSelecionada, 0).toString();
 
-						Double precoVenda = Double.parseDouble(table
-								.getValueAt(linhaSelecionada, 2).toString());
+							Double precoVenda = Double
+									.parseDouble(table.getValueAt(
+											linhaSelecionada, 2).toString());
 
-						String classificacao = table.getValueAt(
-								linhaSelecionada, 3).toString();
+							String classificacao = table.getValueAt(
+									linhaSelecionada, 3).toString();
 
-						Produto produtoExcluir = (Produto) controller
-								.buscaCompleta(nomeProduto, precoVenda,
-										classificacao);
+							Produto produtoExcluir = (Produto) new ProdutoController()
+									.buscaCompleta(nomeProduto, precoVenda,
+											classificacao);
 
-						controller.excluir(produtoExcluir);
-						JOptionPane.showMessageDialog(null,
-								"Produto excluído com sucesso.");
+							new ProdutoController().excluir(produtoExcluir);
+							JOptionPane.showMessageDialog(null,
+									"Produto excluido com Sucesso!");
 
-						table.setModel(new ProdutoTableModel(controller
-								.listar()));
+							// Atualiza tabela
+							table.setModel(new ProdutoTableModel(
+									new ProdutoController().listar()));
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"Selecione um produto para excluí-lo.");
+						}
 
-					} else {
-						JOptionPane.showMessageDialog(null,
-								"Selecione um produto.");
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, e2.getMessage());
 					}
-
-				} catch (Exception e1) {
-					e1.printStackTrace();
 				}
-
 			}
 		});
 

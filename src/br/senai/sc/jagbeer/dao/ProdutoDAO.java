@@ -16,7 +16,8 @@ import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
 /**
- * Classe DAO, respons�vel pela manipula��o dos dados dos Produtos no banco.
+ * Classe DAO, respons�vel pela manipula��o dos dados dos Produtos no
+ * banco.
  * 
  * @author Jaime Gomes
  * 
@@ -76,9 +77,8 @@ public class ProdutoDAO extends GenericDAO {
 			con.rollback();
 			System.out.println("[ProdutoDAO] - Erro ao excluir produto.\n"
 					+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
-
 		}
 
 	}
@@ -104,7 +104,7 @@ public class ProdutoDAO extends GenericDAO {
 			con.rollback();
 			System.out.println("[ProdutoDAO] - Erro ao alterar produto.\n"
 					+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
 
 		}
@@ -112,7 +112,7 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	@Override
-	public List<Entidade> listar() throws Exception{
+	public List<Entidade> listar() throws Exception {
 
 		List<Entidade> listaProdutos = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM produto";
@@ -138,7 +138,7 @@ public class ProdutoDAO extends GenericDAO {
 		} catch (SQLException e) {
 			System.out.println("[ProdutoDAO] - Erro ao listar produtos.\n"
 					+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
 
 		}
@@ -146,7 +146,7 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	@Override
-	public Entidade getPorId(int id) throws Exception{
+	public Entidade getPorId(int id) throws Exception {
 
 		String sql = "SELECT * FROM produto WHERE id = ?";
 		try {
@@ -172,7 +172,7 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por id.\n"
 							+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
 
 		}
@@ -181,7 +181,7 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	@Override
-	public void atualizaTabela(JTable table) throws Exception{
+	public void atualizaTabela(JTable table) throws Exception {
 		table.setModel(new ProdutoTableModel(listar()));
 	}
 
@@ -193,7 +193,8 @@ public class ProdutoDAO extends GenericDAO {
 	 * @return List<Entidade> listProduto
 	 * @throws Exception
 	 */
-	public List<Entidade> getPorClassificacao(String classificacao) throws Exception {
+	public List<Entidade> getPorClassificacao(String classificacao)
+			throws Exception {
 
 		List<Entidade> listProduto = new ArrayList<Entidade>();
 
@@ -223,7 +224,7 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por classifica��o.\n"
 							+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
 
 		}
@@ -239,7 +240,7 @@ public class ProdutoDAO extends GenericDAO {
 	 * @param String
 	 *            nome
 	 * @return List<Entidade> listProduto
-	 * @throws Exception 
+	 * @throws Exception
 	 * @throws Exception
 	 */
 	public List<Entidade> getListNomesProdutos(String nome) throws Exception {
@@ -272,7 +273,7 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por nome.\n"
 							+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
 
 		}
@@ -282,8 +283,8 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * M�todo respons�vel por fazer a busca dos produtos de acordo com o nome e
-	 * a classifica��o passados como par�metro.
+	 * M�todo respons�vel por fazer a busca dos produtos de acordo com o
+	 * nome e a classifica��o passados como par�metro.
 	 * 
 	 * @param nome
 	 * @param classificacao
@@ -322,7 +323,7 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por nome e classifica��o.\n"
 							+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
 
 		}
@@ -332,8 +333,8 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * M�todo respons�vel por fazer a busca dos produtos de acordo com o nome e
-	 * a classifica��o passados como par�metro.
+	 * M�todo respons�vel por fazer a busca dos produtos de acordo com o
+	 * nome e a classifica��o passados como par�metro.
 	 * 
 	 * @param nome
 	 * @param classificacao
@@ -372,7 +373,7 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por nome e classifica��o.\n"
 							+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
 
 		}
@@ -415,7 +416,7 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por nome.\n"
 							+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
 
 		}

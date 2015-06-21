@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
@@ -35,7 +36,6 @@ import br.senai.sc.jagbeer.model.PedidoAberto;
 import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
 import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoPedido;
-import javax.swing.ListSelectionModel;
 
 /**
  * 
@@ -362,7 +362,7 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 
-		//JAIME ESTÁ COM ERRO NESSA CARALHA AQUI.. DÁ UM HELP POR FAVOR.
+		// JAIME ESTÁ COM ERRO NESSA CARALHA AQUI.. DÁ UM HELP POR FAVOR.
 		JButton btnEncerrar = new JButton("Encerrar Pedido");
 		btnEncerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -396,11 +396,11 @@ public class PrincipalUI extends JFrame {
 						encerrarPedidoUI = new EncerrarPedidoUI(
 								clienteEncerrar, pedidoEncerrar);
 
-//						 encerrarPedidoUI.requestFocus(true);
-//						 encerrarPedidoUI.setFocusable(true);
-//						 encerrarPedidoUI.moveToFront();
-						 getContentPane().add(encerrarPedidoUI, 0);
-						 encerrarPedidoUI.setVisible(true);
+						// encerrarPedidoUI.requestFocus(true);
+						// encerrarPedidoUI.setFocusable(true);
+						// encerrarPedidoUI.moveToFront();
+						getContentPane().add(encerrarPedidoUI, 0);
+						encerrarPedidoUI.setVisible(true);
 
 					} else {
 						JOptionPane.showMessageDialog(null,
@@ -564,6 +564,7 @@ public class PrincipalUI extends JFrame {
 	private List<Entidade> getListaPedidosAbertosTableModel() {
 
 		List<Entidade> listRetorno = new ArrayList<Entidade>();
+		PedidoAberto pedidoAberto;
 
 		try {
 
@@ -602,8 +603,12 @@ public class PrincipalUI extends JFrame {
 					e1.printStackTrace();
 				}
 
-				PedidoAberto pedidoAberto = new PedidoAberto(pedido.getId(),
-						pedido.getCliente().getNome(), valorParcial);
+				if (pedido.getCliente() != null) {
+					pedidoAberto = new PedidoAberto(pedido.getId(), pedido
+							.getCliente().getNome(), valorParcial);
+				} else {
+					pedidoAberto = new PedidoAberto(pedido.getId(), null, valorParcial);
+				}
 
 				listRetorno.add(pedidoAberto);
 			}
