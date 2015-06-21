@@ -193,9 +193,9 @@ public class FazerPedidoUI extends JInternalFrame {
 
 					if (!nomeCliente.equals("") && nomeCliente != null) {
 
-						// ve se essa porra carregou
+						// ve se essa porra carregou não sei se tem quer lista cliente ou cliente selecionado
 						cliente = (Cliente) new ClienteController()
-								.getNomeSelecionado(nomeCliente);
+								.getListClientesPorNome(nomeCliente);
 
 						if (cliente != null) {
 							int idCliente = cliente.getId();
