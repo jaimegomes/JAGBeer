@@ -266,51 +266,107 @@ public class ConsultaProdutoUI extends JInternalFrame {
 		JScrollPane scrollPane = new JScrollPane();
 
 		gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNome)
-								.addComponent(lblClassificacao))
-							.addGap(8)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(jtfNome, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
-								.addComponent(cmbClassificacao, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnLimpar, GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-								.addComponent(btnPesquisar, GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-							.addGap(22)
-							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(btnExcluir, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnEditarInserir, GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(10)
-							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(14)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jtfNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNome)
-						.addComponent(btnEditarInserir)
-						.addComponent(btnPesquisar))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(cmbClassificacao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblClassificacao)
-						.addComponent(btnLimpar)
-						.addComponent(btnExcluir))
-					.addGap(18)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
-					.addContainerGap())
-		);
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.LEADING)
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addContainerGap()
+																.addGroup(
+																		gl_panel.createParallelGroup(
+																				Alignment.LEADING)
+																				.addComponent(
+																						lblNome)
+																				.addComponent(
+																						lblClassificacao))
+																.addGap(8)
+																.addGroup(
+																		gl_panel.createParallelGroup(
+																				Alignment.LEADING)
+																				.addComponent(
+																						jtfNome,
+																						GroupLayout.PREFERRED_SIZE,
+																						175,
+																						GroupLayout.PREFERRED_SIZE)
+																				.addComponent(
+																						cmbClassificacao,
+																						GroupLayout.PREFERRED_SIZE,
+																						130,
+																						GroupLayout.PREFERRED_SIZE))
+																.addGap(18)
+																.addGroup(
+																		gl_panel.createParallelGroup(
+																				Alignment.LEADING)
+																				.addComponent(
+																						btnLimpar,
+																						GroupLayout.DEFAULT_SIZE,
+																						150,
+																						Short.MAX_VALUE)
+																				.addComponent(
+																						btnPesquisar,
+																						GroupLayout.DEFAULT_SIZE,
+																						150,
+																						Short.MAX_VALUE))
+																.addGap(22)
+																.addGroup(
+																		gl_panel.createParallelGroup(
+																				Alignment.TRAILING,
+																				false)
+																				.addComponent(
+																						btnExcluir,
+																						GroupLayout.DEFAULT_SIZE,
+																						GroupLayout.DEFAULT_SIZE,
+																						Short.MAX_VALUE)
+																				.addComponent(
+																						btnEditarInserir,
+																						GroupLayout.DEFAULT_SIZE,
+																						150,
+																						Short.MAX_VALUE)))
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addGap(10)
+																.addComponent(
+																		scrollPane,
+																		GroupLayout.DEFAULT_SIZE,
+																		592,
+																		Short.MAX_VALUE)))
+								.addContainerGap()));
+		gl_panel.setVerticalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addGap(14)
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(
+														jtfNome,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblNome)
+												.addComponent(btnEditarInserir)
+												.addComponent(btnPesquisar))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(
+														cmbClassificacao,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblClassificacao)
+												.addComponent(btnLimpar)
+												.addComponent(btnExcluir))
+								.addGap(18)
+								.addComponent(scrollPane,
+										GroupLayout.DEFAULT_SIZE, 285,
+										Short.MAX_VALUE).addContainerGap()));
 
 		try {
 			table = new JTable(new ProdutoTableModel(listProduto));
