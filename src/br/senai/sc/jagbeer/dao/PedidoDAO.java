@@ -245,7 +245,6 @@ public class PedidoDAO extends GenericDAO {
 
 			while (result.next()) {
 
-				System.out.println("entrou ");
 				try {
 					
 					Mesa mesa = null;
