@@ -164,7 +164,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 
 						new ClienteController().excluir(clienteExcluir);
 						JOptionPane.showMessageDialog(null,
-								"Aluno excluido com Sucesso! ");
+								"Cliente excluido com Sucesso! ");
 
 						// Atualiza tabela
 						tableConsultaCliente.setModel(new ClienteTableModel(
