@@ -33,7 +33,7 @@ public class ClienteTableModel extends AbstractTableModel {
 
 	public int getColumnCount() {
 		// numero de colunas
-		return 2;
+		return 3;
 	}
 
 	public String getColumnName(int column) {
