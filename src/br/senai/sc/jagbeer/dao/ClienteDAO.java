@@ -96,7 +96,7 @@ public class ClienteDAO extends GenericDAO {
 	@Override
 	public List<Entidade> listar() throws Exception {
 		List<Entidade> listaClientes = new ArrayList<Entidade>();
-		String sql = "SELECT * FROM cliente";
+		String sql = "SELECT * FROM cliente ORDER BY nome";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			// para executar consulta utilizar executeQuery() pois retorna um
@@ -123,7 +123,7 @@ public class ClienteDAO extends GenericDAO {
 		Cliente cliente = null;
 		List<Entidade> listCliente = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM cliente WHERE nome LIKE '%"
-				+ clientePesquisar + "%'";
+				+ clientePesquisar + "%'ORDER BY nome";
 
 		try {
 			Statement pstmt = con.createStatement();
@@ -186,7 +186,7 @@ public class ClienteDAO extends GenericDAO {
 			throws Exception {
 		Cliente cliente = null;
 		String sql = "SELECT * FROM cliente WHERE nome LIKE '"
-				+ clientePesquisar + "'";
+				+ clientePesquisar + "'ORDER BY nome";
 
 		try {
 			Statement pstmt = con.createStatement();
