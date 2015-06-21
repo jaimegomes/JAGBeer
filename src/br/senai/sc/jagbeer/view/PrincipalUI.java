@@ -271,9 +271,14 @@ public class PrincipalUI extends JFrame {
 							for (Entidade en : getListaPedidosAbertosTableModel()) {
 								PedidoAberto pedidoAberto = (PedidoAberto) en;
 
-								if (pedidoAberto.getPedido() == pedido.getId()) {
-									listPedidoAberto.add(pedidoAberto);
+								if (pedidoAberto != null) {
+									if (pedidoAberto.getPedido() == pedido
+											.getId()) {
+
+										listPedidoAberto.add(pedidoAberto);
+									}
 								}
+
 							}
 
 						}
