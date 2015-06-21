@@ -267,15 +267,14 @@ public class PedidoDAO extends GenericDAO {
 							result.getInt("status"));
 
 					listPedidos.add(pedido);
+					pstm.close();
 
 				} catch (Exception e) {
 					System.out
 							.println("[PedidoDAO] - Erro ao buscar pedido aberto. "
 									+ e.getMessage());
-				} finally {
-					con.close();
+					System.out.println(e.getStackTrace());
 				}
-
 			}
 
 			pstm.close();
@@ -283,7 +282,10 @@ public class PedidoDAO extends GenericDAO {
 		} catch (SQLException e) {
 			System.out.println("[PedidoDAO] - Erro ao buscar pedido aberto.\n"
 					+ e.getMessage());
+		} finally {
+			con.close();
 		}
+
 
 		return listPedidos;
 	}
