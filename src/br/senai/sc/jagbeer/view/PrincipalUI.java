@@ -51,14 +51,14 @@ public class PrincipalUI extends JFrame {
 
 	private static PrincipalUI instancia;
 
-	public static PrincipalUI obterInstancia() {
-
-		if (instancia == null) {
-			instancia = new PrincipalUI();
-
-		}
-		return instancia;
-	}
+	// public static PrincipalUI obterInstancia() {
+	//
+	// if (instancia == null) {
+	// instancia = new PrincipalUI();
+	//
+	// }
+	// return instancia;
+	// }
 
 	private List<Entidade> listPedidoAberto = new ArrayList<Entidade>();
 
@@ -70,7 +70,8 @@ public class PrincipalUI extends JFrame {
 			public void run() {
 				try {
 
-					PrincipalUI frame = obterInstancia();
+					// PrincipalUI frame = obterInstancia();
+					PrincipalUI frame = new PrincipalUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -81,8 +82,9 @@ public class PrincipalUI extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws Exception 
 	 */
-	public PrincipalUI() {
+	public PrincipalUI() throws Exception {
 
 		setForeground(Color.BLUE);
 
@@ -195,7 +197,7 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 		mnMesa.add(mntmConsultaMesa);
-		
+
 		JMenu mnRelatorio = new JMenu("Relatorio");
 		menuBar.add(mnRelatorio);
 
@@ -204,13 +206,12 @@ public class PrincipalUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 RelatorioFaturamentoUI relFaturamento = new
-				 RelatorioFaturamentoUI();
-				 relFaturamento.requestFocus(true);
-				 relFaturamento.setFocusable(true);
-				 relFaturamento.moveToFront();
-				 getContentPane().add(relFaturamento, 0);
-				 relFaturamento.setVisible(true);
+				RelatorioFaturamentoUI relFaturamento = new RelatorioFaturamentoUI();
+				relFaturamento.requestFocus(true);
+				relFaturamento.setFocusable(true);
+				relFaturamento.moveToFront();
+				getContentPane().add(relFaturamento, 0);
+				relFaturamento.setVisible(true);
 			}
 		});
 		mnRelatorio.add(mntmFaturamento);
@@ -256,11 +257,16 @@ public class PrincipalUI extends JFrame {
 					Cliente cliente = (Cliente) new ClienteController()
 							.getPorNome(jtfCliente.getText());
 
-					Pedido pedido = (Pedido) new PedidoController()
-							.getPorIdCliente(cliente.getId());
-
-					listPedidoAberto.add(new ProdutoPedidoController()
-							.getPorIdPedido(pedido.getId()));
+					Pedido pedido;
+					try {
+						pedido = (Pedido) new PedidoController()
+								.getPorIdCliente(cliente.getId());
+						
+						listPedidoAberto.add(new ProdutoPedidoController()
+						.getPorIdPedido(pedido.getId()));
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
 
 					if (listPedidoAberto.isEmpty()) {
 						JOptionPane
@@ -301,8 +307,13 @@ public class PrincipalUI extends JFrame {
 				} else if (jtfCliente.getText().isEmpty()
 						&& jtfPedido.getText().isEmpty()) {
 
-					tablePedidoAberto.setModel(new PedidoAbertoTableModel(
-							new PedidoController().getPedidosAbertos()));
+					try {
+						tablePedidoAberto.setModel(new PedidoAbertoTableModel(
+								new PedidoController().getPedidosAbertos()));
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 
 				}
 
@@ -357,50 +368,128 @@ public class PrincipalUI extends JFrame {
 		});
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblPedido)
-							.addGap(4)
-							.addComponent(jtfPedido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(40)
-							.addComponent(lblNome)
-							.addPreferredGap(ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-							.addComponent(jtfCliente, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)
-							.addGap(27))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 546, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(btnEncerrar, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-						.addComponent(btnNovo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(btnPesquisar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addContainerGap(143, Short.MAX_VALUE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblPedido)
-						.addComponent(lblNome)
-						.addComponent(jtfPedido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jtfCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnPesquisar))
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(30)
-							.addComponent(btnNovo, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnEncerrar, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 452, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(39, Short.MAX_VALUE))
-		);
+		gl_contentPane
+				.setHorizontalGroup(gl_contentPane
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_contentPane
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												gl_contentPane
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_contentPane
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblPedido)
+																		.addGap(4)
+																		.addComponent(
+																				jtfPedido,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(40)
+																		.addComponent(
+																				lblNome)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED,
+																				63,
+																				Short.MAX_VALUE)
+																		.addComponent(
+																				jtfCliente,
+																				GroupLayout.PREFERRED_SIZE,
+																				259,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(27))
+														.addGroup(
+																gl_contentPane
+																		.createSequentialGroup()
+																		.addComponent(
+																				panel,
+																				GroupLayout.PREFERRED_SIZE,
+																				546,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)))
+										.addGroup(
+												gl_contentPane
+														.createParallelGroup(
+																Alignment.LEADING,
+																false)
+														.addComponent(
+																btnEncerrar,
+																GroupLayout.DEFAULT_SIZE,
+																169,
+																Short.MAX_VALUE)
+														.addComponent(
+																btnNovo,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
+														.addComponent(
+																btnPesquisar,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE))
+										.addContainerGap(143, Short.MAX_VALUE)));
+		gl_contentPane
+				.setVerticalGroup(gl_contentPane
+						.createParallelGroup(Alignment.TRAILING)
+						.addGroup(
+								gl_contentPane
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												gl_contentPane
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(lblPedido)
+														.addComponent(lblNome)
+														.addComponent(
+																jtfPedido,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																jtfCliente,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																btnPesquisar))
+										.addGroup(
+												gl_contentPane
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_contentPane
+																		.createSequentialGroup()
+																		.addGap(30)
+																		.addComponent(
+																				btnNovo,
+																				GroupLayout.PREFERRED_SIZE,
+																				31,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				ComponentPlacement.UNRELATED)
+																		.addComponent(
+																				btnEncerrar,
+																				GroupLayout.PREFERRED_SIZE,
+																				31,
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																gl_contentPane
+																		.createSequentialGroup()
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				panel,
+																				GroupLayout.PREFERRED_SIZE,
+																				452,
+																				GroupLayout.PREFERRED_SIZE)))
+										.addContainerGap(39, Short.MAX_VALUE)));
 
 		JScrollPane scrollPane = new JScrollPane();
 

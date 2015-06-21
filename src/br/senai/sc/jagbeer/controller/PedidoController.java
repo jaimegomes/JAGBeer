@@ -69,17 +69,17 @@ public class PedidoController implements IController {
 	}
 
 	@Override
-	public void atualizaTabela(JTable table) {
+	public void atualizaTabela(JTable table) throws Exception {
 		dao.atualizaTabela(table);
 
 	}
 
-	public List<Entidade> getPedidosAbertos() {
+	public List<Entidade> getPedidosAbertos() throws Exception{
 
 		return dao.getPedidosAbertos();
 	}
 
-	public Entidade getPorIdCliente(int idCliente) {
+	public Entidade getPorIdCliente(int idCliente) throws Exception {
 		
 		return dao.getPorIdCliente(idCliente);
 	}

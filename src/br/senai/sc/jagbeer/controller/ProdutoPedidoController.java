@@ -45,11 +45,9 @@ public class ProdutoPedidoController implements IController {
 	public void atualizaTabela(JTable table) throws Exception {
 
 	}
-	
-	public Entidade getPorIdPedido(int idPedido) {
+
+	public Entidade getPorIdPedido(int idPedido) throws Exception {
 		return dao.getPorIdPedido(idPedido);
 	}
-
-	
 
 }
