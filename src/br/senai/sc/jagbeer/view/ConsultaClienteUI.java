@@ -112,7 +112,8 @@ public class ConsultaClienteUI extends JInternalFrame {
 
 						cadClienteUI = new CadastroClienteUI(clienteEditar,
 								tableConsultaCliente);
-						getContentPane().add(cadClienteUI, 0);
+						PrincipalUI.obterInstancia().getContentPane()
+								.add(cadClienteUI, 0);
 						cadClienteUI.setVisible(true);
 
 					} else {
@@ -121,7 +122,8 @@ public class ConsultaClienteUI extends JInternalFrame {
 
 					}
 
-					getContentPane().add(cadClienteUI, 0);
+					PrincipalUI.getInstancia().getContentPane()
+							.add(cadClienteUI, 0);
 					cadClienteUI.setVisible(true);
 
 				} catch (Exception e1) {
@@ -262,12 +264,12 @@ public class ConsultaClienteUI extends JInternalFrame {
 										Short.MAX_VALUE)));
 
 		tableConsultaCliente = new JTable();
-//		try {
-//			tableConsultaCliente.setModel(new ClienteTableModel(
-//					new ClienteController().listar()));
-//		} catch (Exception e1) {
-//			e1.printStackTrace();
-//		}
+		// try {
+		// tableConsultaCliente.setModel(new ClienteTableModel(
+		// new ClienteController().listar()));
+		// } catch (Exception e1) {
+		// e1.printStackTrace();
+		// }
 
 		scrollPane.setViewportView(tableConsultaCliente);
 		panel.setLayout(gl_panel);
@@ -275,7 +277,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 
 	}
 
-//	public JTable getTableConsultaCliente() {
-//		return tableConsultaCliente;
-//	}
+	// public JTable getTableConsultaCliente() {
+	// return tableConsultaCliente;
+	// }
 }
