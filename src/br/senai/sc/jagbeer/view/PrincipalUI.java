@@ -364,6 +364,13 @@ public class PrincipalUI extends JFrame {
 		btnEncerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				EncerrarPedidoUI encerrarPedido = new EncerrarPedidoUI();
+				encerrarPedido.requestFocus(true);
+				encerrarPedido.setFocusable(true);
+				encerrarPedido.moveToFront();
+				getContentPane().add(encerrarPedido, 0);
+				encerrarPedido.setVisible(true);
+
 				try {
 
 					int linhaSelecionada = tablePedidoAberto.getSelectedRow();
