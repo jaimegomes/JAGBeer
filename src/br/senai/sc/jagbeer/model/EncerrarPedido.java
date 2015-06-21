@@ -13,6 +13,12 @@ public class EncerrarPedido extends Entidade {
 
 	}
 
+	public EncerrarPedido(int pedido, String cliente) {
+		super();
+		this.pedido = pedido;
+		this.cliente = cliente;
+	}
+
 	public EncerrarPedido(int pedido, String cliente, double valor,
 			int quantdade) {
 		super();
@@ -20,6 +26,14 @@ public class EncerrarPedido extends Entidade {
 		this.cliente = cliente;
 		this.valor = valor;
 		this.quantidade = quantdade;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
 	}
 
 	public int getPedido() {

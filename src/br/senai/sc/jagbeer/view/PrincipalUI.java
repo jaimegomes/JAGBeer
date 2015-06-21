@@ -360,32 +360,45 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 
+		//JAIME ESTÁ COM ERRO NESSA CARALHA AQUI.. DÁ UM HELP POR FAVOR.
 		JButton btnEncerrar = new JButton("Encerrar Pedido");
 		btnEncerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				EncerrarPedidoUI encerrarPedido = new EncerrarPedidoUI();
-				encerrarPedido.requestFocus(true);
-				encerrarPedido.setFocusable(true);
-				encerrarPedido.moveToFront();
-				getContentPane().add(encerrarPedido, 0);
-				encerrarPedido.setVisible(true);
-
+				EncerrarPedidoUI encerrarPedidoUI;
 				try {
 
 					int linhaSelecionada = tablePedidoAberto.getSelectedRow();
 
 					if (linhaSelecionada > -1) {
 
+						String nome = tablePedidoAberto.getValueAt(
+								linhaSelecionada, 0).toString();
+
+						Cliente clienteEncerrar = (Cliente) new ClienteController()
+								.getNomeSelecionado(nome);
+
 						int idPedido = Integer.parseInt(tablePedidoAberto
 								.getValueAt(linhaSelecionada, 0).toString());
+
+						Pedido pedidoEncerrar = (Pedido) new PedidoController()
+								.getPorId(idPedido);
 
 						Pedido pedido = (Pedido) new PedidoController()
 								.getPorId(idPedido);
 
 						pedido.setStatus(0);
 
-						new PedidoController().editar(pedido);
+						new PedidoController().encerrarPedido(pedidoEncerrar);
+
+						encerrarPedidoUI = new EncerrarPedidoUI(
+								clienteEncerrar, pedidoEncerrar);
+
+//						 encerrarPedidoUI.requestFocus(true);
+//						 encerrarPedidoUI.setFocusable(true);
+//						 encerrarPedidoUI.moveToFront();
+						 getContentPane().add(encerrarPedidoUI, 0);
+						 encerrarPedidoUI.setVisible(true);
 
 					} else {
 						JOptionPane.showMessageDialog(null,
