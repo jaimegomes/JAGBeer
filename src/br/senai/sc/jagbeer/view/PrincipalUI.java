@@ -258,9 +258,10 @@ public class PrincipalUI extends JFrame {
 					Pedido pedido;
 					try {
 						// ve se essa porra carregou
-						Cliente cliente = (Cliente) new ClienteController()
-								.getNomeSelecionado(jtfCliente.getText());
+						List<Entidade> listClientes =  new ClienteController()
+								.getListClientesPorNome(jtfCliente.getText());
 
+						//percorrer a lista for(Entidade ent: listClientes) e fazer o que tem aqui em baixo.
 						pedido = (Pedido) new PedidoController()
 								.getPorIdCliente(cliente.getId());
 
