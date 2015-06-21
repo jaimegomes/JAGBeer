@@ -187,7 +187,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 
 						controller.excluir(produtoExcluir);
 						JOptionPane.showMessageDialog(null,
-								"Produto excluï¿½do com sucesso.");
+								"Produto excluído com sucesso.");
 
 						table.setModel(new ProdutoTableModel(controller
 								.listar()));
@@ -204,7 +204,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 			}
 		});
 
-		lblClassificacao = new JLabel("Classificacao:");
+		lblClassificacao = new JLabel("Classificação:");
 
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
