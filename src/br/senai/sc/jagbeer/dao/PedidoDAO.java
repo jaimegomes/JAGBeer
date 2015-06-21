@@ -241,10 +241,13 @@ public class PedidoDAO extends GenericDAO {
 			pstm.setDate(1, new java.sql.Date(data.getTime()));
 
 			ResultSet result = pstm.executeQuery();
+			
 
 			while (result.next()) {
 
+				System.out.println("entrou ");
 				try {
+					
 					Mesa mesa = null;
 					if (result.getInt("idMesa") > 0) {
 
@@ -254,7 +257,6 @@ public class PedidoDAO extends GenericDAO {
 					}
 
 					Cliente cliente = null;
-
 					if (result.getInt("idCliente") > 0) {
 
 						cliente = (Cliente) new ClienteController()
@@ -267,21 +269,24 @@ public class PedidoDAO extends GenericDAO {
 							result.getInt("status"));
 
 					listPedidos.add(pedido);
-					pstm.close();
+					
 
 				} catch (Exception e) {
 					System.out
 							.println("[PedidoDAO] - Erro ao buscar pedido aberto. "
 									+ e.getMessage());
-					System.out.println(e.getStackTrace());
+					e.printStackTrace();
 				}
 			}
-
+			
 			pstm.close();
 
 		} catch (SQLException e) {
 			System.out.println("[PedidoDAO] - Erro ao buscar pedido aberto.\n"
 					+ e.getMessage());
+			e.printStackTrace();
+		} finally {
+			con.close();
 		}
 
 		return listPedidos;
