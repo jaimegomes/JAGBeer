@@ -247,14 +247,13 @@ public class ConsultaProdutoUI extends JInternalFrame {
 						cadProdutoUI = new CadastroProdutoUI(produtoEditar,
 								table);
 
-
 					} else {
 
 						cadProdutoUI = new CadastroProdutoUI(null, table);
 					}
 
-//					PrincipalUI.obterInstancia().
-					getContentPane().add(cadProdutoUI, 0);
+					PrincipalUI.obterInstancia().getContentPane()
+							.add(cadProdutoUI, 0);
 					cadProdutoUI.setVisible(true);
 
 				} catch (Exception e) {
