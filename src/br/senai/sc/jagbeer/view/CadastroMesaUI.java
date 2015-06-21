@@ -97,9 +97,8 @@ public class CadastroMesaUI extends JInternalFrame {
 						JOptionPane.showMessageDialog(null,
 								"Mesa cadastrada com sucesso!");
 
-						Mesa m = (Mesa) new MesaController()
-								.getPorNumeroMesa(Integer.parseInt(mesaNumero
-										.getText()));
+						//Mesa m = (Mesa) new MesaController()
+						//.getPorNumeroMesa(Integer.parseInt(mesaNumero.getText()));
 
 						mesaNumero.setText(null);
 						qtdLugares.setText(null);

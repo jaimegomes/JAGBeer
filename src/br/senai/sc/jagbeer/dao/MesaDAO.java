@@ -25,7 +25,6 @@ public class MesaDAO extends GenericDAO {
 		String query = "INSERT INTO mesa (numeroMesa, lugares) VALUES (?,?)";
 
 		try {
-			// transforma a entidade passada no parâmetro para o objeto Produto
 
 			mesa = (Mesa) entidade;
 
@@ -35,7 +34,6 @@ public class MesaDAO extends GenericDAO {
 
 			pstmt.execute();
 			con.commit();
-			pstmt.close();
 
 		} catch (SQLException se) {
 			con.rollback();
@@ -54,7 +52,6 @@ public class MesaDAO extends GenericDAO {
 		try {
 			mesa = (Mesa) entidade;
 			PreparedStatement pstmt = con.prepareStatement(query);
-
 			pstmt.setInt(1, mesa.getId());
 
 			pstmt.execute();
