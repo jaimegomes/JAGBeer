@@ -76,8 +76,8 @@ public class ClienteController implements IController {
 		return dao.getListClientesPorNome(clientePesquisar);
 	}
 
-	public Entidade getPorNome(String nome) throws Exception {
-		return dao.getPorNome(nome);
+	public Entidade getNomeSelecionado(String nome) throws Exception {
+		return dao.getNomeSelecionado(nome);
 	}
 
 	@Override

@@ -118,7 +118,8 @@ public class ClienteDAO extends GenericDAO {
 		return listaClientes;
 	}
 
-	public List<Entidade> getListClientesPorNome(String clientePesquisar) throws Exception{
+	public List<Entidade> getListClientesPorNome(String clientePesquisar)
+			throws Exception {
 		Cliente cliente = null;
 		List<Entidade> listCliente = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM cliente WHERE nome LIKE '%"
@@ -181,7 +182,8 @@ public class ClienteDAO extends GenericDAO {
 	public void atualizaTabela(JTable table) throws Exception {
 	}
 
-	public Entidade getPorNome(String clientePesquisar) throws Exception {
+	public Entidade getNomeSelecionado(String clientePesquisar)
+			throws Exception {
 		Cliente cliente = null;
 		String sql = "SELECT * FROM cliente WHERE nome LIKE '"
 				+ clientePesquisar + "'";

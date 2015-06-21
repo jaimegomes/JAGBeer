@@ -193,15 +193,16 @@ public class FazerPedidoUI extends JInternalFrame {
 
 					if (!nomeCliente.equals("") && nomeCliente != null) {
 
+						// ve se essa porra carregou
 						cliente = (Cliente) new ClienteController()
-								.getPorNome(nomeCliente);
+								.getNomeSelecionado(nomeCliente);
 
 						if (cliente != null) {
 							int idCliente = cliente.getId();
 
 							Pedido pedido = (Pedido) new PedidoController()
 									.getPorIdCliente(idCliente);
-							
+
 							cmbPedido.setSelectedItem(pedido.getId());
 
 							if (pedido.getMesa() != null) {

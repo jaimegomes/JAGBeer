@@ -83,10 +83,10 @@ public class ConsultaClienteUI extends JInternalFrame {
 
 		scrollPane = new JScrollPane();
 
-		JButton btnFechar = new JButton("Fechar");
+		JButton btnFechar = new JButton("Limpar");
 		btnFechar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				jtfNomeCliente.setText("");
 			}
 		});
 
@@ -95,21 +95,56 @@ public class ConsultaClienteUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				// COLOCAR DO JEITO NOVO
+
+				CadastroClienteUI cadClienteUI;
 				try {
-					Cliente clienteEditar = new ClienteTableModel(
-							new ClienteController().listar())
-							.get(tableConsultaCliente.getSelectedRow());
+					int linhaSelecionada = tableConsultaCliente
+							.getSelectedRow();
 
-					CadastroClienteUI cadClienteUI = new CadastroClienteUI(
-							clienteEditar, tableConsultaCliente);
+					if (linhaSelecionada > -1) {
 
-					PrincipalUI.obterInstancia().getContentPane()
-							.add(cadClienteUI, 0);
+						String nome = tableConsultaCliente.getValueAt(
+								linhaSelecionada, 0).toString();
+
+						Cliente clienteEditar = (Cliente) new ClienteController()
+								.getNomeSelecionado(nome);
+
+						cadClienteUI = new CadastroClienteUI(clienteEditar,
+								tableConsultaCliente);
+						getContentPane().add(cadClienteUI, 0);
+						cadClienteUI.setVisible(true);
+
+					} else {
+						cadClienteUI = new CadastroClienteUI(null,
+								tableConsultaCliente);
+
+					}
+
+					getContentPane().add(cadClienteUI, 0);
 					cadClienteUI.setVisible(true);
 
 				} catch (Exception e1) {
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(
+							null,
+							"[ConsultaClienteUI] - Erro Editar "
+									+ e1.getMessage());
 				}
+
+				// try {
+				// Cliente clienteEditar = new ClienteTableModel(
+				// new ClienteController().listar())
+				// .get(tableConsultaCliente.getSelectedRow());
+				//
+				// CadastroClienteUI cadClienteUI = new CadastroClienteUI(
+				// clienteEditar, tableConsultaCliente);
+				//
+				// PrincipalUI.obterInstancia().getContentPane()
+				// .add(cadClienteUI, 0);
+				// cadClienteUI.setVisible(true);
+				//
+				// } catch (Exception e1) {
+				// e1.printStackTrace();
+				// }
 
 			}
 		});
@@ -128,7 +163,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 
 						new ClienteController().excluir(clienteExcluir);
 						JOptionPane.showMessageDialog(null,
-								"Aluno excluído com Sucesso! ");
+								"Aluno excluido com Sucesso! ");
 
 						// Atualiza tabela
 						tableConsultaCliente.setModel(new ClienteTableModel(
@@ -226,12 +261,12 @@ public class ConsultaClienteUI extends JInternalFrame {
 										Short.MAX_VALUE)));
 
 		tableConsultaCliente = new JTable();
-		try {
-			tableConsultaCliente.setModel(new ClienteTableModel(
-					new ClienteController().listar()));
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+//		try {
+//			tableConsultaCliente.setModel(new ClienteTableModel(
+//					new ClienteController().listar()));
+//		} catch (Exception e1) {
+//			e1.printStackTrace();
+//		}
 
 		scrollPane.setViewportView(tableConsultaCliente);
 		panel.setLayout(gl_panel);
@@ -239,7 +274,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 
 	}
 
-	public JTable getTableConsultaCliente() {
-		return tableConsultaCliente;
-	}
+//	public JTable getTableConsultaCliente() {
+//		return tableConsultaCliente;
+//	}
 }
