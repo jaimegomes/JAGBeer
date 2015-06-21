@@ -26,6 +26,7 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
+import javax.swing.ListSelectionModel;
 
 public class ConsultaProdutoUI extends JInternalFrame {
 
@@ -370,6 +371,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 
 		try {
 			table = new JTable(new ProdutoTableModel(listProduto));
+			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

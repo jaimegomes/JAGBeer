@@ -25,6 +25,7 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.MesaTableModel;
+import javax.swing.ListSelectionModel;
 
 public class ConsultaMesaUI extends JInternalFrame {
 
@@ -274,6 +275,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 										Short.MAX_VALUE).addContainerGap()));
 
 		tableMesa = new JTable();
+		tableMesa.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableMesa.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "Numero da Mesa", "Quantidade de Lugares" }));
 

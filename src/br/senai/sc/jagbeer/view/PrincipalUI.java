@@ -35,6 +35,7 @@ import br.senai.sc.jagbeer.model.PedidoAberto;
 import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
 import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoPedido;
+import javax.swing.ListSelectionModel;
 
 /**
  * 
@@ -242,6 +243,7 @@ public class PrincipalUI extends JFrame {
 		jtfCliente.setColumns(10);
 
 		tablePedidoAberto = new JTable();
+		tablePedidoAberto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		JLabel lblPedido = new JLabel("Pedido:");
 

@@ -19,6 +19,7 @@ import javax.swing.border.TitledBorder;
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.ClienteTableModel;
+import javax.swing.ListSelectionModel;
 
 public class ConsultaClienteUI extends JInternalFrame {
 
@@ -264,6 +265,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 										Short.MAX_VALUE)));
 
 		tableConsultaCliente = new JTable();
+		tableConsultaCliente.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		// try {
 		// tableConsultaCliente.setModel(new ClienteTableModel(
 		// new ClienteController().listar()));
