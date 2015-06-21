@@ -74,6 +74,8 @@ public class PedidoDAO extends GenericDAO {
 			con.rollback();
 			System.out.println("[PedidoDAO] - Erro ao salvar pedido.\n"
 					+ e.getMessage());
+		}finally {
+			con.close();
 		}
 	}
 
@@ -95,6 +97,8 @@ public class PedidoDAO extends GenericDAO {
 			con.rollback();
 			System.out.println("[PedidoDAO] - Erro ao excluir pedido.\n"
 					+ e.getMessage());
+		}finally {
+			con.close();
 		}
 
 	}
@@ -123,12 +127,14 @@ public class PedidoDAO extends GenericDAO {
 			con.rollback();
 			System.out.println("[PedidoDAO] - Erro ao alterar pedido.\n"
 					+ e.getMessage());
+		}finally {
+			con.close();
 		}
 
 	}
 
 	@Override
-	public List<Entidade> listar() {
+	public List<Entidade> listar() throws Exception {
 
 		List<Entidade> listaPedidos = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM pedido";
@@ -164,12 +170,14 @@ public class PedidoDAO extends GenericDAO {
 		} catch (SQLException e) {
 			System.out.println("[PedidoDAO] - Erro ao listar pedidos.\n"
 					+ e.getMessage());
+		}finally {
+			con.close();
 		}
 		return listaPedidos;
 	}
 
 	@Override
-	public Entidade getPorId(int id) {
+	public Entidade getPorId(int id) throws Exception {
 
 		String sql = "SELECT * FROM pedido WHERE id = ?";
 		try {
@@ -205,17 +213,19 @@ public class PedidoDAO extends GenericDAO {
 		} catch (SQLException e) {
 			System.out.println("[PedidoDAO] - Erro ao buscar pedido por id.\n"
 					+ e.getMessage());
+		}finally {
+			con.close();
 		}
 
 		return pedido;
 	}
 
 	@Override
-	public void atualizaTabela(JTable table) {
+	public void atualizaTabela(JTable table) throws Exception {
 		table.setModel(new ProdutoTableModel(listar()));
 	}
 
-	public List<Entidade> getPedidosAbertos() {
+	public List<Entidade> getPedidosAbertos() throws Exception{
 
 		Date data = new Date();
 
@@ -261,6 +271,8 @@ public class PedidoDAO extends GenericDAO {
 					System.out
 							.println("[PedidoDAO] - Erro ao buscar pedido aberto. "
 									+ e.getMessage());
+				}finally {
+					con.close();
 				}
 
 			}
@@ -275,7 +287,7 @@ public class PedidoDAO extends GenericDAO {
 		return listPedidos;
 	}
 
-	public Entidade getPorIdCliente(int idCliente) {
+	public Entidade getPorIdCliente(int idCliente) throws Exception {
 
 		String sql = "SELECT * FROM pedido WHERE idcliente = ?";
 		try {
@@ -312,7 +324,10 @@ public class PedidoDAO extends GenericDAO {
 			System.out
 					.println("[PedidoDAO] - Erro ao buscar pedido por id do cliente.\n"
 							+ e.getMessage());
+		}finally {
+			con.close();
 		}
+		
 
 		return pedido;
 

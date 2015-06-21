@@ -42,6 +42,8 @@ public class ProdutoPedidoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoPedidoDAO] - Erro ao salvar produto do pedido.\n"
 							+ e.getMessage());
+		} finally {
+			con.close();
 		}
 	}
 
@@ -64,6 +66,8 @@ public class ProdutoPedidoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoPedidoDAO] - Erro ao excluir produto do pedido.\n"
 							+ e.getMessage());
+		} finally {
+			con.close();
 		}
 	}
 
@@ -86,6 +90,8 @@ public class ProdutoPedidoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoPedidoDAO] - Erro ao alterar produto do pedido.\n"
 							+ e.getMessage());
+		} finally {
+			con.close();
 		}
 
 	}
@@ -116,7 +122,10 @@ public class ProdutoPedidoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoPedidoDAO] - Erro ao listar produtos do pedido.\n"
 							+ e.getMessage());
+		} finally {
+			con.close();
 		}
+
 		return listaProdutosPedido;
 	}
 
@@ -144,6 +153,8 @@ public class ProdutoPedidoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoPedidoDAO] - Erro ao buscar produto do pedido por id.\n"
 							+ e.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return produtoPedido;
@@ -154,7 +165,7 @@ public class ProdutoPedidoDAO extends GenericDAO {
 
 	}
 
-	public Entidade getPorIdPedido(int idPedido) {
+	public Entidade getPorIdPedido(int idPedido) throws Exception {
 
 		String sql = "SELECT * FROM produtopedido WHERE idpedido = ?";
 		try {
@@ -178,6 +189,8 @@ public class ProdutoPedidoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoPedidoDAO] - Erro ao buscar produto do pedido por id do pedido.\n"
 							+ e.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return produtoPedido;
