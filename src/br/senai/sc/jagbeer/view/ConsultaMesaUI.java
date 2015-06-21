@@ -66,7 +66,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 397,
 								Short.MAX_VALUE).addContainerGap()));
 
-		JLabel lblNome = new JLabel("Numero Mesa:");
+		JLabel lblNome = new JLabel("Número Mesa:");
 
 		numeroMesa = new JTextField();
 		numeroMesa.setColumns(10);
