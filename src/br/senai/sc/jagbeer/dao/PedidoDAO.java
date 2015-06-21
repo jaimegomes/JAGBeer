@@ -282,10 +282,7 @@ public class PedidoDAO extends GenericDAO {
 		} catch (SQLException e) {
 			System.out.println("[PedidoDAO] - Erro ao buscar pedido aberto.\n"
 					+ e.getMessage());
-		} finally {
-			con.close();
 		}
-
 
 		return listPedidos;
 	}
