@@ -22,7 +22,8 @@ import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
 /**
- * Classe DAO, respons�vel pela manipula��o dos dados dos Pedidos no banco.
+ * Classe DAO, respons�vel pela manipula��o dos dados dos Pedidos no
+ * banco.
  * 
  * @author Jaime Gomes
  * 
@@ -55,7 +56,7 @@ public class PedidoDAO extends GenericDAO {
 				pstmt.close();
 
 			} else {
-				
+
 				String sql = "INSERT INTO pedido (idMesa, idCliente, dataPedido, status) values(?,?,?,?)";
 
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -74,7 +75,7 @@ public class PedidoDAO extends GenericDAO {
 			con.rollback();
 			System.out.println("[PedidoDAO] - Erro ao salvar pedido.\n"
 					+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
 		}
 	}
@@ -97,7 +98,7 @@ public class PedidoDAO extends GenericDAO {
 			con.rollback();
 			System.out.println("[PedidoDAO] - Erro ao excluir pedido.\n"
 					+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
 		}
 
@@ -127,7 +128,7 @@ public class PedidoDAO extends GenericDAO {
 			con.rollback();
 			System.out.println("[PedidoDAO] - Erro ao alterar pedido.\n"
 					+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
 		}
 
@@ -170,7 +171,7 @@ public class PedidoDAO extends GenericDAO {
 		} catch (SQLException e) {
 			System.out.println("[PedidoDAO] - Erro ao listar pedidos.\n"
 					+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
 		}
 		return listaPedidos;
@@ -213,7 +214,7 @@ public class PedidoDAO extends GenericDAO {
 		} catch (SQLException e) {
 			System.out.println("[PedidoDAO] - Erro ao buscar pedido por id.\n"
 					+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
 		}
 
@@ -225,7 +226,7 @@ public class PedidoDAO extends GenericDAO {
 		table.setModel(new ProdutoTableModel(listar()));
 	}
 
-	public List<Entidade> getPedidosAbertos() throws Exception{
+	public List<Entidade> getPedidosAbertos() throws Exception {
 
 		Date data = new Date();
 
@@ -271,7 +272,7 @@ public class PedidoDAO extends GenericDAO {
 					System.out
 							.println("[PedidoDAO] - Erro ao buscar pedido aberto. "
 									+ e.getMessage());
-				}finally {
+				} finally {
 					con.close();
 				}
 
@@ -324,12 +325,35 @@ public class PedidoDAO extends GenericDAO {
 			System.out
 					.println("[PedidoDAO] - Erro ao buscar pedido por id do cliente.\n"
 							+ e.getMessage());
-		}finally {
+		} finally {
 			con.close();
 		}
-		
 
 		return pedido;
+
+	}
+
+	public void encerrarPedido(Entidade entidade) throws Exception {
+		String sql = "UPDATE pedido SET status = 0 WHERE id = ?";
+
+		try {
+			pedido = (Pedido) entidade;
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+
+			pstm.setInt(1, pedido.getId());
+
+			pstm.execute();
+			con.commit();
+			pstm.close();
+
+		} catch (SQLException e) {
+			con.rollback();
+			System.out.println("[PedidoDAO] - Erro ao Encerrar pedido.\n"
+					+ e.getMessage());
+		} finally {
+			con.close();
+		}
 
 	}
 }
