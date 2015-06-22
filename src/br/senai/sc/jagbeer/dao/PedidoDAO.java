@@ -295,17 +295,15 @@ public class PedidoDAO extends GenericDAO {
 
 				try {
 					Mesa mesa = null;
-					Cliente cliente = null;
+
 					if (result.getInt("idMesa") > 1) {
 						mesa = (Mesa) new MesaController().getPorId(result
 								.getInt("idMesa"));
 
 					}
 
-					if (result.getInt("idCliente") > 1) {
-						cliente = (Cliente) new ClienteController()
-								.getPorId(result.getInt("idCliente"));
-					}
+					Cliente cliente = (Cliente) new ClienteController()
+							.getPorId(result.getInt("idCliente"));
 
 					pedido = new Pedido(result.getInt("id"), mesa, cliente,
 							result.getDate("dataPedido"),

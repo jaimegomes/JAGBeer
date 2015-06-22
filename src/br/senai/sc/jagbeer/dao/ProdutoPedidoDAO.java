@@ -165,8 +165,9 @@ public class ProdutoPedidoDAO extends GenericDAO {
 
 	}
 
-	public Entidade getPorIdPedido(int idPedido) throws Exception {
+	public List<Entidade> getPorIdPedido(int idPedido) throws Exception {
 
+		List<Entidade> listProdutosPedido = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM produtopedido WHERE idpedido = ?";
 		try {
 
@@ -181,6 +182,8 @@ public class ProdutoPedidoDAO extends GenericDAO {
 						result.getInt("idproduto"), result.getInt("idpedido"),
 						result.getInt("quantidade"));
 
+				listProdutosPedido.add(produtoPedido);
+
 			}
 
 			pstm.close();
@@ -193,7 +196,7 @@ public class ProdutoPedidoDAO extends GenericDAO {
 			con.close();
 		}
 
-		return produtoPedido;
+		return listProdutosPedido;
 	}
 
 }

@@ -46,7 +46,7 @@ public class ProdutoPedidoController implements IController {
 
 	}
 
-	public Entidade getPorIdPedido(int idPedido) throws Exception {
+	public List<Entidade> getPorIdPedido(int idPedido) throws Exception {
 		return dao.getPorIdPedido(idPedido);
 	}
 
