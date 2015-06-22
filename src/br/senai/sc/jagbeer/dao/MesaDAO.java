@@ -34,7 +34,6 @@ public class MesaDAO extends GenericDAO {
 
 			pstmt.execute();
 			con.commit();
-			pstmt.close();
 
 		} catch (SQLException se) {
 			con.rollback();
@@ -53,7 +52,6 @@ public class MesaDAO extends GenericDAO {
 		try {
 			mesa = (Mesa) entidade;
 			PreparedStatement pstmt = con.prepareStatement(query);
-
 			pstmt.setInt(1, mesa.getId());
 
 			pstmt.execute();
