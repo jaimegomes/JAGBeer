@@ -6,8 +6,9 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
+import br.senai.sc.jagbeer.controller.ProdutoController;
 
-public class EncerrarPedidoTableModel extends AbstractTableModel {
+public class produtoPedidoTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
 	private static final int COL_PRODUTO = 0;
@@ -16,7 +17,7 @@ public class EncerrarPedidoTableModel extends AbstractTableModel {
 
 	private List<Entidade> valores;
 
-	public EncerrarPedidoTableModel(List<Entidade> list) {
+	public produtoPedidoTableModel(List<Entidade> list) {
 		this.valores = new ArrayList<Entidade>(list);
 	}
 
@@ -42,24 +43,28 @@ public class EncerrarPedidoTableModel extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int row, int column) {
-		EncerrarPedido encerrarPedido = (EncerrarPedido) valores.get(row);
+		ProdutoPedido produtoPedido = (ProdutoPedido) valores.get(row);
+
+		Produto produto = (Produto) new ProdutoController()
+				.getPorId(produtoPedido.getIdProduto());
+		
 		if (column == COL_PRODUTO)
-			return encerrarPedido.getNomeProduto();
+			return produto.getNome();
 		else if (column == COL_VALOR)
-			return encerrarPedido.getValor();
+			return produto.getPrecoVenda();
 		else if (column == COL_QUANTIDADE)
-			return encerrarPedido.getQuantidade();
+			return produtoPedido.getQtde();
 		return "";
 	}
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		EncerrarPedido encerrarPedido = (EncerrarPedido) valores.get(rowIndex);
+		ProdutoPedido produtoPedido = (ProdutoPedido) valores.get(rowIndex);
 		if (columnIndex == COL_PRODUTO)
-			encerrarPedido.setNomeProduto(aValue.toString());
+			produtoPedido.setIdProduto(Integer.parseInt(aValue.toString()));
 		else if (columnIndex == COL_VALOR)
-			encerrarPedido.setValor(Double.parseDouble(aValue.toString()));
+			produtoPedido.setValor(Double.parseDouble(aValue.toString()));
 		else if (columnIndex == COL_QUANTIDADE)
-			encerrarPedido.setQuantidade(Integer.parseInt(aValue.toString()));
+			produtoPedido.setQuantidade(Integer.parseInt(aValue.toString()));
 	}
 
 	public Class<?> getColumnClass(int columnIndex) {
