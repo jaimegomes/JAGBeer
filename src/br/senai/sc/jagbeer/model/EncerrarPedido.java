@@ -6,11 +6,22 @@ public class EncerrarPedido extends Entidade {
 
 	private int pedido;
 	private String cliente;
+	private String nomeProduto;
 	private double valor;
 	private int quantidade;
 
 	public EncerrarPedido() {
 
+	}
+
+	public EncerrarPedido(int pedido, String cliente, String nomeProduto,
+			double valor, int quantidade) {
+		super();
+		this.pedido = pedido;
+		this.cliente = cliente;
+		this.nomeProduto = nomeProduto;
+		this.valor = valor;
+		this.quantidade = quantidade;
 	}
 
 	public EncerrarPedido(int pedido, String cliente) {
@@ -26,14 +37,6 @@ public class EncerrarPedido extends Entidade {
 		this.cliente = cliente;
 		this.valor = valor;
 		this.quantidade = quantdade;
-	}
-
-	public int getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
 	}
 
 	public int getPedido() {
@@ -52,6 +55,14 @@ public class EncerrarPedido extends Entidade {
 		this.cliente = cliente;
 	}
 
+	public String getNomeProduto() {
+		return nomeProduto;
+	}
+
+	public void setNomeProduto(String nomeProduto) {
+		this.nomeProduto = nomeProduto;
+	}
+
 	public double getValor() {
 		return valor;
 	}
@@ -60,12 +71,12 @@ public class EncerrarPedido extends Entidade {
 		this.valor = valor;
 	}
 
-	public int getQuantdade() {
+	public int getQuantidade() {
 		return quantidade;
 	}
 
-	public void setQuantdade(int quantdade) {
-		this.quantidade = quantdade;
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
 	}
 
 	@Override

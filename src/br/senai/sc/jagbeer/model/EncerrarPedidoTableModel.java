@@ -12,8 +12,9 @@ public class EncerrarPedidoTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private static final int COL_PEDIDO = 0;
 	private static final int COL_CLIENTE = 1;
-	private static final int COL_VALOR = 2;
-	private static final int COL_QUANTIDADE = 3;
+	private static final int COL_PRODUTO = 2;
+	private static final int COL_VALOR = 3;
+	private static final int COL_QUANTIDADE = 4;
 
 	private List<Entidade> valores;
 
@@ -29,7 +30,7 @@ public class EncerrarPedidoTableModel extends AbstractTableModel {
 
 	public int getColumnCount() {
 		// numero de colunas
-		return 4;
+		return 5;
 	}
 
 	public String getColumnName(int column) {
@@ -37,8 +38,10 @@ public class EncerrarPedidoTableModel extends AbstractTableModel {
 			return "Pedido";
 		if (column == COL_CLIENTE)
 			return "Cliente";
+		if (column == COL_PRODUTO)
+			return "Produto";
 		if (column == COL_VALOR)
-			return "Valor Parcial";
+			return "Valor";
 		if (column == COL_QUANTIDADE)
 			return "Quantidade";
 		return "";
@@ -50,10 +53,12 @@ public class EncerrarPedidoTableModel extends AbstractTableModel {
 			return encerrarPedido.getPedido();
 		else if (column == COL_CLIENTE)
 			return encerrarPedido.getCliente();
+		else if (column == COL_PRODUTO)
+			return encerrarPedido.getNomeProduto();
 		else if (column == COL_VALOR)
 			return encerrarPedido.getValor();
 		else if (column == COL_QUANTIDADE)
-			return encerrarPedido.getQuantdade();
+			return encerrarPedido.getQuantidade();
 		return "";
 	}
 
@@ -63,10 +68,12 @@ public class EncerrarPedidoTableModel extends AbstractTableModel {
 			encerrarPedido.setPedido(Integer.parseInt(aValue.toString()));
 		else if (columnIndex == COL_CLIENTE)
 			encerrarPedido.setCliente(aValue.toString());
+		else if (columnIndex == COL_PRODUTO)
+			encerrarPedido.setNomeProduto(aValue.toString());
 		else if (columnIndex == COL_VALOR)
 			encerrarPedido.setValor(Double.parseDouble(aValue.toString()));
 		else if (columnIndex == COL_QUANTIDADE)
-			encerrarPedido.setQuantdade(Integer.parseInt(aValue.toString()));
+			encerrarPedido.setQuantidade(Integer.parseInt(aValue.toString()));
 	}
 
 	public Class<?> getColumnClass(int columnIndex) {
