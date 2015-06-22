@@ -516,9 +516,8 @@ public class PedidoDAO extends GenericDAO {
 					}
 
 					pedido = new Pedido(result.getInt("id"),
-							result.getDate("dataPedido"),
-							result.getInt("status"));
-					
+							result.getDate("dataPedido"));
+
 					listPedidos.add(pedido);
 
 				} catch (Exception e) {
