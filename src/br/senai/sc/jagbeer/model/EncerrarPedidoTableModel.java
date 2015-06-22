@@ -10,11 +10,9 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
 public class EncerrarPedidoTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
-	private static final int COL_PEDIDO = 0;
-	private static final int COL_CLIENTE = 1;
-	private static final int COL_PRODUTO = 2;
-	private static final int COL_VALOR = 3;
-	private static final int COL_QUANTIDADE = 4;
+	private static final int COL_PRODUTO = 0;
+	private static final int COL_VALOR = 1;
+	private static final int COL_QUANTIDADE = 2;
 
 	private List<Entidade> valores;
 
@@ -30,14 +28,10 @@ public class EncerrarPedidoTableModel extends AbstractTableModel {
 
 	public int getColumnCount() {
 		// numero de colunas
-		return 5;
+		return 3;
 	}
 
 	public String getColumnName(int column) {
-		if (column == COL_PEDIDO)
-			return "Pedido";
-		if (column == COL_CLIENTE)
-			return "Cliente";
 		if (column == COL_PRODUTO)
 			return "Produto";
 		if (column == COL_VALOR)
@@ -49,11 +43,7 @@ public class EncerrarPedidoTableModel extends AbstractTableModel {
 
 	public Object getValueAt(int row, int column) {
 		EncerrarPedido encerrarPedido = (EncerrarPedido) valores.get(row);
-		if (column == COL_PEDIDO)
-			return encerrarPedido.getPedido();
-		else if (column == COL_CLIENTE)
-			return encerrarPedido.getCliente();
-		else if (column == COL_PRODUTO)
+		if (column == COL_PRODUTO)
 			return encerrarPedido.getNomeProduto();
 		else if (column == COL_VALOR)
 			return encerrarPedido.getValor();
@@ -64,11 +54,7 @@ public class EncerrarPedidoTableModel extends AbstractTableModel {
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		EncerrarPedido encerrarPedido = (EncerrarPedido) valores.get(rowIndex);
-		if (columnIndex == COL_PEDIDO)
-			encerrarPedido.setPedido(Integer.parseInt(aValue.toString()));
-		else if (columnIndex == COL_CLIENTE)
-			encerrarPedido.setCliente(aValue.toString());
-		else if (columnIndex == COL_PRODUTO)
+		if (columnIndex == COL_PRODUTO)
 			encerrarPedido.setNomeProduto(aValue.toString());
 		else if (columnIndex == COL_VALOR)
 			encerrarPedido.setValor(Double.parseDouble(aValue.toString()));
