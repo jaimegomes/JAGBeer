@@ -16,7 +16,9 @@ import br.senai.sc.jagbeer.abstracts.GenericDAO;
 import br.senai.sc.jagbeer.conexao.Conexao;
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.MesaController;
+import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.controller.ProdutoController;
+import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.Pedido;
@@ -287,19 +289,20 @@ public class PedidoDAO extends GenericDAO {
 	}
 
 	/**
-	 * Método que retorna uma lista da entidade Pedido que tem o status = 1
+	 * Método que retorna uma lista da entidade PedidoAberto
 	 * 
 	 * @return List<Entidade> listPedidosAberto
 	 * @throws Exception
 	 */
 	public List<Entidade> getListPedidosEmAberto() throws Exception {
 
-		List<Entidade> listPedidosAberto = new ArrayList<Entidade>();
+		List<Entidade> listPedidosEmAberto = new ArrayList<Entidade>();
 
-		String sql = "SELECT * FROM pedido WHERE status = 1";
+		String sql = "SELECT * FROM pedido WHERE status = 1 AND dataPedido = ?";
 		try {
 
 			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setDate(1, new java.sql.Date(new Date().getTime()));
 
 			ResultSet result = pstm.executeQuery();
 
@@ -323,7 +326,7 @@ public class PedidoDAO extends GenericDAO {
 							result.getDate("dataPedido"),
 							result.getInt("status"));
 
-					listPedidosAberto.add(pedido);
+					listPedidosEmAberto.add(pedido);
 
 				} catch (Exception e) {
 					System.out
@@ -336,97 +339,16 @@ public class PedidoDAO extends GenericDAO {
 			pstm.close();
 
 		} catch (SQLException e) {
-			System.out.println("[PedidoDAO] - Erro ao buscar pedido por id.\n"
-					+ e.getMessage());
-		} finally {
-			con.close();
-		}
-
-		return listPedidosAberto;
-	}
-
-	/**
-	 * Método que retorna uma lista da entidade PedidoAberto com o objeto
-	 * preenchido
-	 * 
-	 * @return List<Entidade> listPedidosAbertos
-	 * @throws Exception
-	 */
-	public List<Entidade> getListPedidosAbertos() throws Exception {
-
-		Date data = new Date();
-
-		List<Entidade> listPedidosAbertos = new ArrayList<Entidade>();
-
-		String sql = "SELECT  produtopedido.id, produtopedido.idproduto, produtopedido.idpedido, produtopedido.quantidade, pedido.idcliente, pedido.idmesa FROM produtopedido  JOIN pedido  ON pedido.status = 1 AND pedido.datapedido = ? ORDER BY produtopedido.id";
-
-		try {
-
-			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setDate(1, new java.sql.Date(data.getTime()));
-
-			ResultSet result = pstm.executeQuery();
-
-			while (result.next()) {
-
-				try {
-
-					Cliente cliente = null;
-					if (result.getInt("idcliente") > 0) {
-
-						cliente = (Cliente) new ClienteController()
-								.getPorId(result.getInt("idcliente"));
-
-					}
-
-					PedidoAberto pedidoAberto = new PedidoAberto(
-							result.getInt("id"), cliente.getNome(), 0.0);
-
-					listPedidosAbertos.add(pedidoAberto);
-
-				} catch (Exception e) {
-					System.out
-							.println("[PedidoDAO] - Erro ao buscar pedido aberto. "
-									+ e.getMessage());
-					e.printStackTrace();
-				}
-			}
-
-			for (Entidade e : listPedidosAbertos) {
-				PedidoAberto pedidoAberto = (PedidoAberto) e;
-
-				double valorParcial = 0;
-
-				for (Entidade ent : new ProdutoPedidoDAO().listar()) {
-
-					ProdutoPedido produtoPedido = (ProdutoPedido) ent;
-
-					if (produtoPedido.getIdPedido() == pedidoAberto.getPedido()) {
-
-						Produto produto = (Produto) new ProdutoController()
-								.getPorId(produtoPedido.getIdProduto());
-
-						valorParcial += produto.getPrecoVenda()
-								* produtoPedido.getQtde();
-
-						pedidoAberto.setValorParcial(valorParcial);
-
-					}
-				}
-			}
-			pstm.close();
-
-		} catch (SQLException e) {
 			System.out
-					.println("[PedidoDAO] - Erro ao buscar pedidos abertos.\n"
+					.println("[PedidoDAO] - Erro ao buscar lista de pedidos em aberto.\n"
 							+ e.getMessage());
-			e.printStackTrace();
 		} finally {
 			con.close();
 		}
 
-		return listPedidosAbertos;
+		return listPedidosEmAberto;
 	}
+
 
 	/**
 	 * Método que retorna uma entidade Pedido de acordo com o id do cliente
@@ -514,5 +436,43 @@ public class PedidoDAO extends GenericDAO {
 			con.close();
 		}
 
+	}
+
+	public List<Entidade> getListPedidoAberto(
+			List<Entidade> listPedidosEmAberto, List<Entidade> listProdutoPedido)
+			throws Exception {
+
+		List<Entidade> listPedidosAbertos = new ArrayList<>();
+
+		for (Entidade e : listPedidosEmAberto) {
+
+			Pedido pedido = (Pedido) e;
+
+			PedidoAberto pedidoAberto = new PedidoAberto(pedido.getId(), pedido
+					.getCliente().getNome(), 0.0);
+
+			listPedidosAbertos.add(pedidoAberto);
+		}
+
+		for (Entidade ent : listPedidosAbertos) {
+
+			PedidoAberto pedidoAberto = (PedidoAberto) ent;
+
+			double valorParcial = 0;
+
+			for (Entidade en : listProdutoPedido) {
+
+				ProdutoPedido produtoPedido = (ProdutoPedido) en;
+				Produto produto = (Produto) new ProdutoController()
+						.getPorId(produtoPedido.getIdProduto());
+
+				if (pedidoAberto.getPedido() == produtoPedido.getIdPedido()) {
+
+					valorParcial += produto.getPrecoVenda()
+							* produtoPedido.getQtde();
+				}
+			}
+		}
+		return listPedidosAbertos;
 	}
 }

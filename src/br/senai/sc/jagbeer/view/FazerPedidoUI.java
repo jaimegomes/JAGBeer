@@ -385,7 +385,7 @@ public class FazerPedidoUI extends JInternalFrame {
 							.setModel(
 									new PedidoAbertoTableModel(
 											new PedidoController()
-													.getListPedidosAbertos()));
+													.getListPedidosEmAberto()));
 
 					JOptionPane.showMessageDialog(null,
 							"Produtos inseridos com sucesso.");

@@ -96,9 +96,5 @@ public class PedidoController implements IController {
 		return dao.getListPedidosEmAberto();
 	}
 
-	public List<Entidade> getListPedidosAbertos() throws Exception {
-		return dao.getListPedidosAbertos();
-
-	}
 
 }

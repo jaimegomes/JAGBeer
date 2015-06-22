@@ -137,7 +137,7 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 									.setModel(
 											new PedidoAbertoTableModel(
 													new PedidoController()
-															.getListPedidosAbertos()));
+															.getListPedidosEmAberto()));
 
 							JOptionPane.showMessageDialog(null,
 									"Produto excluído com sucesso.");

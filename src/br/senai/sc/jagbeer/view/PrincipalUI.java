@@ -28,11 +28,13 @@ import javax.swing.border.TitledBorder;
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.PedidoController;
+import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PedidoAberto;
 import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
+import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoPedido;
 
 /**
@@ -250,11 +252,8 @@ public class PrincipalUI extends JFrame {
 
 				List<Entidade> listPedidosAbertos = new ArrayList<Entidade>();
 				try {
-					listPedidosAbertos = new PedidoController()
-							.getListPedidosAbertos();
+					listPedidosAbertos = getListPedidosAbertos();
 
-					System.out.println("listPedidosAbertos: "
-							+ listPedidosAbertos.size());
 				} catch (Exception e3) {
 					e3.printStackTrace();
 				}
@@ -559,7 +558,7 @@ public class PrincipalUI extends JFrame {
 								Short.MAX_VALUE)));
 
 		tablePedidoAberto.setModel(new PedidoAbertoTableModel(
-				new PedidoController().getListPedidosAbertos()));
+				getListPedidosAbertos()));
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
 	}
@@ -578,6 +577,41 @@ public class PrincipalUI extends JFrame {
 
 	public void setTablePedidoAberto(JTable tablePedidoAberto) {
 		this.tablePedidoAberto = tablePedidoAberto;
+	}
+
+	public List<Entidade> getListPedidosAbertos() throws Exception {
+		List<Entidade> listPedidosAbertos = new ArrayList<>();
+
+		for (Entidade e : new PedidoController().getListPedidosEmAberto()) {
+
+			Pedido pedido = (Pedido) e;
+
+			PedidoAberto pedidoAberto = new PedidoAberto(pedido.getId(), pedido
+					.getCliente().getNome(), 0.0);
+
+			listPedidosAbertos.add(pedidoAberto);
+		}
+
+		for (Entidade ent : listPedidosAbertos) {
+
+			PedidoAberto pedidoAberto = (PedidoAberto) ent;
+
+			double valorParcial = 0;
+
+			for (Entidade en : new ProdutoPedidoController().listar()) {
+
+				ProdutoPedido produtoPedido = (ProdutoPedido) en;
+				Produto produto = (Produto) new ProdutoController()
+						.getPorId(produtoPedido.getIdProduto());
+
+				if (pedidoAberto.getPedido() == produtoPedido.getIdPedido()) {
+
+					valorParcial += produto.getPrecoVenda()
+							* produtoPedido.getQtde();
+				}
+			}
+		}
+		return listPedidosAbertos;
 	}
 
 }

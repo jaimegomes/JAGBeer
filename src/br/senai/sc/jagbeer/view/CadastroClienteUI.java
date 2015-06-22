@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -20,12 +22,18 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.PedidoController;
+import br.senai.sc.jagbeer.controller.ProdutoController;
+import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.ClienteTableModel;
 import br.senai.sc.jagbeer.model.Pedido;
+import br.senai.sc.jagbeer.model.PedidoAberto;
 import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
+import br.senai.sc.jagbeer.model.Produto;
+import br.senai.sc.jagbeer.model.ProdutoPedido;
 
 public class CadastroClienteUI extends JInternalFrame {
 
@@ -160,13 +168,15 @@ public class CadastroClienteUI extends JInternalFrame {
 
 				if (table != null) {
 					try {
+
 						if (flagTabela.equals("cliente")) {
 							table.setModel(new ClienteTableModel(
 									new ClienteController().listar()));
 						} else if (flagTabela.equals("principal")) {
+							List<Entidade> listPedidosAbertos = calculaValorPedidosAbertos();
+
 							table.setModel(new PedidoAbertoTableModel(
-									new PedidoController()
-											.getListPedidosAbertos()));
+									listPedidosAbertos));
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -175,6 +185,7 @@ public class CadastroClienteUI extends JInternalFrame {
 				}
 
 			}
+
 		});
 
 		JButton btnCancelar = new JButton("Cancelar");
@@ -298,5 +309,40 @@ public class CadastroClienteUI extends JInternalFrame {
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 
+	}
+
+	public List<Entidade> calculaValorPedidosAbertos() throws Exception {
+		List<Entidade> listPedidosAbertos = new ArrayList<>();
+
+		for (Entidade e : new PedidoController().getListPedidosEmAberto()) {
+
+			Pedido pedido = (Pedido) e;
+
+			PedidoAberto pedidoAberto = new PedidoAberto(pedido.getId(), pedido
+					.getCliente().getNome(), 0.0);
+
+			listPedidosAbertos.add(pedidoAberto);
+		}
+
+		for (Entidade ent : listPedidosAbertos) {
+
+			PedidoAberto pedidoAberto = (PedidoAberto) ent;
+
+			double valorParcial = 0;
+
+			for (Entidade en : new ProdutoPedidoController().listar()) {
+
+				ProdutoPedido produtoPedido = (ProdutoPedido) en;
+				Produto produto = (Produto) new ProdutoController()
+						.getPorId(produtoPedido.getIdProduto());
+
+				if (pedidoAberto.getPedido() == produtoPedido.getIdPedido()) {
+
+					valorParcial += produto.getPrecoVenda()
+							* produtoPedido.getQtde();
+				}
+			}
+		}
+		return listPedidosAbertos;
 	}
 }
