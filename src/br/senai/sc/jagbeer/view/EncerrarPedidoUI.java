@@ -1,7 +1,7 @@
 package br.senai.sc.jagbeer.view;
 
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
+import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.EncerrarPedidoTableModel;
@@ -32,7 +33,7 @@ public class EncerrarPedidoUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EncerrarPedidoUI(final Pedido pedido, JTable table) {
+	public EncerrarPedidoUI(final List<Entidade> listProdutos, JTable table) {
 
 		setTitle("Encerrar Pedido");
 		setClosable(true);

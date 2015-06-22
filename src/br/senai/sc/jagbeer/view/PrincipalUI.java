@@ -31,7 +31,6 @@ import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
-import br.senai.sc.jagbeer.model.EncerrarPedido;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PedidoAberto;
 import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
@@ -375,7 +374,8 @@ public class PrincipalUI extends JFrame {
 		JButton btnEncerrar = new JButton("Encerrar Pedido");
 		btnEncerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
+				List<Entidade> listProdutoPedido = new ArrayList<Entidade>();
 				EncerrarPedidoUI encerrarPedidoUI;
 				try {
 
@@ -386,16 +386,16 @@ public class PrincipalUI extends JFrame {
 						int idPedido = Integer.parseInt(tablePedidoAberto
 								.getValueAt(linhaSelecionada, 0).toString());
 
-						Pedido pedidoEncerrar = (Pedido) new ProdutoPedidoController()
-								.getPorIdPedido(idPedido);
+						for (Entidade ent : new ProdutoPedidoController()
+								.getPorIdPedido(idPedido)) {
 
-						for(Entidade ent : new ProdutoPedidoController().getPorIdPedido(idPedido)){
+							ProdutoPedido produtoPedido = (ProdutoPedido) ent;
+							listProdutoPedido.add(produtoPedido);
 
-							EncerrarPedido encerrarPedido = (EncerrarPedido) ent;
 						}
 
-						encerrarPedidoUI = new EncerrarPedidoUI(pedidoEncerrar,
-								tablePedidoAberto);
+						encerrarPedidoUI = new EncerrarPedidoUI(
+								listProdutoPedido, tablePedidoAberto);
 
 						// encerrarPedidoUI.requestFocus(true);
 						// encerrarPedidoUI.setFocusable(true);
