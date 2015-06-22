@@ -1,5 +1,6 @@
 package br.senai.sc.jagbeer.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JTable;
@@ -90,6 +91,10 @@ public class PedidoController implements IController {
 
 	public List<Entidade> getListPedidosEmAberto() throws Exception {
 		return dao.getListPedidosEmAberto();
+	}
+
+	public Entidade getPorData(Date dataInicio, Date dataFim) throws Exception {
+		return dao.getPorData(dataInicio, dataFim);
 	}
 
 }
