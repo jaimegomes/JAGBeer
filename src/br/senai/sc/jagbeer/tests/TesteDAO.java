@@ -1,9 +1,5 @@
 package br.senai.sc.jagbeer.tests;
 
-import br.senai.sc.jagbeer.abstracts.Entidade;
-import br.senai.sc.jagbeer.dao.ClienteDAO;
-import br.senai.sc.jagbeer.dao.PedidoDAO;
-import br.senai.sc.jagbeer.model.PedidoAberto;
 
 public class TesteDAO {
 
@@ -19,9 +15,9 @@ public class TesteDAO {
 //
 //		}
 		
-		ClienteDAO dao = new ClienteDAO();
+//		ClienteDAO dao = new ClienteDAO();f
 		
-		dao.getNomeSelecionado("")
+		
 
 	}
 }

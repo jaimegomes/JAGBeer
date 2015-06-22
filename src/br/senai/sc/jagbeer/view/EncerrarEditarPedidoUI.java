@@ -158,8 +158,6 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 		btnAdicionarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				dispose();
-
 				try {
 
 					FazerPedidoUI fazerPedido = new FazerPedidoUI(
@@ -184,13 +182,15 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 							.add(fazerPedido, 0);
 					fazerPedido.setVisible(true);
 
-					// PrincipalUI
-					// .obterInstancia()
-					// .getTablePedidoAberto()
-					// .setModel(
-					// new PedidoAbertoTableModel(
-					// new PedidoController()
-					// .getListPedidosAbertos()));
+					PrincipalUI
+							.obterInstancia()
+							.getTablePedidoAberto()
+							.setModel(
+									new PedidoAbertoTableModel(
+											new PedidoController()
+													.getListPedidosEmAberto()));
+
+					dispose();
 
 				} catch (Exception e) {
 					e.printStackTrace();

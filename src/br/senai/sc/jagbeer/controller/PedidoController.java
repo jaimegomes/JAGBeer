@@ -97,4 +97,8 @@ public class PedidoController implements IController {
 		return dao.getPorData(dataInicio, dataFim);
 	}
 
+	public List<Entidade> getAbertosHoje() throws Exception {
+		return dao.getAbertosHoje();
+	}
+
 }

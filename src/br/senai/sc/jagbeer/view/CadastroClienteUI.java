@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -312,8 +311,9 @@ public class CadastroClienteUI extends JInternalFrame {
 	}
 
 	public List<Entidade> calculaValorPedidosAbertos() throws Exception {
-		
-		List<Entidade> listPedidosAbertos = new PedidoController().getListPedidosEmAberto();
+
+		List<Entidade> listPedidosAbertos = new PedidoController()
+				.getListPedidosEmAberto();
 
 		for (Entidade ent : listPedidosAbertos) {
 

@@ -138,7 +138,7 @@ public class FazerPedidoUI extends JInternalFrame {
 
 		try {
 			List<Entidade> listIdPedidos = new PedidoController()
-					.getListPedidosEmAberto();
+					.getAbertosHoje();
 
 			if (listIdPedidos.size() > 0) {
 				for (Entidade e : listIdPedidos) {
@@ -230,7 +230,7 @@ public class FazerPedidoUI extends JInternalFrame {
 		try {
 			List<Entidade> listClientes = new ArrayList<Entidade>();
 
-			for (Entidade ent : new PedidoController().getListPedidosEmAberto()) {
+			for (Entidade ent : new PedidoController().getAbertosHoje()) {
 				Pedido pedido = (Pedido) ent;
 
 				listClientes.add(new ClienteController().getPorId(pedido
@@ -362,8 +362,6 @@ public class FazerPedidoUI extends JInternalFrame {
 
 					if (tableEncerrarPedido != null) {
 
-						dispose();
-
 						tableEncerrarPedido.setModel(new EncerrarPedidoTableModel(
 								new ProdutoPedidoController()
 										.getPorIdPedido(pedido.getId())));
@@ -390,7 +388,7 @@ public class FazerPedidoUI extends JInternalFrame {
 					JOptionPane.showMessageDialog(null,
 							"Produtos inseridos com sucesso.");
 
-					dispose();
+					
 
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());

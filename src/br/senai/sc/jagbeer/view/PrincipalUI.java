@@ -320,8 +320,11 @@ public class PrincipalUI extends JFrame {
 							for (Entidade en : listPedidosAbertos) {
 								PedidoAberto pedidoAberto = (PedidoAberto) en;
 
-								if (pedidoAberto.getPedido() == pedido.getId()) {
-									listPedidos.add(pedidoAberto);
+								if (pedido.getId() > 0) {
+									if (pedidoAberto.getPedido() == pedido
+											.getId()) {
+										listPedidos.add(pedidoAberto);
+									}
 								}
 							}
 						} catch (NumberFormatException nf2) {

@@ -387,8 +387,6 @@ public class PedidoDAO extends GenericDAO {
 							result.getDate("dataPedido"),
 							result.getInt("status"));
 
-					System.out.println(pedido.getId());
-
 				} catch (Exception e) {
 					System.out
 							.println("[PedidoDAO] - Erro ao buscar pedido por id do cliente.  "
@@ -539,5 +537,66 @@ public class PedidoDAO extends GenericDAO {
 
 		return pedido;
 
+	}
+
+	/**
+	 * Retorna uma lista de Pedidos
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Entidade> getAbertosHoje() throws Exception {
+
+		List<Entidade> listPedidosEmAberto = new ArrayList<Entidade>();
+
+		String sql = "SELECT * FROM pedido WHERE status = 1 AND dataPedido = ?";
+		try {
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setDate(1, new java.sql.Date(new Date().getTime()));
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				try {
+					Mesa mesa = null;
+					if (result.getInt("idMesa") > 0) {
+						mesa = (Mesa) new MesaController().getPorId(result
+								.getInt("idMesa"));
+					}
+
+					Cliente cliente = null;
+
+					if (result.getInt("idCliente") > 0) {
+						cliente = (Cliente) new ClienteController()
+								.getPorId(result.getInt("idCliente"));
+					}
+
+					pedido = new Pedido(result.getInt("id"), mesa, cliente,
+							result.getDate("dataPedido"),
+							result.getInt("status"));
+
+					listPedidosEmAberto.add(pedido);
+
+				} catch (Exception e) {
+					System.out
+							.println("[PedidoDAO] - Erro ao buscar lista de pedidos com status em aberto.  "
+									+ e.getMessage());
+				}
+
+			}
+
+			pstm.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("[PedidoDAO] - Erro ao buscar lista de pedidos em aberto.\n"
+							+ e.getMessage());
+		} finally {
+			con.close();
+		}
+
+		return listPedidosEmAberto;
 	}
 }
