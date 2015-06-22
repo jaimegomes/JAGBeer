@@ -18,13 +18,13 @@ public class MesaController implements IController {
 
 		Mesa mesa = (Mesa) entidade;
 
-		if (mesa.getNumeroMesa() == null) {
-			throw new Exception("Número da mesa obrigatório.");
+		if (mesa == null) {
+			throw new Exception("Mesa não pode ser nula.");
 		}
 
-		if (mesa.getNumeroMesa() < 1) {
+		if (mesa.getNumeroMesa() == null || mesa.getNumeroMesa() < 1) {
 			throw new Exception(
-					"Número da mesa não pode ser menor ou igual a zero.");
+					"Número da mesa obrigatório e deve ser maior que zero.");
 		}
 
 		dao.salvar(mesa);

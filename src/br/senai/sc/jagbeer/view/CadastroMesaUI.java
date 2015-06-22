@@ -92,9 +92,22 @@ public class CadastroMesaUI extends JInternalFrame {
 				// Verifica se o objeto é nulo
 				if (mesaEdicao == null) {
 
-					Mesa mesa = new Mesa(
-							Integer.parseInt(mesaNumero.getText()), Integer
-									.parseInt(qtdLugares.getText()));
+					int numMesa = 0;
+					Integer lugares = 0;
+					if (!mesaNumero.getText().isEmpty()) {
+						numMesa = Integer.parseInt(mesaNumero.getText());
+
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Número da mesa obrigatório.");
+					}
+
+					if (!qtdLugares.getText().isEmpty()) {
+						lugares = Integer.parseInt(mesaNumero.getText());
+
+					}
+
+					Mesa mesa = new Mesa(numMesa, lugares);
 
 					try {
 						new MesaController().salvar(mesa);
