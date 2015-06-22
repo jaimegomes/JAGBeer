@@ -33,7 +33,7 @@ public class ConfigurarRelatorioFaturamentoUI extends JInternalFrame {
 	private JTextField jtfDataInicio;
 	private JTextField jtfDataFim;
 	private JTable tableRelatorioFaturamento;
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	/**
 	 * Launch the application.
@@ -152,7 +152,7 @@ public class ConfigurarRelatorioFaturamentoUI extends JInternalFrame {
 			}
 		});
 
-		JLabel lblDdmmyyyy = new JLabel("dd/MM/yyyy");
+		JLabel lblDdmmyyyy = new JLabel("yyyy-MM-dd");
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel
 				.createParallelGroup(Alignment.TRAILING)

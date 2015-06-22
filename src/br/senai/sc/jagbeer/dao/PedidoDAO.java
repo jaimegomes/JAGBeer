@@ -486,54 +486,29 @@ public class PedidoDAO extends GenericDAO {
 	public List<Entidade> getPorData(Date dataInicio, Date dataFim)
 			throws Exception {
 
+		Pedido pedido = null;
 		List<Entidade> listPedidos = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM pedido WHERE dataPedido BETWEEN '"
 				+ dataInicio + "' AND '" + dataFim + "'";
 		try {
 
-			Date dataAtual = new Date();
 			PreparedStatement pstm = con.prepareStatement(sql);
 
 			ResultSet result = pstm.executeQuery();
 
 			while (result.next()) {
+				pedido = new Pedido(result.getInt("id"),
+						result.getDate("dataPedido"));
 
-				try {
-
-					Mesa mesa = null;
-
-					if (result.getInt("idMesa") > 1) {
-						mesa = (Mesa) new MesaController().getPorId(result
-								.getInt("idMesa"));
-
-					}
-
-					Cliente cliente = null;
-
-					if (result.getInt("idCliente") > 1) {
-						cliente = (Cliente) new ClienteController()
-								.getPorId(result.getInt("idCliente"));
-					}
-
-					pedido = new Pedido(result.getInt("id"),
-							result.getDate("dataPedido"));
-
-					listPedidos.add(pedido);
-
-				} catch (Exception e) {
-					System.out
-							.println("[PedidoDAO] - Erro ao buscar pedido entre datas selecionada.  "
-									+ e.getMessage());
-				}
-
+				listPedidos.add(pedido);
 			}
-
 			pstm.close();
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out
-					.println("[PedidoDAO] - Erro ao buscar pedido entre datas selecionadas.\n"
+					.println("[PedidoDAO] - Erro ao buscar pedido entre datas selecionada.  "
 							+ e.getMessage());
+
 		} finally {
 			con.close();
 		}

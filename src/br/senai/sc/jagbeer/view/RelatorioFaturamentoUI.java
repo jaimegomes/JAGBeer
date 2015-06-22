@@ -190,11 +190,6 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 												.addComponent(btnFechar))
 								.addContainerGap()));
 
-		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] {
-				"Num. Pedido", "Data", "Valor" }));
-		scrollPane.setViewportView(table);
-
 		tableRelatorioFaturamento = new JTable();
 		try {
 			tableRelatorioFaturamento
@@ -204,26 +199,9 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 			e.printStackTrace();
 		}
 
+		scrollPane.setViewportView(tableRelatorioFaturamento);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 
-		// private double getValorTotal(final List<Entidade> listProdutos)
-		// throws Exception {
-		//
-		// double valorTotal = 0;
-		//
-		// if (!listProdutos.isEmpty()) {
-		// for (Entidade e : listProdutos) {
-		// ProdutoPedido prodPedido = (ProdutoPedido) e;
-		//
-		// Produto prod = (Produto) new ProdutoController()
-		// .getPorId(prodPedido.getIdProduto());
-		// valorTotal += prod.getPrecoVenda() * prodPedido.getQtde();
-		//
-		// }
-		//
-		// }
-		// return valorTotal;
-		// }
 	}
 }
