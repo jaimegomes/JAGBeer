@@ -31,7 +31,7 @@ public class EncerrarPedidoUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EncerrarPedidoUI(final Cliente c, final Pedido p) {
+	public EncerrarPedidoUI(final Cliente c, final Pedido p, JTable table) {
 
 		setTitle("Encerrar Pedido");
 		setClosable(true);

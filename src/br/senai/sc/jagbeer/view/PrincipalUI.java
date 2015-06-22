@@ -390,18 +390,17 @@ public class PrincipalUI extends JFrame {
 						int idPedido = Integer.parseInt(tablePedidoAberto
 								.getValueAt(linhaSelecionada, 0).toString());
 
-						Pedido pedidoEncerrar = (Pedido) new PedidoController()
-								.getPorId(idPedido);
+						Pedido pedidoEncerrar = (Pedido) new ProdutoPedidoController()
+								.getPorIdPedido(idPedido);
 
-						Pedido pedido = (Pedido) new PedidoController()
-								.getPorId(idPedido);
+						// Pedido pedido = (Pedido) new PedidoController()
+						// .getPorId(idPedido);
 
-						pedido.setStatus(0);
-
-						//new PedidoController().encerrarPedido(pedidoEncerrar);
+						// pedido.setStatus(0);
 
 						encerrarPedidoUI = new EncerrarPedidoUI(
-								clienteEncerrar, pedidoEncerrar);
+								clienteEncerrar, pedidoEncerrar,
+								tablePedidoAberto);
 
 						// encerrarPedidoUI.requestFocus(true);
 						// encerrarPedidoUI.setFocusable(true);
@@ -605,8 +604,8 @@ public class PrincipalUI extends JFrame {
 					pedidoAberto = new PedidoAberto(pedidoAberto.getPedido(),
 							pedidoAberto.getCliente(), valorParcial);
 				} else {
-					pedidoAberto = new PedidoAberto(pedidoAberto.getPedido(), null,
-							valorParcial);
+					pedidoAberto = new PedidoAberto(pedidoAberto.getPedido(),
+							null, valorParcial);
 				}
 
 				listRetorno.add(pedidoAberto);
