@@ -64,7 +64,7 @@ public class PedidoController implements IController {
 	@Override
 	public Entidade getPorId(int id) throws Exception {
 
-		if (id == 0)
+		if (id <= 0)
 			throw new Exception("Id deve ser maior que zero.");
 
 		return (Pedido) dao.getPorId(id);
@@ -78,19 +78,36 @@ public class PedidoController implements IController {
 
 	public List<Entidade> getPedidosAbertos() throws Exception {
 
-		return dao.getPedidosAbertos();
+		return dao.getProdutosPedidoEmAberto();
 	}
 
+	//
+	// public Entidade getPorIdStatusAberto(int id) throws Exception {
+	//
+	// if (id <= 0)
+	// throw new Exception("O id deve ser maior que zero.");
+	//
+	// return dao.getPorIdStatusAberto(id);
+	// }
+
 	public Entidade getPorIdCliente(int idCliente) throws Exception {
+
+		if (idCliente <= 0)
+			throw new Exception("O id do cliente deve ser maior que zero.");
 
 		return dao.getPorIdCliente(idCliente);
 	}
 
 	public void encerrarPedido(int idPedidoEncerrar) throws Exception {
 
-		// encerrarPedido = (EncerrarPedido) entidade;
+		if (idPedidoEncerrar <= 0)
+			throw new Exception("O id do cliente deve ser maior que zero.");
 
 		dao.encerrarPedido(idPedidoEncerrar);
+	}
+
+	public List<Entidade> getListPedidosEmAberto() throws Exception {
+		return dao.getListPedidosEmAberto();
 	}
 
 }

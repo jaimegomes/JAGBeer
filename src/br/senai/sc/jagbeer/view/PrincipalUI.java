@@ -354,13 +354,13 @@ public class PrincipalUI extends JFrame {
 
 		});
 
-		JButton btnNovo = new JButton("Fazer Pedido");
-		btnNovo.addActionListener(new ActionListener() {
+		JButton btnFazerPedido = new JButton("Fazer Pedido");
+		btnFazerPedido.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				FazerPedidoUI fazerPedido = new FazerPedidoUI();
+				FazerPedidoUI fazerPedido = new FazerPedidoUI(tablePedidoAberto);
 				fazerPedido.requestFocus(true);
 				fazerPedido.setFocusable(true);
 				fazerPedido.moveToFront();
@@ -369,10 +369,8 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 
-		// JAIME ESTÁ COM ERRO NESSA CARALHA AQUI.. DÁ UM HELP POR FAVOR.
-
-		JButton btnEncerrar = new JButton("Encerrar Pedido");
-		btnEncerrar.addActionListener(new ActionListener() {
+		JButton btnEncerrarEditar = new JButton("Encerrar / Editar Pedido");
+		btnEncerrarEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				List<Entidade> listProdutoPedido = new ArrayList<Entidade>();
@@ -400,7 +398,7 @@ public class PrincipalUI extends JFrame {
 								listProdutoPedido.add(produtoPedido);
 
 							}
-						} 
+						}
 
 						encerrarPedidoUI = new EncerrarPedidoUI(
 								listProdutoPedido, tablePedidoAberto, pedido);
@@ -419,8 +417,6 @@ public class PrincipalUI extends JFrame {
 
 			}
 		});
-
-		JButton btnEditarPedido = new JButton("Editar Pedido");
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane
@@ -465,29 +461,24 @@ public class PrincipalUI extends JFrame {
 										.addGroup(
 												gl_contentPane
 														.createParallelGroup(
-																Alignment.LEADING,
-																false)
-														.addComponent(
-																btnEncerrar,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																btnNovo,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																btnEditarPedido,
-																GroupLayout.DEFAULT_SIZE,
-																156,
-																Short.MAX_VALUE)
+																Alignment.LEADING)
 														.addComponent(
 																btnPesquisar,
 																GroupLayout.DEFAULT_SIZE,
+																164,
+																Short.MAX_VALUE)
+														.addComponent(
+																btnFazerPedido,
 																GroupLayout.DEFAULT_SIZE,
+																215,
+																Short.MAX_VALUE)
+														.addComponent(
+																btnEncerrarEditar,
+																GroupLayout.DEFAULT_SIZE,
+																215,
 																Short.MAX_VALUE))
-										.addContainerGap(156, Short.MAX_VALUE)));
+										.addContainerGap(577,
+												GroupLayout.PREFERRED_SIZE)));
 		gl_contentPane
 				.setVerticalGroup(gl_contentPane
 						.createParallelGroup(Alignment.TRAILING)
@@ -507,7 +498,10 @@ public class PrincipalUI extends JFrame {
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
 														.addComponent(
-																btnPesquisar)
+																btnPesquisar,
+																GroupLayout.PREFERRED_SIZE,
+																34,
+																GroupLayout.PREFERRED_SIZE)
 														.addComponent(
 																jtfCliente,
 																GroupLayout.PREFERRED_SIZE,
@@ -522,19 +516,14 @@ public class PrincipalUI extends JFrame {
 																		.createSequentialGroup()
 																		.addGap(30)
 																		.addComponent(
-																				btnNovo,
+																				btnFazerPedido,
 																				GroupLayout.PREFERRED_SIZE,
 																				31,
 																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(18)
+																		.addPreferredGap(
+																				ComponentPlacement.UNRELATED)
 																		.addComponent(
-																				btnEditarPedido,
-																				GroupLayout.PREFERRED_SIZE,
-																				32,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(18)
-																		.addComponent(
-																				btnEncerrar,
+																				btnEncerrarEditar,
 																				GroupLayout.PREFERRED_SIZE,
 																				31,
 																				GroupLayout.PREFERRED_SIZE))
@@ -548,7 +537,7 @@ public class PrincipalUI extends JFrame {
 																				GroupLayout.PREFERRED_SIZE,
 																				452,
 																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap(39, Short.MAX_VALUE)));
+										.addContainerGap(181, Short.MAX_VALUE)));
 
 		JScrollPane scrollPane = new JScrollPane();
 

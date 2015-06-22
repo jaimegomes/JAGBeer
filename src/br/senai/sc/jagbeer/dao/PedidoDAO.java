@@ -222,18 +222,139 @@ public class PedidoDAO extends GenericDAO {
 		return pedido;
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public Entidade getPorIdStatusAberto(int id) throws Exception {
+
+		String sql = "SELECT * FROM pedido WHERE id = ? AND status = 1";
+		try {
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, id);
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				try {
+					Mesa mesa = null;
+					if (result.getInt("idMesa") > 0) {
+						mesa = (Mesa) new MesaController().getPorId(result
+								.getInt("idMesa"));
+					}
+
+					Cliente cliente = null;
+
+					if (result.getInt("idCliente") > 0) {
+						cliente = (Cliente) new ClienteController()
+								.getPorId(result.getInt("idCliente"));
+					}
+
+					pedido = new Pedido(result.getInt("id"), mesa, cliente,
+							result.getDate("dataPedido"),
+							result.getInt("status"));
+
+				} catch (Exception e) {
+					System.out
+							.println("[PedidoDAO] - Erro ao buscar pedido por id com status em aberto.  "
+									+ e.getMessage());
+				}
+
+			}
+
+			pstm.close();
+
+		} catch (SQLException e) {
+			System.out.println("[PedidoDAO] - Erro ao buscar pedido por id.\n"
+					+ e.getMessage());
+		} finally {
+			con.close();
+		}
+
+		return pedido;
+	}
+
 	@Override
 	public void atualizaTabela(JTable table) throws Exception {
 		table.setModel(new ProdutoTableModel(listar()));
 	}
 
-	public List<Entidade> getPedidosAbertos() throws Exception {
+	/**
+	 * Método que retorna uma lista da entidade Pedido que tem o status = 1
+	 * 
+	 * @return List<Entidade> listPedidosAberto
+	 * @throws Exception
+	 */
+	public List<Entidade> getListPedidosEmAberto() throws Exception {
+
+		List<Entidade> listPedidosAberto = new ArrayList<Entidade>();
+
+		String sql = "SELECT * FROM pedido WHERE status = 1";
+		try {
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				try {
+					Mesa mesa = null;
+					if (result.getInt("idMesa") > 0) {
+						mesa = (Mesa) new MesaController().getPorId(result
+								.getInt("idMesa"));
+					}
+
+					Cliente cliente = null;
+
+					if (result.getInt("idCliente") > 0) {
+						cliente = (Cliente) new ClienteController()
+								.getPorId(result.getInt("idCliente"));
+					}
+
+					pedido = new Pedido(result.getInt("id"), mesa, cliente,
+							result.getDate("dataPedido"),
+							result.getInt("status"));
+
+					listPedidosAberto.add(pedido);
+
+				} catch (Exception e) {
+					System.out
+							.println("[PedidoDAO] - Erro ao buscar lista de pedidos com status em aberto.  "
+									+ e.getMessage());
+				}
+
+			}
+
+			pstm.close();
+
+		} catch (SQLException e) {
+			System.out.println("[PedidoDAO] - Erro ao buscar pedido por id.\n"
+					+ e.getMessage());
+		} finally {
+			con.close();
+		}
+
+		return listPedidosAberto;
+	}
+
+	/**
+	 * Método que retorna uma lista da entidade ProdutoPedido, status = 1
+	 * (aberto), status = 0 (fechado)
+	 * 
+	 * @return List<Entidade> listPedidosAbertos
+	 * @throws Exception
+	 */
+	public List<Entidade> getProdutosPedidoEmAberto() throws Exception {
 
 		Date data = new Date();
 
 		List<Entidade> listPedidosAbertos = new ArrayList<Entidade>();
 
-		// Pedido aberto status = 1, pedido fechado status = 0
 		String sql = "SELECT produtopedido.id, produtopedido.idproduto, produtopedido.idpedido, produtopedido.quantidade, pedido.idcliente, pedido.idmesa FROM produtopedido JOIN pedido  ON produtopedido.id = pedido.id AND pedido.status = 1 AND pedido.datapedido = ?";
 
 		try {
@@ -281,6 +402,14 @@ public class PedidoDAO extends GenericDAO {
 		return listPedidosAbertos;
 	}
 
+	/**
+	 * Método que retorna uma entidade Pedido de acordo com o id do cliente
+	 * passado como parâmetro.
+	 * 
+	 * @param idCliente
+	 * @return Entidade pedido
+	 * @throws Exception
+	 */
 	public Entidade getPorIdCliente(int idCliente) throws Exception {
 
 		String sql = "SELECT * FROM pedido WHERE idcliente = ?";
@@ -331,6 +460,13 @@ public class PedidoDAO extends GenericDAO {
 
 	}
 
+	/**
+	 * Método responsável por encerrar o pedido que tem o id igual ao passado
+	 * como parâmetro
+	 * 
+	 * @param idPedidoEncerrar
+	 * @throws Exception
+	 */
 	public void encerrarPedido(int idPedidoEncerrar) throws Exception {
 		String sql = "UPDATE pedido SET status = 0 WHERE id = ?";
 
