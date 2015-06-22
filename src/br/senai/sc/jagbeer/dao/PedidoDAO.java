@@ -494,14 +494,13 @@ public class PedidoDAO extends GenericDAO {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setDate(1, new java.sql.Date(dataInicio.getTime()));
 			pstm.setDate(2, new java.sql.Date(dataFim.getTime()));
-			
 
 			ResultSet result = pstm.executeQuery();
-			
 
 			while (result.next()) {
 				pedido = new Pedido(result.getInt("id"),
-						result.getDate("dataPedido"));
+						result.getDate("dataPedido"),
+						result.getDouble("valorFinal"));
 
 				listPedidos.add(pedido);
 			}

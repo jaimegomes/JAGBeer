@@ -18,6 +18,7 @@ public class Pedido extends Entidade {
 	private Cliente cliente;
 	private Date dataPedido;
 	private int status;
+	private double valorFinal;
 
 	/**
 	 * Construtor padrão.
@@ -27,9 +28,18 @@ public class Pedido extends Entidade {
 	public Pedido() {
 	}
 
-	public Pedido(int id, Date dataPedido) {
+	public Pedido(int id, Date dataPedido, double valorFinal) {
 		this.id = id;
 		this.dataPedido = dataPedido;
+		this.valorFinal = valorFinal;
+	}
+
+	public double getValorFinal() {
+		return valorFinal;
+	}
+
+	public void setValorFinal(double valorFinal) {
+		this.valorFinal = valorFinal;
 	}
 
 	/**
