@@ -18,6 +18,7 @@ import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.EncerrarPedidoTableModel;
 import br.senai.sc.jagbeer.model.Pedido;
+import br.senai.sc.jagbeer.model.ProdutoPedido;
 
 public class EncerrarPedidoUI extends JInternalFrame {
 
@@ -61,6 +62,7 @@ public class EncerrarPedidoUI extends JInternalFrame {
 
 		Cliente cliente = new Cliente();
 		Pedido pedido = new Pedido();
+		ProdutoPedido pd = new ProdutoPedido();
 
 		JLabel lblNomeCliente = new JLabel("Nome Cliente");
 		lblNomeCliente.setFont(new Font("Tahoma", Font.BOLD, 20));
