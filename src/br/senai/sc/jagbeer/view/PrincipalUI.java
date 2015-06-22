@@ -252,7 +252,8 @@ public class PrincipalUI extends JFrame {
 
 				List<Entidade> listPedidosAbertos = new ArrayList<Entidade>();
 				try {
-					listPedidosAbertos = getListPedidosAbertos();
+					listPedidosAbertos = new PedidoController()
+							.getListPedidosEmAberto();
 
 				} catch (Exception e3) {
 					e3.printStackTrace();
@@ -273,12 +274,13 @@ public class PrincipalUI extends JFrame {
 							Cliente cliente = (Cliente) ent;
 
 							pedido = (Pedido) new PedidoController()
-									.getPorIdCliente(cliente.getId());
+									.getPorCliente(cliente);
 
 							for (Entidade en : listPedidosAbertos) {
 								PedidoAberto pedidoAberto = (PedidoAberto) en;
 
 								if (pedidoAberto != null) {
+
 									if (pedidoAberto.getPedido() == pedido
 											.getId()) {
 
@@ -558,7 +560,7 @@ public class PrincipalUI extends JFrame {
 								Short.MAX_VALUE)));
 
 		tablePedidoAberto.setModel(new PedidoAbertoTableModel(
-				getListPedidosAbertos()));
+				new PedidoController().getListPedidosEmAberto()));
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
 	}

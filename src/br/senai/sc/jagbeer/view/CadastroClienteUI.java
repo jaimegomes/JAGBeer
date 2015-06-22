@@ -312,17 +312,8 @@ public class CadastroClienteUI extends JInternalFrame {
 	}
 
 	public List<Entidade> calculaValorPedidosAbertos() throws Exception {
-		List<Entidade> listPedidosAbertos = new ArrayList<>();
-
-		for (Entidade e : new PedidoController().getListPedidosEmAberto()) {
-
-			Pedido pedido = (Pedido) e;
-
-			PedidoAberto pedidoAberto = new PedidoAberto(pedido.getId(), pedido
-					.getCliente().getNome(), 0.0);
-
-			listPedidosAbertos.add(pedidoAberto);
-		}
+		
+		List<Entidade> listPedidosAbertos = new PedidoController().getListPedidosEmAberto();
 
 		for (Entidade ent : listPedidosAbertos) {
 

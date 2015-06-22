@@ -16,7 +16,6 @@ import br.senai.sc.jagbeer.abstracts.GenericDAO;
 import br.senai.sc.jagbeer.conexao.Conexao;
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.MesaController;
-import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
@@ -346,9 +345,8 @@ public class PedidoDAO extends GenericDAO {
 			con.close();
 		}
 
-		return listPedidosEmAberto;
+		return getListPedidoAberto(listPedidosEmAberto);
 	}
-
 
 	/**
 	 * Método que retorna uma entidade Pedido de acordo com o id do cliente
@@ -358,13 +356,17 @@ public class PedidoDAO extends GenericDAO {
 	 * @return Entidade pedido
 	 * @throws Exception
 	 */
-	public Entidade getPorIdCliente(int idCliente) throws Exception {
+	public Entidade getPorCliente(Entidade entidade) throws Exception {
 
-		String sql = "SELECT * FROM pedido WHERE idcliente = ?";
+		Cliente cliente = (Cliente) entidade;
+
+		String sql = "SELECT * FROM pedido WHERE idcliente = ? AND dataPedido = ?";
 		try {
 
+			Date dataAtual = new Date();
 			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setInt(1, idCliente);
+			pstm.setInt(1, cliente.getId());
+			pstm.setDate(2, new java.sql.Date(dataAtual.getTime()));
 
 			ResultSet result = pstm.executeQuery();
 
@@ -379,12 +381,11 @@ public class PedidoDAO extends GenericDAO {
 
 					}
 
-					Cliente cliente = (Cliente) new ClienteController()
-							.getPorId(result.getInt("idCliente"));
-
 					pedido = new Pedido(result.getInt("id"), mesa, cliente,
 							result.getDate("dataPedido"),
 							result.getInt("status"));
+					
+					System.out.println(pedido.getId());
 
 				} catch (Exception e) {
 					System.out
@@ -438,11 +439,12 @@ public class PedidoDAO extends GenericDAO {
 
 	}
 
-	public List<Entidade> getListPedidoAberto(
-			List<Entidade> listPedidosEmAberto, List<Entidade> listProdutoPedido)
+	public List<Entidade> getListPedidoAberto(List<Entidade> listPedidosEmAberto)
 			throws Exception {
 
-		List<Entidade> listPedidosAbertos = new ArrayList<>();
+		List<Entidade> listPedidosAbertos = new ArrayList<Entidade>();
+		List<Entidade> listProdutoPedido = new ProdutoPedidoController()
+				.listar();
 
 		for (Entidade e : listPedidosEmAberto) {
 
@@ -470,7 +472,10 @@ public class PedidoDAO extends GenericDAO {
 
 					valorParcial += produto.getPrecoVenda()
 							* produtoPedido.getQtde();
+
 				}
+
+				pedidoAberto.setValorParcial(valorParcial);
 			}
 		}
 		return listPedidosAbertos;

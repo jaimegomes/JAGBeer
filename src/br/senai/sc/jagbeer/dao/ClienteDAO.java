@@ -123,8 +123,8 @@ public class ClienteDAO extends GenericDAO {
 			throws Exception {
 		Cliente cliente = null;
 		List<Entidade> listCliente = new ArrayList<Entidade>();
-		String sql = "SELECT * FROM cliente WHERE nome LIKE '%"
-				+ clientePesquisar + "%'ORDER BY nome";
+		String sql = "SELECT * FROM cliente WHERE UPPER(nome) LIKE UPPER('%"
+				+ clientePesquisar + "%')ORDER BY nome";
 
 		try {
 			Statement pstmt = con.createStatement();

@@ -205,7 +205,7 @@ public class FazerPedidoUI extends JInternalFrame {
 							int idCliente = cliente.getId();
 
 							Pedido pedido = (Pedido) new PedidoController()
-									.getPorIdCliente(idCliente);
+									.getPorCliente(cliente);
 
 							cmbPedido.setSelectedItem(pedido.getId());
 

@@ -1,28 +1,22 @@
 package br.senai.sc.jagbeer.tests;
 
-import br.senai.sc.jagbeer.controller.MesaController;
-import br.senai.sc.jagbeer.dao.MesaDAO;
+import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.dao.PedidoDAO;
-import br.senai.sc.jagbeer.model.Mesa;
+import br.senai.sc.jagbeer.model.PedidoAberto;
 
 public class TesteDAO {
 
 	public static void main(String[] args) throws Exception {
 
 		PedidoDAO dao = new PedidoDAO();
-		MesaDAO mDAO = new MesaDAO();
 
-		// ClienteDAO cdao = new ClienteDAO();
-		//
-		// Cliente c = (Cliente) cdao.getPorId(1);
-		//
-		// Pedido p = new Pedido(null, c, new Date(), 1);
+		for (Entidade e : dao.getListPedidosEmAberto()) {
+			PedidoAberto p = (PedidoAberto) e;
 
-		Mesa mesa = new Mesa(33, 4);
-//		mDAO.salvar(mesa);
-		
-		new MesaController().salvar(mesa);
+			System.out.println(p.getCliente());
+			System.out.println(p.getValorParcial());
 
+		}
 
 	}
 }
