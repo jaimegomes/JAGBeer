@@ -56,10 +56,6 @@ public class MesaController implements IController {
 					"Número da mesa não pode ser menor ou igual a zero");
 		}
 
-		if (dao.verificarNumeroMesa(mesa.getNumeroMesa())) {
-			throw new Exception("Número da mesa já cadastrado.");
-		}
-
 		dao.editar(mesa);
 	}
 

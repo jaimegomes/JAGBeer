@@ -74,7 +74,7 @@ public class MesaDAO extends GenericDAO {
 	@Override
 	public void editar(Entidade entidade) throws Exception {
 
-		String query = "UPDATE mesa SET numero = ?, numeroLugares = ? WHERE id = ? ";
+		String query = "UPDATE mesa SET numeromesa = ?, lugares = ? WHERE id = ? ";
 
 		try {
 			mesa = (Mesa) entidade;
