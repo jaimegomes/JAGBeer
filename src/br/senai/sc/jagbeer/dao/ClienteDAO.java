@@ -187,7 +187,7 @@ public class ClienteDAO extends GenericDAO {
 			throws Exception {
 		Cliente cliente = null;
 		String sql = "SELECT * FROM cliente WHERE nome LIKE '"
-				+ clientePesquisar + "'ORDER BY nome";
+				+ clientePesquisar + "'";
 
 		try {
 			Statement pstmt = con.createStatement();

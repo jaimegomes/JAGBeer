@@ -345,7 +345,9 @@ public class PedidoDAO extends GenericDAO {
 			con.close();
 		}
 
-		return getListPedidoAberto(listPedidosEmAberto);
+		List<Entidade> listRetorno = getListPedidoAberto(listPedidosEmAberto);
+
+		return listRetorno;
 	}
 
 	/**
@@ -384,7 +386,7 @@ public class PedidoDAO extends GenericDAO {
 					pedido = new Pedido(result.getInt("id"), mesa, cliente,
 							result.getDate("dataPedido"),
 							result.getInt("status"));
-					
+
 					System.out.println(pedido.getId());
 
 				} catch (Exception e) {
@@ -450,8 +452,9 @@ public class PedidoDAO extends GenericDAO {
 
 			Pedido pedido = (Pedido) e;
 
-			PedidoAberto pedidoAberto = new PedidoAberto(pedido.getId(), pedido
-					.getCliente().getNome(), 0.0);
+			PedidoAberto pedidoAberto = new PedidoAberto();
+			pedidoAberto.setCliente(pedido.getCliente().getNome());
+			pedidoAberto.setPedido(pedido.getId());
 
 			listPedidosAbertos.add(pedidoAberto);
 		}
@@ -478,6 +481,63 @@ public class PedidoDAO extends GenericDAO {
 				pedidoAberto.setValorParcial(valorParcial);
 			}
 		}
+
 		return listPedidosAbertos;
+	}
+
+	public Entidade getPorData(Date dataInicio, Date dataFim) throws Exception {
+
+		String sql = "SELECT * FROM pedido WHERE dataPedido BETWEEN '"
+				+ dataInicio + "' AND '" + dataFim + "'";
+		try {
+
+			Date dataAtual = new Date();
+			PreparedStatement pstm = con.prepareStatement(sql);
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				try {
+
+					Mesa mesa = null;
+
+					if (result.getInt("idMesa") > 1) {
+						mesa = (Mesa) new MesaController().getPorId(result
+								.getInt("idMesa"));
+
+					}
+
+					Cliente cliente = null;
+
+					if (result.getInt("idCliente") > 1) {
+						cliente = (Cliente) new ClienteController()
+								.getPorId(result.getInt("idCliente"));
+					}
+
+					pedido = new Pedido(result.getInt("id"), mesa, cliente,
+							result.getDate("dataPedido"),
+							result.getInt("status"));
+
+				} catch (Exception e) {
+					System.out
+							.println("[PedidoDAO] - Erro ao buscar pedido entre datas selecionada.  "
+									+ e.getMessage());
+				}
+
+			}
+
+			pstm.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("[PedidoDAO] - Erro ao buscar pedido entre datas selecionadas.\n"
+							+ e.getMessage());
+		} finally {
+			con.close();
+		}
+
+		return pedido;
+
 	}
 }

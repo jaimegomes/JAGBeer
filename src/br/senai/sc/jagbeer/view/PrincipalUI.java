@@ -56,7 +56,7 @@ public class PrincipalUI extends JFrame {
 
 		if (instancia == null) {
 			instancia = new PrincipalUI();
-
+			return instancia;
 		}
 		return instancia;
 	}
@@ -69,7 +69,7 @@ public class PrincipalUI extends JFrame {
 			public void run() {
 				try {
 
-					PrincipalUI frame = obterInstancia();
+					PrincipalUI frame = new PrincipalUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
