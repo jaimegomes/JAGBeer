@@ -365,6 +365,7 @@ public class FazerPedidoUI extends JInternalFrame {
 						tableEncerrarPedido.setModel(new EncerrarPedidoTableModel(
 								new ProdutoPedidoController()
 										.getPorIdPedido(pedido.getId())));
+						
 						EncerrarEditarPedidoUI encerrarEditarPedido = new EncerrarEditarPedidoUI(
 								tableEncerrarPedido, pedido);
 

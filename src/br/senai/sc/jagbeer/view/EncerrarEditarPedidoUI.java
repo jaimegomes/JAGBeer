@@ -162,6 +162,13 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 
 					FazerPedidoUI fazerPedido = new FazerPedidoUI(
 							tableEncerraPedido);
+					fazerPedido.requestFocus(true);
+					fazerPedido.setFocusable(true);
+					fazerPedido.moveToFront();
+					PrincipalUI.obterInstancia().getContentPane()
+							.add(fazerPedido, 0);
+					fazerPedido.setVisible(true);
+
 					fazerPedido.getCmbPedido().setSelectedItem(pedido.getId());
 
 					if (pedido.getCliente() != null) {
@@ -173,14 +180,6 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 						fazerPedido.getCmbMesa().setSelectedItem(
 								pedido.getMesa().getNumeroMesa());
 					}
-
-					fazerPedido.requestFocus(true);
-					fazerPedido.setFocusable(true);
-					fazerPedido.moveToFront();
-
-					PrincipalUI.obterInstancia().getContentPane()
-							.add(fazerPedido, 0);
-					fazerPedido.setVisible(true);
 
 					PrincipalUI
 							.obterInstancia()
