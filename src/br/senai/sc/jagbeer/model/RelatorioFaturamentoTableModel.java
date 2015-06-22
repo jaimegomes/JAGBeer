@@ -14,8 +14,8 @@ public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
 	private static final int COL_PEDIDO = 0;
-	private static final int COL_VALOR = 1;
-	private static final int COL_DATA = 2;
+	private static final int COL_DATA = 1;
+	private static final int COL_VALOR = 2;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	private List<Entidade> valores;
 
@@ -38,10 +38,10 @@ public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 	public String getColumnName(int column) {
 		if (column == COL_PEDIDO)
 			return "Pedido";
-		if (column == COL_VALOR)
-			return "Valor";
 		if (column == COL_DATA)
 			return "Data";
+		if (column == COL_VALOR)
+			return "Valor";
 		return "";
 	}
 

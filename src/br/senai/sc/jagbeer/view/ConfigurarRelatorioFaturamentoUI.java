@@ -38,19 +38,6 @@ public class ConfigurarRelatorioFaturamentoUI extends JInternalFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ConfigurarRelatorioFaturamentoUI frame = new ConfigurarRelatorioFaturamentoUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
 	 */
@@ -122,6 +109,8 @@ public class ConfigurarRelatorioFaturamentoUI extends JInternalFrame {
 							.getPorData(sdf.parse(jtfDataInicio.getText()),
 									sdf.parse(jtfDataFim.getText()));
 
+					System.out.println(listPedidos.size());
+
 					relatorioFaturamentoUI = new RelatorioFaturamentoUI(
 							tableRelatorioFaturamento, sdf.parse(jtfDataInicio
 									.getText()),
@@ -131,7 +120,7 @@ public class ConfigurarRelatorioFaturamentoUI extends JInternalFrame {
 					relatorioFaturamentoUI.setVisible(true);
 
 				} catch (Exception e2) {
-
+					e2.printStackTrace();
 				}
 
 			}
@@ -152,7 +141,7 @@ public class ConfigurarRelatorioFaturamentoUI extends JInternalFrame {
 			}
 		});
 
-		JLabel lblDdmmyyyy = new JLabel("yyyy-MM-dd");
+		JLabel lblDdmmyyyy = new JLabel("dd/MM/yyyy");
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel
 				.createParallelGroup(Alignment.TRAILING)

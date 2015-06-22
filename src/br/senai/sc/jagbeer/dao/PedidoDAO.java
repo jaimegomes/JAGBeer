@@ -503,7 +503,10 @@ public class PedidoDAO extends GenericDAO {
 						result.getDouble("valorFinal"));
 
 				listPedidos.add(pedido);
+				
 			}
+			
+			System.out.println(listPedidos.size());;
 			pstm.close();
 
 		} catch (Exception e) {
