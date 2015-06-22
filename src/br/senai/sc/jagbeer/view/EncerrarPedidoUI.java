@@ -1,6 +1,8 @@
 package br.senai.sc.jagbeer.view;
 
 import java.awt.Font;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -15,6 +17,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
+import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.EncerrarPedidoTableModel;
@@ -23,6 +26,7 @@ import br.senai.sc.jagbeer.model.ProdutoPedido;
 
 public class EncerrarPedidoUI extends JInternalFrame {
 
+	private static final long serialVersionUID = 1L;
 	Cliente cliente = new Cliente();
 	private JTable tableEncerraPedido;
 
@@ -35,6 +39,30 @@ public class EncerrarPedidoUI extends JInternalFrame {
 	 */
 	public EncerrarPedidoUI(final List<Entidade> listProdutos, JTable table) {
 
+		ProdutoPedido produtoPedido = (ProdutoPedido) listProdutos.get(1);
+		Pedido pedido = null;
+		Cliente cliente = null;
+		double valorTotal = 0;
+		List<Entidade> listProdutosPedido = new ArrayList<Entidade>();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		for (Entidade e : listProdutos) {
+			ProdutoPedido prodPedido = (ProdutoPedido) e;
+
+			listProdutosPedido.add(prodPedido);
+		}
+
+		try {
+			pedido = getPedido(produtoPedido);
+
+			cliente = getCliente(pedido.getCliente().getId());
+
+		} catch (Exception e) {
+			System.out
+					.println("[EncerrarPedidoUI] - Erro ao pegar pedido e cliente. "
+							+ e.getMessage());
+		}
+
 		setTitle("Encerrar Pedido");
 		setClosable(true);
 		setBounds(100, 100, 650, 600);
@@ -43,6 +71,21 @@ public class EncerrarPedidoUI extends JInternalFrame {
 
 		panel.setBorder(new TitledBorder(null, "Encerrar Pedido",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+
+		JLabel lblNomeCliente = new JLabel("Nome Cliente");
+		lblNomeCliente.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNomeCliente.setText(cliente.getNome());
+
+		JLabel lblNome = new JLabel("Nome:");
+		lblNome.setFont(new Font("Tahoma", Font.BOLD, 20));
+
+		JLabel lblPedido = new JLabel("Pedido:");
+		lblPedido.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		JLabel lblNumeroPedido = new JLabel("Numero Pedido");
+		lblNumeroPedido.setText("" + pedido.getId());
+		lblNumeroPedido.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
 				Alignment.LEADING).addGroup(
@@ -61,26 +104,10 @@ public class EncerrarPedidoUI extends JInternalFrame {
 								GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(19, Short.MAX_VALUE)));
 
-		Cliente cliente = new Cliente();
-		Pedido pedido2 = new Pedido();
-		ProdutoPedido pd = new ProdutoPedido();
-
-		JLabel lblNomeCliente = new JLabel("Nome Cliente");
-		lblNomeCliente.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNomeCliente.setText(cliente.getNome());
-
-		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setFont(new Font("Tahoma", Font.BOLD, 20));
-
-		JLabel lblPedido = new JLabel("Pedido:");
-		lblPedido.setFont(new Font("Tahoma", Font.PLAIN, 15));
-
-		JLabel lblNumeroPedido = new JLabel("Numero Pedido");
-		lblNumeroPedido.setFont(new Font("Tahoma", Font.PLAIN, 15));
-
 		JScrollPane scrollPane = new JScrollPane();
 
 		JLabel lblDdmmyyyy = new JLabel("dd/MM/yyyy");
+		lblDdmmyyyy.setText("" + sdf.format(pedido.getDataPedido()));
 
 		JLabel lblData = new JLabel("Data:");
 
@@ -92,7 +119,9 @@ public class EncerrarPedidoUI extends JInternalFrame {
 		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		JLabel lblValor = new JLabel("Valor");
+		lblValor.setText("" + valorTotal);
 		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel
 				.createParallelGroup(Alignment.LEADING)
@@ -220,7 +249,7 @@ public class EncerrarPedidoUI extends JInternalFrame {
 		tableEncerraPedido = new JTable();
 		try {
 			tableEncerraPedido.setModel(new EncerrarPedidoTableModel(
-					new PedidoController().listar()));
+					listProdutos));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -228,6 +257,25 @@ public class EncerrarPedidoUI extends JInternalFrame {
 		scrollPane.setViewportView(tableEncerraPedido);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
+
+	}
+
+	private Pedido getPedido(ProdutoPedido produtoPedido) throws Exception {
+		return (Pedido) new PedidoController().getPorId(produtoPedido
+				.getIdPedido());
+	}
+
+	public Cliente getCliente(int idPedido) throws Exception {
+
+		Pedido pedido = (Pedido) new PedidoController().getPorId(idPedido);
+
+		Cliente cliente = null;
+		if (pedido.getCliente() != null) {
+			return (Cliente) new ClienteController().getPorId(pedido
+					.getCliente().getId());
+		}
+
+		return null;
 
 	}
 
