@@ -19,9 +19,11 @@ import javax.swing.border.TitledBorder;
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.PedidoController;
+import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.EncerrarPedidoTableModel;
 import br.senai.sc.jagbeer.model.Pedido;
+import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoPedido;
 
 public class EncerrarPedidoUI extends JInternalFrame {
@@ -40,19 +42,25 @@ public class EncerrarPedidoUI extends JInternalFrame {
 	public EncerrarPedidoUI(final List<Entidade> listProdutos, JTable table) {
 
 		ProdutoPedido produtoPedido = (ProdutoPedido) listProdutos.get(1);
+
 		Pedido pedido = null;
 		Cliente cliente = null;
 		double valorTotal = 0;
 		List<Entidade> listProdutosPedido = new ArrayList<Entidade>();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-		for (Entidade e : listProdutos) {
-			ProdutoPedido prodPedido = (ProdutoPedido) e;
-
-			listProdutosPedido.add(prodPedido);
-		}
-
 		try {
+
+			for (Entidade e : listProdutos) {
+				ProdutoPedido prodPedido = (ProdutoPedido) e;
+
+				Produto prod = (Produto) new ProdutoController()
+						.getPorId(prodPedido.getIdProduto());
+				valorTotal += prod.getPrecoVenda() * prodPedido.getQtde();
+
+				listProdutosPedido.add(prodPedido);
+			}
+
 			pedido = getPedido(produtoPedido);
 
 			cliente = getCliente(pedido.getCliente().getId());
