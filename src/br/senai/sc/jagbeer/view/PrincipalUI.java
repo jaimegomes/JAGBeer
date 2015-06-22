@@ -205,7 +205,7 @@ public class PrincipalUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				RelatorioFaturamentoUI relFaturamento = new RelatorioFaturamentoUI();
+				ConfigurarRelatorioFaturamentoUI relFaturamento = new ConfigurarRelatorioFaturamentoUI();
 				relFaturamento.requestFocus(true);
 				relFaturamento.setFocusable(true);
 				relFaturamento.moveToFront();
