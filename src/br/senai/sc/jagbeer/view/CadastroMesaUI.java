@@ -83,193 +83,147 @@ public class CadastroMesaUI extends JInternalFrame {
 			mesaNumero.setText(mesaEdicao.getNumeroMesa().toString());
 			qtdLugares.setText(mesaEdicao.getLugares().toString());
 		}
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 308, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+				// Botão salvar
+				JButton btnSalvar = new JButton("Salvar");
+				btnSalvar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
 
-		// Botão salvar
-		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+						// Verifica se o objeto é nulo
+						if (mesaEdicao == null) {
 
-				// Verifica se o objeto é nulo
-				if (mesaEdicao == null) {
+							int numMesa = 0;
+							Integer lugares = 0;
+							if (!mesaNumero.getText().isEmpty()) {
+								numMesa = Integer.parseInt(mesaNumero.getText());
 
-					int numMesa = 0;
-					Integer lugares = 0;
-					if (!mesaNumero.getText().isEmpty()) {
-						numMesa = Integer.parseInt(mesaNumero.getText());
+							} else {
+								JOptionPane.showMessageDialog(null,
+										"Número da mesa obrigatório.");
+							}
 
-					} else {
-						JOptionPane.showMessageDialog(null,
-								"Número da mesa obrigatório.");
-					}
+							if (!qtdLugares.getText().isEmpty()) {
+								lugares = Integer.parseInt(mesaNumero.getText());
 
-					if (!qtdLugares.getText().isEmpty()) {
-						lugares = Integer.parseInt(mesaNumero.getText());
+							}
 
-					}
+							Mesa mesa = new Mesa(numMesa, lugares);
 
-					Mesa mesa = new Mesa(numMesa, lugares);
+							try {
+								new MesaController().salvar(mesa);
+								JOptionPane.showMessageDialog(null,
+										"Mesa cadastrada com sucesso!");
 
-					try {
-						new MesaController().salvar(mesa);
-						JOptionPane.showMessageDialog(null,
-								"Mesa cadastrada com sucesso!");
+								mesaNumero.setText("");
+								qtdLugares.setText("");
 
-						mesaNumero.setText("");
-						qtdLugares.setText("");
+								if (table != null) {
+									table.setModel(new ProdutoTableModel(
+											new MesaController().listar()));
+								}
 
-						if (table != null) {
-							table.setModel(new ProdutoTableModel(
-									new MesaController().listar()));
+							} catch (Exception e) {
+								JOptionPane.showMessageDialog(null, e.getMessage());
+							}
+
+						} else {
+							// Se não for nulo ele edita
+							mesaEdicao.setNumeroMesa(Integer.parseInt(mesaNumero
+									.getText()));
+							mesaEdicao.setLugares(Integer.parseInt(qtdLugares.getText()));
+							try {
+								new MesaController().editar(mesaEdicao);
+								JOptionPane.showMessageDialog(null,
+										"Mesa editada com sucesso!");
+								dispose();
+
+							} catch (Exception e) {
+								JOptionPane.showMessageDialog(null, e.getMessage());
+							}
 						}
 
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e.getMessage());
+						if (table != null) {
+							try {
+								table.setModel(new MesaTableModel(new MesaController()
+										.listar()));
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
 					}
-
-				} else {
-					// Se não for nulo ele edita
-					mesaEdicao.setNumeroMesa(Integer.parseInt(mesaNumero
-							.getText()));
-					mesaEdicao.setLugares(Integer.parseInt(qtdLugares.getText()));
-					try {
-						new MesaController().editar(mesaEdicao);
-						JOptionPane.showMessageDialog(null,
-								"Mesa editada com sucesso!");
+				});
+		
+				// Botão limpar
+				JButton btnLimpar = new JButton("Limpar");
+				btnLimpar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						mesaNumero.setText(null);
+						qtdLugares.setText(null);
+					}
+				});
+		
+				// Botão cancelar
+				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
 						dispose();
-
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
-				}
-
-				if (table != null) {
-					try {
-						table.setModel(new MesaTableModel(new MesaController()
-								.listar()));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-
-		// Botão limpar
-		JButton btnLimpar = new JButton("Limpar");
-		btnLimpar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				mesaNumero.setText(null);
-				qtdLugares.setText(null);
-			}
-		});
-
-		// Botão cancelar
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																panel,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addGroup(
-																Alignment.TRAILING,
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				btnSalvar,
-																				GroupLayout.PREFERRED_SIZE,
-																				79,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				btnLimpar)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				btnCancelar)))
-										.addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING)
-				.addGroup(
-						groupLayout
-								.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(panel,
-										GroupLayout.PREFERRED_SIZE, 122,
-										GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(
-										groupLayout
-												.createParallelGroup(
-														Alignment.BASELINE)
-												.addComponent(btnCancelar)
-												.addComponent(btnLimpar)
-												.addComponent(btnSalvar))
-								.addContainerGap(GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)));
+				});
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(
-								gl_panel.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblQtdLugares)
-										.addComponent(lblNmero))
-						.addGap(18)
-						.addGroup(
-								gl_panel.createParallelGroup(Alignment.LEADING)
-										.addComponent(mesaNumero,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(qtdLugares,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(33, Short.MAX_VALUE)));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGap(22)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(lblNmero)
-												.addComponent(
-														mesaNumero,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE))
-								.addGap(18)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(lblQtdLugares)
-												.addComponent(
-														qtdLugares,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE))
-								.addContainerGap(55, Short.MAX_VALUE)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblQtdLugares)
+								.addComponent(lblNmero))
+							.addGap(18)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(mesaNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(qtdLugares, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnLimpar)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnCancelar)))
+					.addContainerGap(57, Short.MAX_VALUE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(22)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNmero)
+						.addComponent(mesaNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblQtdLugares)
+						.addComponent(qtdLugares, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnSalvar)
+						.addComponent(btnLimpar)
+						.addComponent(btnCancelar)))
+		);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 	}
