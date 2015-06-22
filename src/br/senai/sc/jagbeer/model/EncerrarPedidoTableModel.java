@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel;
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.ProdutoController;
 
-public class produtoPedidoTableModel extends AbstractTableModel {
+public class EncerrarPedidoTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
 	private static final int COL_PRODUTO = 0;
@@ -17,7 +17,7 @@ public class produtoPedidoTableModel extends AbstractTableModel {
 
 	private List<Entidade> valores;
 
-	public produtoPedidoTableModel(List<Entidade> list) {
+	public EncerrarPedidoTableModel(List<Entidade> list) {
 		this.valores = new ArrayList<Entidade>(list);
 	}
 
@@ -45,26 +45,43 @@ public class produtoPedidoTableModel extends AbstractTableModel {
 	public Object getValueAt(int row, int column) {
 		ProdutoPedido produtoPedido = (ProdutoPedido) valores.get(row);
 
-		Produto produto = (Produto) new ProdutoController()
-				.getPorId(produtoPedido.getIdProduto());
-		
-		if (column == COL_PRODUTO)
-			return produto.getNome();
-		else if (column == COL_VALOR)
-			return produto.getPrecoVenda();
-		else if (column == COL_QUANTIDADE)
-			return produtoPedido.getQtde();
+		Produto produto;
+		try {
+			produto = (Produto) new ProdutoController().getPorId(produtoPedido
+					.getIdProduto());
+
+			if (column == COL_PRODUTO)
+				return produto.getNome();
+			else if (column == COL_VALOR)
+				return produto.getPrecoVenda();
+			else if (column == COL_QUANTIDADE)
+				return produtoPedido.getQtde();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return "";
 	}
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		ProdutoPedido produtoPedido = (ProdutoPedido) valores.get(rowIndex);
-		if (columnIndex == COL_PRODUTO)
-			produtoPedido.setIdProduto(Integer.parseInt(aValue.toString()));
-		else if (columnIndex == COL_VALOR)
-			produtoPedido.setValor(Double.parseDouble(aValue.toString()));
-		else if (columnIndex == COL_QUANTIDADE)
-			produtoPedido.setQuantidade(Integer.parseInt(aValue.toString()));
+
+		Produto produto;
+		try {
+			produto = (Produto) new ProdutoController().getPorId(produtoPedido
+					.getIdProduto());
+
+			if (columnIndex == COL_PRODUTO)
+				produto.setNome(aValue.toString());
+			else if (columnIndex == COL_VALOR)
+				produto.setPrecoVenda(Double.parseDouble(aValue.toString()));
+			else if (columnIndex == COL_QUANTIDADE)
+				produtoPedido.setQtde(Integer.parseInt(aValue.toString()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public Class<?> getColumnClass(int columnIndex) {
