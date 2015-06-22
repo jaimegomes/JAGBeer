@@ -1,5 +1,6 @@
 package br.senai.sc.jagbeer.tests;
 
+import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.dao.MesaDAO;
 import br.senai.sc.jagbeer.dao.PedidoDAO;
 import br.senai.sc.jagbeer.model.Mesa;
@@ -17,9 +18,11 @@ public class TesteDAO {
 		//
 		// Pedido p = new Pedido(null, c, new Date(), 1);
 
-		Mesa mesa = (Mesa) mDAO.getPorId(1);
+		Mesa mesa = new Mesa(33, 4);
+//		mDAO.salvar(mesa);
+		
+		new MesaController().salvar(mesa);
 
-		System.out.println(mesa.getNumeroMesa());
 
 	}
 }

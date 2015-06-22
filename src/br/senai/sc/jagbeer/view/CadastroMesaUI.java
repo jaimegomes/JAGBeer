@@ -21,9 +21,11 @@ import javax.swing.border.TitledBorder;
 import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.MesaTableModel;
+import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
 public class CadastroMesaUI extends JInternalFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JTextField mesaNumero;
 	private JTextField qtdLugares;
 	private Mesa mesaEdicao;
@@ -90,10 +92,12 @@ public class CadastroMesaUI extends JInternalFrame {
 				// Verifica se o objeto é nulo
 				if (mesaEdicao == null) {
 
-					Mesa mesa = new Mesa();
-					mesa.setNumeroMesa(Integer.parseInt(mesaNumero.getText()));
-					mesa.setLugares(Integer.parseInt(qtdLugares.getText()));
+					Mesa mesa = new Mesa(
+							Integer.parseInt(mesaNumero.getText()), Integer
+									.parseInt(qtdLugares.getText()));
 
+					System.out.println("n: " + mesa.getNumeroMesa() + " lug. "
+							+ mesa.getLugares());
 					try {
 						new MesaController().salvar(mesa);
 						JOptionPane.showMessageDialog(null,
@@ -101,6 +105,11 @@ public class CadastroMesaUI extends JInternalFrame {
 
 						mesaNumero.setText("");
 						qtdLugares.setText("");
+
+						if (table != null) {
+							table.setModel(new ProdutoTableModel(
+									new MesaController().listar()));
+						}
 
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());

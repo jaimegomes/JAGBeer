@@ -13,6 +13,7 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.abstracts.GenericDAO;
 import br.senai.sc.jagbeer.conexao.Conexao;
 import br.senai.sc.jagbeer.model.Mesa;
+import br.senai.sc.jagbeer.model.Produto;
 
 public class MesaDAO extends GenericDAO {
 
@@ -21,27 +22,29 @@ public class MesaDAO extends GenericDAO {
 
 	@Override
 	public void salvar(Entidade entidade) throws Exception {
-
-//		String query = "INSERT INTO mesa (numeroMesa, lugares) VALUES (?,?)";
-		String sql = "INSERT INTO mesa (numeromesa, lugares) values(?,?)";
+	
+		String query = "INSERT INTO mesa (numeromesa, lugares) VALUES (?,?)";
+		
 		try {
 
 			mesa = (Mesa) entidade;
 
-			PreparedStatement pstmt = con.prepareStatement(sql);
+			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, mesa.getNumeroMesa());
 			pstmt.setInt(2, mesa.getLugares());
 
 			pstmt.execute();
 			con.commit();
+			pstmt.close();
 
-		} catch (SQLException se) {
+		} catch (SQLException e) {
 			con.rollback();
-			System.out.println("Erro ao salvar Mesa\n" + se.getMessage());
+			System.out.println("[MesaDAO] - Erro ao salvar mesa.\n"
+					+ e.getMessage());
 		} finally {
 			con.close();
-		}
 
+		}
 	}
 
 	@Override
@@ -60,6 +63,7 @@ public class MesaDAO extends GenericDAO {
 
 		} catch (SQLException se) {
 			con.rollback();
+			se.printStackTrace();
 			System.out.println("Erro ao excluir Mesa.\n" + se.getMessage());
 		} finally {
 			con.close();

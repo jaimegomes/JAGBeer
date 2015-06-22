@@ -1,7 +1,9 @@
 package br.senai.sc.jagbeer.controller;
 
 import java.util.List;
+
 import javax.swing.JTable;
+
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.dao.MesaDAO;
 import br.senai.sc.jagbeer.interfaces.IController;
@@ -14,20 +16,17 @@ public class MesaController implements IController {
 	@Override
 	public void salvar(Entidade entidade) throws Exception {
 
-		Mesa mesa = (Mesa) entidade;		
+		Mesa mesa = (Mesa) entidade;
 
-		if(mesa.getNumeroMesa().equals(null) || mesa.getNumeroMesa() == null){
+		if (mesa.getNumeroMesa() == null) {
 			throw new Exception("Número da mesa obrigatório.");
 		}
 
-		if (mesa.getNumeroMesa() < 0 || mesa.getNumeroMesa() == 0) {
-			throw new Exception("Número da mesa não pode ser menor ou igual a zero.");
+		if (mesa.getNumeroMesa() < 1) {
+			throw new Exception(
+					"Número da mesa não pode ser menor ou igual a zero.");
 		}
 
-		if (dao.verificarNumeroMesa(mesa.getNumeroMesa())) {
-			throw new Exception("Número da mesa ja cadastrado.");
-		}
-		
 		dao.salvar(mesa);
 	}
 
@@ -48,15 +47,15 @@ public class MesaController implements IController {
 
 		Mesa mesa = (Mesa) entidade;
 
-		if (mesa == null){
+		if (mesa == null) {
 			throw new Exception("Mesa não pode ser nula.");
 		}
-		
-		if (mesa.getNumeroMesa() < 0 || mesa.getNumeroMesa() == 0){
+
+		if (mesa.getNumeroMesa() < 0 || mesa.getNumeroMesa() == 0) {
 			throw new Exception(
 					"Número da mesa não pode ser menor ou igual a zero");
 		}
-		
+
 		if (dao.verificarNumeroMesa(mesa.getNumeroMesa())) {
 			throw new Exception("Número da mesa já cadastrado.");
 		}
@@ -77,7 +76,7 @@ public class MesaController implements IController {
 	public Entidade getPorNumeroMesa(int numeroMesa) throws Exception {
 		return dao.getPorNumeroMesa(numeroMesa);
 	}
-	
+
 	@Override
 	public void atualizaTabela(JTable table) throws Exception {
 		dao.atualizaTabela(table);
