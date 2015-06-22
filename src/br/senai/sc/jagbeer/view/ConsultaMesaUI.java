@@ -89,8 +89,14 @@ public class ConsultaMesaUI extends JInternalFrame {
 						Mesa mesa = (Mesa) new MesaController()
 								.getPorNumeroMesa(Integer.parseInt(numeroMesa
 										.getText()));
-						listaMesa.add(mesa);
-						tableMesa.setModel(new MesaTableModel(listaMesa));
+						if(mesa == null){
+							JOptionPane.showMessageDialog(null, "Número mesa não cadastrado");
+							listaMesa.clear();
+						}else{
+							listaMesa.add(mesa);
+							tableMesa.setModel(new MesaTableModel(listaMesa));
+						}
+
 					}
 
 				} catch (Exception e) {
