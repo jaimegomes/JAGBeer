@@ -280,7 +280,12 @@ public class ConsultaMesaUI extends JInternalFrame {
 										GroupLayout.DEFAULT_SIZE, 305,
 										Short.MAX_VALUE).addContainerGap()));
 
-		tableMesa = new JTable();
+		tableMesa = new JTable(){
+			public boolean isCellEditable(int row, int column) 
+			{
+			return false; 
+			}
+		};
 		tableMesa.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableMesa.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "Numero da Mesa", "Quantidade de Lugares" }));
