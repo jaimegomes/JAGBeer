@@ -76,21 +76,21 @@ public class PedidoController implements IController {
 
 	}
 
-	public List<Entidade> getPedidosAbertos() throws Exception{
+	public List<Entidade> getPedidosAbertos() throws Exception {
 
 		return dao.getPedidosAbertos();
 	}
 
 	public Entidade getPorIdCliente(int idCliente) throws Exception {
-		
+
 		return dao.getPorIdCliente(idCliente);
 	}
-	
-	public void encerrarPedido(Entidade entidade)throws Exception{
-		
-		encerrarPedido = (EncerrarPedido) entidade;
-		
-		dao.encerrarPedido(encerrarPedido);
+
+	public void encerrarPedido(int idPedidoEncerrar) throws Exception {
+
+		// encerrarPedido = (EncerrarPedido) entidade;
+
+		dao.encerrarPedido(idPedidoEncerrar);
 	}
 
 }

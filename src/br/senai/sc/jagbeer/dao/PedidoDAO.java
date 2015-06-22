@@ -327,15 +327,14 @@ public class PedidoDAO extends GenericDAO {
 
 	}
 
-	public void encerrarPedido(Entidade entidade) throws Exception {
+	public void encerrarPedido(int idPedidoEncerrar) throws Exception {
 		String sql = "UPDATE pedido SET status = 0 WHERE id = ?";
 
 		try {
-			pedido = (Pedido) entidade;
-
+			
 			PreparedStatement pstm = con.prepareStatement(sql);
 
-			pstm.setInt(1, pedido.getId());
+			pstm.setInt(1, idPedidoEncerrar);
 
 			pstm.execute();
 			con.commit();

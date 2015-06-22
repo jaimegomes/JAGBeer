@@ -398,7 +398,7 @@ public class PrincipalUI extends JFrame {
 
 						pedido.setStatus(0);
 
-						new PedidoController().encerrarPedido(pedidoEncerrar);
+						//new PedidoController().encerrarPedido(pedidoEncerrar);
 
 						encerrarPedidoUI = new EncerrarPedidoUI(
 								clienteEncerrar, pedidoEncerrar);
