@@ -370,6 +370,7 @@ public class PrincipalUI extends JFrame {
 		});
 
 		// JAIME ESTÁ COM ERRO NESSA CARALHA AQUI.. DÁ UM HELP POR FAVOR.
+
 		JButton btnEncerrar = new JButton("Encerrar Pedido");
 		btnEncerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -380,12 +381,6 @@ public class PrincipalUI extends JFrame {
 					int linhaSelecionada = tablePedidoAberto.getSelectedRow();
 
 					if (linhaSelecionada > -1) {
-
-						String nome = tablePedidoAberto.getValueAt(
-								linhaSelecionada, 0).toString();
-
-						Cliente clienteEncerrar = (Cliente) new ClienteController()
-								.getNomeSelecionado(nome);
 
 						int idPedido = Integer.parseInt(tablePedidoAberto
 								.getValueAt(linhaSelecionada, 0).toString());
@@ -398,8 +393,7 @@ public class PrincipalUI extends JFrame {
 
 						// pedido.setStatus(0);
 
-						encerrarPedidoUI = new EncerrarPedidoUI(
-								clienteEncerrar, pedidoEncerrar,
+						encerrarPedidoUI = new EncerrarPedidoUI(pedidoEncerrar,
 								tablePedidoAberto);
 
 						// encerrarPedidoUI.requestFocus(true);

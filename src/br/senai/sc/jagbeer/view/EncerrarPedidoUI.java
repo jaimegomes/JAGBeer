@@ -32,7 +32,7 @@ public class EncerrarPedidoUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EncerrarPedidoUI(final Cliente c, final Pedido p, JTable table) {
+	public EncerrarPedidoUI(final Pedido pedido, JTable table) {
 
 		setTitle("Encerrar Pedido");
 		setClosable(true);
@@ -61,7 +61,7 @@ public class EncerrarPedidoUI extends JInternalFrame {
 						.addContainerGap(19, Short.MAX_VALUE)));
 
 		Cliente cliente = new Cliente();
-		Pedido pedido = new Pedido();
+		Pedido pedido2 = new Pedido();
 		ProdutoPedido pd = new ProdutoPedido();
 
 		JLabel lblNomeCliente = new JLabel("Nome Cliente");
