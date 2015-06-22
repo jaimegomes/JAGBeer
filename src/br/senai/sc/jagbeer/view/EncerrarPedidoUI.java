@@ -122,7 +122,7 @@ public class EncerrarPedidoUI extends JInternalFrame {
 
 		JButton btnExcluirItem = new JButton("Excluir Item");
 
-		JLabel lblTotal = new JLabel("Total:");
+		JLabel lblTotal = new JLabel("Total R$");
 		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		JLabel lblValor = new JLabel("Valor");
@@ -130,128 +130,61 @@ public class EncerrarPedidoUI extends JInternalFrame {
 		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.TRAILING)
-												.addGroup(
-														Alignment.LEADING,
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		scrollPane,
-																		GroupLayout.PREFERRED_SIZE,
-																		574,
-																		GroupLayout.PREFERRED_SIZE)
-																.addContainerGap())
-												.addGroup(
-														Alignment.LEADING,
-														gl_panel.createSequentialGroup()
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING,
-																				false)
-																				.addComponent(
-																						lblNome,
-																						Alignment.TRAILING,
-																						GroupLayout.DEFAULT_SIZE,
-																						GroupLayout.DEFAULT_SIZE,
-																						Short.MAX_VALUE)
-																				.addComponent(
-																						lblPedido,
-																						Alignment.TRAILING,
-																						GroupLayout.DEFAULT_SIZE,
-																						GroupLayout.DEFAULT_SIZE,
-																						Short.MAX_VALUE))
-																.addGap(18)
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING)
-																				.addGroup(
-																						gl_panel.createSequentialGroup()
-																								.addComponent(
-																										lblNumeroPedido)
-																								.addPreferredGap(
-																										ComponentPlacement.RELATED,
-																										289,
-																										Short.MAX_VALUE)
-																								.addComponent(
-																										lblData)
-																								.addGap(18)
-																								.addComponent(
-																										lblDdmmyyyy))
-																				.addComponent(
-																						lblNomeCliente))
-																.addContainerGap())
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		btnExcluirItem)
-																.addGap(18)
-																.addComponent(
-																		btnEncerrar)
-																.addContainerGap())
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		lblTotal)
-																.addGap(18)
-																.addComponent(
-																		lblValor)
-																.addContainerGap(
-																		484,
-																		Short.MAX_VALUE)))));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(
-														lblNome,
-														GroupLayout.PREFERRED_SIZE,
-														25,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblNomeCliente))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(
-														lblPedido,
-														GroupLayout.PREFERRED_SIZE,
-														25,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-														lblNumeroPedido,
-														GroupLayout.PREFERRED_SIZE,
-														25,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblDdmmyyyy)
-												.addComponent(lblData))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(scrollPane,
-										GroupLayout.PREFERRED_SIZE, 368,
-										GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(lblTotal)
-												.addComponent(lblValor))
-								.addPreferredGap(ComponentPlacement.RELATED, 9,
-										Short.MAX_VALUE)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(btnEncerrar)
-												.addComponent(btnExcluirItem))
-								.addContainerGap()));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(lblNome, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblPedido, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addGap(18)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(lblNumeroPedido)
+									.addPreferredGap(ComponentPlacement.RELATED, 385, Short.MAX_VALUE)
+									.addComponent(lblData)
+									.addGap(18)
+									.addComponent(lblDdmmyyyy))
+								.addComponent(lblNomeCliente)))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(lblTotal, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblValor))
+						.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+							.addGroup(gl_panel.createSequentialGroup()
+								.addComponent(btnExcluirItem)
+								.addGap(18)
+								.addComponent(btnEncerrar))
+							.addComponent(scrollPane, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 574, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNomeCliente))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPedido, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNumeroPedido, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDdmmyyyy)
+						.addComponent(lblData))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblTotal)
+						.addComponent(lblValor))
+					.addPreferredGap(ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnEncerrar)
+						.addComponent(btnExcluirItem))
+					.addContainerGap())
+		);
 
 		tableEncerraPedido = new JTable();
 		try {
