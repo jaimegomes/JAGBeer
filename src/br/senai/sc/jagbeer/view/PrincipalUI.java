@@ -571,15 +571,14 @@ public class PrincipalUI extends JFrame {
 	private List<Entidade> getListaPedidosAbertosTableModel() {
 
 		List<Entidade> listRetorno = new ArrayList<Entidade>();
-		PedidoAberto pedidoAberto;
 
 		try {
 
 			for (Entidade ent : new PedidoController().getPedidosAbertos()) {
 
-				double valorParcial = 0;
+				PedidoAberto pedidoAberto = (PedidoAberto) ent;
 
-				Pedido pedido = (Pedido) ent;
+				double valorParcial = 0;
 
 				try {
 
@@ -587,7 +586,8 @@ public class PrincipalUI extends JFrame {
 
 						ProdutoPedido produtoPedido = (ProdutoPedido) e;
 
-						if (produtoPedido.getIdPedido() == pedido.getId()) {
+						if (produtoPedido.getIdPedido() == pedidoAberto
+								.getPedido()) {
 
 							Produto prod = (Produto) new ProdutoController()
 									.getPorId(produtoPedido.getIdProduto());
@@ -601,11 +601,11 @@ public class PrincipalUI extends JFrame {
 					e1.printStackTrace();
 				}
 
-				if (pedido.getCliente() != null) {
-					pedidoAberto = new PedidoAberto(pedido.getId(), pedido
-							.getCliente().getNome(), valorParcial);
+				if (pedidoAberto.getCliente() != null) {
+					pedidoAberto = new PedidoAberto(pedidoAberto.getPedido(),
+							pedidoAberto.getCliente(), valorParcial);
 				} else {
-					pedidoAberto = new PedidoAberto(pedido.getId(), null,
+					pedidoAberto = new PedidoAberto(pedidoAberto.getPedido(), null,
 							valorParcial);
 				}
 

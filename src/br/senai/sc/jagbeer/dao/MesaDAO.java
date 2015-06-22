@@ -22,14 +22,13 @@ public class MesaDAO extends GenericDAO {
 	@Override
 	public void salvar(Entidade entidade) throws Exception {
 
-		String query = "INSERT INTO mesa (numeroMesa, lugares) VALUES (?,?)";
-
+//		String query = "INSERT INTO mesa (numeroMesa, lugares) VALUES (?,?)";
+		String sql = "INSERT INTO mesa (numeromesa, lugares) values(?,?)";
 		try {
-			// transforma a entidade passada no parâmetro para o objeto Produto
 
 			mesa = (Mesa) entidade;
 
-			PreparedStatement pstmt = con.prepareStatement(query);
+			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, mesa.getNumeroMesa());
 			pstmt.setInt(2, mesa.getLugares());
 

@@ -16,10 +16,6 @@ public class MesaController implements IController {
 
 		Mesa mesa = (Mesa) entidade;		
 
-		//if (mesa == null) {
-			//throw new Exception("Mesa não pode ser nula.");
-		//}		
-		
 		if(mesa.getNumeroMesa().equals(null) || mesa.getNumeroMesa() == null){
 			throw new Exception("Número da mesa obrigatório.");
 		}

@@ -19,6 +19,7 @@ import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.Pedido;
+import br.senai.sc.jagbeer.model.PedidoAberto;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
 /**
@@ -230,10 +231,10 @@ public class PedidoDAO extends GenericDAO {
 
 		Date data = new Date();
 
-		List<Entidade> listPedidos = new ArrayList<Entidade>();
+		List<Entidade> listPedidosAbertos = new ArrayList<Entidade>();
 
 		// Pedido aberto status = 1, pedido fechado status = 0
-		String sql = "SELECT * FROM pedido WHERE dataPedido = ? AND status = 1";
+		String sql = "SELECT produtopedido.id, produtopedido.idproduto, produtopedido.idpedido, produtopedido.quantidade, pedido.idcliente, pedido.idmesa FROM produtopedido JOIN pedido  ON produtopedido.id = pedido.id AND pedido.status = 1 AND pedido.datapedido = ?";
 
 		try {
 
@@ -241,34 +242,24 @@ public class PedidoDAO extends GenericDAO {
 			pstm.setDate(1, new java.sql.Date(data.getTime()));
 
 			ResultSet result = pstm.executeQuery();
-			
 
 			while (result.next()) {
 
 				try {
-					
-					Mesa mesa = null;
-					if (result.getInt("idMesa") > 0) {
-
-						mesa = (Mesa) new MesaController().getPorId(result
-								.getInt("idMesa"));
-
-					}
 
 					Cliente cliente = null;
-					if (result.getInt("idCliente") > 0) {
+					if (result.getInt("idcliente") > 0) {
 
 						cliente = (Cliente) new ClienteController()
-								.getPorId(result.getInt("idCliente"));
+								.getPorId(result.getInt("idcliente"));
 
 					}
 
-					pedido = new Pedido(result.getInt("id"), mesa, cliente,
-							result.getDate("dataPedido"),
-							result.getInt("status"));
+					PedidoAberto pedidoAberto = new PedidoAberto(
+							result.getInt("id"),
+							cliente.getNome(), 0.0);
 
-					listPedidos.add(pedido);
-					
+					listPedidosAbertos.add(pedidoAberto);
 
 				} catch (Exception e) {
 					System.out
@@ -277,7 +268,7 @@ public class PedidoDAO extends GenericDAO {
 					e.printStackTrace();
 				}
 			}
-			
+
 			pstm.close();
 
 		} catch (SQLException e) {
@@ -288,7 +279,7 @@ public class PedidoDAO extends GenericDAO {
 			con.close();
 		}
 
-		return listPedidos;
+		return listPedidosAbertos;
 	}
 
 	public Entidade getPorIdCliente(int idCliente) throws Exception {
