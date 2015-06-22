@@ -93,7 +93,8 @@ public class PedidoController implements IController {
 		return dao.getListPedidosEmAberto();
 	}
 
-	public Entidade getPorData(Date dataInicio, Date dataFim) throws Exception {
+	public List<Entidade> getPorData(Date dataInicio, Date dataFim)
+			throws Exception {
 		return dao.getPorData(dataInicio, dataFim);
 	}
 

@@ -483,8 +483,10 @@ public class PedidoDAO extends GenericDAO {
 		return listPedidosAbertos;
 	}
 
-	public Entidade getPorData(Date dataInicio, Date dataFim) throws Exception {
+	public List<Entidade> getPorData(Date dataInicio, Date dataFim)
+			throws Exception {
 
+		List<Entidade> listPedidos = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM pedido WHERE dataPedido BETWEEN '"
 				+ dataInicio + "' AND '" + dataFim + "'";
 		try {
@@ -513,9 +515,11 @@ public class PedidoDAO extends GenericDAO {
 								.getPorId(result.getInt("idCliente"));
 					}
 
-					pedido = new Pedido(result.getInt("id"), mesa, cliente,
+					pedido = new Pedido(result.getInt("id"),
 							result.getDate("dataPedido"),
 							result.getInt("status"));
+					
+					listPedidos.add(pedido);
 
 				} catch (Exception e) {
 					System.out
@@ -535,7 +539,7 @@ public class PedidoDAO extends GenericDAO {
 			con.close();
 		}
 
-		return pedido;
+		return listPedidos;
 
 	}
 
