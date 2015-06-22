@@ -96,8 +96,6 @@ public class CadastroMesaUI extends JInternalFrame {
 							Integer.parseInt(mesaNumero.getText()), Integer
 									.parseInt(qtdLugares.getText()));
 
-					System.out.println("n: " + mesa.getNumeroMesa() + " lug. "
-							+ mesa.getLugares());
 					try {
 						new MesaController().salvar(mesa);
 						JOptionPane.showMessageDialog(null,
