@@ -18,7 +18,6 @@ import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.ClienteController;
-import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.EncerrarPedidoTableModel;
@@ -39,11 +38,9 @@ public class EncerrarPedidoUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EncerrarPedidoUI(final List<Entidade> listProdutos, JTable table) {
+	public EncerrarPedidoUI(final List<Entidade> listProdutos, JTable table,
+			Pedido pedido) {
 
-		ProdutoPedido produtoPedido = (ProdutoPedido) listProdutos.get(1);
-
-		Pedido pedido = null;
 		Cliente cliente = null;
 		double valorTotal = 0;
 		List<Entidade> listProdutosPedido = new ArrayList<Entidade>();
@@ -51,19 +48,21 @@ public class EncerrarPedidoUI extends JInternalFrame {
 
 		try {
 
-			for (Entidade e : listProdutos) {
-				ProdutoPedido prodPedido = (ProdutoPedido) e;
+			if (!listProdutos.isEmpty()) {
+				for (Entidade e : listProdutos) {
+					ProdutoPedido prodPedido = (ProdutoPedido) e;
 
-				Produto prod = (Produto) new ProdutoController()
-						.getPorId(prodPedido.getIdProduto());
-				valorTotal += prod.getPrecoVenda() * prodPedido.getQtde();
+					Produto prod = (Produto) new ProdutoController()
+							.getPorId(prodPedido.getIdProduto());
+					valorTotal += prod.getPrecoVenda() * prodPedido.getQtde();
 
-				listProdutosPedido.add(prodPedido);
+					listProdutosPedido.add(prodPedido);
+				}
+
 			}
 
-			pedido = getPedido(produtoPedido);
-
-			cliente = getCliente(pedido.getCliente().getId());
+			cliente = (Cliente) new ClienteController().getPorId(pedido
+					.getCliente().getId());
 
 		} catch (Exception e) {
 			System.out
@@ -265,25 +264,6 @@ public class EncerrarPedidoUI extends JInternalFrame {
 		scrollPane.setViewportView(tableEncerraPedido);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
-
-	}
-
-	private Pedido getPedido(ProdutoPedido produtoPedido) throws Exception {
-		return (Pedido) new PedidoController().getPorId(produtoPedido
-				.getIdPedido());
-	}
-
-	public Cliente getCliente(int idPedido) throws Exception {
-
-		Pedido pedido = (Pedido) new PedidoController().getPorId(idPedido);
-
-		Cliente cliente = null;
-		if (pedido.getCliente() != null) {
-			return (Cliente) new ClienteController().getPorId(pedido
-					.getCliente().getId());
-		}
-
-		return null;
 
 	}
 
