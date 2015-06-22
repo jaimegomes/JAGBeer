@@ -488,13 +488,16 @@ public class PedidoDAO extends GenericDAO {
 
 		Pedido pedido = null;
 		List<Entidade> listPedidos = new ArrayList<Entidade>();
-		String sql = "SELECT * FROM pedido WHERE dataPedido BETWEEN '"
-				+ dataInicio + "' AND '" + dataFim + "'";
+		String sql = "SELECT * FROM pedido WHERE dataPedido BETWEEN ? AND ?";
 		try {
 
 			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setDate(1, new java.sql.Date(dataInicio.getTime()));
+			pstm.setDate(2, new java.sql.Date(dataFim.getTime()));
+			
 
 			ResultSet result = pstm.executeQuery();
+			
 
 			while (result.next()) {
 				pedido = new Pedido(result.getInt("id"),

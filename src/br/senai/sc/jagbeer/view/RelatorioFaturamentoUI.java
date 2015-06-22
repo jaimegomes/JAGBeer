@@ -1,36 +1,26 @@
 package br.senai.sc.jagbeer.view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JInternalFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.LayoutStyle.ComponentPlacement;
-
 import java.awt.Font;
-
-import javax.swing.JScrollPane;
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-import javax.swing.JButton;
-
-import br.senai.sc.jagbeer.abstracts.Entidade;
-import br.senai.sc.jagbeer.controller.PedidoController;
-import br.senai.sc.jagbeer.controller.ProdutoController;
-import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
-import br.senai.sc.jagbeer.model.Pedido;
-import br.senai.sc.jagbeer.model.Produto;
-import br.senai.sc.jagbeer.model.ProdutoPedido;
-import br.senai.sc.jagbeer.model.RelatorioFaturamentoTableModel;
-
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.table.DefaultTableModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.TitledBorder;
+
+import br.senai.sc.jagbeer.abstracts.Entidade;
+import br.senai.sc.jagbeer.controller.PedidoController;
+import br.senai.sc.jagbeer.model.RelatorioFaturamentoTableModel;
 
 public class RelatorioFaturamentoUI extends JInternalFrame {
 
@@ -48,9 +38,11 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	// recebe como parametro table ou lista?
-	public RelatorioFaturamentoUI(JTable table, Date inicio, Date Fim) {
+	public RelatorioFaturamentoUI(JTable table, Date dataInicio,
+			Date dataFinal) {
 		ConfigurarRelatorioFaturamentoUI configRelFat = new ConfigurarRelatorioFaturamentoUI();
 
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		setTitle("Relatorio Faturamento");
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
@@ -98,12 +90,13 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 		});
 
 		JLabel lblPeriodo2 = new JLabel("Periodo2");
-		lblPeriodo2.setText(configRelFat.getJtfDataFim().toString());
+
+		lblPeriodo2.setText(sdf.format(dataFinal));
 
 		JLabel lblAte = new JLabel("Ate");
 
 		JLabel lblPeriodo1 = new JLabel("Periodo1");
-		lblPeriodo1.setText(configRelFat.getJtfDataInicio().toString());
+		lblPeriodo1.setText(sdf.format(dataInicio));
 
 		JLabel lblPeriodo = new JLabel("Periodo:");
 		GroupLayout gl_panel = new GroupLayout(panel);
@@ -194,14 +187,19 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 		try {
 			tableRelatorioFaturamento
 					.setModel(new RelatorioFaturamentoTableModel(
-							new PedidoController().getPorData(inicio, Fim)));
+							new PedidoController().getPorData(dataInicio,
+									dataFinal)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
 
 		scrollPane.setViewportView(tableRelatorioFaturamento);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 
 	}
+	
+	
 }
