@@ -36,6 +36,7 @@ import br.senai.sc.jagbeer.model.ItemPedido;
 import br.senai.sc.jagbeer.model.ItemPedidoTableModel;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.Pedido;
+import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
 import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoPedido;
 
@@ -356,20 +357,38 @@ public class FazerPedidoUI extends JInternalFrame {
 						new ProdutoPedidoController().salvar(produtoPedido);
 
 						listProdutoPedido.add(produtoPedido);
+
 					}
 
 					if (tableEncerrarPedido != null) {
 
 						for (Entidade e : new ProdutoPedidoController()
 								.getPorIdPedido(pedido.getId())) {
+
 							ProdutoPedido prodPedido = (ProdutoPedido) e;
+
+							Produto produto = (Produto) new ProdutoController()
+									.getPorId(prodPedido.getIdProduto());
+							//
+							// ItemPedido itemPedido = new ItemPedido(produto,
+							// prodPedido.getQtde());
+
+							// listItensPedido.add(itemPedido);
 
 							listProdutoPedido.add(prodPedido);
 						}
 
-						tableEncerrarPedido.setModel(new EncerrarPedidoTableModel(
-								listProdutoPedido));
+						tableEncerrarPedido
+								.setModel(new EncerrarPedidoTableModel(
+										listProdutoPedido));
 					}
+
+					JTable tablePrincipal = PrincipalUI.obterInstancia()
+							.getTablePedidoAberto();
+
+					tablePrincipal.setModel(new PedidoAbertoTableModel(
+							new PedidoController().getPedidosAbertos()));
+
 					JOptionPane.showMessageDialog(null,
 							"Produtos inseridos com sucesso.");
 

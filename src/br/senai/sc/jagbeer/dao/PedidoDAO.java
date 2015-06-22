@@ -16,10 +16,13 @@ import br.senai.sc.jagbeer.abstracts.GenericDAO;
 import br.senai.sc.jagbeer.conexao.Conexao;
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.MesaController;
+import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PedidoAberto;
+import br.senai.sc.jagbeer.model.Produto;
+import br.senai.sc.jagbeer.model.ProdutoPedido;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
 /**
@@ -343,13 +346,13 @@ public class PedidoDAO extends GenericDAO {
 	}
 
 	/**
-	 * Método que retorna uma lista da entidade ProdutoPedido, status = 1
-	 * (aberto), status = 0 (fechado)
+	 * Método que retorna uma lista da entidade PedidoAberto com o objeto
+	 * preenchido
 	 * 
 	 * @return List<Entidade> listPedidosAbertos
 	 * @throws Exception
 	 */
-	public List<Entidade> getProdutosPedidoEmAberto() throws Exception {
+	public List<Entidade> getListPedidosAbertos() throws Exception {
 
 		Date data = new Date();
 
@@ -389,11 +392,34 @@ public class PedidoDAO extends GenericDAO {
 				}
 			}
 
+			for (Entidade e : listPedidosAbertos) {
+				PedidoAberto pedidoAberto = (PedidoAberto) e;
+
+				double valorParcial = 0;
+
+				for (Entidade ent : new ProdutoPedidoDAO().listar()) {
+
+					ProdutoPedido produtoPedido = (ProdutoPedido) ent;
+
+					if (produtoPedido.getIdPedido() == pedidoAberto.getPedido()) {
+
+						Produto produto = (Produto) new ProdutoController()
+								.getPorId(produtoPedido.getIdProduto());
+
+						valorParcial += produto.getPrecoVenda()
+								* produtoPedido.getQtde();
+
+						pedidoAberto.setValorParcial(valorParcial);
+
+					}
+				}
+			}
 			pstm.close();
 
 		} catch (SQLException e) {
-			System.out.println("[PedidoDAO] - Erro ao buscar pedido aberto.\n"
-					+ e.getMessage());
+			System.out
+					.println("[PedidoDAO] - Erro ao buscar pedidos abertos.\n"
+							+ e.getMessage());
 			e.printStackTrace();
 		} finally {
 			con.close();

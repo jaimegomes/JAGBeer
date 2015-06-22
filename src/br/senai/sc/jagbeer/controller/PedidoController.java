@@ -78,7 +78,7 @@ public class PedidoController implements IController {
 
 	public List<Entidade> getPedidosAbertos() throws Exception {
 
-		return dao.getProdutosPedidoEmAberto();
+		return dao.getListPedidosAbertos();
 	}
 
 	//
@@ -108,6 +108,11 @@ public class PedidoController implements IController {
 
 	public List<Entidade> getListPedidosEmAberto() throws Exception {
 		return dao.getListPedidosEmAberto();
+	}
+
+	public List<Entidade> getListPedidosAbertos() throws Exception {
+		return dao.getListPedidosAbertos();
+
 	}
 
 }

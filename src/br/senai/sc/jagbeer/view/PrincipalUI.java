@@ -28,13 +28,11 @@ import javax.swing.border.TitledBorder;
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.PedidoController;
-import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PedidoAberto;
 import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
-import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoPedido;
 
 /**
@@ -51,6 +49,8 @@ public class PrincipalUI extends JFrame {
 	private JTable tablePedidoAberto;
 
 	private static PrincipalUI instancia;
+	private List<Entidade> listPedidosAbertos = new PedidoController()
+			.getListPedidosAbertos();
 
 	public static PrincipalUI obterInstancia() throws Exception {
 
@@ -60,8 +60,6 @@ public class PrincipalUI extends JFrame {
 		}
 		return instancia;
 	}
-
-	private List<Entidade> listPedidoAberto = new ArrayList<Entidade>();
 
 	/**
 	 * Launch the application.
@@ -257,7 +255,7 @@ public class PrincipalUI extends JFrame {
 				if (!jtfCliente.getText().isEmpty()
 						&& jtfPedido.getText().isEmpty()) {
 
-					listPedidoAberto = new ArrayList<Entidade>();
+					List<Entidade> listPedidos = new ArrayList<Entidade>();
 
 					Pedido pedido;
 					try {
@@ -270,14 +268,14 @@ public class PrincipalUI extends JFrame {
 							pedido = (Pedido) new PedidoController()
 									.getPorIdCliente(cliente.getId());
 
-							for (Entidade en : getListaPedidosAbertosTableModel()) {
+							for (Entidade en : listPedidosAbertos) {
 								PedidoAberto pedidoAberto = (PedidoAberto) en;
 
 								if (pedidoAberto != null) {
 									if (pedidoAberto.getPedido() == pedido
 											.getId()) {
 
-										listPedidoAberto.add(pedidoAberto);
+										listPedidos.add(pedidoAberto);
 									}
 								}
 
@@ -289,20 +287,20 @@ public class PrincipalUI extends JFrame {
 						e2.printStackTrace();
 					}
 
-					if (listPedidoAberto.isEmpty()) {
+					if (listPedidosAbertos.isEmpty()) {
 						JOptionPane
 								.showMessageDialog(null,
 										"Não foram encontrados pedidos abertos para esse número de pedido.");
 					} else {
 						tablePedidoAberto.setModel(new PedidoAbertoTableModel(
-								listPedidoAberto));
+								listPedidos));
 					}
 
 					// campo pedido preenchido
 				} else if (jtfCliente.getText().isEmpty()
 						&& !jtfPedido.getText().isEmpty()) {
 
-					listPedidoAberto = new ArrayList<Entidade>();
+					List<Entidade> listPedidos = new ArrayList<Entidade>();
 
 					try {
 						try {
@@ -310,11 +308,11 @@ public class PrincipalUI extends JFrame {
 									.getPorId(Integer.parseInt(jtfPedido
 											.getText()));
 
-							for (Entidade en : getListaPedidosAbertosTableModel()) {
+							for (Entidade en : listPedidosAbertos) {
 								PedidoAberto pedidoAberto = (PedidoAberto) en;
 
 								if (pedidoAberto.getPedido() == pedido.getId()) {
-									listPedidoAberto.add(pedidoAberto);
+									listPedidos.add(pedidoAberto);
 								}
 							}
 						} catch (NumberFormatException nf2) {
@@ -322,7 +320,7 @@ public class PrincipalUI extends JFrame {
 									"Você deve inserir um número inteiro.");
 						}
 
-						if (listPedidoAberto.isEmpty()) {
+						if (listPedidosAbertos.isEmpty()) {
 							JOptionPane
 									.showMessageDialog(null,
 											"Não foram encontrados pedidos abertos para esse pedido.");
@@ -330,7 +328,7 @@ public class PrincipalUI extends JFrame {
 						} else {
 							tablePedidoAberto
 									.setModel(new PedidoAbertoTableModel(
-											listPedidoAberto));
+											listPedidos));
 						}
 
 					} catch (NumberFormatException e1) {
@@ -343,10 +341,10 @@ public class PrincipalUI extends JFrame {
 				} else if (jtfCliente.getText().isEmpty()
 						&& jtfPedido.getText().isEmpty()) {
 
-					listPedidoAberto = new ArrayList<Entidade>();
+					listPedidosAbertos = new ArrayList<Entidade>();
 
 					tablePedidoAberto.setModel(new PedidoAbertoTableModel(
-							getListaPedidosAbertosTableModel()));
+							listPedidosAbertos));
 
 				}
 
@@ -408,7 +406,7 @@ public class PrincipalUI extends JFrame {
 
 					} else {
 						JOptionPane.showMessageDialog(null,
-								"Selecione um produto.");
+								"Selecione um pedido.");
 					}
 
 				} catch (Exception e1) {
@@ -555,7 +553,7 @@ public class PrincipalUI extends JFrame {
 								Short.MAX_VALUE)));
 
 		tablePedidoAberto.setModel(new PedidoAbertoTableModel(
-				getListaPedidosAbertosTableModel()));
+				listPedidosAbertos));
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
 	}
@@ -568,53 +566,19 @@ public class PrincipalUI extends JFrame {
 		PrincipalUI.instancia = instancia;
 	}
 
-	private List<Entidade> getListaPedidosAbertosTableModel() {
+	public JTable getTablePedidoAberto() {
+		return tablePedidoAberto;
+	}
 
-		List<Entidade> listRetorno = new ArrayList<Entidade>();
+	public void setTablePedidoAberto(JTable tablePedidoAberto) {
+		this.tablePedidoAberto = tablePedidoAberto;
+	}
 
-		try {
+	public List<Entidade> getListPedidosAbertos() {
+		return listPedidosAbertos;
+	}
 
-			for (Entidade ent : new PedidoController().getPedidosAbertos()) {
-
-				PedidoAberto pedidoAberto = (PedidoAberto) ent;
-
-				double valorParcial = 0;
-
-				try {
-
-					for (Entidade e : new ProdutoPedidoController().listar()) {
-
-						ProdutoPedido produtoPedido = (ProdutoPedido) e;
-
-						if (produtoPedido.getIdPedido() == pedidoAberto
-								.getPedido()) {
-
-							Produto prod = (Produto) new ProdutoController()
-									.getPorId(produtoPedido.getIdProduto());
-
-							valorParcial += prod.getPrecoVenda()
-									* produtoPedido.getQtde();
-
-						}
-					}
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-
-				if (pedidoAberto.getCliente() != null) {
-					pedidoAberto = new PedidoAberto(pedidoAberto.getPedido(),
-							pedidoAberto.getCliente(), valorParcial);
-				} else {
-					pedidoAberto = new PedidoAberto(pedidoAberto.getPedido(),
-							null, valorParcial);
-				}
-
-				listRetorno.add(pedidoAberto);
-			}
-
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		return listRetorno;
+	public void setListPedidosAbertos(List<Entidade> listPedidosAbertos) {
+		this.listPedidosAbertos = listPedidosAbertos;
 	}
 }
