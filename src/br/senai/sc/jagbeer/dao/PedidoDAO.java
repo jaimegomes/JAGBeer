@@ -256,8 +256,7 @@ public class PedidoDAO extends GenericDAO {
 					}
 
 					PedidoAberto pedidoAberto = new PedidoAberto(
-							result.getInt("id"),
-							cliente.getNome(), 0.0);
+							result.getInt("id"), cliente.getNome(), 0.0);
 
 					listPedidosAbertos.add(pedidoAberto);
 
@@ -295,11 +294,18 @@ public class PedidoDAO extends GenericDAO {
 			while (result.next()) {
 
 				try {
-					Mesa mesa = (Mesa) new MesaController().getPorId(result
-							.getInt("idMesa"));
+					Mesa mesa = null;
+					Cliente cliente = null;
+					if (result.getInt("idMesa") > 1) {
+						mesa = (Mesa) new MesaController().getPorId(result
+								.getInt("idMesa"));
 
-					Cliente cliente = (Cliente) new ClienteController()
-							.getPorId(result.getInt("idCliente"));
+					}
+
+					if (result.getInt("idCliente") > 1) {
+						cliente = (Cliente) new ClienteController()
+								.getPorId(result.getInt("idCliente"));
+					}
 
 					pedido = new Pedido(result.getInt("id"), mesa, cliente,
 							result.getDate("dataPedido"),
@@ -331,7 +337,7 @@ public class PedidoDAO extends GenericDAO {
 		String sql = "UPDATE pedido SET status = 0 WHERE id = ?";
 
 		try {
-			
+
 			PreparedStatement pstm = con.prepareStatement(sql);
 
 			pstm.setInt(1, idPedidoEncerrar);
