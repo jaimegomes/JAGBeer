@@ -20,17 +20,17 @@ public class ProdutoController implements IController {
 		produto = (Produto) entidade;
 
 		if (produto == null)
-			throw new Exception("Produto nï¿½o pode ser nulo.");
+			throw new Exception("Produto não pode ser nulo.");
 
 		if (produto.getNome().trim().equals(""))
-			throw new Exception("Nome do produto obrigatï¿½rio.");
+			throw new Exception("Nome do produto obrigatório.");
 
 		if (produto.getPrecoVenda() == null || produto.getPrecoVenda() == 0)
 			throw new Exception(
-					"Valor do produto ï¿½ obrigatï¿½rio e deve ser maior que zero.");
+					"Valor do produto é obrigatorio e deve ser maior que zero.");
 
 		if (produto.getClassificacao().trim().equals(""))
-			throw new Exception("classificaï¿½ï¿½o do produto obrigatï¿½ria.");
+			throw new Exception("classificaóóo do produto obrigatória.");
 
 		dao.salvar(produto);
 
@@ -54,17 +54,17 @@ public class ProdutoController implements IController {
 		produto = (Produto) entidade;
 
 		if (produto == null)
-			throw new Exception("Produto nï¿½o pode ser nulo.");
+			throw new Exception("Produto nóo pode ser nulo.");
 
 		if (produto.getNome().trim().equals(""))
-			throw new Exception("Nome do produto obrigatï¿½rio.");
+			throw new Exception("Nome do produto obrigatório.");
 
 		if (produto.getPrecoVenda() == null || produto.getPrecoVenda() == 0)
 			throw new Exception(
-					"Valor do produto ï¿½ obrigatï¿½rio e deve ser maior que zero.");
+					"Valor do produto ó obrigatório e deve ser maior que zero.");
 
 		if (produto.getClassificacao().trim().equals(""))
-			throw new Exception("classificaï¿½ï¿½o do produto obrigatï¿½ria.");
+			throw new Exception("classificaóóo do produto obrigatória.");
 
 		dao.editar(produto);
 
@@ -85,7 +85,7 @@ public class ProdutoController implements IController {
 		produto = null;
 
 		if (id < 0)
-			throw new Exception("id nï¿½o pode ser menor que zero.");
+			throw new Exception("id nóo pode ser menor que zero.");
 
 		produto = (Produto) dao.getPorId(id);
 
@@ -99,8 +99,8 @@ public class ProdutoController implements IController {
 	}
 
 	/**
-	 * Mï¿½todo responsï¿½vel por buscar todos os produtos de determinada
-	 * classificaï¿½ï¿½o passada como parï¿½metro.
+	 * Mótodo responsóvel por buscar todos os produtos de determinada
+	 * classificaóóo passada como parómetro.
 	 * 
 	 * @param classificacao
 	 * @return dao.getPorClassificacao(classificacao)
@@ -111,14 +111,14 @@ public class ProdutoController implements IController {
 
 		if (classificacao == null || classificacao.trim().equals(""))
 			throw new Exception(
-					"A classificaï¿½ï¿½o nï¿½o pode ser nula ou em branco.");
+					"A classificaóóo nóo pode ser nula ou em branco.");
 
 		return dao.getPorClassificacao(classificacao);
 	}
 
 	/**
-	 * Mï¿½todo responsï¿½vel por buscar todos os produtos de determinado nome
-	 * passado como parï¿½metro.
+	 * Mótodo responsóvel por buscar todos os produtos de determinado nome
+	 * passado como parómetro.
 	 * 
 	 * @param classificacao
 	 * @return dao.getPorNome(nome)
@@ -127,14 +127,14 @@ public class ProdutoController implements IController {
 	public List<Entidade> getListNomesProdutos(String nome) throws Exception {
 
 		if (nome == null || nome.trim().equals(""))
-			throw new Exception("O nome nï¿½o pode ser nulo ou em branco.");
+			throw new Exception("O nome nóo pode ser nulo ou em branco.");
 
 		return dao.getListNomesProdutos(nome);
 	}
 
 	/**
-	 * Mï¿½todo responsï¿½vel por fazer a busca dos produtos de acordo com o nome e
-	 * a classificaï¿½ï¿½o passados como parï¿½metro.
+	 * Mótodo responsóvel por fazer a busca dos produtos de acordo com o nome e
+	 * a classificaóóo passados como parómetro.
 	 * 
 	 * @param nome
 	 * @param classificacao
@@ -148,8 +148,8 @@ public class ProdutoController implements IController {
 	}
 
 	/**
-	 * Mï¿½todo responsï¿½vel por fazer a busca dos produtos de acordo com o nome, a
-	 * classificaï¿½ï¿½o e o valor de venda passados como parï¿½metro.
+	 * Mótodo responsóvel por fazer a busca dos produtos de acordo com o nome, a
+	 * classificaóóo e o valor de venda passados como parómetro.
 	 * 
 	 * @param nome
 	 * @param classificacao
@@ -163,8 +163,8 @@ public class ProdutoController implements IController {
 	}
 
 	/**
-	 * Mï¿½todo responsï¿½vel por buscar o produto com o nome passado como
-	 * parï¿½metro.
+	 * Método responsóvel por buscar o produto com o nome passado como
+	 * parâmetro.
 	 * 
 	 * @param String nome
 	 * @throws Exception
