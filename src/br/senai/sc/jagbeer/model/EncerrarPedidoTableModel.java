@@ -38,7 +38,7 @@ public class EncerrarPedidoTableModel extends AbstractTableModel {
 		if (column == COL_CLIENTE)
 			return "Cliente";
 		if (column == COL_VALOR)
-			return "Valor Parcial";
+			return "Valor";
 		if (column == COL_QUANTIDADE)
 			return "Quantidade";
 		return "";
