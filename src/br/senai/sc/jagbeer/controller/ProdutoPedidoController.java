@@ -50,4 +50,9 @@ public class ProdutoPedidoController implements IController {
 		return dao.getPorIdPedido(idPedido);
 	}
 
+	public Entidade getPorNomeQtdeIdPedido(int idProduto, int qtde, int idPedido)
+			throws Exception {
+		return dao.getPorNomeQtdeIdPedido(idProduto, qtde, idPedido);
+	}
+
 }

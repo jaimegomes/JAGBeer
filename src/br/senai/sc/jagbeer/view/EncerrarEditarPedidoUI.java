@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -12,6 +11,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,14 +19,17 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
+import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.controller.ProdutoController;
+import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.EncerrarPedidoTableModel;
 import br.senai.sc.jagbeer.model.Pedido;
+import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
 import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoPedido;
 
-public class EncerrarPedidoUI extends JInternalFrame {
+public class EncerrarEditarPedidoUI extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	private Cliente cliente = null;
@@ -49,32 +52,10 @@ public class EncerrarPedidoUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EncerrarPedidoUI(final List<Entidade> listProdutos, JTable table,
-			final Pedido pedido) {
+	public EncerrarEditarPedidoUI(JTable table, final Pedido pedido) {
 
 		cliente = pedido.getCliente();
-		double valorTotal = 0;
-		List<Entidade> listProdutosPedido = new ArrayList<Entidade>();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-		try {
-
-			if (!listProdutos.isEmpty()) {
-				for (Entidade e : listProdutos) {
-					ProdutoPedido prodPedido = (ProdutoPedido) e;
-
-					Produto prod = (Produto) new ProdutoController()
-							.getPorId(prodPedido.getIdProduto());
-					valorTotal += prod.getPrecoVenda() * prodPedido.getQtde();
-
-					listProdutosPedido.add(prodPedido);
-				}
-
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 		setTitle("Encerrar Pedido");
 		setClosable(true);
@@ -89,7 +70,7 @@ public class EncerrarPedidoUI extends JInternalFrame {
 		lblNomeCliente.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNomeCliente.setText(cliente.getNome());
 
-		lblNome = new JLabel("Nome:");
+		lblNome = new JLabel("Cliente:");
 		lblNome.setFont(new Font("Tahoma", Font.BOLD, 20));
 
 		lblPedido = new JLabel("Pedido:");
@@ -109,20 +90,80 @@ public class EncerrarPedidoUI extends JInternalFrame {
 		btnEncerrar = new JButton("Encerrar");
 
 		btnExcluirItem = new JButton("Excluir Item");
+		btnExcluirItem.addActionListener(new ActionListener() {
 
-		lblTotal = new JLabel("Total: R$");
-		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			@Override
+			public void actionPerformed(ActionEvent e) {
 
-		lblValor = new JLabel("Valor");
-		lblValor.setText("" + valorTotal);
-		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				try {
+
+					int linhaSelecionada = tableEncerraPedido.getSelectedRow();
+
+					if (linhaSelecionada > -1) {
+
+						int opcao = JOptionPane.showConfirmDialog(null,
+								"Deseja excluir o produto selecionado?");
+
+						if (opcao == 0) {
+
+							String nomeProduto = tableEncerraPedido.getValueAt(
+									linhaSelecionada, 0).toString();
+
+							Produto produto = (Produto) new ProdutoController()
+									.getPorNome(nomeProduto);
+
+							int qtdeProduto = Integer
+									.parseInt(tableEncerraPedido.getValueAt(
+											linhaSelecionada, 2).toString());
+
+							ProdutoPedido produtoPedido = (ProdutoPedido) new ProdutoPedidoController()
+									.getPorNomeQtdeIdPedido(produto.getId(),
+											qtdeProduto, pedido.getId());
+
+							new ProdutoPedidoController()
+									.excluir(produtoPedido);
+
+							tableEncerraPedido
+									.setModel(new EncerrarPedidoTableModel(
+											getListProdutos(pedido.getId())));
+
+							lblValor.setText(""
+									+ getValorTotal(getListProdutos(pedido
+											.getId())));
+
+							PrincipalUI
+									.obterInstancia()
+									.getTablePedidoAberto()
+									.setModel(
+											new PedidoAbertoTableModel(
+													new PedidoController()
+															.getListPedidosAbertos()));
+
+							JOptionPane.showMessageDialog(null,
+									"Produto excluído com sucesso.");
+						}
+
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Selecione um item do pedido.");
+					}
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		btnAdicionarProduto = new JButton("Add Produto");
 		btnAdicionarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
+				dispose();
+
 				try {
-					FazerPedidoUI fazerPedido = new FazerPedidoUI(tableEncerraPedido);
+
+					FazerPedidoUI fazerPedido = new FazerPedidoUI(
+							tableEncerraPedido);
 					fazerPedido.getCmbPedido().setSelectedItem(pedido.getId());
 
 					if (pedido.getCliente() != null) {
@@ -143,12 +184,32 @@ public class EncerrarPedidoUI extends JInternalFrame {
 							.add(fazerPedido, 0);
 					fazerPedido.setVisible(true);
 
+					// PrincipalUI
+					// .obterInstancia()
+					// .getTablePedidoAberto()
+					// .setModel(
+					// new PedidoAbertoTableModel(
+					// new PedidoController()
+					// .getListPedidosAbertos()));
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
 			}
 		});
+
+		lblTotal = new JLabel("Total: R$");
+		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		lblValor = new JLabel("Valor");
+		try {
+			lblValor.setText(""
+					+ getValorTotal(getListProdutos(pedido.getId())));
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
@@ -205,13 +266,15 @@ public class EncerrarPedidoUI extends JInternalFrame {
 																										lblNumeroPedido)
 																								.addPreferredGap(
 																										ComponentPlacement.RELATED,
-																										337,
+																										322,
 																										Short.MAX_VALUE)
 																								.addComponent(
 																										lblData)
-																								.addGap(18)
+																								.addPreferredGap(
+																										ComponentPlacement.UNRELATED)
 																								.addComponent(
-																										lblDdmmyyyy))
+																										lblDdmmyyyy)
+																								.addGap(6))
 																				.addComponent(
 																						lblNomeCliente)))
 												.addComponent(
@@ -230,7 +293,7 @@ public class EncerrarPedidoUI extends JInternalFrame {
 																		ComponentPlacement.RELATED)
 																.addComponent(
 																		lblValor)
-																.addGap(105)
+																.addGap(99)
 																.addComponent(
 																		btnAdicionarProduto,
 																		GroupLayout.DEFAULT_SIZE,
@@ -243,13 +306,12 @@ public class EncerrarPedidoUI extends JInternalFrame {
 																		GroupLayout.PREFERRED_SIZE,
 																		120,
 																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		ComponentPlacement.UNRELATED)
+																.addGap(12)
 																.addComponent(
 																		btnEncerrar,
-																		GroupLayout.DEFAULT_SIZE,
-																		117,
-																		Short.MAX_VALUE)))
+																		GroupLayout.PREFERRED_SIZE,
+																		123,
+																		GroupLayout.PREFERRED_SIZE)))
 								.addContainerGap()));
 		gl_panel.setVerticalGroup(gl_panel
 				.createParallelGroup(Alignment.LEADING)
@@ -279,8 +341,8 @@ public class EncerrarPedidoUI extends JInternalFrame {
 														GroupLayout.PREFERRED_SIZE,
 														25,
 														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblDdmmyyyy)
-												.addComponent(lblData))
+												.addComponent(lblData)
+												.addComponent(lblDdmmyyyy))
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(scrollPane,
 										GroupLayout.PREFERRED_SIZE, 368,
@@ -300,7 +362,7 @@ public class EncerrarPedidoUI extends JInternalFrame {
 		tableEncerraPedido = new JTable();
 		try {
 			tableEncerraPedido.setModel(new EncerrarPedidoTableModel(
-					listProdutos));
+					getListProdutos(pedido.getId())));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -311,12 +373,43 @@ public class EncerrarPedidoUI extends JInternalFrame {
 
 	}
 
+	private double getValorTotal(final List<Entidade> listProdutos)
+			throws Exception {
+
+		double valorTotal = 0;
+
+		if (!listProdutos.isEmpty()) {
+			for (Entidade e : listProdutos) {
+				ProdutoPedido prodPedido = (ProdutoPedido) e;
+
+				Produto prod = (Produto) new ProdutoController()
+						.getPorId(prodPedido.getIdProduto());
+				valorTotal += prod.getPrecoVenda() * prodPedido.getQtde();
+
+			}
+
+		}
+		return valorTotal;
+	}
+
 	public Cliente getCliente() {
 		return cliente;
 	}
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	/**
+	 * Retorna uma lista de entidade ProdutoPedido que tenham o id do pedido
+	 * igual ao passado como parâmetro.
+	 * 
+	 * @return new ProdutoPedidoController().getPorIdPedido(idPedido)
+	 * @throws Exception
+	 */
+	public List<Entidade> getListProdutos(int idPedido) throws Exception {
+		return new ProdutoPedidoController().getPorIdPedido(idPedido);
+
 	}
 
 }

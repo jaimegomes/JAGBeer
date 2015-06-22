@@ -127,7 +127,7 @@ public class ProdutoController implements IController {
 	public List<Entidade> getListNomesProdutos(String nome) throws Exception {
 
 		if (nome == null || nome.trim().equals(""))
-			throw new Exception("O nome nóo pode ser nulo ou em branco.");
+			throw new Exception("O nome não pode ser nulo ou em branco.");
 
 		return dao.getListNomesProdutos(nome);
 	}

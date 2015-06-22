@@ -70,7 +70,6 @@ public class PrincipalUI extends JFrame {
 				try {
 
 					PrincipalUI frame = obterInstancia();
-					// PrincipalUI frame = new PrincipalUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -341,8 +340,6 @@ public class PrincipalUI extends JFrame {
 				} else if (jtfCliente.getText().isEmpty()
 						&& jtfPedido.getText().isEmpty()) {
 
-					listPedidosAbertos = new ArrayList<Entidade>();
-
 					tablePedidoAberto.setModel(new PedidoAbertoTableModel(
 							listPedidosAbertos));
 
@@ -372,7 +369,7 @@ public class PrincipalUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				List<Entidade> listProdutoPedido = new ArrayList<Entidade>();
-				EncerrarPedidoUI encerrarPedidoUI;
+				EncerrarEditarPedidoUI encerrarPedidoUI;
 				ProdutoPedido produtoPedido = null;
 				try {
 
@@ -398,8 +395,7 @@ public class PrincipalUI extends JFrame {
 							}
 						}
 
-						encerrarPedidoUI = new EncerrarPedidoUI(
-								listProdutoPedido, tablePedidoAberto, pedido);
+						encerrarPedidoUI = new EncerrarEditarPedidoUI(tablePedidoAberto, pedido);
 
 						getContentPane().add(encerrarPedidoUI, 0);
 						encerrarPedidoUI.setVisible(true);

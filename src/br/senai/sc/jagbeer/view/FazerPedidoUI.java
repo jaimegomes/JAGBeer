@@ -362,32 +362,30 @@ public class FazerPedidoUI extends JInternalFrame {
 
 					if (tableEncerrarPedido != null) {
 
-						for (Entidade e : new ProdutoPedidoController()
-								.getPorIdPedido(pedido.getId())) {
+						dispose();
 
-							ProdutoPedido prodPedido = (ProdutoPedido) e;
+						tableEncerrarPedido.setModel(new EncerrarPedidoTableModel(
+								new ProdutoPedidoController()
+										.getPorIdPedido(pedido.getId())));
+						EncerrarEditarPedidoUI encerrarEditarPedido = new EncerrarEditarPedidoUI(
+								tableEncerrarPedido, pedido);
 
-							Produto produto = (Produto) new ProdutoController()
-									.getPorId(prodPedido.getIdProduto());
-							//
-							// ItemPedido itemPedido = new ItemPedido(produto,
-							// prodPedido.getQtde());
+						encerrarEditarPedido.requestFocus(true);
+						encerrarEditarPedido.setFocusable(true);
+						encerrarEditarPedido.moveToFront();
+						PrincipalUI.obterInstancia().getContentPane()
+								.add(encerrarEditarPedido, 0);
+						encerrarEditarPedido.setVisible(true);
 
-							// listItensPedido.add(itemPedido);
-
-							listProdutoPedido.add(prodPedido);
-						}
-
-						tableEncerrarPedido
-								.setModel(new EncerrarPedidoTableModel(
-										listProdutoPedido));
 					}
 
-					JTable tablePrincipal = PrincipalUI.obterInstancia()
-							.getTablePedidoAberto();
-
-					tablePrincipal.setModel(new PedidoAbertoTableModel(
-							new PedidoController().getPedidosAbertos()));
+					PrincipalUI
+							.obterInstancia()
+							.getTablePedidoAberto()
+							.setModel(
+									new PedidoAbertoTableModel(
+											new PedidoController()
+													.getListPedidosAbertos()));
 
 					JOptionPane.showMessageDialog(null,
 							"Produtos inseridos com sucesso.");

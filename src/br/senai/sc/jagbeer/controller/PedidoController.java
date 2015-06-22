@@ -76,20 +76,6 @@ public class PedidoController implements IController {
 
 	}
 
-	public List<Entidade> getPedidosAbertos() throws Exception {
-
-		return dao.getListPedidosAbertos();
-	}
-
-	//
-	// public Entidade getPorIdStatusAberto(int id) throws Exception {
-	//
-	// if (id <= 0)
-	// throw new Exception("O id deve ser maior que zero.");
-	//
-	// return dao.getPorIdStatusAberto(id);
-	// }
-
 	public Entidade getPorIdCliente(int idCliente) throws Exception {
 
 		if (idCliente <= 0)
