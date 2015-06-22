@@ -20,6 +20,7 @@ import br.senai.sc.jagbeer.model.Cliente;
  * @author Bazzi
  *
  */
+
 public class ClienteDAO extends GenericDAO {
 
 	private Connection con = Conexao.getConnection();
