@@ -25,6 +25,7 @@ import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.ClienteTableModel;
 import br.senai.sc.jagbeer.model.Pedido;
+import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
 
 public class CadastroClienteUI extends JInternalFrame {
 
@@ -39,7 +40,8 @@ public class CadastroClienteUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroClienteUI(final Cliente c, final JTable table) {
+	public CadastroClienteUI(final Cliente c, final JTable table,
+			final String flagTabela) {
 
 		clienteEdicao = c;
 
@@ -158,12 +160,20 @@ public class CadastroClienteUI extends JInternalFrame {
 
 				if (table != null) {
 					try {
-						table.setModel(new ClienteTableModel(
-								new ClienteController().listar()));
+						if (flagTabela.equals("cliente")) {
+							table.setModel(new ClienteTableModel(
+									new ClienteController().listar()));
+						} else if (flagTabela.equals("principal")) {
+							table.setModel(new PedidoAbertoTableModel(
+									new PedidoController()
+											.getListPedidosAbertos()));
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+
 				}
+
 			}
 		});
 

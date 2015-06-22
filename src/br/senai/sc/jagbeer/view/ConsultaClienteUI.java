@@ -14,12 +14,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.ClienteTableModel;
-import javax.swing.ListSelectionModel;
 
 public class ConsultaClienteUI extends JInternalFrame {
 
@@ -112,14 +112,14 @@ public class ConsultaClienteUI extends JInternalFrame {
 								.getNomeSelecionado(nome);
 
 						cadClienteUI = new CadastroClienteUI(clienteEditar,
-								tableConsultaCliente);
+								tableConsultaCliente, "cliente");
 						PrincipalUI.obterInstancia().getContentPane()
 								.add(cadClienteUI, 0);
 						cadClienteUI.setVisible(true);
 
 					} else {
 						cadClienteUI = new CadastroClienteUI(null,
-								tableConsultaCliente);
+								tableConsultaCliente, "cliente");
 
 					}
 
@@ -265,7 +265,8 @@ public class ConsultaClienteUI extends JInternalFrame {
 										Short.MAX_VALUE)));
 
 		tableConsultaCliente = new JTable();
-		tableConsultaCliente.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableConsultaCliente
+				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		// try {
 		// tableConsultaCliente.setModel(new ClienteTableModel(
 		// new ClienteController().listar()));

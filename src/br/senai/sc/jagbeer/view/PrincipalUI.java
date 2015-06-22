@@ -49,8 +49,6 @@ public class PrincipalUI extends JFrame {
 	private JTable tablePedidoAberto;
 
 	private static PrincipalUI instancia;
-	private List<Entidade> listPedidosAbertos = new PedidoController()
-			.getListPedidosAbertos();
 
 	public static PrincipalUI obterInstancia() throws Exception {
 
@@ -103,7 +101,7 @@ public class PrincipalUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				CadastroClienteUI cadClienteUI = new CadastroClienteUI(null,
-						null);
+						tablePedidoAberto, "principal");
 				cadClienteUI.requestFocus(true);
 				cadClienteUI.setFocusable(true);
 				cadClienteUI.moveToFront();
@@ -205,7 +203,7 @@ public class PrincipalUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ConfigurarRelatorioFaturamentoUI relFaturamento = new ConfigurarRelatorioFaturamentoUI();
+				RelatorioFaturamentoUI relFaturamento = new RelatorioFaturamentoUI();
 				relFaturamento.requestFocus(true);
 				relFaturamento.setFocusable(true);
 				relFaturamento.moveToFront();
@@ -249,6 +247,17 @@ public class PrincipalUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+				List<Entidade> listPedidosAbertos = new ArrayList<Entidade>();
+				try {
+					listPedidosAbertos = new PedidoController()
+							.getListPedidosAbertos();
+
+					System.out.println("listPedidosAbertos: "
+							+ listPedidosAbertos.size());
+				} catch (Exception e3) {
+					e3.printStackTrace();
+				}
 
 				// campo cliente preenchido
 				if (!jtfCliente.getText().isEmpty()
@@ -395,7 +404,8 @@ public class PrincipalUI extends JFrame {
 							}
 						}
 
-						encerrarPedidoUI = new EncerrarEditarPedidoUI(tablePedidoAberto, pedido);
+						encerrarPedidoUI = new EncerrarEditarPedidoUI(
+								tablePedidoAberto, pedido);
 
 						getContentPane().add(encerrarPedidoUI, 0);
 						encerrarPedidoUI.setVisible(true);
@@ -549,7 +559,7 @@ public class PrincipalUI extends JFrame {
 								Short.MAX_VALUE)));
 
 		tablePedidoAberto.setModel(new PedidoAbertoTableModel(
-				listPedidosAbertos));
+				new PedidoController().getListPedidosAbertos()));
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
 	}
@@ -570,11 +580,4 @@ public class PrincipalUI extends JFrame {
 		this.tablePedidoAberto = tablePedidoAberto;
 	}
 
-	public List<Entidade> getListPedidosAbertos() {
-		return listPedidosAbertos;
-	}
-
-	public void setListPedidosAbertos(List<Entidade> listPedidosAbertos) {
-		this.listPedidosAbertos = listPedidosAbertos;
-	}
 }

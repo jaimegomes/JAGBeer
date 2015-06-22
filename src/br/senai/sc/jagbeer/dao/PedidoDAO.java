@@ -358,7 +358,7 @@ public class PedidoDAO extends GenericDAO {
 
 		List<Entidade> listPedidosAbertos = new ArrayList<Entidade>();
 
-		String sql = "SELECT produtopedido.id, produtopedido.idproduto, produtopedido.idpedido, produtopedido.quantidade, pedido.idcliente, pedido.idmesa FROM produtopedido JOIN pedido  ON produtopedido.id = pedido.id AND pedido.status = 1 AND pedido.datapedido = ?";
+		String sql = "SELECT  produtopedido.id, produtopedido.idproduto, produtopedido.idpedido, produtopedido.quantidade, pedido.idcliente, pedido.idmesa FROM produtopedido  JOIN pedido  ON pedido.status = 1 AND pedido.datapedido = ? ORDER BY produtopedido.id";
 
 		try {
 
