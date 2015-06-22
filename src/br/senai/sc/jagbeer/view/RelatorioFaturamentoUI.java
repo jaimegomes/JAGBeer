@@ -25,6 +25,7 @@ import br.senai.sc.jagbeer.model.RelatorioFaturamentoTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 public class RelatorioFaturamentoUI extends JInternalFrame {
 
@@ -36,6 +37,7 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 	private JLabel lblPeriodo2;
 	private JLabel lblAte;
 	private JButton btnFechar;
+	private JTable table;
 
 	/**
 	 * Create the frame.
@@ -96,86 +98,57 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 
 		JLabel lblPeriodo = new JLabel("Periodo:");
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		lblTotal)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addComponent(
-																		lblValortotal)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED,
-																		207,
-																		Short.MAX_VALUE)
-																.addComponent(
-																		btnFechar))
-												.addGroup(
-														gl_panel.createParallelGroup(
-																Alignment.TRAILING)
-																.addGroup(
-																		gl_panel.createSequentialGroup()
-																				.addComponent(
-																						lblPeriodo,
-																						GroupLayout.PREFERRED_SIZE,
-																						42,
-																						GroupLayout.PREFERRED_SIZE)
-																				.addGap(18)
-																				.addComponent(
-																						lblPeriodo1,
-																						GroupLayout.PREFERRED_SIZE,
-																						42,
-																						GroupLayout.PREFERRED_SIZE)
-																				.addPreferredGap(
-																						ComponentPlacement.UNRELATED)
-																				.addComponent(
-																						lblAte)
-																				.addPreferredGap(
-																						ComponentPlacement.UNRELATED)
-																				.addComponent(
-																						lblPeriodo2))
-																.addComponent(
-																		scrollPane,
-																		GroupLayout.PREFERRED_SIZE,
-																		398,
-																		GroupLayout.PREFERRED_SIZE)))
-								.addContainerGap()));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(lblPeriodo2)
-												.addComponent(lblAte)
-												.addComponent(lblPeriodo1)
-												.addComponent(lblPeriodo))
-								.addGap(8)
-								.addComponent(scrollPane,
-										GroupLayout.PREFERRED_SIZE, 402,
-										GroupLayout.PREFERRED_SIZE)
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(lblTotal)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblValortotal)
+							.addPreferredGap(ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
+							.addComponent(btnFechar))
+						.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+							.addGroup(gl_panel.createSequentialGroup()
+								.addComponent(lblPeriodo, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblPeriodo1, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
 								.addGap(18)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addComponent(lblTotal)
-												.addGroup(
-														gl_panel.createParallelGroup(
-																Alignment.BASELINE)
-																.addComponent(
-																		lblValortotal)
-																.addComponent(
-																		btnFechar)))
-								.addContainerGap()));
+								.addComponent(lblAte)
+								.addGap(18)
+								.addComponent(lblPeriodo2, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 398, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPeriodo2)
+						.addComponent(lblPeriodo)
+						.addComponent(lblPeriodo1)
+						.addComponent(lblAte))
+					.addGap(8)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 402, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblTotal)
+							.addComponent(lblValortotal))
+						.addComponent(btnFechar))
+					.addContainerGap())
+		);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Num. Pedido", "Data", "Valor"
+			}
+		));
+		scrollPane.setViewportView(table);
 
 		tableRelatorioFaturamento = new JTable();
 		try {

@@ -205,12 +205,13 @@ public class PrincipalUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				RelatorioFaturamentoUI relFaturamento = new RelatorioFaturamentoUI();
-				relFaturamento.requestFocus(true);
-				relFaturamento.setFocusable(true);
-				relFaturamento.moveToFront();
-				getContentPane().add(relFaturamento, 0);
-				relFaturamento.setVisible(true);
+				ConfigurarRelatorioFaturamentoUI configRelFat = new ConfigurarRelatorioFaturamentoUI();
+				//RelatorioFaturamentoUI relFaturamento = new RelatorioFaturamentoUI();
+				configRelFat.requestFocus(true);
+				configRelFat.setFocusable(true);
+				configRelFat.moveToFront();
+				getContentPane().add(configRelFat, 0);
+				configRelFat.setVisible(true);
 			}
 		});
 		mnRelatorio.add(mntmFaturamento);
