@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
 
-public class PedidoAbertoTableModel extends AbstractTableModel {
+public class PrincipalTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
 	private static final int COL_PEDIDO = 0;
@@ -16,7 +16,7 @@ public class PedidoAbertoTableModel extends AbstractTableModel {
 
 	private List<Entidade> valores;
 
-	public PedidoAbertoTableModel(List<Entidade> list) {
+	public PrincipalTableModel(List<Entidade> list) {
 		this.valores = new ArrayList<Entidade>(list);
 	}
 
@@ -42,24 +42,24 @@ public class PedidoAbertoTableModel extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int row, int column) {
-		PedidoAberto pedidoAberto = (PedidoAberto) valores.get(row);
+		Pedido pedido = (Pedido) valores.get(row);
 		if (column == COL_PEDIDO)
-			return pedidoAberto.getPedido();
+			return pedido.getId();
 		else if (column == COL_CLIENTE)
-			return pedidoAberto.getCliente();
+			return pedido.getCliente().getNome();
 		else if (column == COL_VALOR_PARCIAL)
-			return pedidoAberto.getValorParcial();
+			return pedido.getValor();
 		return "";
 	}
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		PedidoAberto pedidoAberto = (PedidoAberto) valores.get(rowIndex);
+		Pedido pedido = (Pedido) valores.get(rowIndex);
 		if (columnIndex == COL_PEDIDO)
-			pedidoAberto.setPedido(Integer.parseInt(aValue.toString()));
+			pedido.setId(Integer.parseInt(aValue.toString()));
 		else if (columnIndex == COL_CLIENTE)
-			pedidoAberto.setCliente(aValue.toString());
+			pedido.getCliente().setNome(aValue.toString());
 		else if (columnIndex == COL_VALOR_PARCIAL)
-			pedidoAberto.setValorParcial(Double.parseDouble(aValue.toString()));
+			pedido.setValor(Double.parseDouble(aValue.toString()));
 	}
 
 	public Class<?> getColumnClass(int columnIndex) {

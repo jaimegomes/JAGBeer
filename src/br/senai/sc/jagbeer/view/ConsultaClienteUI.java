@@ -110,7 +110,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 
 						cadClienteUI = new CadastroClienteUI(clienteEditar,
 								tableConsultaCliente, "cliente");
-						PrincipalUI.obterInstancia().getContentPane()
+						PrincipalUI.getInstancia().getContentPane()
 								.add(cadClienteUI, 0);
 						cadClienteUI.setVisible(true);
 

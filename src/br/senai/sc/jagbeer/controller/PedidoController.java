@@ -8,14 +8,12 @@ import javax.swing.JTable;
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.dao.PedidoDAO;
 import br.senai.sc.jagbeer.interfaces.IController;
-import br.senai.sc.jagbeer.model.EncerrarPedido;
 import br.senai.sc.jagbeer.model.Pedido;
 
 public class PedidoController implements IController {
 
 	PedidoDAO dao = new PedidoDAO();
 	Pedido pedido = null;
-	EncerrarPedido encerrarPedido = null;
 
 	@Override
 	public void salvar(Entidade entidade) throws Exception {
@@ -77,10 +75,6 @@ public class PedidoController implements IController {
 
 	}
 
-	public Entidade getPorCliente(Entidade entidade) throws Exception {
-		return dao.getPorCliente(entidade);
-	}
-
 	public void encerrarPedido(int idPedidoEncerrar) throws Exception {
 
 		if (idPedidoEncerrar <= 0)
@@ -97,9 +91,9 @@ public class PedidoController implements IController {
 			throws Exception {
 		return dao.getPorData(dataInicio, dataFim);
 	}
-
-	public List<Entidade> getAbertosHoje() throws Exception {
-		return dao.getAbertosHoje();
+	
+	public Entidade getPorIdCliente(int id) throws Exception {
+		return dao.getPorIdCliente(id);
 	}
 
 }

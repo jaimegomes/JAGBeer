@@ -127,7 +127,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 						
 						cadMesaUI = new CadastroMesaUI(editarMesa, tableMesa);
 
-						PrincipalUI.obterInstancia().getContentPane()
+						PrincipalUI.getInstancia().getContentPane()
 								.add(cadMesaUI, 0);
 						
 						cadMesaUI.setVisible(true);
@@ -135,7 +135,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 						cadMesaUI = new CadastroMesaUI(null, tableMesa);
 					}
 
-					PrincipalUI.obterInstancia().
+					PrincipalUI.getInstancia().
 					getContentPane().add(cadMesaUI, 0);
 					cadMesaUI.setVisible(true);
 

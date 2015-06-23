@@ -6,16 +6,18 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
+import br.senai.sc.jagbeer.controller.ProdutoController;
 
-public class ItemPedidoTableModel extends AbstractTableModel {
+public class FazerPedidoTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
 	private static final int COL_NOME_PRODUTO = 0;
 	private static final int COL_QTDE = 1;
+	private static final int COL_VALOR = 2;
 
 	private List<Entidade> valores;
 
-	public ItemPedidoTableModel(List<Entidade> list) {
+	public FazerPedidoTableModel(List<Entidade> list) {
 		this.valores = new ArrayList<Entidade>(list);
 	}
 
@@ -34,7 +36,7 @@ public class ItemPedidoTableModel extends AbstractTableModel {
 	 * @return 2
 	 */
 	public int getColumnCount() {
-		return 2;
+		return 3;
 	}
 
 	/**
@@ -47,6 +49,8 @@ public class ItemPedidoTableModel extends AbstractTableModel {
 			return "Produto";
 		if (column == COL_QTDE)
 			return "Quantidade";
+		if (column == COL_VALOR)
+			return "Valor";
 		return "";
 	}
 
@@ -57,11 +61,20 @@ public class ItemPedidoTableModel extends AbstractTableModel {
 	 * @param int column
 	 */
 	public Object getValueAt(int row, int column) {
-		ItemPedido itemPedido = (ItemPedido) valores.get(row);
+		ProdutoPedido produtoPedido = (ProdutoPedido) valores.get(row);
+		Produto produto = null;
+		try {
+			produto = (Produto) new ProdutoController().getPorId(produtoPedido
+					.getIdProduto());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (column == COL_NOME_PRODUTO)
-			return itemPedido.getProduto().getNome();
+			return produto.getNome();
 		else if (column == COL_QTDE)
-			return itemPedido.getQtde();
+			return produtoPedido.getQtde();
+		else if (column == COL_VALOR)
+			return produto.getPrecoVenda();
 		return "";
 	}
 
@@ -75,12 +88,21 @@ public class ItemPedidoTableModel extends AbstractTableModel {
 	 * @param int columnIndex
 	 */
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		
-		ItemPedido itemPedido = (ItemPedido) valores.get(rowIndex);
+
+		ProdutoPedido produtoPedido = (ProdutoPedido) valores.get(rowIndex);
+		Produto produto = null;
+		try {
+			produto = (Produto) new ProdutoController().getPorId(produtoPedido
+					.getIdProduto());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (columnIndex == COL_NOME_PRODUTO)
-			itemPedido.getProduto().setNome(aValue.toString());
+			produto.setNome(aValue.toString());
 		else if (columnIndex == COL_QTDE)
-			itemPedido.setQtde(Integer.parseInt(aValue.toString()));
+			produtoPedido.setQtde(Integer.parseInt(aValue.toString()));
+		else if (columnIndex == COL_VALOR)
+			produto.setPrecoVenda(Double.parseDouble(aValue.toString()));
 	}
 
 	/**

@@ -25,7 +25,7 @@ import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.EncerrarPedidoTableModel;
 import br.senai.sc.jagbeer.model.Pedido;
-import br.senai.sc.jagbeer.model.PedidoAbertoTableModel;
+import br.senai.sc.jagbeer.model.PrincipalTableModel;
 import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoPedido;
 
@@ -132,10 +132,10 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 											.getId())));
 
 							PrincipalUI
-									.obterInstancia()
+									.getInstancia()
 									.getTablePedidoAberto()
 									.setModel(
-											new PedidoAbertoTableModel(
+											new PrincipalTableModel(
 													new PedidoController()
 															.getListPedidosEmAberto()));
 
@@ -161,11 +161,11 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 				try {
 
 					FazerPedidoUI fazerPedido = new FazerPedidoUI(
-							tableEncerraPedido);
+							tableEncerraPedido, null);
 					fazerPedido.requestFocus(true);
 					fazerPedido.setFocusable(true);
 					fazerPedido.moveToFront();
-					PrincipalUI.obterInstancia().getContentPane()
+					PrincipalUI.getInstancia().getContentPane()
 							.add(fazerPedido, 0);
 					fazerPedido.setVisible(true);
 
@@ -182,10 +182,10 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 					}
 
 					PrincipalUI
-							.obterInstancia()
+							.getInstancia()
 							.getTablePedidoAberto()
 							.setModel(
-									new PedidoAbertoTableModel(
+									new PrincipalTableModel(
 											new PedidoController()
 													.getListPedidosEmAberto()));
 

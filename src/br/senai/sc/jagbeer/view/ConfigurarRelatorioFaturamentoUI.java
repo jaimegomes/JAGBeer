@@ -115,7 +115,7 @@ public class ConfigurarRelatorioFaturamentoUI extends JInternalFrame {
 							tableRelatorioFaturamento, sdf.parse(jtfDataInicio
 									.getText()),
 							sdf.parse(jtfDataFim.getText()));
-					PrincipalUI.obterInstancia().getContentPane()
+					PrincipalUI.getInstancia().getContentPane()
 							.add(relatorioFaturamentoUI, 0);
 					relatorioFaturamentoUI.setVisible(true);
 
