@@ -315,8 +315,7 @@ public class PedidoDAO extends GenericDAO {
 
 			while (result.next()) {
 				Pedido pedido = new Pedido(result.getInt("id"),
-						result.getDate("dataPedido"),
-						result.getDouble("valorFinal"));
+						result.getDate("dataPedido"), result.getDouble("valor"));
 
 				listPedidos.add(pedido);
 

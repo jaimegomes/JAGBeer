@@ -67,7 +67,7 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 
 		setTitle("Encerrar Pedido");
 		setClosable(true);
-		setBounds(100, 100, 650, 600);
+		setBounds(400, 50, 650, 600);
 
 		panel = new JPanel();
 

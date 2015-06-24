@@ -6,8 +6,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -15,55 +13,48 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
-
-import br.senai.sc.jagbeer.abstracts.Entidade;
-import br.senai.sc.jagbeer.controller.PedidoController;
-import br.senai.sc.jagbeer.model.Pedido;
 
 public class FiltroRelatorioUI extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFormattedTextField jtfDataInicio;
 	private JFormattedTextField jtfDataFim;
-	private JTable tableRelatorioFaturamento;
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-	/**
-	 * Launch the application.
-	 */
 	/**
 	 * Create the frame.
 	 */
 	public FiltroRelatorioUI() {
 		setClosable(true);
 		setTitle("Configurar Relatorio");
-		setBounds(100, 100, 439, 152);
+		setBounds(100, 100, 438, 163);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Filtro de Relatório",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 412, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(84, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 98, Short.MAX_VALUE)
-					.addContainerGap())
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 397,
+								GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(44, Short.MAX_VALUE)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 110,
+								Short.MAX_VALUE).addContainerGap()));
 
-		JLabel lblDataInicio = new JLabel("De:");
+		JLabel lblDataInicio = new JLabel("Per\u00EDodo de");
 
 		MaskFormatter mascara;
 		try {
@@ -107,37 +98,32 @@ public class FiltroRelatorioUI extends JInternalFrame {
 		btnGerarRelatorio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				List<Entidade> listPedidos = new ArrayList<Entidade>();
-				RelatorioFaturamentoUI relatorioFaturamentoUI;
-
 				try {
 
-					listPedidos = (List<Entidade>) new PedidoController()
-							.getPorData(sdf.parse(jtfDataInicio.getText()),
-									sdf.parse(jtfDataFim.getText()));
+					String dataInicio = jtfDataInicio.getValue().toString();
+					String dataFinal = jtfDataFim.getValue().toString();
 
-					System.out.println(listPedidos.size());
+					if (dataInicio != null && dataFinal != null) {
 
-					relatorioFaturamentoUI = new RelatorioFaturamentoUI(
-							tableRelatorioFaturamento, sdf.parse(jtfDataInicio
-									.getText()),
-							sdf.parse(jtfDataFim.getText()));
-					PrincipalUI.getInstancia().getContentPane()
-							.add(relatorioFaturamentoUI, 0);
-					relatorioFaturamentoUI.setVisible(true);
+						RelatorioFaturamentoUI relatorioFaturamentoUI = new RelatorioFaturamentoUI(
+								sdf.parse(dataInicio), sdf.parse(dataFinal));
+
+						PrincipalUI.getInstancia().getContentPane()
+								.add(relatorioFaturamentoUI, 0);
+						relatorioFaturamentoUI.setVisible(true);
+
+						dispose();
+
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Favor selecionar uma data válida");
+
+					}
 
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				}
 
-			}
-		});
-
-		JButton btnLimpar = new JButton("Limpar");
-		btnLimpar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jtfDataInicio.setText("__/__/____");
-				jtfDataFim.setText("__/__/____");
 			}
 		});
 
@@ -148,46 +134,86 @@ public class FiltroRelatorioUI extends JInternalFrame {
 			}
 		});
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblDataInicio, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(jtfDataInicio, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblDataFim)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(jtfDataFim, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnLimpar, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))
-						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-							.addComponent(btnGerarRelatorio)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)))
-					.addGap(36))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(11)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblDataInicio)
-						.addComponent(jtfDataInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDataFim)
-						.addComponent(jtfDataFim, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnLimpar, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnGerarRelatorio)
-						.addComponent(btnCancelar))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(Alignment.TRAILING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.LEADING)
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addComponent(
+																		lblDataInicio,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		Short.MAX_VALUE)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		jtfDataInicio,
+																		GroupLayout.PREFERRED_SIZE,
+																		100,
+																		GroupLayout.PREFERRED_SIZE))
+												.addComponent(
+														btnGerarRelatorio,
+														Alignment.TRAILING))
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.LEADING)
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addComponent(
+																		lblDataFim)
+																.addPreferredGap(
+																		ComponentPlacement.UNRELATED)
+																.addComponent(
+																		jtfDataFim,
+																		GroupLayout.PREFERRED_SIZE,
+																		102,
+																		GroupLayout.PREFERRED_SIZE))
+												.addComponent(
+														btnCancelar,
+														GroupLayout.PREFERRED_SIZE,
+														141,
+														GroupLayout.PREFERRED_SIZE))
+								.addGap(94)));
+		gl_panel.setVerticalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.TRAILING)
+												.addGroup(
+														gl_panel.createParallelGroup(
+																Alignment.BASELINE)
+																.addComponent(
+																		lblDataInicio)
+																.addComponent(
+																		jtfDataInicio,
+																		GroupLayout.PREFERRED_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE)
+																.addComponent(
+																		lblDataFim))
+												.addComponent(
+														jtfDataFim,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))
+								.addGap(18)
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.LEADING)
+												.addComponent(btnGerarRelatorio)
+												.addComponent(btnCancelar))
+								.addGap(14)));
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 
 	}
-
 }
