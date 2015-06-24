@@ -33,9 +33,9 @@ import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PrincipalTableModel;
 
 /**
- * Classe principal do sistema
+ * Classe que contém a tela principal do sistema
  * 
- * @author Bazzi
+ * @author Jaime Gomes
  *
  */
 public class PrincipalUI extends JFrame {

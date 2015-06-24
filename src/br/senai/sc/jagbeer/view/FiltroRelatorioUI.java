@@ -19,6 +19,12 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
+/**
+ * Classe que contém a tela de filtro de relatório
+ * 
+ * @author Jaime Gomes
+ *
+ */
 public class FiltroRelatorioUI extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;

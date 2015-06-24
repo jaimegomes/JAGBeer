@@ -179,10 +179,6 @@ public class ProdutoDAO extends GenericDAO {
 		return produto;
 	}
 
-	@Override
-	public void atualizaTabela(JTable table) throws Exception {
-		table.setModel(new ProdutoTableModel(listar()));
-	}
 
 	/**
 	 * Método responsável por buscar todos os produtos de determinada

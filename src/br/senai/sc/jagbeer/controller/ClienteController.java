@@ -9,6 +9,12 @@ import br.senai.sc.jagbeer.dao.ClienteDAO;
 import br.senai.sc.jagbeer.interfaces.IController;
 import br.senai.sc.jagbeer.model.Cliente;
 
+/**
+ * Classe de controle da entidade Cliente.
+ * 
+ * @author Bazzi
+ *
+ */
 public class ClienteController implements IController {
 
 	ClienteDAO dao = new ClienteDAO();
@@ -84,9 +90,6 @@ public class ClienteController implements IController {
 		return dao.getPorNome(nome);
 	}
 
-	@Override
-	public void atualizaTabela(JTable table) throws Exception {
-		dao.atualizaTabela(table);
-	}
+
 
 }

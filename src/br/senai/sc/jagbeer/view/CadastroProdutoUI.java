@@ -26,6 +26,12 @@ import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
+/**
+ * Classe que contém a tela de cadastro de produto
+ * 
+ * @author Jaime Gomes
+ *
+ */
 public class CadastroProdutoUI extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;

@@ -9,6 +9,13 @@ import br.senai.sc.jagbeer.dao.MesaDAO;
 import br.senai.sc.jagbeer.interfaces.IController;
 import br.senai.sc.jagbeer.model.Mesa;
 
+
+/**
+ * Classe de controle da entidade Mesa.
+ * 
+ * @author Gabriela
+ *
+ */
 public class MesaController implements IController {
 
 	MesaDAO dao = new MesaDAO();
@@ -73,9 +80,5 @@ public class MesaController implements IController {
 		return dao.getPorNumeroMesa(numeroMesa);
 	}
 
-	@Override
-	public void atualizaTabela(JTable table) throws Exception {
-		dao.atualizaTabela(table);
-	}
 
 }

@@ -39,7 +39,7 @@ import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoPedido;
 
 /**
- * Classe View FazerPedidoUI
+ * Classe que contém a tela de fazer pedido
  * 
  * @author Jaime Gomes
  *

@@ -8,6 +8,12 @@ import javax.swing.table.AbstractTableModel;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
 
+/**
+ * Classe que representa a tabela da view RelatorioFaturamentoUI
+ * 
+ * @author Jaime Gomes
+ *
+ */
 public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;

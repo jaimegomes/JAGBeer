@@ -2,52 +2,88 @@ package br.senai.sc.jagbeer.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
+
 import br.senai.sc.jagbeer.abstracts.Entidade;
 
-public class MesaTableModel extends AbstractTableModel{
-	
+/**
+ * Classe que representa a tabela da view ConsultaMesaUI
+ * 
+ * @author Gabriela
+ *
+ */
+public class MesaTableModel extends AbstractTableModel {
+
 	private static final long serialVersionUID = 1L;
 	private static final int COL_NUMEROMESA = 0;
 	private static final int COL_LUGARES = 1;
-	
+
 	private List<Entidade> valores;
-	
-	public MesaTableModel(List<Entidade> list){
+
+	public MesaTableModel(List<Entidade> list) {
 		this.valores = new ArrayList<Entidade>(list);
 	}
-	
+
+	/**
+	 * Retorna a quantidade de linhas da lista.
+	 * 
+	 * @return valores.size();
+	 */
 	public int getRowCount() {
-		//Quantas linhas tem sua tabela? Uma para cada item da lista.
 		return valores.size();
 	}
 
+	/**
+	 * Retorna a quantidade de colunas, deve ser setado manualmente.
+	 * 
+	 * @return 2
+	 */
 	public int getColumnCount() {
-		//Quantas colunas tem a tabela? Nesse exemplo, sÃ³ 2.
 		return 2;
 	}
-	
+
+	/**
+	 * Retorna o nome da coluna passada como parâmetro.
+	 * 
+	 * @param int colunm
+	 */
 	public String getColumnName(int column) {
-		//Qual Ã© o nome das nossas colunas?
-		if (column == COL_NUMEROMESA) return "Numero Mesa";
-		if (column == COL_LUGARES) return "Lugares";
-		return ""; //Nunca deve ocorrer
+		if (column == COL_NUMEROMESA)
+			return "Numero Mesa";
+		if (column == COL_LUGARES)
+			return "Lugares";
+		return "";
 	}
-	
+
+	/**
+	 * Retorna o objeto que está na linha e coluna indicada como parâmetros.
+	 * 
+	 * @param int row
+	 * @param int column
+	 */
 	public Object getValueAt(int row, int column) {
-		//Precisamos retornar o valor da coluna column e da linha row.
 		Mesa mesa = (Mesa) valores.get(row);
-		if (column == COL_NUMEROMESA){
+		if (column == COL_NUMEROMESA) {
 			return mesa.getNumeroMesa();
 		}
 
-		else if (column == COL_LUGARES){
+		else if (column == COL_LUGARES) {
 			return mesa.getLugares();
 		}
-		
+
 		return "";
 	}
-	
+
+	/**
+	 * Atribui valor ao objeto que está na linha e coluna que são passados como
+	 * parâmetros.
+	 * 
+	 * @param Object
+	 *            aValue
+	 * @param int rowIndex
+	 * @param int columnIndex
+	 */
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		Mesa mesa = (Mesa) valores.get(rowIndex);
 		if (columnIndex == COL_NUMEROMESA)
@@ -57,14 +93,35 @@ public class MesaTableModel extends AbstractTableModel{
 
 	}
 
+	/**
+	 * Retorna a classe da coluna passada como parâmetro, caso tenha mais de um
+	 * tipo de parâmetro fazer um if como em setValueAt para verificar qual a
+	 * columnIndex se trata e retornar o tipo da classe.
+	 * 
+	 * @param int columnIndex
+	 * @return Class<?>
+	 */
 	public Class<?> getColumnClass(int columnIndex) {
 		return String.class;
 	}
 
+	/**
+	 * Verifica se a célula passada como parâmetro é editável.
+	 * 
+	 * @param int rowIndex
+	 * @param int columnIndex
+	 * @return boolean true
+	 */
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return true;
+		return false;
 	}
 
+	/**
+	 * Retorna o objeto que está na linha passada como parâmetro.
+	 * 
+	 * @param int row
+	 * @return Produto valores.get(row)
+	 */
 	public Mesa get(int row) {
 		return (Mesa) valores.get(row);
 	}

@@ -2,13 +2,11 @@ package br.senai.sc.jagbeer.interfaces;
 
 import java.util.List;
 
-import javax.swing.JTable;
-
 import br.senai.sc.jagbeer.abstracts.Entidade;
 
 /**
  * Interface Controller, a classe que estender esta interface deve sobrescrever
- * todos os m√©todos que forem usados.
+ * todos os mÈtodos que forem usados.
  * 
  * @author Jaime Gomes
  * 
@@ -16,7 +14,7 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
 public interface IController {
 
 	/**
-	 * M√©todo respons√°vel por persistir a entidade no banco
+	 * MÈtodo respons·vel por persistir a entidade no banco
 	 * 
 	 * @param Entidade
 	 *            entidade
@@ -24,7 +22,7 @@ public interface IController {
 	public void salvar(Entidade entidade) throws Exception;
 
 	/**
-	 * M√©todo respons√°vel por excluir a entidade no banco
+	 * MÈtodo respons·vel por excluir a entidade no banco
 	 * 
 	 * @param Entidade
 	 *            entidade
@@ -32,7 +30,7 @@ public interface IController {
 	public void excluir(Entidade entidade) throws Exception;
 
 	/**
-	 * M√©todo respons√°vel por editar a entidade no banco
+	 * MÈtodo respons·vel por editar a entidade no banco
 	 * 
 	 * @param Entidade
 	 *            entidade
@@ -40,7 +38,7 @@ public interface IController {
 	public void editar(Entidade entidade) throws Exception;
 
 	/**
-	 * M√©todo que retorna uma lista de entidade
+	 * MÈtodo que retorna uma lista de entidade
 	 * 
 	 * @param Entidade
 	 *            entidade
@@ -50,19 +48,11 @@ public interface IController {
 	public List<Entidade> listar() throws Exception;
 
 	/**
-	 * M√©todo que retorna a entidade referente ao id passado como par√¢metro
+	 * MÈtodo que retorna a entidade referente ao id passado como par‚metro
 	 * 
 	 * @param Entidade
 	 *            entidade
 	 */
 	public Entidade getPorId(int id) throws Exception;
-
-	/**
-	 * M√©todo respons√°vel por atualizar a tabela passada como par√¢metro.
-	 * 
-	 * @param Entidade
-	 *            entidade
-	 */
-	public void atualizaTabela(JTable table) throws Exception;
 
 }

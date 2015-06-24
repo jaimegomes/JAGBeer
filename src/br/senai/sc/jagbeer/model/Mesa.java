@@ -2,6 +2,13 @@ package br.senai.sc.jagbeer.model;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
 
+
+/**
+ * Classe que representa a entidade Mesa do banco de dados
+ * 
+ * @author Gabriela
+ *
+ */
 public class Mesa extends Entidade {
 	
 	private Integer id;

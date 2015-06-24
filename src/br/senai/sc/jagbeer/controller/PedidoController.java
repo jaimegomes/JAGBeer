@@ -10,6 +10,13 @@ import br.senai.sc.jagbeer.dao.PedidoDAO;
 import br.senai.sc.jagbeer.interfaces.IController;
 import br.senai.sc.jagbeer.model.Pedido;
 
+
+/**
+ * Classe de controle da entidade Pedido.
+ * 
+ * @author Jaime Gomes
+ *
+ */
 public class PedidoController implements IController {
 
 	PedidoDAO dao = new PedidoDAO();
@@ -67,12 +74,6 @@ public class PedidoController implements IController {
 			throw new Exception("Id deve ser maior que zero.");
 
 		return (Pedido) dao.getPorId(id);
-	}
-
-	@Override
-	public void atualizaTabela(JTable table) throws Exception {
-		dao.atualizaTabela(table);
-
 	}
 
 	public List<Entidade> getListPedidosEmAberto() throws Exception {

@@ -2,12 +2,16 @@ package br.senai.sc.jagbeer.controller;
 
 import java.util.List;
 
-import javax.swing.JTable;
-
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.dao.ProdutoPedidoDAO;
 import br.senai.sc.jagbeer.interfaces.IController;
 
+/**
+ * Classe de controle da entidade ProdutoPedido.
+ * 
+ * @author Jaime Gomes
+ *
+ */
 public class ProdutoPedidoController implements IController {
 
 	private ProdutoPedidoDAO dao = new ProdutoPedidoDAO();
@@ -39,11 +43,6 @@ public class ProdutoPedidoController implements IController {
 	@Override
 	public Entidade getPorId(int id) throws Exception {
 		return dao.getPorId(id);
-	}
-
-	@Override
-	public void atualizaTabela(JTable table) throws Exception {
-
 	}
 
 	public List<Entidade> getPorIdPedido(int idPedido) throws Exception {

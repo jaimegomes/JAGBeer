@@ -9,6 +9,12 @@ import br.senai.sc.jagbeer.dao.ProdutoDAO;
 import br.senai.sc.jagbeer.interfaces.IController;
 import br.senai.sc.jagbeer.model.Produto;
 
+/**
+ * Classe de controle da entidade Produto.
+ * 
+ * @author Jaime Gomes
+ *
+ */
 public class ProdutoController implements IController {
 
 	ProdutoDAO dao = new ProdutoDAO();
@@ -92,11 +98,6 @@ public class ProdutoController implements IController {
 		return produto;
 	}
 
-	@Override
-	public void atualizaTabela(JTable table) throws Exception{
-		dao.atualizaTabela(table);
-
-	}
 
 	/**
 	 * Mótodo responsóvel por buscar todos os produtos de determinada

@@ -27,6 +27,12 @@ import br.senai.sc.jagbeer.model.ClienteTableModel;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PrincipalTableModel;
 
+/**
+ * Classe que contém a tela de cadastro de cliente
+ * 
+ * @author Bazzi
+ *
+ */
 public class CadastroClienteUI extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;

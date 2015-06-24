@@ -3,10 +3,7 @@ package br.senai.sc.jagbeer.model;
 import br.senai.sc.jagbeer.abstracts.Entidade;
 
 /**
- * Classe Produto.
- * Atributos:
- * int id, String nome, Double precoCusto, Double
- * precoVenda, Stirng classificacao;
+ * Classe que representa a entidade Produto do banco de dados
  * 
  * @author Jaime Gomes
  * 
@@ -19,13 +16,30 @@ public class Produto extends Entidade {
 	private Double precoVenda;
 	private String classificacao;
 
+	/**
+	 * Construtor padrão
+	 */
 	public Produto() {
 	}
 
+	/**
+	 * Construtor que recebe o id como parâmetro
+	 * 
+	 * @param id
+	 */
 	public Produto(int id) {
 
 	}
 
+	/**
+	 * Contrutor que recebe como parâmetro o nome, precoCusto, precoVenda e
+	 * classificação
+	 * 
+	 * @param nome
+	 * @param precoCusto
+	 * @param precoVenda
+	 * @param classificacao
+	 */
 	public Produto(String nome, Double precoCusto, Double precoVenda,
 			String classificacao) {
 		this.nome = nome;
@@ -34,6 +48,16 @@ public class Produto extends Entidade {
 		this.classificacao = classificacao;
 	}
 
+	/**
+	 * Contrutor que recebe como parâmetro o id, nome, precoCusto, precoVenda e
+	 * classificação
+	 * 
+	 * @param id
+	 * @param nome
+	 * @param precoCusto
+	 * @param precoVenda
+	 * @param classificacao
+	 */
 	public Produto(int id, String nome, Double precoCusto, Double precoVenda,
 			String classificacao) {
 		this.id = id;

@@ -28,6 +28,12 @@ import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
+/**
+ * Classe que contém a tela de consulta de produto
+ * 
+ * @author Jaime Gomes
+ *
+ */
 public class ConsultaProdutoUI extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -55,6 +61,13 @@ public class ConsultaProdutoUI extends JInternalFrame {
 		setTitle("Consulta de Produtos");
 		setClosable(true);
 		setBounds(100, 100, 650, 450);
+
+		try {
+			table = new JTable(new ProdutoTableModel(listProduto));
+			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,
@@ -165,16 +178,15 @@ public class ConsultaProdutoUI extends JInternalFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				
 				int linhaSelecionada = table.getSelectedRow();
 
 				if (linhaSelecionada > -1) {
-					
-				int opcao = JOptionPane.showConfirmDialog(null,
-						"Deseja excluir?");
 
-				if (opcao == 0) {
-					try {
+					int opcao = JOptionPane.showConfirmDialog(null,
+							"Deseja excluir?");
+
+					if (opcao == 0) {
+						try {
 
 							String nomeProduto = table.getValueAt(
 									linhaSelecionada, 0).toString();
@@ -197,13 +209,12 @@ public class ConsultaProdutoUI extends JInternalFrame {
 							// Atualiza tabela
 							table.setModel(new ProdutoTableModel(
 									new ProdutoController().listar()));
-						
 
-					} catch (Exception e2) {
-						JOptionPane.showMessageDialog(null, e2.getMessage());
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(null, e2.getMessage());
+						}
 					}
 				}
-			} 
 			}
 		});
 
@@ -371,12 +382,6 @@ public class ConsultaProdutoUI extends JInternalFrame {
 										GroupLayout.DEFAULT_SIZE, 285,
 										Short.MAX_VALUE).addContainerGap()));
 
-		try {
-			table = new JTable(new ProdutoTableModel(listProduto));
-			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
 		scrollPane.setViewportView(table);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);

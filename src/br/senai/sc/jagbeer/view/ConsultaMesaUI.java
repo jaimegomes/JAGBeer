@@ -27,6 +27,13 @@ import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.MesaTableModel;
 import javax.swing.ListSelectionModel;
 
+
+/**
+ * Classe que contém a tela de consulta de mesa
+ * 
+ * @author Gabriela
+ *
+ */
 public class ConsultaMesaUI extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;

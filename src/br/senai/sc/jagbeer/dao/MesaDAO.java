@@ -151,10 +151,6 @@ public class MesaDAO extends GenericDAO {
 		return mesa;
 	}
 
-	@Override
-	public void atualizaTabela(JTable table) throws Exception {
-
-	}
 
 	public boolean verificarNumeroMesa(int numeroMesa) throws Exception {
 

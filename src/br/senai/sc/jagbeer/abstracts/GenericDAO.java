@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JTable;
 
 /**
- * Classe abstrata DAO que cont√©m os m√©todos necess√°rios para a manipula√ß√£o das
+ * Classe abstrata DAO que contÈm os mÈtodos necess·rios para a manipulaÁ„o das
  * Entidades no banco de dados.
  * 
  * @author Jaime Gomes
@@ -14,7 +14,7 @@ import javax.swing.JTable;
 public abstract class GenericDAO {
 
 	/**
-	 * M√©todo respons√°vel por persistir a entidade no banco
+	 * MÈtodo respons·vel por persistir a entidade no banco
 	 * 
 	 * @param Entidade
 	 *            entidade
@@ -24,7 +24,7 @@ public abstract class GenericDAO {
 	public abstract void salvar(Entidade entidade) throws Exception;
 
 	/**
-	 * M√©todo respons√°vel por excluir a entidade no banco
+	 * MÈtodo respons·vel por excluir a entidade no banco
 	 * 
 	 * @param Entidade
 	 *            entidade
@@ -34,7 +34,7 @@ public abstract class GenericDAO {
 	public abstract void excluir(Entidade entidade) throws Exception;
 
 	/**
-	 * M√©todo respons√°vel por editar a entidade no banco
+	 * MÈtodo respons·vel por editar a entidade no banco
 	 * 
 	 * @param Entidade
 	 *            entidade
@@ -44,7 +44,7 @@ public abstract class GenericDAO {
 	public abstract void editar(Entidade entidade) throws Exception;
 
 	/**
-	 * M√©todo que retorna uma lista de entidade
+	 * MÈtodo que retorna uma lista de entidade
 	 * 
 	 * @param Entidade
 	 *            entidade
@@ -56,7 +56,7 @@ public abstract class GenericDAO {
 	public abstract List<Entidade> listar() throws Exception;
 
 	/**
-	 * M√©todo que retorna a entidade referente ao id passado como par√¢metro
+	 * MÈtodo que retorna a entidade referente ao id passado como par‚metro
 	 * 
 	 * @param int id
 	 * 
@@ -66,14 +66,5 @@ public abstract class GenericDAO {
 	 */
 	public abstract Entidade getPorId(int id) throws Exception;
 
-	/**
-	 * M√©todo respons√°vel por atualizar a tabela passada como par√¢metro.
-	 * 
-	 * @param Entidade
-	 *            entidade
-	 * 
-	 * @throws Exception
-	 */
-	public abstract void atualizaTabela(JTable table) throws Exception;
 
 }

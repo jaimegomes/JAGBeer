@@ -7,6 +7,12 @@ import javax.swing.table.AbstractTableModel;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
 
+/**
+ * Classe que representa a tabela da view ConsultaProdutoUI
+ * 
+ * @author Jaime Gomes
+ *
+ */
 public class ProdutoTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
@@ -117,7 +123,7 @@ public class ProdutoTableModel extends AbstractTableModel {
 	 * @return boolean true
 	 */
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return true;
+		return false;
 	}
 
 	/**

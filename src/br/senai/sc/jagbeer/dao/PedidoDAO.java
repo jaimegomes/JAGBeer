@@ -235,10 +235,6 @@ public class PedidoDAO extends GenericDAO {
 		return pedido;
 	}
 
-	@Override
-	public void atualizaTabela(JTable table) throws Exception {
-		table.setModel(new ProdutoTableModel(listar()));
-	}
 
 	/**
 	 * Método que retorna uma lista de pedidos com status = 1

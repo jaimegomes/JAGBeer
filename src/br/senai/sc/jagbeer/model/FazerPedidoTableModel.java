@@ -8,6 +8,12 @@ import javax.swing.table.AbstractTableModel;
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.ProdutoController;
 
+/**
+ * Classe que representa a tabela da view FazerPedidoUI
+ * 
+ * @author Jaime Gomes
+ *
+ */
 public class FazerPedidoTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
@@ -33,7 +39,7 @@ public class FazerPedidoTableModel extends AbstractTableModel {
 	/**
 	 * Retorna a quantidade de colunas, deve ser setado manualmente.
 	 * 
-	 * @return 2
+	 * @return 3
 	 */
 	public int getColumnCount() {
 		return 3;
@@ -121,21 +127,21 @@ public class FazerPedidoTableModel extends AbstractTableModel {
 	}
 
 	/**
-	 * Verifica se a célula passada como parâmetro Ã© editÃ¡vel.
+	 * Verifica se a célula passada como parâmetro é editável.
 	 * 
 	 * @param int rowIndex
 	 * @param int columnIndex
 	 * @return boolean true
 	 */
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return true;
+		return false;
 	}
 
 	/**
 	 * Retorna o objeto que está na linha passada como parâmetro.
 	 * 
 	 * @param int row
-	 * @return Aluno valores.get(row)
+	 * @return Produto valores.get(row)
 	 */
 	public Produto get(int row) {
 		return (Produto) valores.get(row);

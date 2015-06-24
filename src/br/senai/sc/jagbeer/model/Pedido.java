@@ -5,8 +5,7 @@ import java.util.Date;
 import br.senai.sc.jagbeer.abstracts.Entidade;
 
 /**
- * Classe Pedido. Atributos: int id, Mesa mesa, Cliente cliente, Date
- * dataPedido, int status;
+ * Classe que representa a entidade Pedido do banco de dados
  * 
  * @author Jaime Gomes
  * 

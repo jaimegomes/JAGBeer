@@ -16,9 +16,10 @@ import br.senai.sc.jagbeer.conexao.Conexao;
 import br.senai.sc.jagbeer.model.Cliente;
 
 /**
+ * Classe DAO, responsável pela manipulação dos dados dos Pedidos no banco.
  * 
  * @author Bazzi
- *
+ * 
  */
 
 public class ClienteDAO extends GenericDAO {
@@ -177,10 +178,6 @@ public class ClienteDAO extends GenericDAO {
 		}
 
 		return cliente;
-	}
-
-	@Override
-	public void atualizaTabela(JTable table) throws Exception {
 	}
 
 	public Entidade getNomeSelecionado(String clientePesquisar)

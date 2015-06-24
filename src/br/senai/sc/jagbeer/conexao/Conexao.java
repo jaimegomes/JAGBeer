@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Classe que faz a conex√£o com o banco de dados.
+ * Classe que faz a conex„o com o banco de dados.
  * 
  * @author Jaime Gomes
  * 
@@ -15,7 +15,7 @@ public class Conexao {
 	static Connection con = null;
 
 	/**
-	 * Metodo que inicia uma conexao com o banco de dados.
+	 * MÈtodo que inicia uma conex„o com o banco de dados.
 	 * 
 	 * @return
 	 */
@@ -24,11 +24,11 @@ public class Conexao {
 		try {
 
 			// Conex„oMySQLWorkbench
-//			 Class.forName("com.mysql.jdbc.Driver");
-//			 String url = "jdbc:mysql://localhost:3306/jagbeer";
-//			 con = DriverManager.getConnection(url, "root","2905");
-//			 //alexandre "root","2905"
-//			 con.setAutoCommit(false);
+			// Class.forName("com.mysql.jdbc.Driver");
+			// String url = "jdbc:mysql://localhost:3306/jagbeer";
+			// con = DriverManager.getConnection(url, "root","2905");
+			// //alexandre "root","2905"
+			// con.setAutoCommit(false);
 
 			// Conex„o Postgres
 			Class.forName("org.postgresql.Driver");
