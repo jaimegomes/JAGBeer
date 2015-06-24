@@ -62,7 +62,7 @@ public class CadastroProdutoUI extends JInternalFrame {
 
 		setTitle("Cadastro de Produto");
 		setClosable(true);
-		setBounds(100, 100, 425, 275);
+		setBounds(850, 20, 425, 275);
 
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,

@@ -44,7 +44,7 @@ public class CadastroMesaUI extends JInternalFrame {
 
 		setTitle("Cadastro de Mesa");
 		setClosable(true);
-		setBounds(100, 100, 344, 203);
+		setBounds(850, 20, 344, 203);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Mesa", TitledBorder.LEADING,

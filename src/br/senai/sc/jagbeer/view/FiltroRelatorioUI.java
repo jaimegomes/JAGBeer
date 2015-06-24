@@ -38,7 +38,7 @@ public class FiltroRelatorioUI extends JInternalFrame {
 	public FiltroRelatorioUI() {
 		setClosable(true);
 		setTitle("Configurar Relatorio");
-		setBounds(100, 100, 438, 163);
+		setBounds(580, 180, 438, 163);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Filtro de Relatório",

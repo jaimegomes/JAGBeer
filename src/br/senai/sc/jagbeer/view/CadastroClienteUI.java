@@ -52,7 +52,7 @@ public class CadastroClienteUI extends JInternalFrame {
 
 		setTitle("Cadastro de Cliente");
 		setClosable(true);
-		setBounds(100, 100, 425, 275);
+		setBounds(850, 20, 425, 275);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,

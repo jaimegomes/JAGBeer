@@ -45,7 +45,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 	public ConsultaClienteUI() {
 		setClosable(true);
 		setTitle("Consulta Cliente");
-		setBounds(100, 100, 656, 450);
+		setBounds(580, 180, 656, 450);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Consulta Cliente",

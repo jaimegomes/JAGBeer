@@ -51,7 +51,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 	public ConsultaMesaUI() {
 		setClosable(true);
 		setTitle("Consulta de Mesas");
-		setBounds(100, 100, 652, 449);
+		setBounds(580, 180, 652, 449);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager
@@ -192,16 +192,16 @@ public class ConsultaMesaUI extends JInternalFrame {
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(lblNome)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
 								.addComponent(btnPesquisar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(btnLimpar, GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+							.addGap(18)
 							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
 								.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE))))
@@ -218,14 +218,14 @@ public class ConsultaMesaUI extends JInternalFrame {
 								.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnPesquisar)
-								.addComponent(btnEditar))
+								.addComponent(btnEditar)
+								.addComponent(btnPesquisar))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnLimpar)
-								.addComponent(btnExcluir))))
+								.addComponent(btnExcluir)
+								.addComponent(btnLimpar))))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 
