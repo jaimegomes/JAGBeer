@@ -403,42 +403,42 @@ public class FazerPedidoUI extends JInternalFrame {
 						pedido.setValor(pedido.getValor() + valor);
 						new PedidoController().editar(pedido);
 
+						PrincipalUI
+								.getInstancia()
+								.getTablePedidoAberto()
+								.setModel(
+										new PrincipalTableModel(
+												new PedidoController()
+														.getListPedidosEmAberto()));
+
+						if (table != null) {
+
+							table.setModel(new FazerPedidoTableModel(
+									new ProdutoPedidoController()
+											.getPorIdPedido(pedido.getId())));
+
+							EncerrarEditarPedidoUI encerrarPedidoUI = new EncerrarEditarPedidoUI(
+									table, pedido);
+							getContentPane().add(encerrarPedidoUI, 0);
+							encerrarPedidoUI.requestFocus(true);
+							encerrarPedidoUI.setFocusable(true);
+							encerrarPedidoUI.moveToFront();
+							PrincipalUI.getInstancia().getContentPane()
+									.add(encerrarPedidoUI, 0);
+							encerrarPedidoUI.setVisible(true);
+
+						}
+
+						JOptionPane.showMessageDialog(null,
+								"Produtos inseridos com sucesso ao pedido de número: "
+										+ pedido.getId());
+
+						dispose();
+
 					} else {
 						JOptionPane.showMessageDialog(null,
-								"Você deve selecionar produtos ao pedido.");
+								"Você deve adicionar produtos ao pedido.");
 					}
-
-					PrincipalUI
-							.getInstancia()
-							.getTablePedidoAberto()
-							.setModel(
-									new PrincipalTableModel(
-											new PedidoController()
-													.getListPedidosEmAberto()));
-
-					if (table != null) {
-
-						table.setModel(new FazerPedidoTableModel(
-								new ProdutoPedidoController()
-										.getPorIdPedido(pedido.getId())));
-
-						EncerrarEditarPedidoUI encerrarPedidoUI = new EncerrarEditarPedidoUI(
-								table, pedido);
-						getContentPane().add(encerrarPedidoUI, 0);
-						encerrarPedidoUI.requestFocus(true);
-						encerrarPedidoUI.setFocusable(true);
-						encerrarPedidoUI.moveToFront();
-						PrincipalUI.getInstancia().getContentPane()
-								.add(encerrarPedidoUI, 0);
-						encerrarPedidoUI.setVisible(true);
-
-					}
-
-					JOptionPane.showMessageDialog(null,
-							"Produtos inseridos com sucesso ao pedido de número: "
-									+ pedido.getId());
-
-					dispose();
 
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());

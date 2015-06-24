@@ -100,6 +100,7 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 
 		lblValor = new JLabel("Valor");
 		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
 		try {
 			lblValor.setText("" + pedido.getValor());
 		} catch (Exception e1) {
@@ -175,13 +176,28 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 							new ProdutoPedidoController()
 									.excluir(produtoPedido);
 
-							pedido.setValor(pedido.getValor()
+							double valor = pedido.getValor()
 									- (produto.getPrecoVenda() * produtoPedido
-											.getQtde()));
+											.getQtde());
+
+							pedido.setValor(valor);
 
 							new PedidoController().editar(pedido);
 
 							listProdutos.remove(linhaSelecionada);
+
+							lblValor.setText("" + valor);
+							tableEncerraPedido
+									.setModel(new FazerPedidoTableModel(
+											listProdutos));
+
+							PrincipalUI
+									.getInstancia()
+									.getTablePedidoAberto()
+									.setModel(
+											new PrincipalTableModel(
+													new PedidoController()
+															.getListPedidosEmAberto()));
 
 						}
 					} else {
@@ -189,9 +205,6 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 								.showMessageDialog(null,
 										"Selecione um produto do pedido que deseja excluir.");
 					}
-
-					tableEncerraPedido.setModel(new FazerPedidoTableModel(
-							listProdutos));
 
 				} catch (Exception e1) {
 					e1.printStackTrace();
