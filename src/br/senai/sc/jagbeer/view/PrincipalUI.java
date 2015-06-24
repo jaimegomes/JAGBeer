@@ -440,6 +440,10 @@ public class PrincipalUI extends JFrame {
 								pedido);
 
 						getContentPane().add(encerrarPedidoUI, 0);
+						encerrarPedidoUI.requestFocus(true);
+						encerrarPedidoUI.setFocusable(true);
+						encerrarPedidoUI.moveToFront();
+						getContentPane().add(encerrarPedidoUI, 0);
 						encerrarPedidoUI.setVisible(true);
 
 					} else {

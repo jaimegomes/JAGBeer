@@ -55,7 +55,11 @@ public class PrincipalTableModel extends AbstractTableModel {
 			if (column == COL_PEDIDO)
 				return pedido.getId();
 			else if (column == COL_CLIENTE)
-				return pedido.getCliente().getNome();
+				if (pedido.getCliente() != null) {
+					return pedido.getCliente().getNome();
+				} else {
+					return "";
+				}
 			else if (column == COL_VALOR_PARCIAL)
 				return pedido.getValor();
 			else if (column == COL_DATA_PEDIDO)

@@ -197,7 +197,8 @@ public class FazerPedidoUI extends JInternalFrame {
 						if (cliente != null) {
 
 							Pedido pedidoCliente = (Pedido) new PedidoController()
-									.getPedidoAbertoPorIdCliente(cliente.getId());
+									.getPedidoAbertoPorIdCliente(cliente
+											.getId());
 
 							cmbPedido.setSelectedItem(pedidoCliente.getId());
 
@@ -415,9 +416,29 @@ public class FazerPedidoUI extends JInternalFrame {
 											new PedidoController()
 													.getListPedidosEmAberto()));
 
+					if (table != null) {
+
+						table.setModel(new FazerPedidoTableModel(
+								new ProdutoPedidoController()
+										.getPorIdPedido(pedido.getId())));
+
+						EncerrarEditarPedidoUI encerrarPedidoUI = new EncerrarEditarPedidoUI(
+								table, pedido);
+						getContentPane().add(encerrarPedidoUI, 0);
+						encerrarPedidoUI.requestFocus(true);
+						encerrarPedidoUI.setFocusable(true);
+						encerrarPedidoUI.moveToFront();
+						PrincipalUI.getInstancia().getContentPane()
+								.add(encerrarPedidoUI, 0);
+						encerrarPedidoUI.setVisible(true);
+
+					}
+
 					JOptionPane.showMessageDialog(null,
 							"Produtos inseridos com sucesso ao pedido de número: "
 									+ pedido.getId());
+
+					dispose();
 
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());

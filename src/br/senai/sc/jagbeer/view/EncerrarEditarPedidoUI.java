@@ -95,7 +95,52 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 
 		lblData = new JLabel("Data:");
 
+		lblTotal = new JLabel("Total: R$");
+		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		lblValor = new JLabel("Valor");
+		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		try {
+			lblValor.setText("" + pedido.getValor());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
 		btnEncerrar = new JButton("Encerrar");
+		btnEncerrar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				int opcao = JOptionPane.showConfirmDialog(null,
+						"Deseja encerrar o pedido?");
+
+				if (opcao == 0) {
+
+					pedido.setStatus(0);
+
+					try {
+						new PedidoController().editar(pedido);
+
+						PrincipalUI
+								.getInstancia()
+								.getTablePedidoAberto()
+								.setModel(
+										new PrincipalTableModel(
+												new PedidoController()
+														.getListPedidosEmAberto()));
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+
+					JOptionPane.showMessageDialog(null,
+							"Pedido encerrado com sucesso.");
+
+					dispose();
+
+				}
+			}
+		});
 
 		btnExcluirItem = new JButton("Excluir Item");
 		btnExcluirItem.addActionListener(new ActionListener() {
@@ -131,7 +176,8 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 									.excluir(produtoPedido);
 
 							pedido.setValor(pedido.getValor()
-									- (produto.getPrecoVenda() * produtoPedido.getQtde()));
+									- (produto.getPrecoVenda() * produtoPedido
+											.getQtde()));
 
 							new PedidoController().editar(pedido);
 
@@ -160,25 +206,15 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 				try {
 
 					FazerPedidoUI fazerPedido = new FazerPedidoUI(
-							tableEncerraPedido, null);
+							tableEncerraPedido, pedido);
 					fazerPedido.requestFocus(true);
 					fazerPedido.setFocusable(true);
 					fazerPedido.moveToFront();
+
 					PrincipalUI.getInstancia().getContentPane()
 							.add(fazerPedido, 0);
+
 					fazerPedido.setVisible(true);
-
-					fazerPedido.getCmbPedido().setSelectedItem(pedido.getId());
-
-					if (pedido.getCliente() != null) {
-						fazerPedido.getCmbCliente().setSelectedItem(
-								pedido.getCliente().getNome());
-					}
-
-					if (pedido.getMesa() != null) {
-						fazerPedido.getCmbMesa().setSelectedItem(
-								pedido.getMesa().getNumeroMesa());
-					}
 
 					PrincipalUI
 							.getInstancia()
@@ -196,17 +232,6 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 
 			}
 		});
-
-		lblTotal = new JLabel("Total: R$");
-		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 15));
-
-		lblValor = new JLabel("Valor");
-		try {
-			lblValor.setText("" + pedido.getValor());
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
@@ -272,23 +297,20 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 																.addGap(17))
 												.addGroup(
 														gl_panel.createParallelGroup(
-																Alignment.TRAILING,
+																Alignment.LEADING,
 																false)
 																.addGroup(
-																		Alignment.LEADING,
 																		gl_panel.createSequentialGroup()
 																				.addGroup(
 																						gl_panel.createParallelGroup(
-																								Alignment.LEADING,
+																								Alignment.TRAILING,
 																								false)
 																								.addComponent(
 																										lblNome,
-																										Alignment.TRAILING,
 																										GroupLayout.DEFAULT_SIZE,
 																										GroupLayout.DEFAULT_SIZE,
 																										Short.MAX_VALUE)
 																								.addGroup(
-																										Alignment.TRAILING,
 																										gl_panel.createSequentialGroup()
 																												.addComponent(
 																														lblPedido,
@@ -320,6 +342,8 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 																														lblData)
 																												.addPreferredGap(
 																														ComponentPlacement.RELATED)))
+																				.addPreferredGap(
+																						ComponentPlacement.RELATED)
 																				.addComponent(
 																						lblDdmmyyyy,
 																						GroupLayout.PREFERRED_SIZE,
@@ -327,7 +351,6 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 																						GroupLayout.PREFERRED_SIZE))
 																.addComponent(
 																		scrollPane,
-																		Alignment.LEADING,
 																		GroupLayout.PREFERRED_SIZE,
 																		574,
 																		GroupLayout.PREFERRED_SIZE)))
@@ -360,8 +383,8 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 														GroupLayout.PREFERRED_SIZE,
 														25,
 														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblDdmmyyyy)
-												.addComponent(lblData))
+												.addComponent(lblData)
+												.addComponent(lblDdmmyyyy))
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(scrollPane,
 										GroupLayout.PREFERRED_SIZE, 368,
@@ -391,4 +414,13 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 		getContentPane().setLayout(groupLayout);
 
 	}
+
+	public JLabel getLblValor() {
+		return lblValor;
+	}
+
+	public void setLblValor(JLabel lblValor) {
+		this.lblValor = lblValor;
+	}
+
 }
