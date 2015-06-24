@@ -23,6 +23,7 @@ import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.ClienteTableModel;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PrincipalTableModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * Classe que contém a tela de consulta de cliente
@@ -45,28 +46,26 @@ public class ConsultaClienteUI extends JInternalFrame {
 	public ConsultaClienteUI() {
 		setClosable(true);
 		setTitle("Consulta Cliente");
-		setBounds(580, 180, 656, 450);
+		setBounds(580, 180, 650, 450);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Consulta Cliente",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(25, Short.MAX_VALUE)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 402,
-								Short.MAX_VALUE).addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 616, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(18, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 
 		JLabel lblNome = new JLabel("Nome:");
 
@@ -195,89 +194,60 @@ public class ConsultaClienteUI extends JInternalFrame {
 		});
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addComponent(
-														scrollPane,
-														GroupLayout.PREFERRED_SIZE,
-														583,
-														GroupLayout.PREFERRED_SIZE)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		lblNome)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addComponent(
-																		jtfNomeCliente,
-																		GroupLayout.PREFERRED_SIZE,
-																		218,
-																		GroupLayout.PREFERRED_SIZE)
-																.addGap(18)
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING,
-																				false)
-																				.addComponent(
-																						btnPesquisar,
-																						GroupLayout.DEFAULT_SIZE,
-																						GroupLayout.DEFAULT_SIZE,
-																						Short.MAX_VALUE)
-																				.addComponent(
-																						btnFechar,
-																						GroupLayout.DEFAULT_SIZE,
-																						150,
-																						Short.MAX_VALUE))
-																.addPreferredGap(
-																		ComponentPlacement.UNRELATED)
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING)
-																				.addComponent(
-																						btnEditar,
-																						GroupLayout.PREFERRED_SIZE,
-																						150,
-																						GroupLayout.PREFERRED_SIZE)
-																				.addComponent(
-																						btnExcluir,
-																						GroupLayout.PREFERRED_SIZE,
-																						150,
-																						GroupLayout.PREFERRED_SIZE))))
-								.addContainerGap()));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(lblNome)
-												.addComponent(
-														jtfNomeCliente,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(btnPesquisar)
-												.addComponent(btnEditar))
-								.addGap(18)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(btnFechar)
-												.addComponent(btnExcluir))
-								.addGap(18)
-								.addComponent(scrollPane,
-										GroupLayout.DEFAULT_SIZE, 276,
-										Short.MAX_VALUE).addContainerGap()));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(scrollPane, Alignment.LEADING)
+						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+							.addComponent(lblNome)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jtfNomeCliente, GroupLayout.PREFERRED_SIZE, 218, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnFechar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnPesquisar, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
+							.addGap(39)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnEditar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnExcluir, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))))
+					.addGap(28))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnPesquisar)
+								.addComponent(btnEditar))
+							.addGap(18)
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnFechar)
+								.addComponent(btnExcluir)))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(29)
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jtfNomeCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNome))))
+					.addGap(18)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 
 		tableConsultaCliente = new JTable();
+		tableConsultaCliente.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Nome", "Telefone", "E-mail"
+			}
+		));
+		tableConsultaCliente.getColumnModel().getColumn(0).setPreferredWidth(277);
+		tableConsultaCliente.getColumnModel().getColumn(1).setPreferredWidth(90);
+		tableConsultaCliente.getColumnModel().getColumn(2).setPreferredWidth(182);
 		tableConsultaCliente
 				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		// try {
