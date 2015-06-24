@@ -40,7 +40,7 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 	// recebe como parametro table ou lista?
 	public RelatorioFaturamentoUI(JTable table, Date dataInicio, Date dataFinal) {
 
-		ConfigurarRelatorioFaturamentoUI configRelFat = new ConfigurarRelatorioFaturamentoUI();
+		FiltroRelatorioUI configRelFat = new FiltroRelatorioUI();
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		

@@ -194,7 +194,7 @@ public class PrincipalUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ConfigurarRelatorioFaturamentoUI configRelFat = new ConfigurarRelatorioFaturamentoUI();
+				FiltroRelatorioUI configRelFat = new FiltroRelatorioUI();
 				configRelFat.requestFocus(true);
 				configRelFat.setFocusable(true);
 				configRelFat.moveToFront();
