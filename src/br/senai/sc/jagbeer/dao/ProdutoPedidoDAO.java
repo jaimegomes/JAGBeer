@@ -207,7 +207,7 @@ public class ProdutoPedidoDAO extends GenericDAO {
 		return listProdutosPedido;
 	}
 
-	public Entidade getPorNomeQtdeIdPedido(int idProduto, int qtde, int idPedido)
+	public Entidade buscaCompleta(int idProduto, int qtde, int idPedido)
 			throws Exception {
 
 		String sql = "SELECT * FROM produtopedido WHERE idProduto = ? AND quantidade = ? AND idPedido = ?";

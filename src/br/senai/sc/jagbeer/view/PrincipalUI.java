@@ -35,6 +35,7 @@ import br.senai.sc.jagbeer.model.PrincipalTableModel;
 import br.senai.sc.jagbeer.model.ProdutoPedido;
 
 /**
+ * Classe principal do sistema
  * 
  * @author Bazzi
  *
@@ -239,8 +240,7 @@ public class PrincipalUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					List<Entidade> listPedidosAbertos = new PedidoController()
-							.getListPedidosEmAberto();
+					List<Entidade> listPedidosAbertos = null;
 
 					// campo cliente preenchido
 					if (!jtfCliente.getText().isEmpty()
@@ -256,20 +256,26 @@ public class PrincipalUI extends JFrame {
 								Cliente cliente = (Cliente) ent;
 
 								Pedido pedido = (Pedido) new PedidoController()
-										.getPorIdCliente(cliente.getId());
+										.getPedidoAbertoPorIdCliente(cliente.getId());
 
-								if (pedido.getStatus() == 1) {
+								if (pedido != null) {
+									if (pedido.getStatus() == 1) {
 
-									listPedidosAbertos.add(pedido);
-									table.setModel(new PrincipalTableModel(
-											listPedidosAbertos));
+										listPedidosAbertos.add(pedido);
 
-								} else {
-									JOptionPane
-											.showMessageDialog(null,
-													"Não foram encontrados pedidos abertos para o cliente solicitado.");
+									}
+
 								}
 							}
+
+							if (listPedidosAbertos.isEmpty()) {
+								JOptionPane
+										.showMessageDialog(null,
+												"Não foram encontrados pedidos abertos para o cliente solicitado.");
+							}
+
+							table.setModel(new PrincipalTableModel(
+									listPedidosAbertos));
 
 						} catch (Exception e1) {
 							e1.printStackTrace();
@@ -281,28 +287,32 @@ public class PrincipalUI extends JFrame {
 
 						listPedidosAbertos = new ArrayList<Entidade>();
 						try {
+
 							Pedido pedido = (Pedido) new PedidoController()
 									.getPorId(Integer.parseInt(jtfPedido
 											.getText()));
 
-							if (pedido == null) {
-								JOptionPane
-										.showMessageDialog(null,
-												"O pedido solicitado não foi encontrado no banco de dados.");
-							}
+							if (pedido != null) {
 
-							else if (pedido.getStatus() == 1) {
+								if (pedido.getStatus() == 1) {
 
-								listPedidosAbertos.add(pedido);
+									listPedidosAbertos.add(pedido);
 
-								table.setModel(new PrincipalTableModel(
-										listPedidosAbertos));
+								}
 
+								if (listPedidosAbertos.isEmpty()) {
+									JOptionPane
+											.showMessageDialog(null,
+													"Não foram encontrados pedidos abertos para o cliente solicitado.");
+								}
 							} else {
 								JOptionPane
 										.showMessageDialog(null,
-												"O pedido solicitado já foi encerrado.");
+												"Não foram encontrados pedidos abertos para o cliente solicitado.");
 							}
+
+							table.setModel(new PrincipalTableModel(
+									listPedidosAbertos));
 
 						} catch (NumberFormatException e1) {
 							e1.printStackTrace();
@@ -315,7 +325,7 @@ public class PrincipalUI extends JFrame {
 							&& jtfPedido.getText().isEmpty()) {
 
 						table.setModel(new PrincipalTableModel(
-								listPedidosAbertos));
+								new PedidoController().getListPedidosEmAberto()));
 
 						// tudo preenchido
 					} else if (!jtfCliente.getText().isEmpty()
@@ -328,43 +338,38 @@ public class PrincipalUI extends JFrame {
 									.getPorId(Integer.parseInt(jtfPedido
 											.getText()));
 
-							Cliente cliente = (Cliente) new ClienteController()
-									.getNomeSelecionado(jtfCliente.getText());
+							List<Entidade> listClientes = new ClienteController()
+									.getPorNome(jtfCliente.getText());
 
-							if (pedido == null) {
-								JOptionPane
-										.showMessageDialog(null,
-												"O pedido solicitado não foi encontrado no banco de dados.");
+							if (!listClientes.isEmpty()) {
+								if (pedido.getCliente().getId() == listClientes
+										.get(0).getId()) {
 
-							}
+									if (pedido.getStatus() == 1) {
+										listPedidosAbertos.add(pedido);
 
-							else if (cliente == null) {
-								JOptionPane
-										.showMessageDialog(null,
-												"Não existem clientes cadastrados com o nome informado no filtro.");
+									} else {
+										JOptionPane
+												.showMessageDialog(null,
+														"Não foram encontrados pedidos abertos para o filtro selecionado.");
 
-							}
-
-							else if (pedido.getCliente().getId() == cliente
-									.getId()) {
-
-								if (pedido.getStatus() == 1) {
-									listPedidosAbertos.add(pedido);
-
-									table.setModel(new PrincipalTableModel(
-											listPedidosAbertos));
+									}
 
 								} else {
 									JOptionPane
 											.showMessageDialog(null,
 													"Não foram encontrados pedidos abertos para o filtro selecionado.");
-								}
 
+								}
 							} else {
 								JOptionPane
 										.showMessageDialog(null,
-												"Não foram encontrados pedidos abertos para os dados do filtro.");
+												"Não foram encontrados pedidos abertos para o filtro selecionado.");
+
 							}
+
+							table.setModel(new PrincipalTableModel(
+									listPedidosAbertos));
 
 						} catch (NumberFormatException e1) {
 							e1.printStackTrace();
@@ -418,9 +423,7 @@ public class PrincipalUI extends JFrame {
 		btnEncerrarEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				List<Entidade> listProdutoPedido = new ArrayList<Entidade>();
 				EncerrarEditarPedidoUI encerrarPedidoUI;
-				ProdutoPedido produtoPedido = null;
 				try {
 
 					int linhaSelecionada = table.getSelectedRow();
@@ -432,18 +435,6 @@ public class PrincipalUI extends JFrame {
 
 						Pedido pedido = (Pedido) new PedidoController()
 								.getPorId(idPedido);
-
-						List<Entidade> listProdutos = new ProdutoPedidoController()
-								.getPorIdPedido(idPedido);
-
-						if (!listProdutos.isEmpty()) {
-							for (Entidade ent : listProdutos) {
-
-								produtoPedido = (ProdutoPedido) ent;
-								listProdutoPedido.add(produtoPedido);
-
-							}
-						}
 
 						encerrarPedidoUI = new EncerrarEditarPedidoUI(table,
 								pedido);

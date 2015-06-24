@@ -84,8 +84,8 @@ public class PedidoController implements IController {
 		return dao.getPorData(dataInicio, dataFim);
 	}
 	
-	public Entidade getPorIdCliente(int id) throws Exception {
-		return dao.getPorIdCliente(id);
+	public Entidade getPedidoAbertoPorIdCliente(int id) throws Exception {
+		return dao.getPedidoAbertoPorIdCliente(id);
 	}
 
 }

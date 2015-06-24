@@ -165,15 +165,16 @@ public class ConsultaProdutoUI extends JInternalFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				
+				int linhaSelecionada = table.getSelectedRow();
+
+				if (linhaSelecionada > -1) {
+					
 				int opcao = JOptionPane.showConfirmDialog(null,
 						"Deseja excluir?");
 
 				if (opcao == 0) {
 					try {
-
-						int linhaSelecionada = table.getSelectedRow();
-
-						if (linhaSelecionada > -1) {
 
 							String nomeProduto = table.getValueAt(
 									linhaSelecionada, 0).toString();
@@ -196,15 +197,13 @@ public class ConsultaProdutoUI extends JInternalFrame {
 							// Atualiza tabela
 							table.setModel(new ProdutoTableModel(
 									new ProdutoController().listar()));
-						} else {
-							JOptionPane.showMessageDialog(null,
-									"Selecione um produto para excluí-lo.");
-						}
+						
 
 					} catch (Exception e2) {
 						JOptionPane.showMessageDialog(null, e2.getMessage());
 					}
 				}
+			} 
 			}
 		});
 

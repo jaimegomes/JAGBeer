@@ -336,14 +336,14 @@ public class PedidoDAO extends GenericDAO {
 
 	}
 
-	public Entidade getPorIdCliente(int id) throws Exception {
+	public Entidade getPedidoAbertoPorIdCliente(int id) throws Exception {
 
 		Pedido pedido = null;
-		String sql = "SELECT * FROM pedido WHERE status = 1 AND dataPedido = ?";
+		String sql = "SELECT * FROM pedido WHERE status = 1 AND idCliente = ?";
 		try {
 
 			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setDate(1, new java.sql.Date(new Date().getTime()));
+			pstm.setInt(1, id);
 
 			ResultSet result = pstm.executeQuery();
 

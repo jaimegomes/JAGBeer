@@ -1,5 +1,7 @@
 package br.senai.sc.jagbeer.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +15,11 @@ public class PrincipalTableModel extends AbstractTableModel {
 	private static final int COL_PEDIDO = 0;
 	private static final int COL_CLIENTE = 1;
 	private static final int COL_VALOR_PARCIAL = 2;
+	private static final int COL_DATA_PEDIDO = 3;
 
 	private List<Entidade> valores;
+
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	public PrincipalTableModel(List<Entidade> list) {
 		this.valores = new ArrayList<Entidade>(list);
@@ -28,7 +33,7 @@ public class PrincipalTableModel extends AbstractTableModel {
 
 	public int getColumnCount() {
 		// numero de colunas
-		return 3;
+		return 4;
 	}
 
 	public String getColumnName(int column) {
@@ -38,6 +43,8 @@ public class PrincipalTableModel extends AbstractTableModel {
 			return "Cliente";
 		if (column == COL_VALOR_PARCIAL)
 			return "Valor Parcial";
+		if (column == COL_DATA_PEDIDO)
+			return "Data";
 		return "";
 	}
 
@@ -51,6 +58,8 @@ public class PrincipalTableModel extends AbstractTableModel {
 				return pedido.getCliente().getNome();
 			else if (column == COL_VALOR_PARCIAL)
 				return pedido.getValor();
+			else if (column == COL_DATA_PEDIDO)
+				return sdf.format(pedido.getDataPedido());
 		}
 		return "";
 	}
@@ -65,6 +74,12 @@ public class PrincipalTableModel extends AbstractTableModel {
 				pedido.getCliente().setNome(aValue.toString());
 			else if (columnIndex == COL_VALOR_PARCIAL)
 				pedido.setValor(Double.parseDouble(aValue.toString()));
+			else if (columnIndex == COL_DATA_PEDIDO)
+				try {
+					pedido.setDataPedido(sdf.parse(aValue.toString()));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 		}
 
 	}
