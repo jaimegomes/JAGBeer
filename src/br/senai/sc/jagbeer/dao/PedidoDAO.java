@@ -40,8 +40,9 @@ public class PedidoDAO extends GenericDAO {
 		try {
 			Date data = new Date();
 			pedido = (Pedido) entidade;
+			double valor = 0;
 
-			String sql = "INSERT INTO pedido (idMesa, idCliente, dataPedido, status) values(?,?,?,?)";
+			String sql = "INSERT INTO pedido (idMesa, idCliente, dataPedido, status, valor) values(?,?,?,?,?)";
 
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			if (pedido.getMesa() != null) {
@@ -59,6 +60,14 @@ public class PedidoDAO extends GenericDAO {
 			}
 			pstmt.setDate(3, new java.sql.Date(data.getTime()));
 			pstmt.setInt(4, pedido.getStatus());
+
+			if (pedido.getValor() == null) {
+				valor = 0;
+
+			}
+
+			pstmt.setDouble(5, valor);
+
 			pstmt.execute();
 
 			con.commit();
@@ -100,7 +109,7 @@ public class PedidoDAO extends GenericDAO {
 	@Override
 	public void editar(Entidade entidade) throws SQLException {
 
-		String sql = "UPDATE pedido SET idMesa = ?, idCliente = ?, dataPedido = ?, status = ?  WHERE id = ?";
+		String sql = "UPDATE pedido SET idMesa = ?, idCliente = ?, dataPedido = ?, status = ?, valor = ?  WHERE id = ?";
 		try {
 			pedido = (Pedido) entidade;
 			Date dataAtual = new Date();
@@ -120,9 +129,11 @@ public class PedidoDAO extends GenericDAO {
 			} else {
 				pstm.setNull(2, java.sql.Types.NULL);
 			}
+
 			pstm.setDate(3, new java.sql.Date(dataAtual.getTime()));
 			pstm.setInt(4, pedido.getStatus());
-			pstm.setInt(5, pedido.getId());
+			pstm.setDouble(5, pedido.getValor());
+			pstm.setInt(6, pedido.getId());
 
 			pstm.execute();
 			con.commit();
@@ -159,7 +170,7 @@ public class PedidoDAO extends GenericDAO {
 
 					Pedido p = new Pedido(result.getInt("id"), mesa, cliente,
 							result.getDate("dataPedido"),
-							result.getInt("status"));
+							result.getInt("status"), result.getDouble("valor"));
 
 					listaPedidos.add(p);
 
@@ -203,7 +214,7 @@ public class PedidoDAO extends GenericDAO {
 
 					pedido = new Pedido(result.getInt("id"), mesa, cliente,
 							result.getDate("dataPedido"),
-							result.getInt("status"));
+							result.getInt("status"), result.getDouble("valor"));
 
 				} catch (Exception e) {
 
@@ -265,7 +276,7 @@ public class PedidoDAO extends GenericDAO {
 
 					pedido = new Pedido(result.getInt("id"), mesa, cliente,
 							result.getDate("dataPedido"),
-							result.getInt("status"));
+							result.getInt("status"), result.getDouble("valor"));
 
 					listPedidosEmAberto.add(pedido);
 
@@ -354,7 +365,7 @@ public class PedidoDAO extends GenericDAO {
 
 					pedido = new Pedido(result.getInt("id"), mesa, cliente,
 							result.getDate("dataPedido"),
-							result.getInt("status"));
+							result.getInt("status"), result.getDouble("valor"));
 
 				} catch (Exception e) {
 					e.printStackTrace();

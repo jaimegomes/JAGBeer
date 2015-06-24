@@ -80,6 +80,10 @@ public class ClienteController implements IController {
 		return dao.getNomeSelecionado(nome);
 	}
 
+	public List<Entidade> getPorNome(String nome) throws Exception {
+		return dao.getPorNome(nome);
+	}
+
 	@Override
 	public void atualizaTabela(JTable table) throws Exception {
 		dao.atualizaTabela(table);

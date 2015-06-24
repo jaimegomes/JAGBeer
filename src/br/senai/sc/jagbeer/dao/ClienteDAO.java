@@ -203,13 +203,44 @@ public class ClienteDAO extends GenericDAO {
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("Erro ao listar Cliente por Nome "
+			System.out.println("Erro ao buscar cliente por nome selecionado "
 					+ se.getMessage());
 		} finally {
 			con.close();
 		}
 
 		return cliente;
+	}
+
+	public List<Entidade> getPorNome(String clientePesquisar) throws Exception {
+		List<Entidade> listClientes = new ArrayList<Entidade>();
+		Cliente cliente = null;
+		String sql = "SELECT * FROM cliente WHERE UPPER(nome) LIKE UPPER('%"
+				+ clientePesquisar + "%')";
+
+		try {
+			Statement pstmt = con.createStatement();
+
+			ResultSet result = pstmt.executeQuery(sql);
+
+			while (result.next()) {
+				cliente = new Cliente(result.getInt("id"),
+						result.getString("nome"), result.getString("telefone"),
+						result.getString("email"));
+
+				listClientes.add(cliente);
+			}
+
+			pstmt.close();
+
+		} catch (SQLException se) {
+			System.out.println("Erro ao buscar cliente por Nome "
+					+ se.getMessage());
+		} finally {
+			con.close();
+		}
+
+		return listClientes;
 	}
 
 }

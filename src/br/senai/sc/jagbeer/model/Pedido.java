@@ -18,7 +18,7 @@ public class Pedido extends Entidade {
 	private Cliente cliente;
 	private Date dataPedido;
 	private int status;
-	private double valor;
+	private Double valor;
 
 	/**
 	 * Construtor padrão.
@@ -28,7 +28,16 @@ public class Pedido extends Entidade {
 	public Pedido() {
 	}
 
-	public Pedido(int id, Date dataPedido, double valor) {
+	/**
+	 * Construtor que recebe como parâmetro o id, a data e o valor
+	 * 
+	 * @param int id
+	 * @param Date
+	 *            dataPedido
+	 * @param Double
+	 *            valor
+	 */
+	public Pedido(int id, Date dataPedido, Double valor) {
 		this.id = id;
 		this.dataPedido = dataPedido;
 		this.valor = valor;
@@ -46,7 +55,7 @@ public class Pedido extends Entidade {
 
 	/**
 	 * Construtor que recebe como parâmetro a mesa, o cliente, a data do pedido
-	 * e o status.
+	 * e o status, valor.
 	 * 
 	 * @param Mesa
 	 *            mesa
@@ -56,12 +65,17 @@ public class Pedido extends Entidade {
 	 *            dataPedido
 	 * @param boolean Status
 	 * 
+	 * @param Double
+	 *            valor
+	 * 
 	 */
-	public Pedido(Mesa mesa, Cliente cliente, Date dataPedido, int status) {
+	public Pedido(Mesa mesa, Cliente cliente, Date dataPedido, int status,
+			Double valor) {
 		this.mesa = mesa;
 		this.cliente = cliente;
 		this.dataPedido = dataPedido;
 		this.status = status;
+		this.valor = valor;
 	}
 
 	/**
@@ -76,14 +90,18 @@ public class Pedido extends Entidade {
 	 *            dataPedido
 	 * @param boolean Status
 	 * 
+	 * @param Double
+	 *            valor
+	 * 
 	 */
 	public Pedido(int id, Mesa mesa, Cliente cliente, Date dataPedido,
-			int status) {
+			int status, Double valor) {
 		this.id = id;
 		this.mesa = mesa;
 		this.cliente = cliente;
 		this.dataPedido = dataPedido;
 		this.status = status;
+		this.valor = valor;
 	}
 
 	@Override
@@ -160,7 +178,7 @@ public class Pedido extends Entidade {
 	/**
 	 * @return the valor
 	 */
-	public double getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
@@ -168,7 +186,7 @@ public class Pedido extends Entidade {
 	 * @param valor
 	 *            the valor to set
 	 */
-	public void setValor(double valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 

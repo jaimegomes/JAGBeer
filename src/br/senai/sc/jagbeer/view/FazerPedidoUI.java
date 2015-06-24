@@ -375,8 +375,6 @@ public class FazerPedidoUI extends JInternalFrame {
 							valor += produto.getPrecoVenda()
 									* produtoPedido.getQtde();
 
-							System.out.println("valor: " + valor);
-
 							new ProdutoPedidoController().salvar(produtoPedido);
 
 						}
@@ -385,8 +383,13 @@ public class FazerPedidoUI extends JInternalFrame {
 						// pedido for selecionada uma mesa, atualiza a entidade
 						// pedido no banco de dados com o valor do id da mesa
 						if (pedido.getMesa() == null) {
+							int idMesa = 0;
 
-							int idMesa = (int) cmbMesa.getSelectedItem();
+							if (cmbMesa.getSelectedIndex() > 0) {
+
+								idMesa = (int) cmbMesa.getSelectedItem();
+							}
+
 							if (idMesa > 0) {
 
 								Mesa mesa = (Mesa) new MesaController()
@@ -396,7 +399,7 @@ public class FazerPedidoUI extends JInternalFrame {
 						}
 
 						// atualizar o valor do pedido
-						pedido.setValor(valor);
+						pedido.setValor(pedido.getValor() + valor);
 						new PedidoController().editar(pedido);
 
 					} else {

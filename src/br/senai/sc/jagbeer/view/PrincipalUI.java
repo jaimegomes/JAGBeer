@@ -238,93 +238,144 @@ public class PrincipalUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				List<Entidade> listPedidosAbertos = new ArrayList<Entidade>();
 				try {
-					listPedidosAbertos = new PedidoController()
+					List<Entidade> listPedidosAbertos = new PedidoController()
 							.getListPedidosEmAberto();
+
+					// campo cliente preenchido
+					if (!jtfCliente.getText().isEmpty()
+							&& jtfPedido.getText().isEmpty()) {
+
+						listPedidosAbertos = new ArrayList<Entidade>();
+
+						try {
+							List<Entidade> listClientes = new ClienteController()
+									.getPorNome(jtfCliente.getText());
+
+							for (Entidade ent : listClientes) {
+								Cliente cliente = (Cliente) ent;
+
+								Pedido pedido = (Pedido) new PedidoController()
+										.getPorIdCliente(cliente.getId());
+
+								if (pedido.getStatus() == 1) {
+
+									listPedidosAbertos.add(pedido);
+									table.setModel(new PrincipalTableModel(
+											listPedidosAbertos));
+
+								} else {
+									JOptionPane
+											.showMessageDialog(null,
+													"Não foram encontrados pedidos abertos para o cliente solicitado.");
+								}
+							}
+
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+
+						// campo pedido preenchido
+					} else if (jtfCliente.getText().isEmpty()
+							&& !jtfPedido.getText().isEmpty()) {
+
+						listPedidosAbertos = new ArrayList<Entidade>();
+						try {
+							Pedido pedido = (Pedido) new PedidoController()
+									.getPorId(Integer.parseInt(jtfPedido
+											.getText()));
+
+							if (pedido == null) {
+								JOptionPane
+										.showMessageDialog(null,
+												"O pedido solicitado não foi encontrado no banco de dados.");
+							}
+
+							else if (pedido.getStatus() == 1) {
+
+								listPedidosAbertos.add(pedido);
+
+								table.setModel(new PrincipalTableModel(
+										listPedidosAbertos));
+
+							} else {
+								JOptionPane
+										.showMessageDialog(null,
+												"O pedido solicitado já foi encerrado.");
+							}
+
+						} catch (NumberFormatException e1) {
+							e1.printStackTrace();
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+
+						// em branco
+					} else if (jtfCliente.getText().isEmpty()
+							&& jtfPedido.getText().isEmpty()) {
+
+						table.setModel(new PrincipalTableModel(
+								listPedidosAbertos));
+
+						// tudo preenchido
+					} else if (!jtfCliente.getText().isEmpty()
+							&& !jtfPedido.getText().isEmpty()) {
+
+						listPedidosAbertos = new ArrayList<Entidade>();
+						try {
+
+							Pedido pedido = (Pedido) new PedidoController()
+									.getPorId(Integer.parseInt(jtfPedido
+											.getText()));
+
+							Cliente cliente = (Cliente) new ClienteController()
+									.getNomeSelecionado(jtfCliente.getText());
+
+							if (pedido == null) {
+								JOptionPane
+										.showMessageDialog(null,
+												"O pedido solicitado não foi encontrado no banco de dados.");
+
+							}
+
+							else if (cliente == null) {
+								JOptionPane
+										.showMessageDialog(null,
+												"Não existem clientes cadastrados com o nome informado no filtro.");
+
+							}
+
+							else if (pedido.getCliente().getId() == cliente
+									.getId()) {
+
+								if (pedido.getStatus() == 1) {
+									listPedidosAbertos.add(pedido);
+
+									table.setModel(new PrincipalTableModel(
+											listPedidosAbertos));
+
+								} else {
+									JOptionPane
+											.showMessageDialog(null,
+													"Não foram encontrados pedidos abertos para o filtro selecionado.");
+								}
+
+							} else {
+								JOptionPane
+										.showMessageDialog(null,
+												"Não foram encontrados pedidos abertos para os dados do filtro.");
+							}
+
+						} catch (NumberFormatException e1) {
+							e1.printStackTrace();
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+
+					}
 
 				} catch (Exception e3) {
 					e3.printStackTrace();
-				}
-
-				// campo cliente preenchido
-				if (!jtfCliente.getText().isEmpty()
-						&& jtfPedido.getText().isEmpty()) {
-
-					listPedidosAbertos = new ArrayList<Entidade>();
-
-					try {
-						Cliente cliente = (Cliente) new ClienteController()
-								.getNomeSelecionado(jtfCliente.getText());
-
-						Pedido pedido = (Pedido) new PedidoController()
-								.getPorIdCliente(cliente.getId());
-
-						listPedidosAbertos.add(pedido);
-
-						table.setModel(new PrincipalTableModel(
-								listPedidosAbertos));
-
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-
-					// campo pedido preenchido
-				} else if (jtfCliente.getText().isEmpty()
-						&& !jtfPedido.getText().isEmpty()) {
-
-					listPedidosAbertos = new ArrayList<Entidade>();
-					try {
-						Pedido pedido = (Pedido) new PedidoController()
-								.getPorId(Integer.parseInt(jtfPedido.getText()));
-						listPedidosAbertos.add(pedido);
-
-						table.setModel(new PrincipalTableModel(
-								listPedidosAbertos));
-
-					} catch (NumberFormatException e1) {
-						e1.printStackTrace();
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-
-					// em branco
-				} else if (jtfCliente.getText().isEmpty()
-						&& jtfPedido.getText().isEmpty()) {
-
-					table.setModel(new PrincipalTableModel(listPedidosAbertos));
-
-					// tudo preenchido
-				} else if (!jtfCliente.getText().isEmpty()
-						&& !jtfPedido.getText().isEmpty()) {
-
-					listPedidosAbertos = new ArrayList<Entidade>();
-					try {
-
-						Pedido pedido = (Pedido) new PedidoController()
-								.getPorId(Integer.parseInt(jtfPedido.getText()));
-
-						Cliente cliente = (Cliente) new ClienteController()
-								.getNomeSelecionado(jtfCliente.getText());
-
-						if (pedido.getCliente().getId() == cliente.getId()) {
-							listPedidosAbertos.add(pedido);
-
-							table.setModel(new PrincipalTableModel(
-									listPedidosAbertos));
-
-						} else {
-							JOptionPane
-									.showMessageDialog(null,
-											"Não foram encontrados pedidos abertos para os dados do filtro.");
-						}
-
-					} catch (NumberFormatException e1) {
-						e1.printStackTrace();
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-
 				}
 
 			}

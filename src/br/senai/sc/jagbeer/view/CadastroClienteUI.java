@@ -130,6 +130,7 @@ public class CadastroClienteUI extends JInternalFrame {
 						pedido.setStatus(1);
 						pedido.setDataPedido(new Date());
 						pedido.setMesa(null);
+						pedido.setValor(0.00);
 
 						new PedidoController().salvar(pedido);
 
