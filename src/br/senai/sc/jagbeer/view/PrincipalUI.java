@@ -91,7 +91,7 @@ public class PrincipalUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				CadastroClienteUI cadClienteUI = new CadastroClienteUI(null,
-						table, "principal");
+						table);
 				cadClienteUI.requestFocus(true);
 				cadClienteUI.setFocusable(true);
 				cadClienteUI.moveToFront();
@@ -354,7 +354,7 @@ public class PrincipalUI extends JFrame {
 
 				}
 
-				FazerPedidoUI fazerPedido = new FazerPedidoUI(table, pedido);
+				FazerPedidoUI fazerPedido = new FazerPedidoUI(null, pedido);
 				fazerPedido.requestFocus(true);
 				fazerPedido.setFocusable(true);
 				fazerPedido.moveToFront();

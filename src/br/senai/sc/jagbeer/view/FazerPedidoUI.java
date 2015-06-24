@@ -31,7 +31,6 @@ import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.controller.ProdutoController;
 import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
-import br.senai.sc.jagbeer.model.EncerrarPedidoTableModel;
 import br.senai.sc.jagbeer.model.FazerPedidoTableModel;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.Pedido;
@@ -66,18 +65,17 @@ public class FazerPedidoUI extends JInternalFrame {
 	private JSpinner spinnerQtde;
 	private JButton btnAdicionarProduto;
 	private GroupLayout gl_panelProduto;
-	private List<Entidade> listProdutoPedido = new ArrayList<Entidade>();
-	private List<Entidade> listNomesProdutos = new ArrayList<Entidade>();
-	private List<Entidade> listClientes = new ArrayList<Entidade>();
-	private JTable table;
+	private JTable tableFazerPedido;
 	private JButton btnExcluir;
 	private JComboBox cmbCliente;
 
-	public FazerPedidoUI(final JTable tableEncerrarPedido, Pedido pedido) {
+	private List<Entidade> listProdutoPedido = new ArrayList<Entidade>();
+
+	public FazerPedidoUI(final JTable table, Pedido pedido) {
 
 		setTitle("Fazer Pedido");
 		setClosable(true);
-		setBounds(100, 0, 770, 490);
+		setBounds(100, 0, 808, 499);
 
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,
@@ -89,6 +87,18 @@ public class FazerPedidoUI extends JInternalFrame {
 		cmbPedido = new JComboBox();
 		cmbPedido.setMaximumRowCount(8);
 		cmbPedido.addItem("");
+
+		try {
+			for (Entidade e : new PedidoController().getListPedidosEmAberto()) {
+
+				Pedido pedidosAbertos = (Pedido) e;
+
+				cmbPedido.addItem(pedidosAbertos.getId());
+			}
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+
 		cmbPedido.addActionListener(new ActionListener() {
 
 			@Override
@@ -97,23 +107,25 @@ public class FazerPedidoUI extends JInternalFrame {
 				int idPedido = 0;
 
 				if (cmbPedido.getSelectedItem() != null
-						&& !cmbPedido.getSelectedItem().equals("")) {
+						&& cmbPedido.getSelectedIndex() > 0) {
 
 					idPedido = Integer.parseInt(cmbPedido.getSelectedItem()
 							+ "");
 
 				} else {
+					// seta os valores nos combox Mesa e Cliente
 					cmbCliente.setSelectedIndex(-1);
 					cmbMesa.setSelectedIndex(-1);
 				}
 
 				try {
 
+					// seta os valores nos combox Mesa e Cliente
 					if (idPedido > 0) {
 						Pedido pedido = (Pedido) new PedidoController()
 								.getPorId(idPedido);
 
-						if (pedido != null) {
+						if (pedido.getCliente() != null) {
 							cmbCliente.setSelectedItem(pedido.getCliente()
 									.getNome());
 
@@ -183,14 +195,16 @@ public class FazerPedidoUI extends JInternalFrame {
 								.getNomeSelecionado(nomeCliente);
 
 						if (cliente != null) {
-							// int idCliente = cliente.getId();
-							//
-							// cmbPedido.setSelectedItem(pedido.getId());
-							//
-							// if (pedido.getMesa() != null) {
-							// cmbMesa.setSelectedItem(pedido.getMesa()
-							// .getNumeroMesa());
-							// }
+
+							Pedido pedidoCliente = (Pedido) new PedidoController()
+									.getPorIdCliente(cliente.getId());
+
+							cmbPedido.setSelectedItem(pedidoCliente.getId());
+
+							if (pedidoCliente.getMesa() != null) {
+								cmbMesa.setSelectedItem(pedidoCliente.getMesa()
+										.getNumeroMesa());
+							}
 
 						}
 					} else {
@@ -206,22 +220,28 @@ public class FazerPedidoUI extends JInternalFrame {
 		});
 
 		try {
-			List<Entidade> listClientes = new ArrayList<Entidade>();
 
-			// for (Entidade ent : new PedidoController().getAbertosHoje()) {
-			// Pedido pedido = (Pedido) ent;
-			//
-			// listClientes.add(new ClienteController().getPorId(pedido
-			// .getCliente().getId()));
-			// }
+			for (Entidade ent : new PedidoController().getListPedidosEmAberto()) {
+				Pedido pedidoAberto = (Pedido) ent;
 
-			for (Entidade en : listClientes) {
-				Cliente cliente = (Cliente) en;
-				cmbCliente.addItem(cliente.getNome());
+				cmbCliente.addItem(pedidoAberto.getCliente().getNome());
+
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+
+		// caso o pedido passado como parâmetro seja != null, carrega os valores
+		// na tela de fazer pedido
+		if (pedido != null) {
+			cmbCliente.setSelectedItem(pedido.getCliente().getNome());
+			cmbPedido.setSelectedItem(pedido.getId());
+
+			if (pedido.getMesa() != null) {
+				cmbMesa.setSelectedItem(pedido.getMesa().getNumeroMesa());
+
+			}
 		}
 
 		lblClassificao = new JLabel("Classifica\u00E7\u00E3o:");
@@ -236,10 +256,12 @@ public class FazerPedidoUI extends JInternalFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				List<Entidade> listNomesProdutos = new ArrayList<Entidade>();
 				try {
 
 					cmbProduto.removeAllItems();
 
+					// verifica a classificação escolhida
 					if (cmbClassificacao.getSelectedIndex() == 1) {
 						listNomesProdutos = new ProdutoController()
 								.getPorClassificacao("Alimento");
@@ -249,6 +271,7 @@ public class FazerPedidoUI extends JInternalFrame {
 								.getPorClassificacao("Bebida");
 					}
 
+					// adiciona os produtos ao combobox
 					if (listNomesProdutos.size() > 0) {
 						for (Entidade ent : listNomesProdutos) {
 
@@ -256,6 +279,10 @@ public class FazerPedidoUI extends JInternalFrame {
 							cmbProduto.addItem(produto.getNome());
 
 						}
+					} else {
+						JOptionPane
+								.showMessageDialog(null,
+										"Não existem produtos com esta classificação cadastrados no sistema.");
 					}
 
 				} catch (Exception e1) {
@@ -284,19 +311,29 @@ public class FazerPedidoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				String nomeProduto = cmbProduto.getSelectedItem() + "";
+				ProdutoPedido produtoPedido = null;
 
 				try {
 					Produto produto = (Produto) new ProdutoController()
 							.getPorNome(nomeProduto);
 
-					Pedido pedido = (Pedido) cmbPedido.getSelectedItem();
+					int idPedido = (int) cmbPedido.getSelectedItem();
 
-					ProdutoPedido produtoPedido = new ProdutoPedido(produto
-							.getId(), pedido.getId(), Integer
-							.parseInt(spinnerQtde.getValue().toString()));
+					if (Integer.parseInt(spinnerQtde.getValue().toString()) > 0) {
 
-					listProdutoPedido.add(produtoPedido);
-					table.setModel(new FazerPedidoTableModel(listProdutoPedido));
+						produtoPedido = new ProdutoPedido(produto.getId(),
+								idPedido, Integer.parseInt(spinnerQtde
+										.getValue().toString()));
+
+						listProdutoPedido.add(produtoPedido);
+						tableFazerPedido.setModel(new FazerPedidoTableModel(
+								listProdutoPedido));
+					} else {
+						listProdutoPedido.remove(produtoPedido);
+						JOptionPane.showMessageDialog(null,
+								"Você deve selecionar a quantidade desejada.");
+					}
+
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -308,49 +345,63 @@ public class FazerPedidoUI extends JInternalFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				List<Entidade> listProdutoPedido = new ArrayList<Entidade>();
 				Pedido pedido = null;
-				Mesa mesa = null;
 
 				try {
 
 					if (cmbPedido.getSelectedIndex() > 0) {
 
-						int idPedido = Integer.parseInt(cmbPedido
-								.getSelectedItem() + "");
+						int idPedido = (int) cmbPedido.getSelectedItem();
 
 						pedido = (Pedido) new PedidoController()
 								.getPorId(idPedido);
 
 					} else {
-						pedido = new Pedido();
+						JOptionPane.showMessageDialog(null,
+								"Você deve selecionar um pedido.");
 					}
 
-					for (Entidade e : listProdutoPedido) {
-						ProdutoPedido produtoPedido = (ProdutoPedido) e;
+					if (!listProdutoPedido.isEmpty()) {
 
-						new ProdutoPedidoController().salvar(produtoPedido);
+						double valor = 0;
+						for (Entidade e : listProdutoPedido) {
+							ProdutoPedido produtoPedido = (ProdutoPedido) e;
 
-						listProdutoPedido.add(produtoPedido);
+							int idProduto = produtoPedido.getIdProduto();
 
-					}
+							Produto produto = (Produto) new ProdutoController()
+									.getPorId(idProduto);
 
-					if (tableEncerrarPedido != null) {
+							valor += produto.getPrecoVenda()
+									* produtoPedido.getQtde();
 
-						tableEncerrarPedido.setModel(new EncerrarPedidoTableModel(
-								new ProdutoPedidoController()
-										.getPorIdPedido(pedido.getId())));
+							System.out.println("valor: " + valor);
 
-						EncerrarEditarPedidoUI encerrarEditarPedido = new EncerrarEditarPedidoUI(
-								tableEncerrarPedido, pedido);
+							new ProdutoPedidoController().salvar(produtoPedido);
 
-						encerrarEditarPedido.requestFocus(true);
-						encerrarEditarPedido.setFocusable(true);
-						encerrarEditarPedido.moveToFront();
-						PrincipalUI.getInstancia().getContentPane()
-								.add(encerrarEditarPedido, 0);
-						encerrarEditarPedido.setVisible(true);
+						}
 
+						// caso o pedido não tenha mesa setada e no momento do
+						// pedido for selecionada uma mesa, atualiza a entidade
+						// pedido no banco de dados com o valor do id da mesa
+						if (pedido.getMesa() == null) {
+
+							int idMesa = (int) cmbMesa.getSelectedItem();
+							if (idMesa > 0) {
+
+								Mesa mesa = (Mesa) new MesaController()
+										.getPorId(idMesa);
+								pedido.setMesa(mesa);
+							}
+						}
+
+						// atualizar o valor do pedido
+						pedido.setValor(valor);
+						new PedidoController().editar(pedido);
+
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Você deve selecionar produtos ao pedido.");
 					}
 
 					PrincipalUI
@@ -362,7 +413,8 @@ public class FazerPedidoUI extends JInternalFrame {
 													.getListPedidosEmAberto()));
 
 					JOptionPane.showMessageDialog(null,
-							"Produtos inseridos com sucesso.");
+							"Produtos inseridos com sucesso ao pedido de número: "
+									+ pedido.getId());
 
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
@@ -384,18 +436,19 @@ public class FazerPedidoUI extends JInternalFrame {
 
 				try {
 
-					int linhaSelecionada = table.getSelectedRow();
+					int linhaSelecionada = tableFazerPedido.getSelectedRow();
 
 					if (linhaSelecionada > -1) {
 
 						listProdutoPedido.remove(linhaSelecionada);
 
-						table.setModel(new FazerPedidoTableModel(
+						tableFazerPedido.setModel(new FazerPedidoTableModel(
 								listProdutoPedido));
 
 					} else {
-						JOptionPane.showMessageDialog(null,
-								"Selecione um item do pedido.");
+						JOptionPane
+								.showMessageDialog(null,
+										"Selecione um produto do pedido que deseja excluir.");
 					}
 
 				} catch (Exception e1) {
@@ -429,82 +482,70 @@ public class FazerPedidoUI extends JInternalFrame {
 						.addGroup(
 								groupLayoutProduto
 										.createSequentialGroup()
+										.addComponent(panelProduto,
+												GroupLayout.DEFAULT_SIZE, 758,
+												Short.MAX_VALUE)
+										.addContainerGap())
+						.addGroup(
+								groupLayoutProduto
+										.createSequentialGroup()
+										.addContainerGap()
 										.addGroup(
 												groupLayoutProduto
 														.createParallelGroup(
 																Alignment.LEADING)
+														.addComponent(
+																scrollPane,
+																GroupLayout.DEFAULT_SIZE,
+																746,
+																Short.MAX_VALUE)
+														.addGroup(
+																Alignment.TRAILING,
+																groupLayoutProduto
+																		.createSequentialGroup()
+																		.addComponent(
+																				btnSalvar,
+																				GroupLayout.PREFERRED_SIZE,
+																				100,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				ComponentPlacement.UNRELATED)
+																		.addComponent(
+																				btnCancelar,
+																				GroupLayout.PREFERRED_SIZE,
+																				100,
+																				GroupLayout.PREFERRED_SIZE))
 														.addGroup(
 																groupLayoutProduto
 																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addGroup(
-																				groupLayoutProduto
-																						.createParallelGroup(
-																								Alignment.TRAILING)
-																						.addGroup(
-																								groupLayoutProduto
-																										.createSequentialGroup()
-																										.addComponent(
-																												btnSalvar,
-																												GroupLayout.PREFERRED_SIZE,
-																												100,
-																												GroupLayout.PREFERRED_SIZE)
-																										.addGap(18)
-																										.addComponent(
-																												btnCancelar,
-																												GroupLayout.PREFERRED_SIZE,
-																												100,
-																												GroupLayout.PREFERRED_SIZE))
-																						.addGroup(
-																								Alignment.LEADING,
-																								groupLayoutProduto
-																										.createSequentialGroup()
-																										.addComponent(
-																												lblPedido)
-																										.addPreferredGap(
-																												ComponentPlacement.RELATED)
-																										.addComponent(
-																												cmbPedido,
-																												GroupLayout.PREFERRED_SIZE,
-																												71,
-																												GroupLayout.PREFERRED_SIZE)
-																										.addGap(18)
-																										.addComponent(
-																												lblMesa)
-																										.addPreferredGap(
-																												ComponentPlacement.RELATED)
-																										.addComponent(
-																												cmbMesa,
-																												GroupLayout.PREFERRED_SIZE,
-																												76,
-																												GroupLayout.PREFERRED_SIZE)
-																										.addGap(18)
-																										.addComponent(
-																												lblCliente)
-																										.addGap(18)
-																										.addComponent(
-																												cmbCliente,
-																												GroupLayout.PREFERRED_SIZE,
-																												331,
-																												GroupLayout.PREFERRED_SIZE))))
-														.addGroup(
-																groupLayoutProduto
-																		.createParallelGroup(
-																				Alignment.TRAILING,
-																				false)
-																		.addGroup(
-																				Alignment.LEADING,
-																				groupLayoutProduto
-																						.createSequentialGroup()
-																						.addContainerGap()
-																						.addComponent(
-																								scrollPane))
 																		.addComponent(
-																				panelProduto,
-																				Alignment.LEADING,
+																				lblPedido)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				cmbPedido,
 																				GroupLayout.PREFERRED_SIZE,
-																				716,
-																				GroupLayout.PREFERRED_SIZE)))
+																				71,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(18)
+																		.addComponent(
+																				lblMesa)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				cmbMesa,
+																				GroupLayout.PREFERRED_SIZE,
+																				76,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(18)
+																		.addComponent(
+																				lblCliente)
+																		.addGap(18)
+																		.addComponent(
+																				cmbCliente,
+																				0,
+																				369,
+																				Short.MAX_VALUE)))
 										.addContainerGap()));
 		groupLayoutProduto
 				.setVerticalGroup(groupLayoutProduto
@@ -557,9 +598,9 @@ public class FazerPedidoUI extends JInternalFrame {
 														.addComponent(btnSalvar))
 										.addContainerGap()));
 
-		table = new JTable();
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(table);
+		tableFazerPedido = new JTable();
+		tableFazerPedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(tableFazerPedido);
 
 		gl_panelProduto = new GroupLayout(panelProduto);
 		gl_panelProduto
@@ -602,11 +643,14 @@ public class FazerPedidoUI extends JInternalFrame {
 																		.createSequentialGroup()
 																		.addComponent(
 																				btnAdicionarProduto)
-																		.addGap(18)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED,
+																				GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE)
 																		.addComponent(
 																				btnExcluir,
 																				GroupLayout.PREFERRED_SIZE,
-																				124,
+																				163,
 																				GroupLayout.PREFERRED_SIZE))
 														.addGroup(
 																gl_panelProduto
@@ -619,7 +663,7 @@ public class FazerPedidoUI extends JInternalFrame {
 																				GroupLayout.PREFERRED_SIZE,
 																				67,
 																				GroupLayout.PREFERRED_SIZE)))
-										.addGap(59)));
+										.addContainerGap()));
 		gl_panelProduto
 				.setVerticalGroup(gl_panelProduto
 						.createParallelGroup(Alignment.LEADING)
@@ -660,27 +704,12 @@ public class FazerPedidoUI extends JInternalFrame {
 																btnExcluir)
 														.addComponent(
 																btnAdicionarProduto))
-										.addContainerGap(22, Short.MAX_VALUE)));
+										.addContainerGap(17, Short.MAX_VALUE)));
 		panelProduto.setLayout(gl_panelProduto);
 		panel.setLayout(groupLayoutProduto);
-		table.setModel(new FazerPedidoTableModel(listProdutoPedido));
+		tableFazerPedido.setModel(new FazerPedidoTableModel(listProdutoPedido));
 		getContentPane().setLayout(groupLayout);
 
-	}
-
-	/**
-	 * @return the listItensPedido
-	 */
-	public List<Entidade> getListItensPedido() {
-		return listProdutoPedido;
-	}
-
-	/**
-	 * @param listItensPedido
-	 *            the listItensPedido to set
-	 */
-	public void setListItensPedido(List<Entidade> listItensPedido) {
-		this.listProdutoPedido = listItensPedido;
 	}
 
 	public JComboBox getCmbCliente() {

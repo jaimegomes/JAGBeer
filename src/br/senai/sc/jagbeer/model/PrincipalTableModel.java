@@ -43,23 +43,30 @@ public class PrincipalTableModel extends AbstractTableModel {
 
 	public Object getValueAt(int row, int column) {
 		Pedido pedido = (Pedido) valores.get(row);
-		if (column == COL_PEDIDO)
-			return pedido.getId();
-		else if (column == COL_CLIENTE)
-			return pedido.getCliente().getNome();
-		else if (column == COL_VALOR_PARCIAL)
-			return pedido.getValor();
+
+		if (pedido != null) {
+			if (column == COL_PEDIDO)
+				return pedido.getId();
+			else if (column == COL_CLIENTE)
+				return pedido.getCliente().getNome();
+			else if (column == COL_VALOR_PARCIAL)
+				return pedido.getValor();
+		}
 		return "";
 	}
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		Pedido pedido = (Pedido) valores.get(rowIndex);
-		if (columnIndex == COL_PEDIDO)
-			pedido.setId(Integer.parseInt(aValue.toString()));
-		else if (columnIndex == COL_CLIENTE)
-			pedido.getCliente().setNome(aValue.toString());
-		else if (columnIndex == COL_VALOR_PARCIAL)
-			pedido.setValor(Double.parseDouble(aValue.toString()));
+
+		if (pedido != null) {
+			if (columnIndex == COL_PEDIDO)
+				pedido.setId(Integer.parseInt(aValue.toString()));
+			else if (columnIndex == COL_CLIENTE)
+				pedido.getCliente().setNome(aValue.toString());
+			else if (columnIndex == COL_VALOR_PARCIAL)
+				pedido.setValor(Double.parseDouble(aValue.toString()));
+		}
+
 	}
 
 	public Class<?> getColumnClass(int columnIndex) {

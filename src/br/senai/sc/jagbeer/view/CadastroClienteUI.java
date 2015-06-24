@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -21,7 +20,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
@@ -42,8 +40,7 @@ public class CadastroClienteUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroClienteUI(final Cliente c, final JTable table,
-			final String flagTabela) {
+	public CadastroClienteUI(final Cliente c, final JTable table) {
 
 		clienteEdicao = c;
 
@@ -160,22 +157,24 @@ public class CadastroClienteUI extends JInternalFrame {
 					}
 				}
 
-				if (table != null) {
-//					try {
-//
-//						if (flagTabela.equals("cliente")) {
-//							table.setModel(new ClienteTableModel(
-//									new ClienteController().listar()));
-//						} else if (flagTabela.equals("principal")) {
-//							List<Entidade> listPedidosAbertos = calculaValorPedidosAbertos();
-//
-//							table.setModel(new PrincipalTableModel(
-//									listPedidosAbertos));
-//						}
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
+				try {
+					if (table != null) {
 
+						table.setModel(new ClienteTableModel(
+								new ClienteController().listar()));
+
+					}
+
+					PrincipalUI
+							.getInstancia()
+							.getTablePedidoAberto()
+							.setModel(
+									new PrincipalTableModel(
+											new PedidoController()
+													.getListPedidosEmAberto()));
+
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 
 			}

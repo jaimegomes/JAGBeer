@@ -75,14 +75,6 @@ public class PedidoController implements IController {
 
 	}
 
-	public void encerrarPedido(int idPedidoEncerrar) throws Exception {
-
-		if (idPedidoEncerrar <= 0)
-			throw new Exception("O id do cliente deve ser maior que zero.");
-
-		dao.encerrarPedido(idPedidoEncerrar);
-	}
-
 	public List<Entidade> getListPedidosEmAberto() throws Exception {
 		return dao.getListPedidosEmAberto();
 	}

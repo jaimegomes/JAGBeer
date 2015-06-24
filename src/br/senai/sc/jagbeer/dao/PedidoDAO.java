@@ -22,8 +22,7 @@ import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
 /**
- * Classe DAO, responsï¿½vel pela manipulaï¿½ï¿½o dos dados dos Pedidos no
- * banco.
+ * Classe DAO, responsável pela manipulação dos dados dos Pedidos no banco.
  * 
  * @author Jaime Gomes
  * 
@@ -42,34 +41,28 @@ public class PedidoDAO extends GenericDAO {
 			Date data = new Date();
 			pedido = (Pedido) entidade;
 
-			if (pedido.getMesa() == null) {
-				String sql = "INSERT INTO pedido (idCliente, dataPedido, status, idMesa) values(?,?,?,?)";
+			String sql = "INSERT INTO pedido (idMesa, idCliente, dataPedido, status) values(?,?,?,?)";
 
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setObject(1, pedido.getCliente().getId());
-				pstmt.setDate(2, new java.sql.Date(data.getTime()));
-				pstmt.setInt(3, pedido.getStatus());
-				pstmt.setNull(4, java.sql.Types.NULL);
-
-				pstmt.execute();
-				con.commit();
-				pstmt.close();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			if (pedido.getMesa() != null) {
+				pstmt.setInt(1, pedido.getMesa().getId());
 
 			} else {
-
-				String sql = "INSERT INTO pedido (idMesa, idCliente, dataPedido, status) values(?,?,?,?)";
-
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setObject(1, pedido.getMesa().getId());
-				pstmt.setObject(2, pedido.getCliente().getId());
-				pstmt.setDate(3, new java.sql.Date(data.getTime()));
-				pstmt.setInt(4, pedido.getStatus());
-				pstmt.execute();
-
-				con.commit();
-				pstmt.close();
-
+				pstmt.setNull(1, java.sql.Types.NULL);
 			}
+
+			if (pedido.getCliente() != null) {
+				pstmt.setInt(2, pedido.getCliente().getId());
+
+			} else {
+				pstmt.setNull(2, java.sql.Types.NULL);
+			}
+			pstmt.setDate(3, new java.sql.Date(data.getTime()));
+			pstmt.setInt(4, pedido.getStatus());
+			pstmt.execute();
+
+			con.commit();
+			pstmt.close();
 
 		} catch (SQLException e) {
 			con.rollback();
@@ -107,15 +100,26 @@ public class PedidoDAO extends GenericDAO {
 	@Override
 	public void editar(Entidade entidade) throws SQLException {
 
-		String sql = "UPDATE pedido SET idMesa = ?, idCliente = ?, dataPedido = ?, status = ?  WHERE id= ?";
+		String sql = "UPDATE pedido SET idMesa = ?, idCliente = ?, dataPedido = ?, status = ?  WHERE id = ?";
 		try {
 			pedido = (Pedido) entidade;
 			Date dataAtual = new Date();
 
 			PreparedStatement pstm = con.prepareStatement(sql);
 
-			pstm.setInt(1, pedido.getMesa().getId());
-			pstm.setInt(2, pedido.getCliente().getId());
+			if (pedido.getMesa() != null) {
+				pstm.setInt(1, pedido.getMesa().getId());
+
+			} else {
+				pstm.setNull(1, java.sql.Types.NULL);
+			}
+
+			if (pedido.getCliente() != null) {
+				pstm.setInt(2, pedido.getCliente().getId());
+
+			} else {
+				pstm.setNull(2, java.sql.Types.NULL);
+			}
 			pstm.setDate(3, new java.sql.Date(dataAtual.getTime()));
 			pstm.setInt(4, pedido.getStatus());
 			pstm.setInt(5, pedido.getId());
@@ -283,35 +287,6 @@ public class PedidoDAO extends GenericDAO {
 		}
 
 		return listPedidosEmAberto;
-	}
-
-	/**
-	 * Método responsável por encerrar o pedido que tem o id igual ao passado
-	 * como parâmetro
-	 * 
-	 * @param idPedidoEncerrar
-	 * @throws Exception
-	 */
-	public void encerrarPedido(int idPedidoEncerrar) throws Exception {
-		String sql = "UPDATE pedido SET status = 0 WHERE id = ?";
-
-		try {
-
-			PreparedStatement pstm = con.prepareStatement(sql);
-
-			pstm.setInt(1, idPedidoEncerrar);
-
-			pstm.execute();
-			con.commit();
-			pstm.close();
-
-		} catch (SQLException e) {
-			con.rollback();
-			System.out.println("[PedidoDAO] - Erro ao encerrar pedido.");
-		} finally {
-			con.close();
-		}
-
 	}
 
 	public List<Entidade> getPorData(Date dataInicio, Date dataFim)

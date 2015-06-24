@@ -62,19 +62,22 @@ public class FazerPedidoTableModel extends AbstractTableModel {
 	 */
 	public Object getValueAt(int row, int column) {
 		ProdutoPedido produtoPedido = (ProdutoPedido) valores.get(row);
-		Produto produto = null;
+
 		try {
-			produto = (Produto) new ProdutoController().getPorId(produtoPedido
-					.getIdProduto());
+			Produto produto = (Produto) new ProdutoController()
+					.getPorId(produtoPedido.getIdProduto());
+
+			if (column == COL_NOME_PRODUTO)
+				return produto.getNome();
+			else if (column == COL_QTDE)
+				return produtoPedido.getQtde();
+			else if (column == COL_VALOR)
+				return produto.getPrecoVenda();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (column == COL_NOME_PRODUTO)
-			return produto.getNome();
-		else if (column == COL_QTDE)
-			return produtoPedido.getQtde();
-		else if (column == COL_VALOR)
-			return produto.getPrecoVenda();
+
 		return "";
 	}
 
