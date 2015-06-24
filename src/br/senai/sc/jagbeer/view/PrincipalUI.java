@@ -28,11 +28,9 @@ import javax.swing.border.TitledBorder;
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.PedidoController;
-import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PrincipalTableModel;
-import br.senai.sc.jagbeer.model.ProdutoPedido;
 
 /**
  * Classe principal do sistema
@@ -204,14 +202,6 @@ public class PrincipalUI extends JFrame {
 		});
 		mnRelatorio.add(mntmFaturamento);
 
-		JMenu mnSair = new JMenu("Sair");
-		mnSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		menuBar.add(mnSair);
-
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -256,7 +246,8 @@ public class PrincipalUI extends JFrame {
 								Cliente cliente = (Cliente) ent;
 
 								Pedido pedido = (Pedido) new PedidoController()
-										.getPedidoAbertoPorIdCliente(cliente.getId());
+										.getPedidoAbertoPorIdCliente(cliente
+												.getId());
 
 								if (pedido != null) {
 									if (pedido.getStatus() == 1) {
