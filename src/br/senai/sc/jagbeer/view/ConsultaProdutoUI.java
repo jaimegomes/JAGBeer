@@ -24,8 +24,13 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
+import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.controller.ProdutoController;
+import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
+import br.senai.sc.jagbeer.model.Pedido;
+import br.senai.sc.jagbeer.model.PrincipalTableModel;
 import br.senai.sc.jagbeer.model.Produto;
+import br.senai.sc.jagbeer.model.ProdutoPedido;
 import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
 /**
@@ -202,13 +207,54 @@ public class ConsultaProdutoUI extends JInternalFrame {
 									.buscaCompleta(nomeProduto, precoVenda,
 											classificacao);
 
+							List<Entidade> listProdutosPedidos = new ProdutoPedidoController()
+									.getPorIdProduto(produtoExcluir.getId());
+
+							List<Entidade> listPedidosAbertos = new PedidoController()
+									.getListPedidosEmAberto();
+
+							for (Entidade en : listPedidosAbertos) {
+
+								Pedido pedidoAberto = (Pedido) en;
+
+								for (Entidade ent : listProdutosPedidos) {
+									ProdutoPedido produtoPedido = (ProdutoPedido) ent;
+
+									if (pedidoAberto.getId() == produtoPedido
+											.getIdPedido()) {
+
+										Produto p = (Produto) new ProdutoController()
+												.getPorId(produtoPedido
+														.getIdProduto());
+
+										pedidoAberto.setValor(pedidoAberto
+												.getValor()
+												- (p.getPrecoVenda() * produtoPedido
+														.getQtde()));
+
+										new PedidoController()
+												.editar(pedidoAberto);
+									}
+								}
+
+							}
+
 							new ProdutoController().excluir(produtoExcluir);
+
 							JOptionPane.showMessageDialog(null,
 									"Produto excluido com Sucesso!");
 
 							// Atualiza tabela
 							table.setModel(new ProdutoTableModel(
 									new ProdutoController().listar()));
+
+							PrincipalUI
+									.getInstancia()
+									.getTablePedidoAberto()
+									.setModel(
+											new PrincipalTableModel(
+													new PedidoController()
+															.getListPedidosEmAberto()));
 
 						} catch (Exception e2) {
 							JOptionPane.showMessageDialog(null, e2.getMessage());

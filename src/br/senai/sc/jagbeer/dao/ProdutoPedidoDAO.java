@@ -200,6 +200,48 @@ public class ProdutoPedidoDAO extends GenericDAO {
 		return listProdutosPedido;
 	}
 
+	/**
+	 * Método que retorna uma lista de ProdutoPedido de acordo com o id do
+	 * produto passado como parâmetro.
+	 * 
+	 * @param idPedido
+	 * @return List<Entidade> listProdutosPedido
+	 * @throws Exception
+	 */
+	public List<Entidade> getPorIdProduto(int idProduto) throws Exception {
+
+		List<Entidade> listProdutosPedido = new ArrayList<Entidade>();
+		String sql = "SELECT * FROM produtopedido WHERE idProduto = ?";
+		try {
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, idProduto);
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				produtoPedido = new ProdutoPedido(result.getInt("id"),
+						result.getInt("idproduto"), result.getInt("idpedido"),
+						result.getInt("quantidade"));
+
+				listProdutosPedido.add(produtoPedido);
+
+			}
+
+			pstm.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("[ProdutoPedidoDAO] - Erro ao buscar produto do pedido por id do pedido.\n"
+							+ e.getMessage());
+		} finally {
+			con.close();
+		}
+
+		return listProdutosPedido;
+	}
+
 	public Entidade buscaCompleta(int idProduto, int qtde, int idPedido)
 			throws Exception {
 

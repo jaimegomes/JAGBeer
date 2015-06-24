@@ -49,6 +49,10 @@ public class ProdutoPedidoController implements IController {
 		return dao.getPorIdPedido(idPedido);
 	}
 
+	public List<Entidade> getPorIdProduto(int idProduto) throws Exception {
+		return dao.getPorIdProduto(idProduto);
+	}
+
 	public Entidade buscaCompleta(int idProduto, int qtde, int idPedido)
 			throws Exception {
 		return dao.buscaCompleta(idProduto, qtde, idPedido);
