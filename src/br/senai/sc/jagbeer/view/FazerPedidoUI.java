@@ -418,7 +418,7 @@ public class FazerPedidoUI extends JInternalFrame {
 											.getPorIdPedido(pedido.getId())));
 
 							EncerrarEditarPedidoUI encerrarPedidoUI = new EncerrarEditarPedidoUI(
-									table, pedido);
+									pedido);
 							getContentPane().add(encerrarPedidoUI, 0);
 							encerrarPedidoUI.requestFocus(true);
 							encerrarPedidoUI.setFocusable(true);

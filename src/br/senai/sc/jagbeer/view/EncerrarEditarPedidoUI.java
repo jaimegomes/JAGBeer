@@ -53,7 +53,7 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EncerrarEditarPedidoUI(JTable table, final Pedido pedido) {
+	public EncerrarEditarPedidoUI(final Pedido pedido) {
 
 		try {
 			listProdutos = new ProdutoPedidoController().getPorIdPedido(pedido
@@ -82,11 +82,11 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 		lblNome.setFont(new Font("Tahoma", Font.BOLD, 20));
 
 		lblPedido = new JLabel("Pedido:");
-		lblPedido.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblPedido.setFont(new Font("Dialog", Font.BOLD, 15));
 
 		lblNumeroPedido = new JLabel("Numero Pedido");
 		lblNumeroPedido.setText("" + pedido.getId());
-		lblNumeroPedido.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNumeroPedido.setFont(new Font("Dialog", Font.BOLD, 15));
 
 		scrollPane = new JScrollPane();
 
@@ -96,10 +96,10 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 		lblData = new JLabel("Data:");
 
 		lblTotal = new JLabel("Total: R$");
-		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblTotal.setFont(new Font("Dialog", Font.BOLD, 15));
 
 		lblValor = new JLabel("Valor");
-		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblValor.setFont(new Font("Dialog", Font.BOLD, 15));
 
 		try {
 			lblValor.setText("" + pedido.getValor());
@@ -136,6 +136,19 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 
 					JOptionPane.showMessageDialog(null,
 							"Pedido encerrado com sucesso.");
+
+					NotaFiscalUI notaFiscalUI = new NotaFiscalUI(pedido);
+					notaFiscalUI.requestFocus(true);
+					notaFiscalUI.setFocusable(true);
+					notaFiscalUI.moveToFront();
+					notaFiscalUI.setVisible(true);
+
+					try {
+						PrincipalUI.getInstancia().getContentPane()
+								.add(notaFiscalUI, 0);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 
 					dispose();
 
@@ -265,154 +278,70 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 						.addContainerGap(19, Short.MAX_VALUE)));
 
 		gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		lblTotal,
-																		GroupLayout.PREFERRED_SIZE,
-																		70,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addComponent(
-																		lblValor,
-																		GroupLayout.PREFERRED_SIZE,
-																		53,
-																		GroupLayout.PREFERRED_SIZE)
-																.addGap(53)
-																.addComponent(
-																		btnAdicionarProduto,
-																		GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.DEFAULT_SIZE,
-																		Short.MAX_VALUE)
-																.addPreferredGap(
-																		ComponentPlacement.UNRELATED)
-																.addComponent(
-																		btnExcluirItem,
-																		GroupLayout.PREFERRED_SIZE,
-																		120,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		ComponentPlacement.UNRELATED)
-																.addComponent(
-																		btnEncerrar,
-																		GroupLayout.PREFERRED_SIZE,
-																		123,
-																		GroupLayout.PREFERRED_SIZE)
-																.addGap(17))
-												.addGroup(
-														gl_panel.createParallelGroup(
-																Alignment.LEADING,
-																false)
-																.addGroup(
-																		gl_panel.createSequentialGroup()
-																				.addGroup(
-																						gl_panel.createParallelGroup(
-																								Alignment.TRAILING,
-																								false)
-																								.addComponent(
-																										lblNome,
-																										GroupLayout.DEFAULT_SIZE,
-																										GroupLayout.DEFAULT_SIZE,
-																										Short.MAX_VALUE)
-																								.addGroup(
-																										gl_panel.createSequentialGroup()
-																												.addComponent(
-																														lblPedido,
-																														GroupLayout.DEFAULT_SIZE,
-																														GroupLayout.DEFAULT_SIZE,
-																														Short.MAX_VALUE)
-																												.addPreferredGap(
-																														ComponentPlacement.RELATED)
-																												.addComponent(
-																														lblNumeroPedido)
-																												.addGap(16)))
-																				.addGroup(
-																						gl_panel.createParallelGroup(
-																								Alignment.TRAILING)
-																								.addGroup(
-																										gl_panel.createSequentialGroup()
-																												.addGap(18)
-																												.addComponent(
-																														lblNomeCliente)
-																												.addPreferredGap(
-																														ComponentPlacement.RELATED,
-																														GroupLayout.DEFAULT_SIZE,
-																														Short.MAX_VALUE))
-																								.addGroup(
-																										gl_panel.createSequentialGroup()
-																												.addPreferredGap(
-																														ComponentPlacement.RELATED)
-																												.addComponent(
-																														lblData)
-																												.addPreferredGap(
-																														ComponentPlacement.RELATED)))
-																				.addPreferredGap(
-																						ComponentPlacement.RELATED)
-																				.addComponent(
-																						lblDdmmyyyy,
-																						GroupLayout.PREFERRED_SIZE,
-																						111,
-																						GroupLayout.PREFERRED_SIZE))
-																.addComponent(
-																		scrollPane,
-																		GroupLayout.PREFERRED_SIZE,
-																		574,
-																		GroupLayout.PREFERRED_SIZE)))
-								.addContainerGap()));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(
-														lblNome,
-														GroupLayout.PREFERRED_SIZE,
-														25,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblNomeCliente))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(
-														lblPedido,
-														GroupLayout.PREFERRED_SIZE,
-														25,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-														lblNumeroPedido,
-														GroupLayout.PREFERRED_SIZE,
-														25,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblData)
-												.addComponent(lblDdmmyyyy))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(scrollPane,
-										GroupLayout.PREFERRED_SIZE, 368,
-										GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(lblTotal)
-												.addComponent(btnEncerrar)
-												.addComponent(btnExcluirItem)
-												.addComponent(
-														btnAdicionarProduto)
-												.addComponent(lblValor))
-								.addContainerGap(35, Short.MAX_VALUE)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(lblTotal, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblValor, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+									.addGap(42)
+									.addComponent(btnAdicionarProduto, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(btnExcluirItem, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(btnEncerrar, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
+									.addGap(17))
+								.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 574, GroupLayout.PREFERRED_SIZE))
+							.addContainerGap())
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(lblPedido, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblNumeroPedido)
+									.addGap(16)))
+							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGap(18)
+									.addComponent(lblNomeCliente)
+									.addPreferredGap(ComponentPlacement.RELATED, 248, Short.MAX_VALUE))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblData)
+									.addPreferredGap(ComponentPlacement.RELATED)))
+							.addComponent(lblDdmmyyyy)
+							.addGap(22))))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNomeCliente))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPedido, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNumeroPedido, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDdmmyyyy)
+						.addComponent(lblData))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblTotal)
+						.addComponent(btnEncerrar)
+						.addComponent(btnExcluirItem)
+						.addComponent(btnAdicionarProduto)
+						.addComponent(lblValor))
+					.addContainerGap(35, Short.MAX_VALUE))
+		);
 
 		tableEncerraPedido = new JTable();
 		try {
