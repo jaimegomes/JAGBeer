@@ -150,7 +150,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
 				int opcao = JOptionPane.showConfirmDialog(null,
 						"Deseja excluir?");
 				if (opcao == 0) {
@@ -164,20 +164,19 @@ public class ConsultaClienteUI extends JInternalFrame {
 
 						Cliente clienteExcluir = (Cliente) new ClienteController()
 								.getNomeSelecionado(nome);
-
+						
+						System.out.println("consultacliente1");
+						
 						Pedido pedido = (Pedido) new PedidoController()
 								.getPedidoAbertoPorIdCliente(clienteExcluir
 										.getId());
 
 						pedido.setStatus(0);
 
-						//Alterado aqui
-						Pedido p1 = (Pedido)new PedidoController().getPedidoAbertoPorIdCliente((clienteExcluir.getId()));
+						System.out.println("consultacliente");
+						// Alterado aqui
 
-						if (p1.getStatus() == 1) {
-							JOptionPane.showMessageDialog(null,
-									"Cliente possui pedido aberto.");
-						} else {
+						if (pedido.getStatus() == 0) {
 
 							new PedidoController().editar(pedido);
 
@@ -197,6 +196,10 @@ public class ConsultaClienteUI extends JInternalFrame {
 											new PrincipalTableModel(
 													new PedidoController()
 															.getListPedidosEmAberto()));
+
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"Cliente possui pedido aberto.");
 
 						}
 					} catch (Exception e2) {
@@ -326,7 +329,6 @@ public class ConsultaClienteUI extends JInternalFrame {
 		getContentPane().setLayout(groupLayout);
 
 	}
-
 	// public JTable getTableConsultaCliente() {
 	// return tableConsultaCliente;
 	// }
