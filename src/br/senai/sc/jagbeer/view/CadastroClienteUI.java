@@ -92,7 +92,7 @@ public class CadastroClienteUI extends JInternalFrame {
 		jtfTelefoneCliente = new JTextField();
 		jtfTelefoneCliente.setColumns(10);
 
-		// APENA NUMEROS NO CAPO TELEFONE
+		// APENA NUMEROS NO CAMPO TELEFONE
 		jtfTelefoneCliente = new JTextField();
 		jtfTelefoneCliente.addKeyListener(new KeyAdapter() {
 			@Override
