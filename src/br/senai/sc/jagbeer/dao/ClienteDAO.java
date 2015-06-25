@@ -36,7 +36,7 @@ public class ClienteDAO extends GenericDAO {
 		try {
 
 			Cliente cliente = (Cliente) entidade;
-
+			
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, cliente.getNome());
 			pstmt.setString(2, cliente.getTelefone());
@@ -56,7 +56,6 @@ public class ClienteDAO extends GenericDAO {
 	@Override
 	public void excluir(Entidade entidade) throws Exception {
 		String sql = "DELETE FROM cliente WHERE id=?";
-
 		try {
 			Cliente cliente = (Cliente) entidade;
 			PreparedStatement pstmt = con.prepareStatement(sql);

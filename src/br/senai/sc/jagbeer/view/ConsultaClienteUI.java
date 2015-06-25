@@ -165,15 +165,12 @@ public class ConsultaClienteUI extends JInternalFrame {
 						Cliente clienteExcluir = (Cliente) new ClienteController()
 								.getNomeSelecionado(nome);
 						
-						System.out.println("consultacliente1");
-						
 						Pedido pedido = (Pedido) new PedidoController()
 								.getPedidoAbertoPorIdCliente(clienteExcluir
 										.getId());
 
 						pedido.setStatus(0);
 
-						System.out.println("consultacliente");
 						// Alterado aqui
 
 						if (pedido.getStatus() == 0) {
