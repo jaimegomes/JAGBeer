@@ -36,7 +36,7 @@ public class ProdutoController implements IController {
 					"Valor do produto é obrigatorio e deve ser maior que zero.");
 
 		if (produto.getClassificacao().trim().equals(""))
-			throw new Exception("classificaóóo do produto obrigatória.");
+			throw new Exception("classificacao do produto obrigatória.");
 
 		dao.salvar(produto);
 
@@ -70,7 +70,7 @@ public class ProdutoController implements IController {
 					"Valor do produto ó obrigatório e deve ser maior que zero.");
 
 		if (produto.getClassificacao().trim().equals(""))
-			throw new Exception("classificaóóo do produto obrigatória.");
+			throw new Exception("classificacao do produto obrigatória.");
 
 		dao.editar(produto);
 
@@ -91,7 +91,7 @@ public class ProdutoController implements IController {
 		produto = null;
 
 		if (id < 0)
-			throw new Exception("id nóo pode ser menor que zero.");
+			throw new Exception("id nao pode ser menor que zero.");
 
 		produto = (Produto) dao.getPorId(id);
 
@@ -112,7 +112,7 @@ public class ProdutoController implements IController {
 
 		if (classificacao == null || classificacao.trim().equals(""))
 			throw new Exception(
-					"A classificaóóo nóo pode ser nula ou em branco.");
+					"A classificacao nao pode ser nula ou em branco.");
 
 		return dao.getPorClassificacao(classificacao);
 	}
