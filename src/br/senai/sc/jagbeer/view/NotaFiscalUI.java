@@ -67,7 +67,7 @@ public class NotaFiscalUI extends JInternalFrame {
 
 		panel = new JPanel();
 
-		panel.setBorder(new TitledBorder(null, "Encerrar Pedido",
+		panel.setBorder(new TitledBorder(null, "Nota Fiscal",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		lblNomeCliente = new JLabel("Nome Cliente");
