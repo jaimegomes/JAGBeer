@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.PedidoController;
@@ -23,7 +24,6 @@ import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.ClienteTableModel;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PrincipalTableModel;
-import javax.swing.table.DefaultTableModel;
 
 /**
  * Classe que contém a tela de consulta de cliente
@@ -168,12 +168,26 @@ public class ConsultaClienteUI extends JInternalFrame {
 						Pedido pedido = (Pedido) new PedidoController()
 								.getPorIdCliente(clienteExcluir.getId());
 
-						pedido.setStatus(0);
-
-						// Alterado aqui
 						try {
 							if (pedido.getStatus() == 0) {
+								
+								new ClienteController().excluir(clienteExcluir);
 
+								JOptionPane.showMessageDialog(null,
+										"Cliente excluido com Sucesso! ");
+
+								tableConsultaCliente
+										.setModel(new ClienteTableModel(
+												new ClienteController()
+														.listar()));
+
+								PrincipalUI
+										.getInstancia()
+										.getTablePedidoAberto()
+										.setModel(
+												new PrincipalTableModel(
+														new PedidoController()
+																.getListPedidosEmAberto()));
 							}
 						} catch (Exception e2) {
 							JOptionPane.showMessageDialog(
@@ -182,23 +196,6 @@ public class ConsultaClienteUI extends JInternalFrame {
 											+ e2.getMessage());
 						}
 
-						new PedidoController().editar(pedido);
-
-						new ClienteController().excluir(clienteExcluir);
-
-						JOptionPane.showMessageDialog(null,
-								"Cliente excluido com Sucesso! ");
-
-						tableConsultaCliente.setModel(new ClienteTableModel(
-								new ClienteController().listar()));
-
-						PrincipalUI
-								.getInstancia()
-								.getTablePedidoAberto()
-								.setModel(
-										new PrincipalTableModel(
-												new PedidoController()
-														.getListPedidosEmAberto()));
 					} catch (Exception e2) {
 						JOptionPane.showMessageDialog(null, e2.getMessage());
 					}
