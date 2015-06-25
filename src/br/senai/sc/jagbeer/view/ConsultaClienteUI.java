@@ -168,34 +168,29 @@ public class ConsultaClienteUI extends JInternalFrame {
 						Pedido pedido = (Pedido) new PedidoController()
 								.getPorIdCliente(clienteExcluir.getId());
 
-						try {
-							if (pedido.getStatus() == 0) {
-								
-								new ClienteController().excluir(clienteExcluir);
+						if (pedido.getStatus() == 0) {
 
-								JOptionPane.showMessageDialog(null,
-										"Cliente excluido com Sucesso! ");
+							new ClienteController().excluir(clienteExcluir);
 
-								tableConsultaCliente
-										.setModel(new ClienteTableModel(
-												new ClienteController()
-														.listar()));
+							JOptionPane.showMessageDialog(null,
+									"Cliente excluido com Sucesso! ");
 
-								PrincipalUI
-										.getInstancia()
-										.getTablePedidoAberto()
-										.setModel(
-												new PrincipalTableModel(
-														new PedidoController()
-																.getListPedidosEmAberto()));
-							}
-						} catch (Exception e2) {
-							JOptionPane.showMessageDialog(
-									null,
-									"Cliente possui pedido aberto."
-											+ e2.getMessage());
+							tableConsultaCliente
+									.setModel(new ClienteTableModel(
+											new ClienteController().listar()));
+
+							PrincipalUI
+									.getInstancia()
+									.getTablePedidoAberto()
+									.setModel(
+											new PrincipalTableModel(
+													new PedidoController()
+															.getListPedidosEmAberto()));
+						} else {
+							JOptionPane
+									.showMessageDialog(null,
+											"Não é possível excluir clientes com pedido em aberto.");
 						}
-
 					} catch (Exception e2) {
 						JOptionPane.showMessageDialog(null, e2.getMessage());
 					}
