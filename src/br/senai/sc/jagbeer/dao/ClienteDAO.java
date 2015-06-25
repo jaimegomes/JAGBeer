@@ -27,6 +27,9 @@ public class ClienteDAO extends GenericDAO {
 	private Connection con = Conexao.getConnection();
 
 	@Override
+	/**
+	 * 
+	 */
 	public void salvar(Entidade entidade) throws Exception {
 
 		String sql = "INSERT INTO cliente (nome, telefone, email) VALUES (?,?,?)";
@@ -180,6 +183,12 @@ public class ClienteDAO extends GenericDAO {
 		return cliente;
 	}
 
+	/**
+	 * Método retorna apenas um cliente pesquisado com LIKE ''
+	 * @param clientePesquisar
+	 * @return
+	 * @throws Exception
+	 */
 	public Entidade getNomeSelecionado(String clientePesquisar)
 			throws Exception {
 		Cliente cliente = null;
@@ -209,6 +218,12 @@ public class ClienteDAO extends GenericDAO {
 		return cliente;
 	}
 
+	/**
+	 * Método retorna um lista de clientes pesquisados por nome utilzando LIKE ''
+	 * @param clientePesquisar
+	 * @return
+	 * @throws Exception
+	 */
 	public List<Entidade> getPorNome(String clientePesquisar) throws Exception {
 		List<Entidade> listClientes = new ArrayList<Entidade>();
 		Cliente cliente = null;
