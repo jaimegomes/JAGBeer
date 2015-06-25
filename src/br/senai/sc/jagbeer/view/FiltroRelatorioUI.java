@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -30,7 +31,6 @@ public class FiltroRelatorioUI extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JFormattedTextField jtfDataInicio;
 	private JFormattedTextField jtfDataFim;
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	/**
 	 * Create the frame.
@@ -39,6 +39,9 @@ public class FiltroRelatorioUI extends JInternalFrame {
 		setClosable(true);
 		setTitle("Configurar Relatorio");
 		setBounds(580, 180, 438, 163);
+
+		final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		sdf.setLenient(false);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Filtro de Relatório",
@@ -104,26 +107,35 @@ public class FiltroRelatorioUI extends JInternalFrame {
 		btnGerarRelatorio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				Date dataIni = null;
+				Date dataFim = null;
 				try {
 
-					String dataInicio = jtfDataInicio.getValue().toString();
-					String dataFinal = jtfDataFim.getValue().toString();
+					try {
+						dataIni = sdf
+								.parse(jtfDataInicio.getValue().toString());
+						dataFim = sdf.parse(jtfDataFim.getValue().toString());
 
-					if (dataInicio != null && dataFinal != null) {
+						if (dataIni.before(dataFim)) {
 
-						RelatorioFaturamentoUI relatorioFaturamentoUI = new RelatorioFaturamentoUI(
-								sdf.parse(dataInicio), sdf.parse(dataFinal));
+							RelatorioFaturamentoUI relatorioFaturamentoUI = new RelatorioFaturamentoUI(
+									dataIni, dataFim);
 
-						PrincipalUI.getInstancia().getContentPane()
-								.add(relatorioFaturamentoUI, 0);
-						relatorioFaturamentoUI.setVisible(true);
+							PrincipalUI.getInstancia().getContentPane()
+									.add(relatorioFaturamentoUI, 0);
+							relatorioFaturamentoUI.setVisible(true);
 
-						dispose();
+							dispose();
 
-					} else {
-						JOptionPane.showMessageDialog(null,
-								"Favor selecionar uma data válida");
+						} else {
+							JOptionPane
+									.showMessageDialog(null,
+											"A data inicial deve ser menor que a data final.");
 
+						}
+
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "Data inválida.");
 					}
 
 				} catch (Exception e2) {
