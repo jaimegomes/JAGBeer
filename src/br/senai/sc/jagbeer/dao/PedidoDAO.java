@@ -380,4 +380,54 @@ public class PedidoDAO extends GenericDAO {
 		return pedido;
 	}
 
+	public Entidade getPorIdCliente(int id) throws Exception {
+
+		Pedido pedido = null;
+		String sql = "SELECT * FROM pedido WHERE idCliente = ?";
+		try {
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, id);
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				try {
+					Mesa mesa = null;
+					if (result.getInt("idMesa") > 0) {
+						mesa = (Mesa) new MesaController().getPorId(result
+								.getInt("idMesa"));
+					}
+
+					Cliente cliente = null;
+
+					if (result.getInt("idCliente") > 0) {
+						cliente = (Cliente) new ClienteController()
+								.getPorId(result.getInt("idCliente"));
+					}
+
+					pedido = new Pedido(result.getInt("id"), mesa, cliente,
+							result.getDate("dataPedido"),
+							result.getInt("status"), result.getDouble("valor"));
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+
+			pstm.close();
+
+		} catch (SQLException e) {
+			con.rollback();
+			e.printStackTrace();
+		} finally {
+			con.close();
+		}
+
+		return pedido;
+	}
+
+	
 }

@@ -150,7 +150,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				int opcao = JOptionPane.showConfirmDialog(null,
 						"Deseja excluir?");
 				if (opcao == 0) {
@@ -164,41 +164,41 @@ public class ConsultaClienteUI extends JInternalFrame {
 
 						Cliente clienteExcluir = (Cliente) new ClienteController()
 								.getNomeSelecionado(nome);
-						
+
 						Pedido pedido = (Pedido) new PedidoController()
-								.getPedidoAbertoPorIdCliente(clienteExcluir
-										.getId());
+								.getPorIdCliente(clienteExcluir.getId());
 
 						pedido.setStatus(0);
 
 						// Alterado aqui
+						try {
+							if (pedido.getStatus() == 0) {
 
-						if (pedido.getStatus() == 0) {
-
-							new PedidoController().editar(pedido);
-
-							new ClienteController().excluir(clienteExcluir);
-
-							JOptionPane.showMessageDialog(null,
-									"Cliente excluido com Sucesso! ");
-
-							tableConsultaCliente
-									.setModel(new ClienteTableModel(
-											new ClienteController().listar()));
-
-							PrincipalUI
-									.getInstancia()
-									.getTablePedidoAberto()
-									.setModel(
-											new PrincipalTableModel(
-													new PedidoController()
-															.getListPedidosEmAberto()));
-
-						} else {
-							JOptionPane.showMessageDialog(null,
-									"Cliente possui pedido aberto.");
-
+							}
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(
+									null,
+									"Cliente possui pedido aberto."
+											+ e2.getMessage());
 						}
+
+						new PedidoController().editar(pedido);
+
+						new ClienteController().excluir(clienteExcluir);
+
+						JOptionPane.showMessageDialog(null,
+								"Cliente excluido com Sucesso! ");
+
+						tableConsultaCliente.setModel(new ClienteTableModel(
+								new ClienteController().listar()));
+
+						PrincipalUI
+								.getInstancia()
+								.getTablePedidoAberto()
+								.setModel(
+										new PrincipalTableModel(
+												new PedidoController()
+														.getListPedidosEmAberto()));
 					} catch (Exception e2) {
 						JOptionPane.showMessageDialog(null, e2.getMessage());
 					}
