@@ -27,9 +27,6 @@ public class ClienteDAO extends GenericDAO {
 	private Connection con = Conexao.getConnection();
 
 	@Override
-	/**
-	 * 
-	 */
 	public void salvar(Entidade entidade) throws Exception {
 
 		String sql = "INSERT INTO cliente (nome, telefone, email) VALUES (?,?,?)";
@@ -122,6 +119,12 @@ public class ClienteDAO extends GenericDAO {
 		return listaClientes;
 	}
 
+	/**
+	 * Método retorna uma lista de cliente procurados por nome em ordem alfabetica
+	 * @param clientePesquisar
+	 * @return
+	 * @throws Exception
+	 */
 	public List<Entidade> getListClientesPorNome(String clientePesquisar)
 			throws Exception {
 		Cliente cliente = null;

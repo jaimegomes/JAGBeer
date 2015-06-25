@@ -151,7 +151,12 @@ public class MesaDAO extends GenericDAO {
 		return mesa;
 	}
 
-
+	/**
+	 * Método retorna o numero da mesa
+	 * @param numeroMesa
+	 * @return
+	 * @throws Exception
+	 */
 	public boolean verificarNumeroMesa(int numeroMesa) throws Exception {
 
 		String query = "SELECT * FROM mesa WHERE numeroMesa = ?";
@@ -179,6 +184,12 @@ public class MesaDAO extends GenericDAO {
 		return false;
 	}
 
+	/**
+	 * Método retorna o numero da mesa
+	 * @param numeroMesa
+	 * @return
+	 * @throws Exception
+	 */
 	public Entidade getPorNumeroMesa(int numeroMesa) throws Exception {
 		Mesa mesa = null;
 		String sql = "SELECT * FROM mesa WHERE numeroMesa = ?";
