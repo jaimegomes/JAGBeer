@@ -8,8 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JTable;
-
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.abstracts.GenericDAO;
 import br.senai.sc.jagbeer.conexao.Conexao;
@@ -33,7 +31,7 @@ public class ClienteDAO extends GenericDAO {
 		try {
 
 			Cliente cliente = (Cliente) entidade;
-			
+
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, cliente.getNome());
 			pstmt.setString(2, cliente.getTelefone());
@@ -118,9 +116,11 @@ public class ClienteDAO extends GenericDAO {
 	}
 
 	/**
-	 * Método retorna uma lista de cliente procurados por nome em ordem alfabetica
+	 * Método retorna uma lista de cliente procurados por nome em ordem
+	 * alfabetica
+	 * 
 	 * @param clientePesquisar
-	 * @return
+	 * @return list clientes
 	 * @throws Exception
 	 */
 	public List<Entidade> getListClientesPorNome(String clientePesquisar)
@@ -184,9 +184,11 @@ public class ClienteDAO extends GenericDAO {
 	}
 
 	/**
-	 * Método retorna apenas um cliente pesquisado com LIKE ''
+	 * Método retorna apenas um cliente de acordo com o nome passado como
+	 * parâmetro
+	 * 
 	 * @param clientePesquisar
-	 * @return
+	 * @return cliente
 	 * @throws Exception
 	 */
 	public Entidade getNomeSelecionado(String clientePesquisar)
@@ -219,9 +221,10 @@ public class ClienteDAO extends GenericDAO {
 	}
 
 	/**
-	 * Método retorna um lista de clientes pesquisados por nome utilzando LIKE ''
+	 * Método retorna um lista de clientes pesquisados por nome utilizando
+	 * 
 	 * @param clientePesquisar
-	 * @return
+	 * @return list clientes
 	 * @throws Exception
 	 */
 	public List<Entidade> getPorNome(String clientePesquisar) throws Exception {

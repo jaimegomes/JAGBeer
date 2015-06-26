@@ -3,8 +3,6 @@ package br.senai.sc.jagbeer.controller;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.JTable;
-
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.dao.PedidoDAO;
 import br.senai.sc.jagbeer.interfaces.IController;
@@ -28,13 +26,13 @@ public class PedidoController implements IController {
 		pedido = (Pedido) entidade;
 
 		if (pedido == null)
-			throw new Exception("Pedido nao pode ser nulo.");
+			throw new Exception("Pedido não pode ser nulo.");
 
 		if (pedido.getCliente() == null)
-			throw new Exception("Cliente nao pode ser nulo.");
+			throw new Exception("Cliente não pode ser nulo.");
 
 		if (pedido.getDataPedido() == null)
-			throw new Exception("Data do pedido nao pode ser nula.");
+			throw new Exception("Data do pedido não pode ser nula.");
 
 		dao.salvar(pedido);
 
@@ -46,7 +44,7 @@ public class PedidoController implements IController {
 		pedido = (Pedido) entidade;
 
 		if (pedido == null)
-			throw new Exception("Pedido nao pode ser nulo.");
+			throw new Exception("Pedido não pode ser nulo.");
 
 		dao.excluir(pedido);
 	}
@@ -57,7 +55,7 @@ public class PedidoController implements IController {
 		pedido = (Pedido) entidade;
 
 		if (pedido == null)
-			throw new Exception("Pedido nao pode ser nulo.");
+			throw new Exception("Pedido não pode ser nulo.");
 
 		dao.editar(pedido);
 	}

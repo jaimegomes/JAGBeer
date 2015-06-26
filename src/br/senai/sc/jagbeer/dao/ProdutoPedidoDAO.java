@@ -243,7 +243,7 @@ public class ProdutoPedidoDAO extends GenericDAO {
 	}
 
 	/**
-	 * Retorna um produto referente ao id, qtde e idPedido passados como
+	 * Retorna um produtopedido referente ao id, qtde e idPedido passados como
 	 * parâmetro
 	 * 
 	 * @param idProduto

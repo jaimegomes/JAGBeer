@@ -2,8 +2,6 @@ package br.senai.sc.jagbeer.controller;
 
 import java.util.List;
 
-import javax.swing.JTable;
-
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.dao.ProdutoDAO;
 import br.senai.sc.jagbeer.interfaces.IController;
@@ -36,7 +34,7 @@ public class ProdutoController implements IController {
 					"Valor do produto é obrigatorio e deve ser maior que zero.");
 
 		if (produto.getClassificacao().trim().equals(""))
-			throw new Exception("classificacao do produto obrigatória.");
+			throw new Exception("classificação do produto obrigatória.");
 
 		dao.salvar(produto);
 
@@ -60,17 +58,17 @@ public class ProdutoController implements IController {
 		produto = (Produto) entidade;
 
 		if (produto == null)
-			throw new Exception("Produto nóo pode ser nulo.");
+			throw new Exception("Produto não pode ser nulo.");
 
 		if (produto.getNome().trim().equals(""))
 			throw new Exception("Nome do produto obrigatório.");
 
 		if (produto.getPrecoVenda() == null || produto.getPrecoVenda() == 0)
 			throw new Exception(
-					"Valor do produto ó obrigatório e deve ser maior que zero.");
+					"Valor do produto é obrigatório e deve ser maior que zero.");
 
 		if (produto.getClassificacao().trim().equals(""))
-			throw new Exception("classificacao do produto obrigatória.");
+			throw new Exception("classificação do produto obrigatória.");
 
 		dao.editar(produto);
 
@@ -91,7 +89,7 @@ public class ProdutoController implements IController {
 		produto = null;
 
 		if (id < 0)
-			throw new Exception("id nao pode ser menor que zero.");
+			throw new Exception("id não pode ser menor que zero.");
 
 		produto = (Produto) dao.getPorId(id);
 
@@ -100,8 +98,8 @@ public class ProdutoController implements IController {
 
 
 	/**
-	 * Mótodo responsóvel por buscar todos os produtos de determinada
-	 * classificaóóo passada como parómetro.
+	 * Método responsável por buscar todos os produtos de determinada
+	 * classificação passada como parâmetro.
 	 * 
 	 * @param classificacao
 	 * @return dao.getPorClassificacao(classificacao)
@@ -112,14 +110,14 @@ public class ProdutoController implements IController {
 
 		if (classificacao == null || classificacao.trim().equals(""))
 			throw new Exception(
-					"A classificacao nao pode ser nula ou em branco.");
+					"A classificacao não pode ser nula ou em branco.");
 
 		return dao.getPorClassificacao(classificacao);
 	}
 
 	/**
-	 * Mótodo responsóvel por buscar todos os produtos de determinado nome
-	 * passado como parómetro.
+	 * Método responsável por buscar todos os produtos de determinado nome
+	 * passado como parâmetro.
 	 * 
 	 * @param classificacao
 	 * @return dao.getPorNome(nome)
@@ -134,8 +132,8 @@ public class ProdutoController implements IController {
 	}
 
 	/**
-	 * Mótodo responsóvel por fazer a busca dos produtos de acordo com o nome e
-	 * a classificaóóo passados como parómetro.
+	 * Método responsável por fazer a busca dos produtos de acordo com o nome e
+	 * a classificação passados como parâmetro.
 	 * 
 	 * @param nome
 	 * @param classificacao
@@ -149,8 +147,8 @@ public class ProdutoController implements IController {
 	}
 
 	/**
-	 * Mótodo responsóvel por fazer a busca dos produtos de acordo com o nome, a
-	 * classificaóóo e o valor de venda passados como parómetro.
+	 * Método responsável por fazer a busca dos produtos de acordo com o nome, a
+	 * classificação e o valor de venda passados como parâmetro.
 	 * 
 	 * @param nome
 	 * @param classificacao
@@ -164,7 +162,7 @@ public class ProdutoController implements IController {
 	}
 
 	/**
-	 * Método responsóvel por buscar o produto com o nome passado como
+	 * Método responsável por buscar o produto com o nome passado como
 	 * parâmetro.
 	 * 
 	 * @param String nome

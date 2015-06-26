@@ -2,8 +2,6 @@ package br.senai.sc.jagbeer.controller;
 
 import java.util.List;
 
-import javax.swing.JTable;
-
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.dao.ClienteDAO;
 import br.senai.sc.jagbeer.interfaces.IController;
@@ -26,10 +24,10 @@ public class ClienteController implements IController {
 		cliente = (Cliente) entidade;
 
 		if (cliente == null)
-			throw new Exception("Cliente nao pode ser nulo.");
+			throw new Exception("Cliente não pode ser nulo.");
 
 		if (cliente.getNome().trim().equals(""))
-			throw new Exception("Nome do Cliente obrigatorio");
+			throw new Exception("Nome do Cliente obrigatório");
 
 		dao.salvar(cliente);
 
@@ -53,10 +51,10 @@ public class ClienteController implements IController {
 		cliente = (Cliente) entidade;
 
 		if (cliente == null)
-			throw new Exception("Cliente nao pode ser nulo.");
+			throw new Exception("Cliente não pode ser nulo.");
 
 		if (cliente.getNome().trim().equals(""))
-			throw new Exception("Nome do Cliente obrigatorio");
+			throw new Exception("Nome do Cliente obrigatório");
 
 		dao.editar(cliente);
 
@@ -89,7 +87,5 @@ public class ClienteController implements IController {
 	public List<Entidade> getPorNome(String nome) throws Exception {
 		return dao.getPorNome(nome);
 	}
-
-
 
 }

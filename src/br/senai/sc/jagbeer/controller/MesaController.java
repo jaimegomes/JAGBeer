@@ -2,8 +2,6 @@ package br.senai.sc.jagbeer.controller;
 
 import java.util.List;
 
-import javax.swing.JTable;
-
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.dao.MesaDAO;
 import br.senai.sc.jagbeer.interfaces.IController;

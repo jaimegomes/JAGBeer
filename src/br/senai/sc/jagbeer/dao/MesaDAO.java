@@ -19,9 +19,9 @@ public class MesaDAO extends GenericDAO {
 
 	@Override
 	public void salvar(Entidade entidade) throws Exception {
-	
+
 		String query = "INSERT INTO mesa (numeromesa, lugares) VALUES (?,?)";
-		
+
 		try {
 
 			mesa = (Mesa) entidade;
@@ -149,40 +149,9 @@ public class MesaDAO extends GenericDAO {
 	}
 
 	/**
-	 * Método retorna o numero da mesa
-	 * @param numeroMesa
-	 * @return
-	 * @throws Exception
-	 */
-	public boolean verificarNumeroMesa(int numeroMesa) throws Exception {
-
-		String query = "SELECT * FROM mesa WHERE numeroMesa = ?";
-
-		try {
-
-			PreparedStatement pstmt = con.prepareStatement(query);
-
-			pstmt.setInt(1, numeroMesa);
-
-			ResultSet result = pstmt.executeQuery();
-
-			if (result.next())
-				return true;
-
-			pstmt.close();
-
-		} catch (SQLException se) {
-			System.out.println("Erro ao verificar numero da Mesa. "
-					+ se.getMessage());
-		} finally {
-			con.close();
-		}
-
-		return false;
-	}
-
-	/**
-	 * Método retorna o numero da mesa
+	 * Método a entidade mesa de acordo com o número da mesa passado como
+	 * parâmetro
+	 * 
 	 * @param numeroMesa
 	 * @return
 	 * @throws Exception
