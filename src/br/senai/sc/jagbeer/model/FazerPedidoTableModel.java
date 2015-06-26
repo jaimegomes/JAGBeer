@@ -1,3 +1,4 @@
+
 package br.senai.sc.jagbeer.model;
 
 import java.util.ArrayList;

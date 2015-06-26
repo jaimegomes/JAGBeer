@@ -130,7 +130,7 @@ public class CadastroProdutoUI extends JInternalFrame {
 		});
 
 		// Classificacao
-		lblClassificao = new JLabel("Classifica\u00E7\u00E3o:");
+		lblClassificao = new JLabel("Classificacao:");
 
 		cmbClassificacao = new JComboBox();
 
