@@ -116,10 +116,10 @@ public class ConsultaProdutoUI extends JInternalFrame {
 					if (cmbClassificacao.getSelectedIndex() == 2)
 						classificacao = "Drinks";
 
-					if (cmbClassificacao.getSelectedIndex() == 2)
+					if (cmbClassificacao.getSelectedIndex() == 3)
 						classificacao = "Lanches";
 
-					if (cmbClassificacao.getSelectedIndex() == 2)
+					if (cmbClassificacao.getSelectedIndex() == 4)
 						classificacao = "Porções";
 
 					// tudo em branco
@@ -146,7 +146,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 
 					}
 
-					// campo classificaï¿½ï¿½o preenchido
+					// campo classificação preenchido
 					else if (cmbClassificacao.getSelectedIndex() > 0
 							&& jtfNome.getText().isEmpty()) {
 
@@ -162,7 +162,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 
 					}
 
-					// campos nome e classificaï¿½ï¿½o preenchidos
+					// campos nome e classificação preenchidos
 					else if (cmbClassificacao.getSelectedIndex() > 0
 							&& !jtfNome.getText().isEmpty()) {
 
@@ -284,8 +284,8 @@ public class ConsultaProdutoUI extends JInternalFrame {
 
 		cmbClassificacao = new JComboBox();
 		cmbClassificacao.setModel(new DefaultComboBoxModel(new String[] { "",
-				"Alimentos", "Bebidas" }));
-		cmbClassificacao.setMaximumRowCount(3);
+				"Bebidas", "Drinks", "Lanches", "Porções" }));
+		cmbClassificacao.setMaximumRowCount(5);
 
 		btnEditarInserir = new JButton("Editar / Inserir");
 		btnEditarInserir.addActionListener(new ActionListener() {
