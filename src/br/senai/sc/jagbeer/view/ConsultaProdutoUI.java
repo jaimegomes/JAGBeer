@@ -111,10 +111,16 @@ public class ConsultaProdutoUI extends JInternalFrame {
 					String classificacao = "";
 
 					if (cmbClassificacao.getSelectedIndex() == 1)
-						classificacao = "Alimento";
+						classificacao = "Bebidas";
 
 					if (cmbClassificacao.getSelectedIndex() == 2)
-						classificacao = "Bebida";
+						classificacao = "Drinks";
+
+					if (cmbClassificacao.getSelectedIndex() == 2)
+						classificacao = "Lanches";
+
+					if (cmbClassificacao.getSelectedIndex() == 2)
+						classificacao = "Porções";
 
 					// tudo em branco
 					if (cmbClassificacao.getSelectedIndex() <= 0
@@ -134,7 +140,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 						if (listProduto.size() == 0)
 							JOptionPane
 									.showMessageDialog(null,
-											"Nao existem produtos com este nome cadastrados no banco de dados.");
+											"Não existem produtos com este nome cadastrados no banco de dados.");
 
 						table.setModel(new ProdutoTableModel(listProduto));
 
@@ -150,7 +156,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 						if (listProduto.size() == 0)
 							JOptionPane
 									.showMessageDialog(null,
-											"Nao existem produtos com esta classificacao cadastrados no banco de dados.");
+											"Não existem produtos com esta classificação cadastrados no banco de dados.");
 
 						table.setModel(new ProdutoTableModel(listProduto));
 
@@ -168,7 +174,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 							JOptionPane
 									.showMessageDialog(
 											null,
-											"Nao existem produtos com este nome e classificacao cadastrados no banco de dados.");
+											"Não existem produtos com este nome e classificação cadastrados no banco de dados.");
 
 						table.setModel(new ProdutoTableModel(listProduto));
 
@@ -243,7 +249,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 							new ProdutoController().excluir(produtoExcluir);
 
 							JOptionPane.showMessageDialog(null,
-									"Produto excluido com Sucesso!");
+									"Produto excluído com Sucesso!");
 
 							// Atualiza tabela
 							table.setModel(new ProdutoTableModel(

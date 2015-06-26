@@ -134,8 +134,9 @@ public class CadastroProdutoUI extends JInternalFrame {
 
 		cmbClassificacao = new JComboBox();
 
-		cmbClassificacao.setModel(new DefaultComboBoxModel(new String[] { "", "Bebidas","Drinks","Lanches","Porções" }));
-		cmbClassificacao.setMaximumRowCount(3);
+		cmbClassificacao.setModel(new DefaultComboBoxModel(new String[] { "",
+				"Bebidas", "Drinks", "Lanches", "Porções" }));
+		cmbClassificacao.setMaximumRowCount(5);
 
 		// em caso de edição seta os valores nos campos
 		if (produtoEdicao != null) {
@@ -148,11 +149,17 @@ public class CadastroProdutoUI extends JInternalFrame {
 
 			jtfValor.setText(produtoEdicao.getPrecoVenda().toString());
 
-			if (produtoEdicao.getClassificacao().equals("Alimento"))
+			if (produtoEdicao.getClassificacao().equals("Bebidas"))
 				cmbClassificacao.setSelectedIndex(1);
 
-			else if (produtoEdicao.getClassificacao().equals("Bebida"))
+			else if (produtoEdicao.getClassificacao().equals("Drinks"))
 				cmbClassificacao.setSelectedIndex(2);
+
+			else if (produtoEdicao.getClassificacao().equals("Lanches"))
+				cmbClassificacao.setSelectedIndex(3);
+
+			else if (produtoEdicao.getClassificacao().equals("Porções"))
+				cmbClassificacao.setSelectedIndex(4);
 		}
 
 		btnSalvar = new JButton("Salvar");
@@ -161,10 +168,16 @@ public class CadastroProdutoUI extends JInternalFrame {
 				String classificacao = "";
 
 				if (cmbClassificacao.getSelectedIndex() == 1)
-					classificacao = "Alimento";
+					classificacao = "Bebidas";
 
 				if (cmbClassificacao.getSelectedIndex() == 2)
-					classificacao = "Bebida";
+					classificacao = "Drinks";
+
+				if (cmbClassificacao.getSelectedIndex() == 2)
+					classificacao = "Lanches";
+
+				if (cmbClassificacao.getSelectedIndex() == 2)
+					classificacao = "Porções";
 
 				salvarEditarProduto(produtoEdicao, classificacao);
 
