@@ -87,5 +87,9 @@ public class ClienteController implements IController {
 	public List<Entidade> getPorNome(String nome) throws Exception {
 		return dao.getPorNome(nome);
 	}
+	
+	public Entidade buscaCompleta(String nome, String telefone, String email) throws Exception {
+		return dao.buscaCompleta(nome, telefone, email);
+	}
 
 }

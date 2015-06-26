@@ -168,7 +168,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 								linhaSelecionada, 2).toString();
 
 						Cliente clienteExcluir = (Cliente) new ClienteController()
-								.getNomeSelecionado(nome);
+								.buscaCompleta(nome, telefone, email);
 
 						Pedido pedido = (Pedido) new PedidoController()
 								.getPorIdCliente(clienteExcluir.getId());

@@ -221,7 +221,8 @@ public class ClienteDAO extends GenericDAO {
 	}
 
 	/**
-	 * Método retorna um lista de clientes pesquisados por nome utilizando
+	 * Método retorna um lista de clientes pesquisados por nome ou pedaço do
+	 * nome passado como parâmetro
 	 * 
 	 * @param clientePesquisar
 	 * @return list clientes
@@ -256,6 +257,38 @@ public class ClienteDAO extends GenericDAO {
 		}
 
 		return listClientes;
+	}
+
+	public Entidade buscaCompleta(String nome, String telefone, String email)
+			throws SQLException {
+
+		Cliente cliente = null;
+		String sql = "SELECT * FROM cliente WHERE UPPER(nome) LIKE UPPER('"
+				+ nome + "') AND telefone LIKE '" + telefone
+				+ "' AND email LIKE '" + email + "'";
+
+		try {
+			Statement pstmt = con.createStatement();
+
+			ResultSet result = pstmt.executeQuery(sql);
+
+			while (result.next()) {
+				cliente = new Cliente(result.getInt("id"),
+						result.getString("nome"), result.getString("telefone"),
+						result.getString("email"));
+			}
+
+			System.out.println(cliente.getId());
+			pstmt.close();
+
+		} catch (SQLException se) {
+			System.out.println("Erro ao buscar cliente por nome selecionado "
+					+ se.getMessage());
+		} finally {
+			con.close();
+		}
+
+		return cliente;
 	}
 
 }
