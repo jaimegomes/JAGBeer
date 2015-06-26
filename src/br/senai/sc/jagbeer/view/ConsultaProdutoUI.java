@@ -68,7 +68,8 @@ public class ConsultaProdutoUI extends JInternalFrame {
 		setBounds(580, 180, 650, 450);
 
 		try {
-			table = new JTable(new ProdutoTableModel(listProduto));
+			table = new JTable(new ProdutoTableModel(
+					new ProdutoController().listar()));
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		} catch (Exception e1) {
 			e1.printStackTrace();

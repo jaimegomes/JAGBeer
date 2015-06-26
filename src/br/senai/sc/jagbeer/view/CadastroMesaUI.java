@@ -20,7 +20,6 @@ import javax.swing.border.TitledBorder;
 import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.MesaTableModel;
-import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
 /**
  * Classe que contém a tela de cadastro de mesa
@@ -86,7 +85,10 @@ public class CadastroMesaUI extends JInternalFrame {
 
 		if (mesaEdicao != null) {
 			mesaNumero.setText(mesaEdicao.getNumeroMesa().toString());
-			qtdLugares.setText(mesaEdicao.getLugares().toString());
+
+			if (mesaEdicao.getLugares() > 0) {
+				qtdLugares.setText(mesaEdicao.getLugares().toString());
+			}
 		}
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
@@ -109,58 +111,7 @@ public class CadastroMesaUI extends JInternalFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				// Verifica se o objeto é nulo
-				if (mesaEdicao == null) {
-
-					int numMesa = 0;
-					Integer lugares = 0;
-					if (!mesaNumero.getText().isEmpty()) {
-						numMesa = Integer.parseInt(mesaNumero.getText());
-
-					} else {
-						JOptionPane.showMessageDialog(null,
-								"Número da mesa obrigatório.");
-					}
-
-					if (!qtdLugares.getText().isEmpty()) {
-						lugares = Integer.parseInt(mesaNumero.getText());
-
-					}
-
-					Mesa mesa = new Mesa(numMesa, lugares);
-
-					try {
-						new MesaController().salvar(mesa);
-						JOptionPane.showMessageDialog(null,
-								"Mesa cadastrada com sucesso!");
-
-						mesaNumero.setText("");
-						qtdLugares.setText("");
-
-						if (table != null) {
-							table.setModel(new ProdutoTableModel(
-									new MesaController().listar()));
-						}
-
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e.getMessage());
-					}
-
-				} else {
-					// Se não for nulo ele edita
-					mesaEdicao.setNumeroMesa(Integer.parseInt(mesaNumero
-							.getText()));
-					mesaEdicao.setLugares(Integer.parseInt(qtdLugares.getText()));
-					try {
-						new MesaController().editar(mesaEdicao);
-						JOptionPane.showMessageDialog(null,
-								"Mesa editada com sucesso!");
-						dispose();
-
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e.getMessage());
-					}
-				}
+				salvarEditarMesa(mesaEdicao);
 
 				if (table != null) {
 					try {
@@ -171,6 +122,7 @@ public class CadastroMesaUI extends JInternalFrame {
 					}
 				}
 			}
+
 		});
 
 		// Botão limpar
@@ -272,5 +224,59 @@ public class CadastroMesaUI extends JInternalFrame {
 												.addComponent(btnCancelar))));
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
+	}
+
+	/**
+	 * Método que verifica a existência da mesa no banco de dados, caso não
+	 * exista ele adiciona uma nova, caso exista ele edita.
+	 * 
+	 * @param mesa
+	 */
+	private void salvarEditarMesa(Mesa mesa) {
+		if (mesa == null) {
+
+			int numMesa = 0;
+			Integer lugares = 0;
+			if (!mesaNumero.getText().isEmpty()) {
+				numMesa = Integer.parseInt(mesaNumero.getText());
+
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Número da mesa obrigatório.");
+			}
+
+			if (!qtdLugares.getText().isEmpty()) {
+				lugares = Integer.parseInt(mesaNumero.getText());
+
+			}
+
+			Mesa mesaNova = new Mesa(numMesa, lugares);
+
+			try {
+				new MesaController().salvar(mesaNova);
+				JOptionPane.showMessageDialog(null,
+						"Mesa cadastrada com sucesso!");
+
+				mesaNumero.setText("");
+				qtdLugares.setText("");
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			}
+
+		} else {
+			// Se não for nulo ele edita
+			mesa.setNumeroMesa(Integer.parseInt(mesaNumero.getText()));
+			mesa.setLugares(Integer.parseInt(qtdLugares.getText()));
+			try {
+				new MesaController().editar(mesa);
+				JOptionPane
+						.showMessageDialog(null, "Mesa editada com sucesso!");
+				dispose();
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			}
+		}
 	}
 }

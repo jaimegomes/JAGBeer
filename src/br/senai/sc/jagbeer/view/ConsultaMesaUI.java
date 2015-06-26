@@ -17,16 +17,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.MesaTableModel;
-import javax.swing.ListSelectionModel;
-
 
 /**
  * Classe que contém a tela de consulta de mesa
@@ -96,10 +94,11 @@ public class ConsultaMesaUI extends JInternalFrame {
 						Mesa mesa = (Mesa) new MesaController()
 								.getPorNumeroMesa(Integer.parseInt(numeroMesa
 										.getText()));
-						if(mesa == null){
-							JOptionPane.showMessageDialog(null, "Número mesa não cadastrado");
+						if (mesa == null) {
+							JOptionPane.showMessageDialog(null,
+									"Número mesa não cadastrado");
 							listaMesa.clear();
-						}else{
+						} else {
 							listaMesa.add(mesa);
 							tableMesa.setModel(new MesaTableModel(listaMesa));
 						}
@@ -131,19 +130,19 @@ public class ConsultaMesaUI extends JInternalFrame {
 
 						Mesa editarMesa = (Mesa) new MesaController()
 								.getPorNumeroMesa(numeroMesa);
-						
+
 						cadMesaUI = new CadastroMesaUI(editarMesa, tableMesa);
 
 						PrincipalUI.getInstancia().getContentPane()
 								.add(cadMesaUI, 0);
-						
+
 						cadMesaUI.setVisible(true);
 					} else {
 						cadMesaUI = new CadastroMesaUI(null, tableMesa);
 					}
 
-					PrincipalUI.getInstancia().
-					getContentPane().add(cadMesaUI, 0);
+					PrincipalUI.getInstancia().getContentPane()
+							.add(cadMesaUI, 0);
 					cadMesaUI.setVisible(true);
 
 				} catch (Exception e1) {
@@ -187,57 +186,113 @@ public class ConsultaMesaUI extends JInternalFrame {
 		});
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblNome)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(btnPesquisar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnLimpar, GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
-							.addGap(18)
-							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-								.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblNome)
-								.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnEditar)
-								.addComponent(btnPesquisar))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnExcluir)
-								.addComponent(btnLimpar))))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-					.addContainerGap())
-		);
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(Alignment.TRAILING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.LEADING)
+												.addComponent(
+														scrollPane,
+														GroupLayout.DEFAULT_SIZE,
+														594, Short.MAX_VALUE)
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addComponent(
+																		lblNome)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		numeroMesa,
+																		GroupLayout.PREFERRED_SIZE,
+																		190,
+																		GroupLayout.PREFERRED_SIZE)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED,
+																		47,
+																		Short.MAX_VALUE)
+																.addGroup(
+																		gl_panel.createParallelGroup(
+																				Alignment.TRAILING,
+																				false)
+																				.addComponent(
+																						btnPesquisar,
+																						GroupLayout.DEFAULT_SIZE,
+																						GroupLayout.DEFAULT_SIZE,
+																						Short.MAX_VALUE)
+																				.addComponent(
+																						btnLimpar,
+																						GroupLayout.DEFAULT_SIZE,
+																						133,
+																						Short.MAX_VALUE))
+																.addGap(18)
+																.addGroup(
+																		gl_panel.createParallelGroup(
+																				Alignment.TRAILING)
+																				.addComponent(
+																						btnEditar,
+																						GroupLayout.PREFERRED_SIZE,
+																						133,
+																						GroupLayout.PREFERRED_SIZE)
+																				.addComponent(
+																						btnExcluir,
+																						GroupLayout.PREFERRED_SIZE,
+																						133,
+																						GroupLayout.PREFERRED_SIZE))))
+								.addContainerGap()));
+		gl_panel.setVerticalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.LEADING)
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addContainerGap()
+																.addGroup(
+																		gl_panel.createParallelGroup(
+																				Alignment.BASELINE)
+																				.addComponent(
+																						lblNome)
+																				.addComponent(
+																						numeroMesa,
+																						GroupLayout.PREFERRED_SIZE,
+																						GroupLayout.DEFAULT_SIZE,
+																						GroupLayout.PREFERRED_SIZE)))
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addGroup(
+																		gl_panel.createParallelGroup(
+																				Alignment.BASELINE)
+																				.addComponent(
+																						btnEditar)
+																				.addComponent(
+																						btnPesquisar))
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addGroup(
+																		gl_panel.createParallelGroup(
+																				Alignment.BASELINE)
+																				.addComponent(
+																						btnExcluir)
+																				.addComponent(
+																						btnLimpar))))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(scrollPane,
+										GroupLayout.DEFAULT_SIZE, 310,
+										Short.MAX_VALUE).addContainerGap()));
 
-		tableMesa = new JTable(){
-			public boolean isCellEditable(int row, int column) 
-			{
-			return false; 
-			}
-		};
+		tableMesa = new JTable();
 		tableMesa.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tableMesa.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Numero da Mesa", "Quantidade de Lugares" }));
+		try {
+			tableMesa
+					.setModel(new MesaTableModel(new MesaController().listar()));
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
 		scrollPane.setViewportView(tableMesa);
 		panel.setLayout(gl_panel);

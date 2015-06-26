@@ -94,7 +94,7 @@ public class CadastroProdutoUI extends JInternalFrame {
 		jtfNome.setColumns(10);
 
 		// Valor
-		lblValor = new JLabel("Valor:");
+		lblValor = new JLabel("Valor Venda:");
 
 		jtfValor = new JTextField();
 		jtfValor.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -130,7 +130,7 @@ public class CadastroProdutoUI extends JInternalFrame {
 		});
 
 		// Classificacao
-		lblClassificao = new JLabel("Classificacao:");
+		lblClassificao = new JLabel("Classificação:");
 
 		cmbClassificacao = new JComboBox();
 
@@ -138,29 +138,22 @@ public class CadastroProdutoUI extends JInternalFrame {
 				"Alimento", "Bebida" }));
 		cmbClassificacao.setMaximumRowCount(3);
 
-		// em caso de ediçãoo seta os valores nos campos
+		// em caso de edição seta os valores nos campos
 		if (produtoEdicao != null) {
-			if (!produtoEdicao.getNome().equals("")
-					|| produtoEdicao.getNome() != null)
-				jtfNome.setText(produtoEdicao.getNome());
+
+			jtfNome.setText(produtoEdicao.getNome());
 
 			if (!produtoEdicao.getPrecoCusto().equals("")
 					|| produtoEdicao.getPrecoCusto() != null)
 				jtfValorCusto.setText(produtoEdicao.getPrecoCusto().toString());
 
-			if (!produtoEdicao.getPrecoVenda().equals("")
-					|| produtoEdicao.getPrecoVenda() != null)
-				jtfValor.setText(produtoEdicao.getPrecoVenda().toString());
+			jtfValor.setText(produtoEdicao.getPrecoVenda().toString());
 
-			if (!produtoEdicao.getClassificacao().equals("")
-					|| produtoEdicao.getClassificacao() != null) {
+			if (produtoEdicao.getClassificacao().equals("Alimento"))
+				cmbClassificacao.setSelectedIndex(1);
 
-				if (produtoEdicao.getClassificacao().equals("Alimento"))
-					cmbClassificacao.setSelectedIndex(1);
-
-				if (produtoEdicao.getClassificacao().equals("Bebida"))
-					cmbClassificacao.setSelectedIndex(2);
-			}
+			else if (produtoEdicao.getClassificacao().equals("Bebida"))
+				cmbClassificacao.setSelectedIndex(2);
 		}
 
 		btnSalvar = new JButton("Salvar");
@@ -174,96 +167,19 @@ public class CadastroProdutoUI extends JInternalFrame {
 				if (cmbClassificacao.getSelectedIndex() == 2)
 					classificacao = "Bebida";
 
-				if (produtoEdicao == null) {
+				salvarEditarProduto(produtoEdicao, classificacao);
 
-					Produto produto = new Produto();
-
-					produto.setNome(jtfNome.getText());
-
-					if (!jtfValor.getText().isEmpty()) {
-						try {
-							produto.setPrecoVenda(Double.parseDouble(jtfValor
-									.getText().replaceAll(",", ".")));
-						} catch (Exception e) {
-							JOptionPane
-									.showMessageDialog(null,
-											"Você deve inserir números no campo Valor.");
-						}
-
-					}
-
-					if (!jtfValorCusto.getText().isEmpty()) {
-						try {
-							produto.setPrecoCusto(Double
-									.parseDouble(jtfValorCusto.getText()
-											.replaceAll(",", ".")));
-						} catch (Exception e) {
-							JOptionPane
-									.showMessageDialog(null,
-											"Você deve inserir números no campo Valor de Custo.");
-						}
-
-					}
-
-					produto.setClassificacao(classificacao);
-
+				if (table != null) {
 					try {
-						new ProdutoController().salvar(produto);
-						JOptionPane.showMessageDialog(null,
-								"Produto Cadastrado com Sucesso!");
-
-						jtfNome.setText("");
-						jtfValor.setText("");
-						jtfValorCusto.setText("");
-						cmbClassificacao.setSelectedIndex(0);
-
-						if (table != null) {
-							table.setModel(new ProdutoTableModel(
-									new ProdutoController().listar()));
-						}
-
+						table.setModel(new ProdutoTableModel(
+								new ProdutoController().listar()));
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e.getMessage());
+						e.printStackTrace();
 					}
-
-				} else {
-
-					produtoEdicao.setNome(jtfNome.getText());
-
-					if (!jtfValorCusto.getText().isEmpty()) {
-						produtoEdicao.setPrecoCusto(Double
-								.parseDouble(jtfValorCusto.getText()));
-					}
-
-					produtoEdicao.setPrecoVenda(Double.parseDouble(jtfValor
-							.getText()));
-
-					produtoEdicao.setClassificacao(classificacao);
-
-					try {
-						new ProdutoController().editar(produtoEdicao);
-						JOptionPane.showMessageDialog(null,
-								"Produto Editado com Sucesso! ");
-
-						jtfNome.setText("");
-						jtfValor.setText("");
-						jtfValorCusto.setText("");
-						cmbClassificacao.setSelectedIndex(0);
-
-						if (table != null) {
-							table.setModel(new ProdutoTableModel(
-									new ProdutoController().listar()));
-						}
-
-						dispose();
-
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e.getMessage());
-					}
-
 				}
 
 			}
+
 		});
 
 		JButton btnCancelar = new JButton("Cancelar");
@@ -407,5 +323,80 @@ public class CadastroProdutoUI extends JInternalFrame {
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 
+	}
+
+	private void salvarEditarProduto(Produto prod, String classificacao) {
+		if (prod == null) {
+
+			Produto produto = new Produto();
+
+			produto.setNome(jtfNome.getText());
+
+			if (!jtfValor.getText().isEmpty()) {
+				try {
+					produto.setPrecoVenda(Double.parseDouble(jtfValor.getText()
+							.replaceAll(",", ".")));
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+
+			}
+
+			if (!jtfValorCusto.getText().isEmpty()) {
+				try {
+					produto.setPrecoCusto(Double.parseDouble(jtfValorCusto
+							.getText().replaceAll(",", ".")));
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+
+			}
+
+			produto.setClassificacao(classificacao);
+
+			try {
+				new ProdutoController().salvar(produto);
+				JOptionPane.showMessageDialog(null,
+						"Produto Cadastrado com Sucesso!");
+
+				jtfNome.setText("");
+				jtfValor.setText("");
+				jtfValorCusto.setText("");
+				cmbClassificacao.setSelectedIndex(0);
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			}
+
+		} else {
+
+			produtoEdicao.setNome(jtfNome.getText());
+
+			if (!jtfValorCusto.getText().isEmpty()) {
+				produtoEdicao.setPrecoCusto(Double.parseDouble(jtfValorCusto
+						.getText()));
+			}
+
+			produtoEdicao.setPrecoVenda(Double.parseDouble(jtfValor.getText()));
+
+			produtoEdicao.setClassificacao(classificacao);
+
+			try {
+				new ProdutoController().editar(produtoEdicao);
+				JOptionPane.showMessageDialog(null,
+						"Produto Editado com Sucesso! ");
+
+				jtfNome.setText("");
+				jtfValor.setText("");
+				jtfValorCusto.setText("");
+				cmbClassificacao.setSelectedIndex(0);
+
+				dispose();
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			}
+
+		}
 	}
 }

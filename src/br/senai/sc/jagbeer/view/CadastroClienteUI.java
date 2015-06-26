@@ -116,54 +116,9 @@ public class CadastroClienteUI extends JInternalFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (c == null) {
+				salvarEditarCliente(c);
 
-					Cliente cliente = new Cliente();
-					cliente.setNome(jtfNomeCliente.getText());
-					cliente.setTelefone(jtfTelefoneCliente.getText());
-					cliente.setEmail(jtfEmailCliente.getText());
-
-					try {
-						new ClienteController().salvar(cliente);
-						JOptionPane.showMessageDialog(null,
-								"Cliente Cadastrado com Sucesso!");
-
-						Cliente c = (Cliente) new ClienteController()
-								.getNomeSelecionado(jtfNomeCliente.getText());
-
-						Pedido pedido = new Pedido();
-						pedido.setCliente(c);
-						pedido.setStatus(1);
-						pedido.setDataPedido(new Date());
-						pedido.setMesa(null);
-						pedido.setValor(0.00);
-
-						new PedidoController().salvar(pedido);
-
-						jtfNomeCliente.setText("");
-						jtfEmailCliente.setText("");
-						jtfTelefoneCliente.setText("");
-
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e.getMessage());
-					}
-				} else {
-
-					clienteEdicao.setNome(jtfNomeCliente.getText());
-					clienteEdicao.setTelefone(jtfTelefoneCliente.getText());
-					clienteEdicao.setEmail(jtfEmailCliente.getText());
-
-					try {
-						new ClienteController().editar(clienteEdicao);
-						JOptionPane.showMessageDialog(null,
-								"Cliente Editado com Sucesso! ");
-
-						dispose();
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e.getMessage());
-					}
-				}
-
+				// atualiza a tabela da tela de consulta
 				try {
 					if (table != null) {
 
@@ -172,6 +127,7 @@ public class CadastroClienteUI extends JInternalFrame {
 
 					}
 
+					// atualiza a tabela da tela principal
 					PrincipalUI
 							.getInstancia()
 							.getTablePedidoAberto()
@@ -204,6 +160,7 @@ public class CadastroClienteUI extends JInternalFrame {
 
 			}
 		});
+
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel
 				.createParallelGroup(Alignment.LEADING)
@@ -309,6 +266,63 @@ public class CadastroClienteUI extends JInternalFrame {
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 
+	}
+
+	/**
+	 * Método utilizado para verificar se o cliente já existe no banco de dados,
+	 * caso não exista ele salva um novo, caso já tenha uma referência ao
+	 * cliente no banco de dados ele edita.
+	 * 
+	 * @param cliente
+	 */
+	private void salvarEditarCliente(Cliente cliente)  {
+		if (cliente == null) {
+
+			Cliente cli = new Cliente();
+			cli.setNome(jtfNomeCliente.getText());
+			cli.setTelefone(jtfTelefoneCliente.getText());
+			cli.setEmail(jtfEmailCliente.getText());
+
+			try {
+				new ClienteController().salvar(cli);
+				JOptionPane.showMessageDialog(null,
+						"Cliente Cadastrado com Sucesso!");
+
+				Cliente c = (Cliente) new ClienteController()
+						.getNomeSelecionado(jtfNomeCliente.getText());
+
+				Pedido pedido = new Pedido();
+				pedido.setCliente(c);
+				pedido.setStatus(1);
+				pedido.setDataPedido(new Date());
+				pedido.setMesa(null);
+				pedido.setValor(0.00);
+
+				new PedidoController().salvar(pedido);
+
+				jtfNomeCliente.setText("");
+				jtfEmailCliente.setText("");
+				jtfTelefoneCliente.setText("");
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			}
+		} else {
+
+			clienteEdicao.setNome(jtfNomeCliente.getText());
+			clienteEdicao.setTelefone(jtfTelefoneCliente.getText());
+			clienteEdicao.setEmail(jtfEmailCliente.getText());
+
+			try {
+				new ClienteController().editar(clienteEdicao);
+				JOptionPane.showMessageDialog(null,
+						"Cliente Editado com Sucesso! ");
+
+				dispose();
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			}
+		}
 	}
 
 }

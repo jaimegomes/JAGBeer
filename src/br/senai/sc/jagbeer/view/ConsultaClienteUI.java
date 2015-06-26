@@ -16,7 +16,6 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.PedidoController;
@@ -296,8 +295,12 @@ public class ConsultaClienteUI extends JInternalFrame {
 										Short.MAX_VALUE).addContainerGap()));
 
 		tableConsultaCliente = new JTable();
-		tableConsultaCliente.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Nome", "Telefone", "E-mail" }));
+		try {
+			tableConsultaCliente.setModel(new ClienteTableModel(
+					new ClienteController().listar()));
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		tableConsultaCliente.getColumnModel().getColumn(0)
 				.setPreferredWidth(277);
 		tableConsultaCliente.getColumnModel().getColumn(1)
@@ -306,19 +309,10 @@ public class ConsultaClienteUI extends JInternalFrame {
 				.setPreferredWidth(182);
 		tableConsultaCliente
 				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		// try {
-		// tableConsultaCliente.setModel(new ClienteTableModel(
-		// new ClienteController().listar()));
-		// } catch (Exception e1) {
-		// e1.printStackTrace();
-		// }
 
 		scrollPane.setViewportView(tableConsultaCliente);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 
 	}
-	// public JTable getTableConsultaCliente() {
-	// return tableConsultaCliente;
-	// }
 }
