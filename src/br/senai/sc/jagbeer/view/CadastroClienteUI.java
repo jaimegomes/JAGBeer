@@ -94,7 +94,7 @@ public class CadastroClienteUI extends JInternalFrame {
 
 		MaskFormatter mascara;
 		try {
-			mascara = new MaskFormatter("##/##/####");
+			mascara = new MaskFormatter("(##)####-####");
 			mascara.setPlaceholderCharacter('_');
 
 			jtfTelefoneCliente = new JFormattedTextField(mascara);

@@ -161,6 +161,12 @@ public class ConsultaClienteUI extends JInternalFrame {
 						String nome = tableConsultaCliente.getValueAt(
 								linhaSelecionada, 0).toString();
 
+						String telefone = tableConsultaCliente.getValueAt(
+								linhaSelecionada, 1).toString();
+
+						String email = tableConsultaCliente.getValueAt(
+								linhaSelecionada, 2).toString();
+
 						Cliente clienteExcluir = (Cliente) new ClienteController()
 								.getNomeSelecionado(nome);
 
