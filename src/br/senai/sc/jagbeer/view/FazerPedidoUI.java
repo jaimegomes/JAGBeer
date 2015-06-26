@@ -331,8 +331,9 @@ public class FazerPedidoUI extends JInternalFrame {
 								listProdutoPedido));
 					} else {
 						listProdutoPedido.remove(produtoPedido);
-						JOptionPane.showMessageDialog(null,
-								"Você deve selecionar a quantidade desejada.");
+						JOptionPane
+								.showMessageDialog(null,
+										"Você deve selecionar a quantidade desejada do produto.");
 					}
 
 				} catch (Exception e1) {
