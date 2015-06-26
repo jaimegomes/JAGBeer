@@ -162,7 +162,7 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 			}
 		});
 
-		btnExcluirItem = new JButton("Excluir Item");
+		btnExcluirItem = new JButton("Excluir Produto");
 		btnExcluirItem.addActionListener(new ActionListener() {
 
 			@Override
@@ -231,7 +231,7 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 			}
 		});
 
-		btnAdicionarProduto = new JButton("Add Produto");
+		btnAdicionarProduto = new JButton("Adicionar Produto");
 		btnAdicionarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
