@@ -223,7 +223,7 @@ public class PedidoDAO extends GenericDAO {
 
 		} catch (SQLException e) {
 			con.rollback();
-			System.out.println("[PedidoDAO] - Erro ao buscar pedido por id.  "
+			System.out.println("[PedidoDAO] - Erro ao buscar pedido por id.\n"
 					+ e.getMessage());
 		} finally {
 			con.close();

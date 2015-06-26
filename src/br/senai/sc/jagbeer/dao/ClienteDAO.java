@@ -42,7 +42,7 @@ public class ClienteDAO extends GenericDAO {
 
 		} catch (SQLException se) {
 			con.rollback();
-			System.out.println("Erro ao salvar Cliente\n" + se.getMessage());
+			System.out.println("[ClienteDAO] - Erro ao salvar Cliente.\n" + se.getMessage());
 		} finally {
 			con.close();
 		}
@@ -62,7 +62,7 @@ public class ClienteDAO extends GenericDAO {
 
 		} catch (SQLException se) {
 			con.rollback();
-			System.out.println("Erro ao excluir Cliente.\n" + se.getMessage());
+			System.out.println("[ClienteDAO] - Erro ao excluir Cliente.\n" + se.getMessage());
 		} finally {
 			con.close();
 		}
@@ -86,7 +86,7 @@ public class ClienteDAO extends GenericDAO {
 
 		} catch (SQLException se) {
 			con.rollback();
-			System.out.println("Erro ao alterar Cliente.\n" + se.getMessage());
+			System.out.println("[ClienteDAO] - Erro ao alterar Cliente.\n" + se.getMessage());
 		} finally {
 			con.close();
 		}
@@ -108,7 +108,7 @@ public class ClienteDAO extends GenericDAO {
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("Erro ao listar Cliente.\n" + se.getMessage());
+			System.out.println("[ClienteDAO] - Erro ao listar Cliente.\n" + se.getMessage());
 		} finally {
 			con.close();
 		}
@@ -145,7 +145,7 @@ public class ClienteDAO extends GenericDAO {
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("Erro ao listar Cliente por Nome "
+			System.out.println("[ClienteDAO] - Erro ao listar Cliente por Nome.\n"
 					+ se.getMessage());
 		} finally {
 			con.close();
@@ -174,7 +174,7 @@ public class ClienteDAO extends GenericDAO {
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("Erro ao listar Cliente por ID "
+			System.out.println("[ClienteDAO] - Erro ao listar Cliente por ID.\n"
 					+ se.getMessage());
 		} finally {
 			con.close();
@@ -211,7 +211,7 @@ public class ClienteDAO extends GenericDAO {
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("Erro ao buscar cliente por nome selecionado "
+			System.out.println("[ClienteDAO] - Erro ao buscar cliente por nome selecionado.\n"
 					+ se.getMessage());
 		} finally {
 			con.close();
@@ -250,7 +250,7 @@ public class ClienteDAO extends GenericDAO {
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("Erro ao buscar cliente por Nome "
+			System.out.println("[ClienteDAO] - Erro ao buscar cliente por Nome.\n"
 					+ se.getMessage());
 		} finally {
 			con.close();
@@ -282,7 +282,7 @@ public class ClienteDAO extends GenericDAO {
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("Erro ao buscar cliente por nome selecionado "
+			System.out.println("[ClienteDAO] - Erro ao buscar cliente por nome selecionado./n"
 					+ se.getMessage());
 		} finally {
 			con.close();
