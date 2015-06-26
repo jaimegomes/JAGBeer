@@ -5,11 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
 import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
 
 import br.senai.sc.jagbeer.controller.ClienteController;
 import br.senai.sc.jagbeer.controller.PedidoController;
@@ -39,7 +42,7 @@ public class CadastroClienteUI extends JInternalFrame {
 
 	private JTextField jtfNomeCliente;
 	private JTextField jtfEmailCliente;
-	private JTextField jtfTelefoneCliente;
+	private JFormattedTextField jtfTelefoneCliente;
 
 	private Cliente clienteEdicao;
 
@@ -89,15 +92,23 @@ public class CadastroClienteUI extends JInternalFrame {
 		jtfEmailCliente = new JTextField();
 		jtfEmailCliente.setColumns(10);
 
-		jtfTelefoneCliente = new JTextField();
-		jtfTelefoneCliente.setColumns(10);
+		MaskFormatter mascara;
+		try {
+			mascara = new MaskFormatter("##/##/####");
+			mascara.setPlaceholderCharacter('_');
+
+			jtfTelefoneCliente = new JFormattedTextField(mascara);
+			jtfTelefoneCliente.setColumns(10);
+
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
 
 		// APENA NUMEROS NO CAMPO TELEFONE
-		jtfTelefoneCliente = new JTextField();
 		jtfTelefoneCliente.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				String caracteres = "0987654321 -()";
+				String caracteres = "0987654321";
 
 				if (!caracteres.contains(e.getKeyChar() + "")) {
 					e.consume();
@@ -275,7 +286,7 @@ public class CadastroClienteUI extends JInternalFrame {
 	 * 
 	 * @param cliente
 	 */
-	private void salvarEditarCliente(Cliente cliente)  {
+	private void salvarEditarCliente(Cliente cliente) {
 		if (cliente == null) {
 
 			Cliente cli = new Cliente();
