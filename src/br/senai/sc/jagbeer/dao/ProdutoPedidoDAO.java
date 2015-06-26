@@ -242,6 +242,16 @@ public class ProdutoPedidoDAO extends GenericDAO {
 		return listProdutosPedido;
 	}
 
+	/**
+	 * Retorna um produto referente ao id, qtde e idPedido passados como
+	 * parâmetro
+	 * 
+	 * @param idProduto
+	 * @param qtde
+	 * @param idPedido
+	 * @return produto
+	 * @throws Exception
+	 */
 	public Entidade buscaCompleta(int idProduto, int qtde, int idPedido)
 			throws Exception {
 

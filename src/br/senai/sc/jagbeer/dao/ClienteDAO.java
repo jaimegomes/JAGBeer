@@ -103,8 +103,6 @@ public class ClienteDAO extends GenericDAO {
 		String sql = "SELECT * FROM cliente ORDER BY nome";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
-			// para executar consulta utilizar executeQuery() pois retorna um
-			// resultSet
 			ResultSet result = pstmt.executeQuery();
 			while (result.next()) {
 				Cliente c = new Cliente(result.getInt("id"),

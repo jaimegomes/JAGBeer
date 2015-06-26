@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.JTable;
-
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.abstracts.GenericDAO;
 import br.senai.sc.jagbeer.conexao.Conexao;
@@ -19,7 +17,6 @@ import br.senai.sc.jagbeer.controller.MesaController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.Mesa;
 import br.senai.sc.jagbeer.model.Pedido;
-import br.senai.sc.jagbeer.model.ProdutoTableModel;
 
 /**
  * Classe DAO, responsável pela manipulação dos dados dos Pedidos no banco.
@@ -235,7 +232,6 @@ public class PedidoDAO extends GenericDAO {
 		return pedido;
 	}
 
-
 	/**
 	 * Método que retorna uma lista de pedidos com status = 1
 	 * 
@@ -296,6 +292,15 @@ public class PedidoDAO extends GenericDAO {
 		return listPedidosEmAberto;
 	}
 
+	/**
+	 * Retorna uma lista de pedidos realizados entre as datas passadas como
+	 * parâmetro.
+	 * 
+	 * @param dataInicio
+	 * @param dataFim
+	 * @return pedido
+	 * @throws Exception
+	 */
 	public List<Entidade> getPorData(Date dataInicio, Date dataFim)
 			throws Exception {
 
@@ -331,6 +336,14 @@ public class PedidoDAO extends GenericDAO {
 
 	}
 
+	/**
+	 * Retorna o pedido aberto referente ao id do cliente passado como
+	 * parâmetro.
+	 * 
+	 * @param id
+	 * @return pedido
+	 * @throws Exception
+	 */
 	public Entidade getPedidoAbertoPorIdCliente(int id) throws Exception {
 
 		Pedido pedido = null;
@@ -380,6 +393,13 @@ public class PedidoDAO extends GenericDAO {
 		return pedido;
 	}
 
+	/**
+	 * Retorna o pedido referente ao id do cliente passado como parâmetro.
+	 * 
+	 * @param id
+	 * @return pedido
+	 * @throws Exception
+	 */
 	public Entidade getPorIdCliente(int id) throws Exception {
 
 		Pedido pedido = null;
@@ -429,5 +449,4 @@ public class PedidoDAO extends GenericDAO {
 		return pedido;
 	}
 
-	
 }

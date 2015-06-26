@@ -7,13 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JTable;
-
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.abstracts.GenericDAO;
 import br.senai.sc.jagbeer.conexao.Conexao;
 import br.senai.sc.jagbeer.model.Mesa;
-import br.senai.sc.jagbeer.model.Produto;
 
 public class MesaDAO extends GenericDAO {
 
