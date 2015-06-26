@@ -134,8 +134,7 @@ public class CadastroProdutoUI extends JInternalFrame {
 
 		cmbClassificacao = new JComboBox();
 
-		cmbClassificacao.setModel(new DefaultComboBoxModel(new String[] { "",
-				"Alimento", "Bebida" }));
+		cmbClassificacao.setModel(new DefaultComboBoxModel(new String[] { "", "Bebidas","Drinks","Lanches","Porções" }));
 		cmbClassificacao.setMaximumRowCount(3);
 
 		// em caso de edição seta os valores nos campos
