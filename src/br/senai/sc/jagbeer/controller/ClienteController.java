@@ -27,7 +27,7 @@ public class ClienteController implements IController {
 			throw new Exception("Cliente não pode ser nulo.");
 
 		if (cliente.getNome().trim().equals(""))
-			throw new Exception("Nome do Cliente obrigatório");
+			throw new Exception("Nome do Cliente obrigatório.");
 
 		dao.salvar(cliente);
 
@@ -54,7 +54,7 @@ public class ClienteController implements IController {
 			throw new Exception("Cliente não pode ser nulo.");
 
 		if (cliente.getNome().trim().equals(""))
-			throw new Exception("Nome do Cliente obrigatório");
+			throw new Exception("Nome do Cliente obrigatório.");
 
 		dao.editar(cliente);
 
