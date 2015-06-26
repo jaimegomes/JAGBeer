@@ -31,7 +31,7 @@ public class ProdutoController implements IController {
 
 		if (produto.getPrecoVenda() == null || produto.getPrecoVenda() == 0)
 			throw new Exception(
-					"Valor do produto é obrigatorio e deve ser maior que zero.");
+					"Valor do produto é obrigatório e deve ser maior que zero.");
 
 		if (produto.getClassificacao().trim().equals(""))
 			throw new Exception("Classificação do produto obrigatória.");

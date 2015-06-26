@@ -173,10 +173,10 @@ public class CadastroProdutoUI extends JInternalFrame {
 				if (cmbClassificacao.getSelectedIndex() == 2)
 					classificacao = "Drinks";
 
-				if (cmbClassificacao.getSelectedIndex() == 2)
+				if (cmbClassificacao.getSelectedIndex() == 3)
 					classificacao = "Lanches";
 
-				if (cmbClassificacao.getSelectedIndex() == 2)
+				if (cmbClassificacao.getSelectedIndex() == 4)
 					classificacao = "Porções";
 
 				salvarEditarProduto(produtoEdicao, classificacao);
