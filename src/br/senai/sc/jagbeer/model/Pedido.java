@@ -22,7 +22,6 @@ public class Pedido extends Entidade {
 	/**
 	 * Construtor padrão.
 	 * 
-	 * 
 	 */
 	public Pedido() {
 	}

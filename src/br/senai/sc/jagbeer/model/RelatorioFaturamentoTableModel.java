@@ -28,16 +28,31 @@ public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 		this.valores = new ArrayList<Entidade>(list);
 	}
 
+	/**
+	 * Retorna a quantidade de linhas da lista.
+	 * 
+	 * @return valores.size();
+	 */
 	@Override
 	public int getRowCount() {
 		return valores.size();
 	}
 
+	/**
+	 * Retorna a quantidade de colunas, deve ser setado manualmente.
+	 * 
+	 * @return 3
+	 */
 	@Override
 	public int getColumnCount() {
 		return 3;
 	}
 
+	/**
+	 * Retorna o nome da coluna passada como parâmetro.
+	 * 
+	 * @param int colunm
+	 */
 	public String getColumnName(int column) {
 		if (column == COL_PEDIDO)
 			return "Pedido";
@@ -48,6 +63,12 @@ public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 		return "";
 	}
 
+	/**
+	 * Retorna o objeto que está na linha e coluna indicada como parâmetros.
+	 * 
+	 * @param int row
+	 * @param int column
+	 */
 	@Override
 	public Object getValueAt(int row, int column) {
 		Pedido pedido = (Pedido) valores.get(row);
@@ -67,6 +88,15 @@ public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 		return "";
 	}
 
+	/**
+	 * Atribui valor ao objeto que está na linha e coluna que sÃ£o passados como
+	 * parâmetros.
+	 * 
+	 * @param Object
+	 *            aValue
+	 * @param int rowIndex
+	 * @param int columnIndex
+	 */
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		Pedido pedido = (Pedido) valores.get(rowIndex);
 		try {
@@ -83,10 +113,25 @@ public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 
 	}
 
+	/**
+	 * Retorna a classe da coluna passada como parâmetro, caso tenha mais de um
+	 * tipo de parâmetro fazer um if como em setValueAt para verificar qual a
+	 * columnIndex se trata e retornar o tipo da classe.
+	 * 
+	 * @param int columnIndex
+	 * @return Class<?>
+	 */
 	public Class<?> getColumnClass(int columnIndex) {
 		return String.class;
 	}
 
+	/**
+	 * Verifica se a célula passada como parâmetro é editável.
+	 * 
+	 * @param int rowIndex
+	 * @param int columnIndex
+	 * @return boolean true
+	 */
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return false;
 	}
