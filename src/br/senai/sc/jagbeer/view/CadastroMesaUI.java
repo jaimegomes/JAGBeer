@@ -43,16 +43,16 @@ public class CadastroMesaUI extends JInternalFrame {
 
 		setTitle("Cadastro de Mesa");
 		setClosable(true);
-		setBounds(850, 20, 344, 203);
+		setBounds(850, 0, 350, 215);
 
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Mesa", TitledBorder.LEADING,
+		panel.setBorder(new TitledBorder(null, "Cadastro Mesa", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 
-		JLabel lblNmero = new JLabel("N\u00FAmero");
+		JLabel lblNmero = new JLabel("Número:");
 
-		// Apenas permite digitar numero no campo mesa numero
 		mesaNumero = new JTextField();
+		// Apenas permite digitar numero no campo mesa numero	
 		mesaNumero.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent kv) {
@@ -81,7 +81,7 @@ public class CadastroMesaUI extends JInternalFrame {
 		});
 		qtdLugares.setColumns(10);
 
-		JLabel lblQtdLugares = new JLabel("Qtd Lugares");
+		JLabel lblQtdLugares = new JLabel("Lugares:");
 
 		if (mesaEdicao != null) {
 			mesaNumero.setText(mesaEdicao.getNumeroMesa().toString());
@@ -103,8 +103,9 @@ public class CadastroMesaUI extends JInternalFrame {
 				groupLayout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 151,
-								Short.MAX_VALUE).addContainerGap()));
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 156,
+								GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(19, Short.MAX_VALUE)));
 
 		// Botão salvar
 		JButton btnSalvar = new JButton("Salvar");
@@ -160,17 +161,18 @@ public class CadastroMesaUI extends JInternalFrame {
 																						lblQtdLugares)
 																				.addComponent(
 																						lblNmero))
-																.addGap(18)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
 																.addGroup(
 																		gl_panel.createParallelGroup(
 																				Alignment.LEADING)
 																				.addComponent(
-																						mesaNumero,
+																						qtdLugares,
 																						GroupLayout.PREFERRED_SIZE,
 																						GroupLayout.DEFAULT_SIZE,
 																						GroupLayout.PREFERRED_SIZE)
 																				.addComponent(
-																						qtdLugares,
+																						mesaNumero,
 																						GroupLayout.PREFERRED_SIZE,
 																						GroupLayout.DEFAULT_SIZE,
 																						GroupLayout.PREFERRED_SIZE)))
@@ -181,20 +183,21 @@ public class CadastroMesaUI extends JInternalFrame {
 																		GroupLayout.PREFERRED_SIZE,
 																		79,
 																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
+																.addGap(18)
 																.addComponent(
-																		btnLimpar)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
+																		btnLimpar,
+																		GroupLayout.PREFERRED_SIZE,
+																		76,
+																		GroupLayout.PREFERRED_SIZE)
+																.addGap(18)
 																.addComponent(
 																		btnCancelar)))
-								.addContainerGap(57, Short.MAX_VALUE)));
+								.addContainerGap(26, Short.MAX_VALUE)));
 		gl_panel.setVerticalGroup(gl_panel
 				.createParallelGroup(Alignment.LEADING)
 				.addGroup(
 						gl_panel.createSequentialGroup()
-								.addGap(22)
+								.addContainerGap()
 								.addGroup(
 										gl_panel.createParallelGroup(
 												Alignment.BASELINE)
@@ -204,24 +207,25 @@ public class CadastroMesaUI extends JInternalFrame {
 														GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE,
 														GroupLayout.PREFERRED_SIZE))
-								.addGap(18)
+								.addPreferredGap(ComponentPlacement.UNRELATED)
 								.addGroup(
 										gl_panel.createParallelGroup(
 												Alignment.BASELINE)
-												.addComponent(lblQtdLugares)
 												.addComponent(
 														qtdLugares,
 														GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE))
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblQtdLugares))
 								.addPreferredGap(ComponentPlacement.RELATED,
-										24, Short.MAX_VALUE)
+										32, Short.MAX_VALUE)
 								.addGroup(
 										gl_panel.createParallelGroup(
 												Alignment.BASELINE)
 												.addComponent(btnSalvar)
 												.addComponent(btnLimpar)
-												.addComponent(btnCancelar))));
+												.addComponent(btnCancelar))
+								.addGap(24)));
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 	}
@@ -246,7 +250,7 @@ public class CadastroMesaUI extends JInternalFrame {
 			}
 
 			if (!qtdLugares.getText().isEmpty()) {
-				lugares = Integer.parseInt(mesaNumero.getText());
+				lugares = Integer.parseInt(qtdLugares.getText());
 
 			}
 

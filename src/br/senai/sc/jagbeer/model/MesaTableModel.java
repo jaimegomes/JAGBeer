@@ -50,9 +50,9 @@ public class MesaTableModel extends AbstractTableModel {
 	 */
 	public String getColumnName(int column) {
 		if (column == COL_NUMEROMESA)
-			return "Numero Mesa";
+			return "Número Mesa";
 		if (column == COL_LUGARES)
-			return "Lugares";
+			return "Quantidade Lugares";
 		return "";
 	}
 

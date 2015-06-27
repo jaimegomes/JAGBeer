@@ -68,24 +68,24 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 
 		setTitle("Relatório Faturamento");
 		setClosable(true);
-		setBounds(400, 50, 650, 600);
+		setBounds(660, 0, 650, 600);
 
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 
-		lblRelatrioDeFaturamento = new JLabel("Relat\u00F3rio de Faturamento");
+		lblRelatrioDeFaturamento = new JLabel("Relatório de Faturamento");
 		lblRelatrioDeFaturamento.setFont(new Font("Dialog", Font.BOLD, 24));
 
-		lblPeriodo = new JLabel("Per\u00EDodo de");
+		lblPeriodo = new JLabel("Período de");
 
 		lblDataInicio = new JLabel(sdf.format(dataInicio));
 
-		lblAte = new JLabel("at\u00E9");
+		lblAte = new JLabel("até");
 
 		lblDataFim = new JLabel(sdf.format(dataFinal));
 
-		lblValorTotal = new JLabel("Valor Total:");
+		lblValorTotal = new JLabel("Valor Total ");
 
 		label = new JLabel("R$ " + valorTotal);
 
@@ -97,32 +97,27 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(panel, GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblValorTotal)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(label)
-									.addPreferredGap(ComponentPlacement.RELATED, 257, Short.MAX_VALUE)
-									.addComponent(lblTotalDePedidos)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(lblQtdPedidos, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addContainerGap()
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblValorTotal)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(label)
+							.addPreferredGap(ComponentPlacement.RELATED, 351, Short.MAX_VALUE)
+							.addComponent(lblTotalDePedidos)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblQtdPedidos, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lblPeriodo)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblDataInicio)
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(lblAte)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblDataFim, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
-							.addGap(183))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(132)
-							.addComponent(lblRelatrioDeFaturamento, GroupLayout.PREFERRED_SIZE, 367, GroupLayout.PREFERRED_SIZE)))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblRelatrioDeFaturamento, GroupLayout.PREFERRED_SIZE, 367, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblDataFim, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE))))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -131,10 +126,10 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 					.addComponent(lblRelatrioDeFaturamento, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblDataFim)
-						.addComponent(lblAte)
+						.addComponent(lblPeriodo)
 						.addComponent(lblDataInicio)
-						.addComponent(lblPeriodo))
+						.addComponent(lblAte)
+						.addComponent(lblDataFim))
 					.addGap(18)
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 442, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)

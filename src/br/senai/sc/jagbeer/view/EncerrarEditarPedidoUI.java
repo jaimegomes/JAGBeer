@@ -73,7 +73,7 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 
 		setTitle("Encerrar Pedido");
 		setClosable(true);
-		setBounds(400, 50, 650, 600);
+		setBounds(660, 0, 650, 600);
 
 		panel = new JPanel();
 
@@ -113,7 +113,7 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 			e1.printStackTrace();
 		}
 
-		btnEncerrar = new JButton("Encerrar");
+		btnEncerrar = new JButton("Encerrar Pedido");
 		btnEncerrar.addActionListener(new ActionListener() {
 
 			@Override
@@ -295,9 +295,8 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 									.addComponent(lblTotal)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(lblValor, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-									.addComponent(btnEncerrar, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
-									.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 574, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 574, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnEncerrar, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE))
 							.addContainerGap(12, Short.MAX_VALUE))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)

@@ -61,7 +61,7 @@ public class NotaFiscalUI extends JInternalFrame {
 
 		setTitle("Nota Fiscal");
 		setClosable(true);
-		setBounds(400, 50, 650, 600);
+		setBounds(660, 0, 650, 600);
 
 		panel = new JPanel();
 

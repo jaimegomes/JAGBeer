@@ -3,6 +3,8 @@ package br.senai.sc.jagbeer.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +51,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 	public ConsultaMesaUI() {
 		setClosable(true);
 		setTitle("Consulta de Mesas");
-		setBounds(580, 180, 652, 449);
+		setBounds(550, 260, 650, 420);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager
@@ -76,6 +78,20 @@ public class ConsultaMesaUI extends JInternalFrame {
 
 		numeroMesa = new JTextField();
 		numeroMesa.setColumns(10);
+		
+		//Apenas numeros na consulta
+		numeroMesa.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyTyped(KeyEvent kv) {
+
+				String caracteres = "0987654321";
+
+				if (!caracteres.contains(kv.getKeyChar() + "")) {
+					kv.consume();
+				}
+			}
+		});
 
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
@@ -115,7 +131,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 
 		scrollPane = new JScrollPane();
 
-		JButton btnEditar = new JButton("Editar / Inserir");
+		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -163,7 +179,7 @@ public class ConsultaMesaUI extends JInternalFrame {
 
 					new MesaController().excluir(excluirMesa);
 					JOptionPane.showMessageDialog(null,
-							"Mesa excluida com Sucesso! ");
+							"Mesa excluída com Sucesso! ");
 
 					// Atualiza tabela
 					tableMesa.setModel(new MesaTableModel(new MesaController()

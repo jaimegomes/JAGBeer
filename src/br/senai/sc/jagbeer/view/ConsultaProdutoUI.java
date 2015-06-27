@@ -65,7 +65,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 
 		setTitle("Consulta de Produtos");
 		setClosable(true);
-		setBounds(580, 180, 650, 450);
+		setBounds(550, 260, 650, 420);
 
 		try {
 			table = new JTable(new ProdutoTableModel(

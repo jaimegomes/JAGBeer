@@ -45,27 +45,26 @@ public class ConsultaClienteUI extends JInternalFrame {
 	public ConsultaClienteUI() {
 		setClosable(true);
 		setTitle("Consulta Cliente");
-		setBounds(580, 180, 650, 450);
+		setBounds(550, 260, 650, 420);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Consulta Cliente",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 616,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(18, Short.MAX_VALUE)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 402,
-								Short.MAX_VALUE).addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 616, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 369, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 
 		JLabel lblNome = new JLabel("Nome:");
 
@@ -151,7 +150,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				int opcao = JOptionPane.showConfirmDialog(null,
-						"Deseja excluir?");
+						"Deseja excluir cliente?");
 				if (opcao == 0) {
 					try {
 
@@ -174,11 +173,11 @@ public class ConsultaClienteUI extends JInternalFrame {
 								.getPorIdCliente(clienteExcluir.getId());
 
 						if (pedido.getStatus() == 0) {
-
+							
 							new ClienteController().excluir(clienteExcluir);
 
 							JOptionPane.showMessageDialog(null,
-									"Cliente excluido com Sucesso! ");
+									"Cliente excluído com Sucesso! ");
 
 							tableConsultaCliente
 									.setModel(new ClienteTableModel(
@@ -197,6 +196,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 											"Não é possível excluir clientes com pedido em aberto.");
 						}
 					} catch (Exception e2) {
+						System.out.println(" aqui 4");
 						JOptionPane.showMessageDialog(null, e2.getMessage());
 					}
 				}
@@ -204,101 +204,48 @@ public class ConsultaClienteUI extends JInternalFrame {
 		});
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.TRAILING, false)
-												.addComponent(scrollPane,
-														Alignment.LEADING)
-												.addGroup(
-														Alignment.LEADING,
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		lblNome)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addComponent(
-																		jtfNomeCliente,
-																		GroupLayout.PREFERRED_SIZE,
-																		218,
-																		GroupLayout.PREFERRED_SIZE)
-																.addGap(18)
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING,
-																				false)
-																				.addComponent(
-																						btnFechar,
-																						GroupLayout.DEFAULT_SIZE,
-																						GroupLayout.DEFAULT_SIZE,
-																						Short.MAX_VALUE)
-																				.addComponent(
-																						btnPesquisar,
-																						GroupLayout.DEFAULT_SIZE,
-																						132,
-																						Short.MAX_VALUE))
-																.addGap(39)
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING,
-																				false)
-																				.addComponent(
-																						btnEditar,
-																						GroupLayout.DEFAULT_SIZE,
-																						GroupLayout.DEFAULT_SIZE,
-																						Short.MAX_VALUE)
-																				.addComponent(
-																						btnExcluir,
-																						GroupLayout.DEFAULT_SIZE,
-																						132,
-																						Short.MAX_VALUE))))
-								.addGap(28)));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addContainerGap()
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.BASELINE)
-																				.addComponent(
-																						btnPesquisar)
-																				.addComponent(
-																						btnEditar))
-																.addGap(18)
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.BASELINE)
-																				.addComponent(
-																						btnFechar)
-																				.addComponent(
-																						btnExcluir)))
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addGap(29)
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.BASELINE)
-																				.addComponent(
-																						jtfNomeCliente,
-																						GroupLayout.PREFERRED_SIZE,
-																						GroupLayout.DEFAULT_SIZE,
-																						GroupLayout.PREFERRED_SIZE)
-																				.addComponent(
-																						lblNome))))
-								.addGap(18)
-								.addComponent(scrollPane,
-										GroupLayout.DEFAULT_SIZE, 276,
-										Short.MAX_VALUE).addContainerGap()));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(scrollPane, Alignment.LEADING)
+						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+							.addComponent(lblNome)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jtfNomeCliente, GroupLayout.PREFERRED_SIZE, 218, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnFechar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnPesquisar, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
+							.addGap(39)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnEditar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnExcluir, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))))
+					.addGap(20))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnPesquisar)
+								.addComponent(btnEditar))
+							.addGap(18)
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnFechar)
+								.addComponent(btnExcluir)))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(29)
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jtfNomeCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNome))))
+					.addGap(18)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 
 		tableConsultaCliente = new JTable();
 		try {
