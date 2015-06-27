@@ -89,7 +89,7 @@ public class NotaFiscalUI extends JInternalFrame {
 
 		lblData = new JLabel("Data:");
 
-		lblTotal = new JLabel("Valor Total: R$");
+		lblTotal = new JLabel("Valor Total R$");
 		lblTotal.setFont(new Font("Dialog", Font.BOLD, 15));
 
 		lblValor = new JLabel("Valor");
@@ -105,33 +105,27 @@ public class NotaFiscalUI extends JInternalFrame {
 		lblNotaFiscal.setFont(new Font("Dialog", Font.BOLD, 24));
 
 		groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout
-				.createParallelGroup(Alignment.TRAILING)
-				.addGroup(
-						groupLayout.createSequentialGroup()
-								.addContainerGap(235, Short.MAX_VALUE)
-								.addComponent(lblNotaFiscal).addGap(228))
-				.addGroup(
-						Alignment.LEADING,
-						groupLayout
-								.createSequentialGroup()
-								.addGap(18)
-								.addComponent(panel,
-										GroupLayout.PREFERRED_SIZE, 608,
-										GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(14, Short.MAX_VALUE)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(lblNotaFiscal)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(18, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(lblNotaFiscal)
+							.addGap(228))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(16))))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNotaFiscal)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 491, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(26, Short.MAX_VALUE))
+		);
 
 		gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -139,6 +133,7 @@ public class NotaFiscalUI extends JInternalFrame {
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
 								.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -157,9 +152,8 @@ public class NotaFiscalUI extends JInternalFrame {
 									.addComponent(lblData)
 									.addPreferredGap(ComponentPlacement.RELATED)))
 							.addComponent(lblDdmmyyyy))
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 574, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblTotal, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblTotal, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblValor, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
@@ -178,8 +172,8 @@ public class NotaFiscalUI extends JInternalFrame {
 						.addComponent(lblDdmmyyyy)
 						.addComponent(lblData))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 352, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblTotal)
 						.addComponent(lblValor))

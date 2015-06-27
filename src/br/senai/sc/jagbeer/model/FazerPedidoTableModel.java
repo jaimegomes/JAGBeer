@@ -57,7 +57,7 @@ public class FazerPedidoTableModel extends AbstractTableModel {
 		if (column == COL_QTDE)
 			return "Quantidade";
 		if (column == COL_VALOR)
-			return "Valor";
+			return "Valor Unitário";
 		return "";
 	}
 
