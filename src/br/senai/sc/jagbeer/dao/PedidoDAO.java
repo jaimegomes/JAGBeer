@@ -241,12 +241,14 @@ public class PedidoDAO extends GenericDAO {
 	public List<Entidade> getListPedidosEmAberto() throws Exception {
 
 		List<Entidade> listPedidosEmAberto = new ArrayList<Entidade>();
-
-		String sql = "SELECT * FROM pedido WHERE status = 1 AND dataPedido = ?";
+		
+		//Temos que trazer os pedidos em aberto sem a data pois se virar a meia noite vai dar problema!
+		//String sql = "SELECT * FROM pedido WHERE status = 1 AND dataPedido = ?";
+		String sql = "SELECT * FROM pedido WHERE status = 1";
 		try {
 
 			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setDate(1, new java.sql.Date(new Date().getTime()));
+			//pstm.setDate(1, new java.sql.Date(new Date().getTime()));
 
 			ResultSet result = pstm.executeQuery();
 
