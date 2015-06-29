@@ -75,7 +75,7 @@ public class FazerPedidoUI extends JInternalFrame {
 
 		setTitle("Fazer Pedido");
 		setClosable(true);
-		setBounds(550, 150, 790, 510);
+		setBounds(550, 150, 839, 509);
 
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,
@@ -489,12 +489,16 @@ public class FazerPedidoUI extends JInternalFrame {
 		});
 
 		groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addComponent(panel,
-				GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addComponent(panel, Alignment.TRAILING,
-				GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 817, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
+		);
 
 		JScrollPane scrollPane = new JScrollPane();
 
@@ -503,7 +507,7 @@ public class FazerPedidoUI extends JInternalFrame {
 			groupLayoutProduto.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayoutProduto.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayoutProduto.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(groupLayoutProduto.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayoutProduto.createSequentialGroup()
 							.addComponent(lblPedido)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -516,13 +520,13 @@ public class FazerPedidoUI extends JInternalFrame {
 							.addComponent(lblCliente)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(cmbCliente, GroupLayout.PREFERRED_SIZE, 412, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayoutProduto.createSequentialGroup()
+						.addGroup(Alignment.TRAILING, groupLayoutProduto.createSequentialGroup()
 							.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
 							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
-						.addComponent(scrollPane)
-						.addComponent(panelProduto, 0, 0, Short.MAX_VALUE))
-					.addContainerGap(23, Short.MAX_VALUE))
+						.addComponent(panelProduto, 0, 0, Short.MAX_VALUE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 786, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		groupLayoutProduto.setVerticalGroup(
 			groupLayoutProduto.createParallelGroup(Alignment.LEADING)
@@ -541,8 +545,8 @@ public class FazerPedidoUI extends JInternalFrame {
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 246, GroupLayout.PREFERRED_SIZE)
 					.addGap(11)
 					.addGroup(groupLayoutProduto.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnSalvar)
-						.addComponent(btnCancelar))
+						.addComponent(btnCancelar)
+						.addComponent(btnSalvar))
 					.addContainerGap())
 		);
 
