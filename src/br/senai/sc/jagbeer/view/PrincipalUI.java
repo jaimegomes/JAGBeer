@@ -2,6 +2,8 @@ package br.senai.sc.jagbeer.view;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
@@ -31,13 +35,6 @@ import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PrincipalTableModel;
-import javax.swing.UIManager;
-import java.awt.Frame;
-import javax.swing.JTextPane;
-import javax.swing.JSlider;
-import javax.swing.JFormattedTextField;
-import java.awt.Font;
-import javax.swing.ImageIcon;
 
 /**
  * Classe que contém a tela principal do sistema
@@ -79,9 +76,7 @@ public class PrincipalUI extends JFrame {
 	 */
 	public PrincipalUI() throws Exception {
 		setExtendedState(Frame.MAXIMIZED_BOTH);
-
 		setForeground(Color.BLUE);
-
 		setTitle("JAGBeer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1250, 700);
