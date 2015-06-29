@@ -220,7 +220,7 @@ public class PrincipalUI extends JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		JLabel lblJagbeer = new JLabel("");
-		lblJagbeer.setIcon(new ImageIcon("C:\\Users\\Bazzi\\git\\JAGBeer\\Image\\chopp1.jpg"));
+		lblJagbeer.setIcon(new ImageIcon("images/chopp1.jpg"));
 		lblJagbeer.setForeground(UIManager.getColor("textText"));
 		lblJagbeer.setFont(new Font("Trebuchet MS", Font.BOLD, 25));
 		
@@ -232,12 +232,12 @@ public class PrincipalUI extends JFrame {
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 522, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 598, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblJagbeer)
 						.addComponent(lblNewLabel))
-					.addContainerGap(585, Short.MAX_VALUE))
+					.addContainerGap(621, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -245,13 +245,13 @@ public class PrincipalUI extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 601, GroupLayout.PREFERRED_SIZE))
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(19)
 							.addComponent(lblJagbeer)
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGap(38)
 							.addComponent(lblNewLabel)))
-					.addContainerGap(19, Short.MAX_VALUE))
+					.addContainerGap(69, Short.MAX_VALUE))
 		);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -497,8 +497,8 @@ public class PrincipalUI extends JFrame {
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
 							.addComponent(lblPedido)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(jtfPedido, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
@@ -506,18 +506,18 @@ public class PrincipalUI extends JFrame {
 							.addComponent(lblNome)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(jtfCliente, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+							.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
+						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(btnFazerPedido, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(btnEncerrarEditar))
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 479, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(21, Short.MAX_VALUE))
+							.addComponent(btnFazerPedido, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 249, Short.MAX_VALUE)
+							.addComponent(btnEncerrarEditar)))
+					.addGap(29))
 		);
 		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblPedido)
@@ -526,11 +526,11 @@ public class PrincipalUI extends JFrame {
 						.addComponent(jtfCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnPesquisar))
 					.addGap(18)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
 					.addGap(18)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnFazerPedido, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnEncerrarEditar, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnEncerrarEditar, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnFazerPedido, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 
