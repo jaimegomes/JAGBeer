@@ -19,6 +19,7 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
 import br.senai.sc.jagbeer.model.FazerPedidoTableModel;
 import br.senai.sc.jagbeer.model.Pedido;
+import javax.swing.SwingConstants;
 
 /**
  * Classe que contém a tela de nota fiscal
@@ -61,7 +62,7 @@ public class NotaFiscalUI extends JInternalFrame {
 
 		setTitle("Nota Fiscal");
 		setClosable(true);
-		setBounds(660, 0, 650, 600);
+		setBounds(660, 0, 701, 602);
 
 		panel = new JPanel();
 
@@ -85,6 +86,7 @@ public class NotaFiscalUI extends JInternalFrame {
 		scrollPane = new JScrollPane();
 
 		lblDdmmyyyy = new JLabel("dd/MM/yyyy");
+		lblDdmmyyyy.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDdmmyyyy.setText("" + sdf.format(pedido.getDataPedido()));
 
 		lblData = new JLabel("Data:");
@@ -93,6 +95,7 @@ public class NotaFiscalUI extends JInternalFrame {
 		lblTotal.setFont(new Font("Dialog", Font.BOLD, 15));
 
 		lblValor = new JLabel("Valor");
+		lblValor.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblValor.setFont(new Font("Dialog", Font.BOLD, 15));
 
 		try {
@@ -108,13 +111,13 @@ public class NotaFiscalUI extends JInternalFrame {
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(18, Short.MAX_VALUE)
+					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 							.addComponent(lblNotaFiscal)
 							.addGap(228))
 						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(panel, GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
 							.addGap(16))))
 		);
 		groupLayout.setVerticalGroup(
@@ -133,7 +136,7 @@ public class NotaFiscalUI extends JInternalFrame {
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
 								.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -153,7 +156,7 @@ public class NotaFiscalUI extends JInternalFrame {
 									.addPreferredGap(ComponentPlacement.RELATED)))
 							.addComponent(lblDdmmyyyy))
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblTotal, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblTotal, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblValor, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
@@ -177,7 +180,7 @@ public class NotaFiscalUI extends JInternalFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblTotal)
 						.addComponent(lblValor))
-					.addContainerGap(15, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 
 		tableNotaFiscal = new JTable();

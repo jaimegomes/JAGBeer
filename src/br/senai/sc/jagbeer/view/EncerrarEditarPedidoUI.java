@@ -28,6 +28,7 @@ import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PrincipalTableModel;
 import br.senai.sc.jagbeer.model.Produto;
 import br.senai.sc.jagbeer.model.ProdutoPedido;
+import javax.swing.SwingConstants;
 
 /**
  * Classe que contém a tela de encerramento e edição de pedido
@@ -97,6 +98,7 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 		scrollPane = new JScrollPane();
 
 		lblDdmmyyyy = new JLabel("dd/MM/yyyy");
+		lblDdmmyyyy.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDdmmyyyy.setText("" + sdf.format(pedido.getDataPedido()));
 
 		lblData = new JLabel("Data:");
@@ -105,6 +107,7 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 		lblTotal.setFont(new Font("Dialog", Font.BOLD, 15));
 
 		lblValor = new JLabel("Valor");
+		lblValor.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblValor.setFont(new Font("Dialog", Font.BOLD, 15));
 
 		try {
@@ -375,5 +378,4 @@ public class EncerrarEditarPedidoUI extends JInternalFrame {
 	public void setLblValor(JLabel lblValor) {
 		this.lblValor = lblValor;
 	}
-
 }
