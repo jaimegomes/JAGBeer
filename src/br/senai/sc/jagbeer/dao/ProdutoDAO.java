@@ -176,7 +176,6 @@ public class ProdutoDAO extends GenericDAO {
 		return produto;
 	}
 
-
 	/**
 	 * Método responsável por buscar todos os produtos de determinada
 	 * classificação passada como parâmetro.
@@ -275,7 +274,7 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * Mátodo responsável por fazer a busca dos produtos de acordo com o nome e
+	 * Método responsável por fazer a busca dos produtos de acordo com o nome e
 	 * a classificação passados como parâmetro.
 	 * 
 	 * @param nome
@@ -325,7 +324,7 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * Mátodo responsável por fazer a busca dos produtos de acordo com o nome e
+	 * Método responsável por fazer a busca dos produtos de acordo com o nome e
 	 * a classificação passados como parâmetro.
 	 * 
 	 * @param nome
@@ -375,7 +374,7 @@ public class ProdutoDAO extends GenericDAO {
 	}
 
 	/**
-	 * Mátodo responsável por buscar o produto com o nome passado como
+	 * Método responsável por buscar o produto com o nome passado como
 	 * parâmetro.
 	 * 
 	 * @return String nome

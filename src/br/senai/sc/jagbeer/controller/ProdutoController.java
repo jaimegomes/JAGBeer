@@ -29,6 +29,10 @@ public class ProdutoController implements IController {
 		if (produto.getNome().trim().equals(""))
 			throw new Exception("Nome do produto obrigatório.");
 
+		if (dao.getPorNome(produto.getNome().trim()) != null)
+			throw new Exception(
+					"Produto já cadastro, nesse caso você deve editá-lo.");
+
 		if (produto.getPrecoVenda() == null || produto.getPrecoVenda() == 0)
 			throw new Exception(
 					"Valor do produto é obrigatório e deve ser maior que zero.");
@@ -63,6 +67,10 @@ public class ProdutoController implements IController {
 		if (produto.getNome().trim().equals(""))
 			throw new Exception("Nome do produto obrigatório.");
 
+		if (dao.getPorNome(produto.getNome().trim()) != null)
+			throw new Exception(
+					"Produto já cadastro, nesse caso você deve editá-lo.");
+
 		if (produto.getPrecoVenda() == null || produto.getPrecoVenda() == 0)
 			throw new Exception(
 					"Valor do produto é obrigatório e deve ser maior que zero.");
@@ -95,7 +103,6 @@ public class ProdutoController implements IController {
 
 		return produto;
 	}
-
 
 	/**
 	 * Método responsável por buscar todos os produtos de determinada
@@ -165,7 +172,8 @@ public class ProdutoController implements IController {
 	 * Método responsável por buscar o produto com o nome passado como
 	 * parâmetro.
 	 * 
-	 * @param String nome
+	 * @param String
+	 *            nome
 	 * @throws Exception
 	 */
 	public Entidade getPorNome(String nome) throws Exception {

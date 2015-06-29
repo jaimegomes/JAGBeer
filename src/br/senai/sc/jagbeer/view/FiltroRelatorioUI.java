@@ -38,7 +38,7 @@ public class FiltroRelatorioUI extends JInternalFrame {
 	public FiltroRelatorioUI() {
 		setClosable(true);
 		setTitle("Configurar Relatório");
-		setBounds(550, 180, 493, 163);
+		setBounds(550, 180, 446, 155);
 
 		final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		sdf.setLenient(false);
@@ -51,8 +51,8 @@ public class FiltroRelatorioUI extends JInternalFrame {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 459, Short.MAX_VALUE)
-					.addContainerGap())
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 412, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(59, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -154,22 +154,22 @@ public class FiltroRelatorioUI extends JInternalFrame {
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+							.addGap(63)
+							.addComponent(btnGerarRelatorio)
+							.addPreferredGap(ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblDataInicio, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addContainerGap()
+							.addComponent(lblDataInicio, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(jtfDataInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(lblDataFim)
 							.addGap(12)
-							.addComponent(jtfDataFim, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(56))
-						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-							.addComponent(btnGerarRelatorio)
-							.addGap(18)
-							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())))
+							.addComponent(jtfDataFim, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(56))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -182,8 +182,8 @@ public class FiltroRelatorioUI extends JInternalFrame {
 						.addComponent(lblDataFim))
 					.addGap(18)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnCancelar)
-						.addComponent(btnGerarRelatorio))
+						.addComponent(btnGerarRelatorio)
+						.addComponent(btnCancelar))
 					.addContainerGap())
 		);
 		panel.setLayout(gl_panel);

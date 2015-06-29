@@ -70,20 +70,23 @@ public class CadastroProdutoUI extends JInternalFrame {
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
 
 		groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 393, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(42, Short.MAX_VALUE))
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 393,
+								GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 193,
+								GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(42, Short.MAX_VALUE)));
 
 		// Nome
 		lblNome = new JLabel("Nome:");
@@ -212,59 +215,127 @@ public class CadastroProdutoUI extends JInternalFrame {
 		});
 
 		gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblClassificao)
-								.addComponent(lblValorCusto)
-								.addComponent(lblNome)
-								.addComponent(lblValor))
-							.addGap(18)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(jtfNome, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
-								.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(jtfValorCusto, Alignment.LEADING)
-									.addComponent(jtfValor, Alignment.LEADING)
-									.addComponent(cmbClassificacao, Alignment.LEADING, 0, 92, Short.MAX_VALUE)))
-							.addGap(35))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(btnLimpar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(35, Short.MAX_VALUE))))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNome)
-						.addComponent(jtfNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblValorCusto)
-						.addComponent(jtfValorCusto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblValor)
-						.addComponent(jtfValor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblClassificao)
-						.addComponent(cmbClassificacao, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnSalvar)
-						.addComponent(btnLimpar)
-						.addComponent(btnCancelar))
-					.addContainerGap())
-		);
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(Alignment.TRAILING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.LEADING)
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addGroup(
+																		gl_panel.createParallelGroup(
+																				Alignment.LEADING)
+																				.addComponent(
+																						lblClassificao)
+																				.addComponent(
+																						lblValorCusto)
+																				.addComponent(
+																						lblNome)
+																				.addComponent(
+																						lblValor))
+																.addGap(18)
+																.addGroup(
+																		gl_panel.createParallelGroup(
+																				Alignment.LEADING)
+																				.addComponent(
+																						jtfNome,
+																						GroupLayout.DEFAULT_SIZE,
+																						253,
+																						Short.MAX_VALUE)
+																				.addGroup(
+																						gl_panel.createParallelGroup(
+																								Alignment.TRAILING,
+																								false)
+																								.addComponent(
+																										jtfValorCusto,
+																										Alignment.LEADING)
+																								.addComponent(
+																										jtfValor,
+																										Alignment.LEADING)
+																								.addComponent(
+																										cmbClassificacao,
+																										Alignment.LEADING,
+																										0,
+																										92,
+																										Short.MAX_VALUE)))
+																.addGap(35))
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addComponent(
+																		btnSalvar,
+																		GroupLayout.PREFERRED_SIZE,
+																		100,
+																		GroupLayout.PREFERRED_SIZE)
+																.addGap(18)
+																.addComponent(
+																		btnLimpar,
+																		GroupLayout.PREFERRED_SIZE,
+																		100,
+																		GroupLayout.PREFERRED_SIZE)
+																.addGap(18)
+																.addComponent(
+																		btnCancelar,
+																		GroupLayout.PREFERRED_SIZE,
+																		100,
+																		GroupLayout.PREFERRED_SIZE)
+																.addContainerGap(
+																		35,
+																		Short.MAX_VALUE)))));
+		gl_panel.setVerticalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(lblNome)
+												.addComponent(
+														jtfNome,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(lblValorCusto)
+												.addComponent(
+														jtfValorCusto,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(lblValor)
+												.addComponent(
+														jtfValor,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(lblClassificao)
+												.addComponent(
+														cmbClassificacao,
+														GroupLayout.PREFERRED_SIZE,
+														20,
+														GroupLayout.PREFERRED_SIZE))
+								.addGap(18)
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(btnSalvar)
+												.addComponent(btnLimpar)
+												.addComponent(btnCancelar))
+								.addContainerGap()));
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 
@@ -283,6 +354,7 @@ public class CadastroProdutoUI extends JInternalFrame {
 							.replaceAll(",", ".")));
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
+					
 				}
 
 			}
