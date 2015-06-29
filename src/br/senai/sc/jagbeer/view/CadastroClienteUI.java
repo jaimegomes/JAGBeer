@@ -196,8 +196,8 @@ public class CadastroClienteUI extends JInternalFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 								.addComponent(jtfTelefoneCliente, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
-								.addComponent(jtfEmailCliente, GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
-								.addComponent(jtfNomeCliente, GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)))
+								.addComponent(jtfEmailCliente, GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+								.addComponent(jtfNomeCliente, GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
@@ -221,12 +221,12 @@ public class CadastroClienteUI extends JInternalFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jtfEmailCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblEmail))
-					.addGap(18)
+					.addPreferredGap(ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnSalvar)
 						.addComponent(btnLimpar)
 						.addComponent(btnCancelar))
-					.addGap(56))
+					.addGap(25))
 		);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
