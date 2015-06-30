@@ -58,9 +58,7 @@ public class CadastroClienteUI extends JInternalFrame {
 		setBounds(775, 0, 425, 250);
 
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,
-				null, null), "Cadastro Cliente", TitledBorder.LEADING,
-				TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Cadastro Cliente", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -74,7 +72,7 @@ public class CadastroClienteUI extends JInternalFrame {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 199, Short.MAX_VALUE)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 
@@ -196,8 +194,8 @@ public class CadastroClienteUI extends JInternalFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 								.addComponent(jtfTelefoneCliente, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
-								.addComponent(jtfEmailCliente, GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-								.addComponent(jtfNomeCliente, GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)))
+								.addComponent(jtfEmailCliente, GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+								.addComponent(jtfNomeCliente, GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
