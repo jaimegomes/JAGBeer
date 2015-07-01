@@ -39,12 +39,13 @@ public class ClienteDAO extends GenericDAO {
 
 			pstmt.execute();
 			con.commit();
+			pstmt.close();
 
 		} catch (SQLException se) {
+			System.out.println("[ClienteDAO] - Erro ao salvar Cliente.\n"
+					+ se.getMessage());
 			con.rollback();
-			System.out.println("[ClienteDAO] - Erro ao salvar Cliente.\n" + se.getMessage());
-		} finally {
-			con.close();
+
 		}
 	}
 
@@ -61,10 +62,10 @@ public class ClienteDAO extends GenericDAO {
 			pstmt.close();
 
 		} catch (SQLException se) {
+			System.out.println("[ClienteDAO] - Erro ao excluir Cliente.\n"
+					+ se.getMessage());
 			con.rollback();
-			System.out.println("[ClienteDAO] - Erro ao excluir Cliente.\n" + se.getMessage());
-		} finally {
-			con.close();
+
 		}
 	}
 
@@ -85,17 +86,17 @@ public class ClienteDAO extends GenericDAO {
 			pstmt.close();
 
 		} catch (SQLException se) {
+			System.out.println("[ClienteDAO] - Erro ao alterar Cliente.\n"
+					+ se.getMessage());
 			con.rollback();
-			System.out.println("[ClienteDAO] - Erro ao alterar Cliente.\n" + se.getMessage());
-		} finally {
-			con.close();
+
 		}
 	}
 
 	@Override
 	public List<Entidade> listar() throws Exception {
 		List<Entidade> listaClientes = new ArrayList<Entidade>();
-		String sql = "SELECT * FROM cliente ORDER BY nome";
+		String sql = "SELECT c.id, c.nome, c.telefone, c.email FROM cliente c ORDER BY nome";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet result = pstmt.executeQuery();
@@ -105,12 +106,12 @@ public class ClienteDAO extends GenericDAO {
 						result.getString("email"));
 				listaClientes.add(c);
 			}
+			result.close();
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("[ClienteDAO] - Erro ao listar Cliente.\n" + se.getMessage());
-		} finally {
-			con.close();
+			System.out.println("[ClienteDAO] - Erro ao listar Cliente.\n"
+					+ se.getMessage());
 		}
 		return listaClientes;
 	}
@@ -127,8 +128,8 @@ public class ClienteDAO extends GenericDAO {
 			throws Exception {
 		Cliente cliente = null;
 		List<Entidade> listCliente = new ArrayList<Entidade>();
-		String sql = "SELECT * FROM cliente WHERE UPPER(nome) LIKE UPPER('%"
-				+ clientePesquisar + "%')ORDER BY nome";
+		String sql = "SELECT c.id, c.nome, c.telefone, c.email FROM cliente c WHERE UPPER(nome) LIKE UPPER('%"
+				+ clientePesquisar + "%') ORDER BY nome";
 
 		try {
 			Statement pstmt = con.createStatement();
@@ -141,16 +142,14 @@ public class ClienteDAO extends GenericDAO {
 						result.getString("email"));
 				listCliente.add(cliente);
 			}
-
+			result.close();
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("[ClienteDAO] - Erro ao listar Cliente por Nome.\n"
-					+ se.getMessage());
-		} finally {
-			con.close();
+			System.out
+					.println("[ClienteDAO] - Erro ao listar Cliente por Nome.\n"
+							+ se.getMessage());
 		}
-
 		return listCliente;
 	}
 
@@ -158,7 +157,7 @@ public class ClienteDAO extends GenericDAO {
 	public Entidade getPorId(int id) throws Exception {
 
 		Cliente cliente = null;
-		String sql = "SELECT * FROM cliente WHERE id=?";
+		String sql = "SELECT c.id, c.nome, c.telefone, c.email FROM cliente c WHERE id=?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, id);
@@ -170,14 +169,13 @@ public class ClienteDAO extends GenericDAO {
 						result.getString("nome"), result.getString("telefone"),
 						result.getString("email"));
 			}
-
+			result.close();
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("[ClienteDAO] - Erro ao listar Cliente por ID.\n"
-					+ se.getMessage());
-		} finally {
-			con.close();
+			System.out
+					.println("[ClienteDAO] - Erro ao listar Cliente por ID.\n"
+							+ se.getMessage());
 		}
 
 		return cliente;
@@ -194,7 +192,7 @@ public class ClienteDAO extends GenericDAO {
 	public Entidade getNomeSelecionado(String clientePesquisar)
 			throws Exception {
 		Cliente cliente = null;
-		String sql = "SELECT * FROM cliente WHERE UPPER(nome) LIKE UPPER('"
+		String sql = "SELECT c.id, c.nome, c.telefone, c.email FROM cliente c WHERE UPPER(nome) LIKE UPPER('"
 				+ clientePesquisar + "')";
 
 		try {
@@ -207,14 +205,13 @@ public class ClienteDAO extends GenericDAO {
 						result.getString("nome"), result.getString("telefone"),
 						result.getString("email"));
 			}
-
+			result.close();
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("[ClienteDAO] - Erro ao buscar cliente por nome selecionado.\n"
-					+ se.getMessage());
-		} finally {
-			con.close();
+			System.out
+					.println("[ClienteDAO] - Erro ao buscar cliente por nome selecionado.\n"
+							+ se.getMessage());
 		}
 
 		return cliente;
@@ -231,8 +228,8 @@ public class ClienteDAO extends GenericDAO {
 	public List<Entidade> getPorNome(String clientePesquisar) throws Exception {
 		List<Entidade> listClientes = new ArrayList<Entidade>();
 		Cliente cliente = null;
-		String sql = "SELECT * FROM cliente WHERE UPPER(nome) LIKE UPPER('%"
-				+ clientePesquisar + "%')";
+		String sql = "SELECT c.id, c.nome, c.telefone, c.email FROM cliente c WHERE UPPER(nome) LIKE UPPER('%"
+				+ clientePesquisar + "%') ORDER BY c.nome";
 
 		try {
 			Statement pstmt = con.createStatement();
@@ -246,14 +243,13 @@ public class ClienteDAO extends GenericDAO {
 
 				listClientes.add(cliente);
 			}
-
+			result.close();
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("[ClienteDAO] - Erro ao buscar cliente por Nome.\n"
-					+ se.getMessage());
-		} finally {
-			con.close();
+			System.out
+					.println("[ClienteDAO] - Erro ao buscar cliente por Nome.\n"
+							+ se.getMessage());
 		}
 
 		return listClientes;
@@ -263,8 +259,10 @@ public class ClienteDAO extends GenericDAO {
 			throws SQLException {
 
 		Cliente cliente = null;
-		String sql = "SELECT * FROM cliente WHERE UPPER(nome) LIKE UPPER('"
-				+ nome + "') AND telefone LIKE '" + telefone
+		String sql = "SELECT c.id, c.nome, c.telefone, c.email FROM cliente c WHERE UPPER(nome) LIKE UPPER('"
+				+ nome
+				+ "') AND telefone LIKE '"
+				+ telefone
 				+ "' AND email LIKE '" + email + "'";
 
 		try {
@@ -278,14 +276,13 @@ public class ClienteDAO extends GenericDAO {
 						result.getString("email"));
 			}
 
-			System.out.println(cliente.getId());
+			result.close();
 			pstmt.close();
 
 		} catch (SQLException se) {
-			System.out.println("[ClienteDAO] - Erro ao buscar cliente por nome selecionado./n"
-					+ se.getMessage());
-		} finally {
-			con.close();
+			System.out
+					.println("[ClienteDAO] - Erro ao buscar cliente por nome selecionado./n"
+							+ se.getMessage());
 		}
 
 		return cliente;

@@ -35,11 +35,10 @@ public class MesaDAO extends GenericDAO {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			con.rollback();
+			e.printStackTrace();
 			System.out.println("[MesaDAO] - Erro ao salvar mesa.\n"
 					+ e.getMessage());
-		} finally {
-			con.close();
+			con.rollback();
 
 		}
 	}
@@ -59,11 +58,10 @@ public class MesaDAO extends GenericDAO {
 			pstmt.close();
 
 		} catch (SQLException se) {
-			con.rollback();
 			se.printStackTrace();
 			System.out.println("Erro ao excluir Mesa.\n" + se.getMessage());
-		} finally {
-			con.close();
+			con.rollback();
+
 		}
 
 	}
@@ -86,10 +84,10 @@ public class MesaDAO extends GenericDAO {
 			pstmt.close();
 
 		} catch (SQLException se) {
-			con.rollback();
+			se.printStackTrace();
 			System.out.println("Erro ao alterar Mesa.\n" + se.getMessage());
-		} finally {
-			con.close();
+			con.rollback();
+
 		}
 
 	}
@@ -99,7 +97,7 @@ public class MesaDAO extends GenericDAO {
 
 		List<Entidade> listaMesas = new ArrayList<Entidade>();
 
-		String query = "SELECT * FROM mesa";
+		String query = "SELECT m.id, m.numeroMesa, m.lugares FROM mesa m ORDER BY m.numeroMesa";
 
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
@@ -110,12 +108,13 @@ public class MesaDAO extends GenericDAO {
 						result.getInt("numeroMesa"), result.getInt("lugares"));
 				listaMesas.add(m);
 			}
+
+			result.close();
 			pstmt.close();
 
 		} catch (SQLException se) {
 			System.out.println("Erro ao listar Mesa.\n" + se.getMessage());
-		} finally {
-			con.close();
+			se.printStackTrace();
 		}
 
 		return listaMesas;
@@ -124,7 +123,7 @@ public class MesaDAO extends GenericDAO {
 	@Override
 	public Entidade getPorId(int id) throws Exception {
 
-		String query = "SELECT * FROM mesa WHERE id = ?";
+		String query = "SELECT m.id, m.numeroMesa, m.lugares FROM mesa m WHERE id = ?";
 
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
@@ -137,12 +136,13 @@ public class MesaDAO extends GenericDAO {
 						result.getInt("numeromesa"), result.getInt("lugares"));
 			}
 
+			result.close();
 			pstmt.close();
 
 		} catch (SQLException se) {
+			se.printStackTrace();
 			System.out.println("Erro ao pegar mesa por id." + se.getMessage());
-		} finally {
-			con.close();
+
 		}
 
 		return mesa;
@@ -158,7 +158,7 @@ public class MesaDAO extends GenericDAO {
 	 */
 	public Entidade getPorNumeroMesa(int numeroMesa) throws Exception {
 		Mesa mesa = null;
-		String sql = "SELECT * FROM mesa WHERE numeroMesa = ?";
+		String sql = "SELECT m.id, m.numeroMesa, m.lugares FROM mesa m WHERE numeroMesa = ? ORDER BY numeroMesa";
 
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -171,13 +171,13 @@ public class MesaDAO extends GenericDAO {
 						result.getInt("numeroMesa"), result.getInt("lugares"));
 			}
 
+			result.close();
 			pstmt.close();
 
 		} catch (SQLException se) {
+			se.printStackTrace();
 			System.out.println("Erro ao listar Mesa por Numero "
 					+ se.getMessage());
-		} finally {
-			con.close();
 		}
 
 		return mesa;

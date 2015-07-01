@@ -102,7 +102,6 @@ public class ConsultaClienteUI extends JInternalFrame {
 													"Não é possível excluir clientes com pedido em aberto.");
 								}
 							} catch (Exception e2) {
-								System.out.println(" aqui 4");
 								JOptionPane.showMessageDialog(null, e2.getMessage());
 							}
 						}

@@ -7,7 +7,6 @@ import br.senai.sc.jagbeer.dao.MesaDAO;
 import br.senai.sc.jagbeer.interfaces.IController;
 import br.senai.sc.jagbeer.model.Mesa;
 
-
 /**
  * Classe de controle da entidade Mesa.
  * 
@@ -23,14 +22,16 @@ public class MesaController implements IController {
 
 		Mesa mesa = (Mesa) entidade;
 
-		if (mesa == null) {
+		if (mesa == null)
 			throw new Exception("Mesa não pode ser nula.");
-		}
 
-		if (mesa.getNumeroMesa() == null || mesa.getNumeroMesa() < 1) {
+		if (mesa.getNumeroMesa() == null || mesa.getNumeroMesa() < 0)
 			throw new Exception(
 					"Número da mesa obrigatório e deve ser maior que zero.");
-		}
+
+		if (dao.getPorNumeroMesa(mesa.getNumeroMesa()) != null)
+			throw new Exception(
+					"Mesa já cadastrada, neste caso você deve editar.");
 
 		dao.salvar(mesa);
 	}
@@ -77,6 +78,5 @@ public class MesaController implements IController {
 	public Entidade getPorNumeroMesa(int numeroMesa) throws Exception {
 		return dao.getPorNumeroMesa(numeroMesa);
 	}
-
 
 }

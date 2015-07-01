@@ -404,6 +404,11 @@ public class FazerPedidoUI extends JInternalFrame {
 										.getPorId(idMesa);
 								pedido.setMesa(mesa);
 							}
+						} else {
+							int idMesa = (int) cmbMesa.getSelectedItem();
+							Mesa mesa = (Mesa) new MesaController()
+									.getPorId(idMesa);
+							pedido.setMesa(mesa);
 						}
 
 						// atualizar o valor do pedido
@@ -489,111 +494,238 @@ public class FazerPedidoUI extends JInternalFrame {
 		});
 
 		groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 817, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 817,
+								Short.MAX_VALUE).addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addComponent(panel,
+				GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE));
 
 		JScrollPane scrollPane = new JScrollPane();
 
 		groupLayoutProduto = new GroupLayout(panel);
-		groupLayoutProduto.setHorizontalGroup(
-			groupLayoutProduto.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayoutProduto.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayoutProduto.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayoutProduto.createSequentialGroup()
-							.addComponent(lblPedido)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(cmbPedido, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(lblMesa)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(cmbMesa, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(lblCliente)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(cmbCliente, GroupLayout.PREFERRED_SIZE, 412, GroupLayout.PREFERRED_SIZE))
-						.addGroup(Alignment.TRAILING, groupLayoutProduto.createSequentialGroup()
-							.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
-						.addComponent(panelProduto, 0, 0, Short.MAX_VALUE)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 786, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		groupLayoutProduto.setVerticalGroup(
-			groupLayoutProduto.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayoutProduto.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayoutProduto.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblPedido)
-						.addComponent(cmbPedido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblMesa)
-						.addComponent(cmbMesa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblCliente)
-						.addComponent(cmbCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(13)
-					.addComponent(panelProduto, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 246, GroupLayout.PREFERRED_SIZE)
-					.addGap(11)
-					.addGroup(groupLayoutProduto.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnCancelar)
-						.addComponent(btnSalvar))
-					.addContainerGap())
-		);
+		groupLayoutProduto
+				.setHorizontalGroup(groupLayoutProduto
+						.createParallelGroup(Alignment.TRAILING)
+						.addGroup(
+								groupLayoutProduto
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												groupLayoutProduto
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																groupLayoutProduto
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblPedido)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				cmbPedido,
+																				GroupLayout.PREFERRED_SIZE,
+																				71,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(18)
+																		.addComponent(
+																				lblMesa)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				cmbMesa,
+																				GroupLayout.PREFERRED_SIZE,
+																				76,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(18)
+																		.addComponent(
+																				lblCliente)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				cmbCliente,
+																				GroupLayout.PREFERRED_SIZE,
+																				412,
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																Alignment.TRAILING,
+																groupLayoutProduto
+																		.createSequentialGroup()
+																		.addComponent(
+																				btnSalvar,
+																				GroupLayout.PREFERRED_SIZE,
+																				100,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(18)
+																		.addComponent(
+																				btnCancelar,
+																				GroupLayout.PREFERRED_SIZE,
+																				100,
+																				GroupLayout.PREFERRED_SIZE))
+														.addComponent(
+																panelProduto,
+																0, 0,
+																Short.MAX_VALUE)
+														.addComponent(
+																scrollPane,
+																GroupLayout.DEFAULT_SIZE,
+																786,
+																Short.MAX_VALUE))
+										.addContainerGap()));
+		groupLayoutProduto
+				.setVerticalGroup(groupLayoutProduto
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								groupLayoutProduto
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												groupLayoutProduto
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(lblPedido)
+														.addComponent(
+																cmbPedido,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(lblMesa)
+														.addComponent(
+																cmbMesa,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																lblCliente)
+														.addComponent(
+																cmbCliente,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addGap(13)
+										.addComponent(panelProduto,
+												GroupLayout.PREFERRED_SIZE,
+												102, GroupLayout.PREFERRED_SIZE)
+										.addGap(18)
+										.addComponent(scrollPane,
+												GroupLayout.PREFERRED_SIZE,
+												246, GroupLayout.PREFERRED_SIZE)
+										.addGap(11)
+										.addGroup(
+												groupLayoutProduto
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																btnCancelar)
+														.addComponent(btnSalvar))
+										.addContainerGap()));
 
 		tableFazerPedido = new JTable();
 		tableFazerPedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(tableFazerPedido);
 
 		gl_panelProduto = new GroupLayout(panelProduto);
-		gl_panelProduto.setHorizontalGroup(
-			gl_panelProduto.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelProduto.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panelProduto.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelProduto.createSequentialGroup()
-							.addComponent(lblClassificao)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(cmbClassificacao, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(lblProduto)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(cmbProduto, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(lblQuantidade)
-							.addGap(4)
-							.addComponent(spinnerQtde, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panelProduto.createSequentialGroup()
-							.addComponent(btnAdicionarProduto, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(64, Short.MAX_VALUE))
-		);
-		gl_panelProduto.setVerticalGroup(
-			gl_panelProduto.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelProduto.createSequentialGroup()
-					.addGroup(gl_panelProduto.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblClassificao)
-						.addComponent(cmbClassificacao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblProduto)
-						.addComponent(cmbProduto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblQuantidade)
-						.addComponent(spinnerQtde, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_panelProduto.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnAdicionarProduto)
-						.addComponent(btnExcluir))
-					.addContainerGap())
-		);
+		gl_panelProduto
+				.setHorizontalGroup(gl_panelProduto
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_panelProduto
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												gl_panelProduto
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_panelProduto
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblClassificao)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				cmbClassificacao,
+																				GroupLayout.PREFERRED_SIZE,
+																				126,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(18)
+																		.addComponent(
+																				lblProduto)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				cmbProduto,
+																				GroupLayout.PREFERRED_SIZE,
+																				270,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(18)
+																		.addComponent(
+																				lblQuantidade)
+																		.addGap(4)
+																		.addComponent(
+																				spinnerQtde,
+																				GroupLayout.PREFERRED_SIZE,
+																				50,
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																gl_panelProduto
+																		.createSequentialGroup()
+																		.addComponent(
+																				btnAdicionarProduto,
+																				GroupLayout.PREFERRED_SIZE,
+																				165,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(18)
+																		.addComponent(
+																				btnExcluir,
+																				GroupLayout.PREFERRED_SIZE,
+																				163,
+																				GroupLayout.PREFERRED_SIZE)))
+										.addContainerGap(64, Short.MAX_VALUE)));
+		gl_panelProduto
+				.setVerticalGroup(gl_panelProduto
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_panelProduto
+										.createSequentialGroup()
+										.addGroup(
+												gl_panelProduto
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																lblClassificao)
+														.addComponent(
+																cmbClassificacao,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																lblProduto)
+														.addComponent(
+																cmbProduto,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																lblQuantidade)
+														.addComponent(
+																spinnerQtde,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addGap(18)
+										.addGroup(
+												gl_panelProduto
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																btnAdicionarProduto)
+														.addComponent(
+																btnExcluir))
+										.addContainerGap()));
 		panelProduto.setLayout(gl_panelProduto);
 		panel.setLayout(groupLayoutProduto);
 		tableFazerPedido.setModel(new FazerPedidoTableModel(listProdutoPedido));

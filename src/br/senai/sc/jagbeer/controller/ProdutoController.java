@@ -60,6 +60,8 @@ public class ProdutoController implements IController {
 	public void editar(Entidade entidade) throws Exception {
 
 		produto = (Produto) entidade;
+		System.out.println(produto.getClassificacao());
+		System.out.println(produto.getNome());
 
 		if (produto == null)
 			throw new Exception("Produto não pode ser nulo.");
@@ -67,7 +69,8 @@ public class ProdutoController implements IController {
 		if (produto.getNome().trim().equals(""))
 			throw new Exception("Nome do produto obrigatório.");
 
-		if (dao.getPorNome(produto.getNome().trim()) != null)
+		if (dao.getPorNomeClassificacao(produto.getNome().trim(),
+				produto.getClassificacao().trim()).size() > 0)
 			throw new Exception(
 					"Produto já cadastro, nesse caso você deve editá-lo.");
 
@@ -149,7 +152,7 @@ public class ProdutoController implements IController {
 	public List<Entidade> buscaPorNomeClassificacao(String nome,
 			String classificacao) throws Exception {
 
-		return dao.buscaPorNomeClassificacao(nome, classificacao);
+		return dao.getPorNomeClassificacao(nome, classificacao);
 
 	}
 
