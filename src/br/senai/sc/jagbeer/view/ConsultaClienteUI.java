@@ -206,8 +206,8 @@ public class ConsultaClienteUI extends JInternalFrame {
 
 		scrollPane = new JScrollPane();
 
-		JButton btnFechar = new JButton("Limpar");
-		btnFechar.addActionListener(new ActionListener() {
+		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jtfNomeCliente.setText("");
 			}
@@ -223,7 +223,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 					.addGap(28)
 					.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(btnFechar, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
+					.addComponent(btnLimpar, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
 				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
 		);
 		gl_panel.setVerticalGroup(
@@ -233,7 +233,7 @@ public class ConsultaClienteUI extends JInternalFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNome)
 						.addComponent(jtfNomeCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnFechar)
+						.addComponent(btnLimpar)
 						.addComponent(btnPesquisar))
 					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE))
