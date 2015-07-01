@@ -14,12 +14,13 @@ import br.senai.sc.jagbeer.model.Mesa;
 
 public class MesaDAO extends GenericDAO {
 
-	private Connection con = Conexao.getConnection();
+	private Connection con = null;
 	private Mesa mesa = null;
 
 	@Override
 	public void salvar(Entidade entidade) throws Exception {
 
+		con = Conexao.getConnection();
 		String query = "INSERT INTO mesa (numeromesa, lugares) VALUES (?,?)";
 
 		try {
@@ -40,12 +41,14 @@ public class MesaDAO extends GenericDAO {
 					+ e.getMessage());
 			con.rollback();
 
+		} finally {
+			con.close();
 		}
 	}
 
 	@Override
 	public void excluir(Entidade entidade) throws Exception {
-
+		con = Conexao.getConnection();
 		String query = "DELETE FROM mesa WHERE id = ? ";
 
 		try {
@@ -62,6 +65,8 @@ public class MesaDAO extends GenericDAO {
 			System.out.println("Erro ao excluir Mesa.\n" + se.getMessage());
 			con.rollback();
 
+		} finally {
+			con.close();
 		}
 
 	}
@@ -69,6 +74,7 @@ public class MesaDAO extends GenericDAO {
 	@Override
 	public void editar(Entidade entidade) throws Exception {
 
+		con = Conexao.getConnection();
 		String query = "UPDATE mesa SET numeromesa = ?, lugares = ? WHERE id = ? ";
 
 		try {
@@ -88,13 +94,15 @@ public class MesaDAO extends GenericDAO {
 			System.out.println("Erro ao alterar Mesa.\n" + se.getMessage());
 			con.rollback();
 
+		} finally {
+			con.close();
 		}
 
 	}
 
 	@Override
 	public List<Entidade> listar() throws Exception {
-
+		con = Conexao.getConnection();
 		List<Entidade> listaMesas = new ArrayList<Entidade>();
 
 		String query = "SELECT m.id, m.numeroMesa, m.lugares FROM mesa m ORDER BY m.numeroMesa";
@@ -115,6 +123,8 @@ public class MesaDAO extends GenericDAO {
 		} catch (SQLException se) {
 			System.out.println("Erro ao listar Mesa.\n" + se.getMessage());
 			se.printStackTrace();
+		} finally {
+			con.close();
 		}
 
 		return listaMesas;
@@ -123,6 +133,7 @@ public class MesaDAO extends GenericDAO {
 	@Override
 	public Entidade getPorId(int id) throws Exception {
 
+		con = Conexao.getConnection();
 		String query = "SELECT m.id, m.numeroMesa, m.lugares FROM mesa m WHERE id = ?";
 
 		try {
@@ -143,6 +154,8 @@ public class MesaDAO extends GenericDAO {
 			se.printStackTrace();
 			System.out.println("Erro ao pegar mesa por id." + se.getMessage());
 
+		} finally {
+			con.close();
 		}
 
 		return mesa;
@@ -157,6 +170,8 @@ public class MesaDAO extends GenericDAO {
 	 * @throws Exception
 	 */
 	public Entidade getPorNumeroMesa(int numeroMesa) throws Exception {
+
+		con = Conexao.getConnection();
 		Mesa mesa = null;
 		String sql = "SELECT m.id, m.numeroMesa, m.lugares FROM mesa m WHERE numeroMesa = ? ORDER BY numeroMesa";
 
@@ -178,6 +193,8 @@ public class MesaDAO extends GenericDAO {
 			se.printStackTrace();
 			System.out.println("Erro ao listar Mesa por Numero "
 					+ se.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return mesa;

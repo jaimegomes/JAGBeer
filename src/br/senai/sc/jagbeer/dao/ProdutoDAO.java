@@ -20,12 +20,13 @@ import br.senai.sc.jagbeer.model.Produto;
  */
 public class ProdutoDAO extends GenericDAO {
 
-	private Connection con = Conexao.getConnection();
+	private Connection con = null;
 	private Produto produto = null;
 
 	@Override
 	public void salvar(Entidade entidade) throws SQLException {
 
+		con = Conexao.getConnection();
 		String sql = "INSERT INTO produto (nomeproduto, precocusto, precovenda, classificacao) values(?,?,?,?)";
 
 		try {
@@ -51,12 +52,15 @@ public class ProdutoDAO extends GenericDAO {
 					+ e.getMessage());
 			con.rollback();
 
+		} finally {
+			con.close();
 		}
 	}
 
 	@Override
 	public void excluir(Entidade entidade) throws SQLException {
 
+		con = Conexao.getConnection();
 		String sql = "DELETE FROM produto WHERE id=?";
 		try {
 
@@ -74,6 +78,8 @@ public class ProdutoDAO extends GenericDAO {
 					+ e.getMessage());
 			con.rollback();
 
+		} finally {
+			con.close();
 		}
 
 	}
@@ -81,6 +87,7 @@ public class ProdutoDAO extends GenericDAO {
 	@Override
 	public void editar(Entidade entidade) throws SQLException {
 
+		con = Conexao.getConnection();
 		String sql = "UPDATE produto SET nomeproduto = ? , precocusto = ?, precovenda = ?, classificacao = ? WHERE id=?";
 		try {
 			produto = (Produto) entidade;
@@ -101,6 +108,8 @@ public class ProdutoDAO extends GenericDAO {
 					+ e.getMessage());
 			con.rollback();
 
+		} finally {
+			con.close();
 		}
 
 	}
@@ -108,6 +117,7 @@ public class ProdutoDAO extends GenericDAO {
 	@Override
 	public List<Entidade> listar() throws Exception {
 
+		con = Conexao.getConnection();
 		List<Entidade> listaProdutos = new ArrayList<Entidade>();
 		String sql = "SELECT p.id, p.nomeProduto, p.precoCusto, p.precoVenda, p.classificacao FROM produto p ORDER BY p.nomeProduto";
 		try {
@@ -134,6 +144,8 @@ public class ProdutoDAO extends GenericDAO {
 			e.printStackTrace();
 			System.out.println("[ProdutoDAO] - Erro ao listar produtos.\n"
 					+ e.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return listaProdutos;
@@ -142,6 +154,7 @@ public class ProdutoDAO extends GenericDAO {
 	@Override
 	public Entidade getPorId(int id) throws Exception {
 
+		con = Conexao.getConnection();
 		String sql = "SELECT p.id, p.nomeProduto, p.precoCusto, p.precoVenda, p.classificacao FROM produto p WHERE id = ?";
 		try {
 
@@ -168,6 +181,8 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por id.\n"
 							+ e.getMessage());
+		} finally {
+			con.close();
 		}
 		return produto;
 	}
@@ -182,6 +197,8 @@ public class ProdutoDAO extends GenericDAO {
 	 */
 	public List<Entidade> getPorClassificacao(String classificacao)
 			throws Exception {
+
+		con = Conexao.getConnection();
 
 		List<Entidade> listProduto = new ArrayList<Entidade>();
 
@@ -213,6 +230,8 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por classificação.\n"
 							+ e.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return listProduto;
@@ -231,6 +250,7 @@ public class ProdutoDAO extends GenericDAO {
 	 */
 	public List<Entidade> getListNomesProdutos(String nome) throws Exception {
 
+		con = Conexao.getConnection();
 		List<Entidade> listProduto = new ArrayList<Entidade>();
 
 		String sql = "SELECT p.id, p.nomeProduto, p.precoCusto, p.precoVenda, p.classificacao FROM produto p WHERE UPPER(nomeProduto) LIKE  UPPER('%"
@@ -260,6 +280,8 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por nome.\n"
 							+ e.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return listProduto;
@@ -277,6 +299,7 @@ public class ProdutoDAO extends GenericDAO {
 	public List<Entidade> getPorNomeClassificacao(String nome,
 			String classificacao) throws Exception {
 
+		con = Conexao.getConnection();
 		List<Entidade> listProduto = new ArrayList<Entidade>();
 
 		String sql = "SELECT p.id, p.nomeProduto, p.precoCusto, p.precoVenda, p.classificacao FROM produto p WHERE UPPER(nomeProduto) LIKE UPPER('%"
@@ -308,6 +331,8 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por nome e classificação.\n"
 							+ e.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return listProduto;
@@ -326,6 +351,7 @@ public class ProdutoDAO extends GenericDAO {
 	public Entidade buscaCompleta(String nome, Double precoVenda,
 			String classificacao) throws Exception {
 
+		con = Conexao.getConnection();
 		Produto produto = null;
 
 		String sql = "SELECT p.id, p.nomeProduto, p.precoCusto, p.precoVenda, p.classificacao FROM produto p WHERE UPPER(nomeProduto) LIKE UPPER('%"
@@ -357,6 +383,8 @@ public class ProdutoDAO extends GenericDAO {
 					.println("[ProdutoDAO] - Erro ao buscar produto por nome e classificação.\n"
 							+ e.getMessage());
 
+		} finally {
+			con.close();
 		}
 		return produto;
 
@@ -371,6 +399,7 @@ public class ProdutoDAO extends GenericDAO {
 	 */
 	public Entidade getPorNome(String nome) throws Exception {
 
+		con = Conexao.getConnection();
 		Produto produto = null;
 		String sql = "SELECT p.id, p.nomeProduto, p.precoCusto, p.precoVenda, p.classificacao FROM produto p WHERE UPPER(nomeProduto) LIKE  UPPER('"
 				+ nome + "')";
@@ -397,6 +426,8 @@ public class ProdutoDAO extends GenericDAO {
 			System.out
 					.println("[ProdutoDAO] - Erro ao buscar produto por nome.\n"
 							+ e.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return produto;

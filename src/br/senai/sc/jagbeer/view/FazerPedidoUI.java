@@ -391,23 +391,23 @@ public class FazerPedidoUI extends JInternalFrame {
 						// pedido for selecionada uma mesa, atualiza a entidade
 						// pedido no banco de dados com o valor do id da mesa
 						if (pedido.getMesa() == null) {
-							int idMesa = 0;
+							int numMesa = 0;
 
 							if (cmbMesa.getSelectedIndex() > 0) {
 
-								idMesa = (int) cmbMesa.getSelectedItem();
+								numMesa = (int) cmbMesa.getSelectedItem();
 							}
 
-							if (idMesa > 0) {
+							if (numMesa > 0) {
 
 								Mesa mesa = (Mesa) new MesaController()
-										.getPorId(idMesa);
+										.getPorNumeroMesa(numMesa);
 								pedido.setMesa(mesa);
 							}
 						} else {
-							int idMesa = (int) cmbMesa.getSelectedItem();
+							int numMesa = (int) cmbMesa.getSelectedItem();
 							Mesa mesa = (Mesa) new MesaController()
-									.getPorId(idMesa);
+									.getPorNumeroMesa(numMesa);
 							pedido.setMesa(mesa);
 						}
 

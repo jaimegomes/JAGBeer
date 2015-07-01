@@ -60,8 +60,6 @@ public class ProdutoController implements IController {
 	public void editar(Entidade entidade) throws Exception {
 
 		produto = (Produto) entidade;
-		System.out.println(produto.getClassificacao());
-		System.out.println(produto.getNome());
 
 		if (produto == null)
 			throw new Exception("Produto não pode ser nulo.");

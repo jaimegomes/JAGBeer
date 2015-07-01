@@ -22,10 +22,12 @@ import br.senai.sc.jagbeer.model.Cliente;
 
 public class ClienteDAO extends GenericDAO {
 
-	private Connection con = Conexao.getConnection();
+	private Connection con = null;
 
 	@Override
 	public void salvar(Entidade entidade) throws Exception {
+
+		con = Conexao.getConnection();
 
 		String sql = "INSERT INTO cliente (nome, telefone, email) VALUES (?,?,?)";
 		try {
@@ -46,11 +48,15 @@ public class ClienteDAO extends GenericDAO {
 					+ se.getMessage());
 			con.rollback();
 
+		} finally {
+			con.close();
 		}
 	}
 
 	@Override
 	public void excluir(Entidade entidade) throws Exception {
+
+		con = Conexao.getConnection();
 		String sql = "DELETE FROM cliente WHERE id=?";
 		try {
 			Cliente cliente = (Cliente) entidade;
@@ -66,11 +72,15 @@ public class ClienteDAO extends GenericDAO {
 					+ se.getMessage());
 			con.rollback();
 
+		} finally {
+			con.close();
 		}
 	}
 
 	@Override
 	public void editar(Entidade entidade) throws Exception {
+
+		con = Conexao.getConnection();
 		String sql = "UPDATE cliente SET nome = ?, telefone = ?, email = ? WHERE id=?";
 
 		try {
@@ -90,11 +100,15 @@ public class ClienteDAO extends GenericDAO {
 					+ se.getMessage());
 			con.rollback();
 
+		} finally {
+			con.close();
 		}
 	}
 
 	@Override
 	public List<Entidade> listar() throws Exception {
+
+		con = Conexao.getConnection();
 		List<Entidade> listaClientes = new ArrayList<Entidade>();
 		String sql = "SELECT c.id, c.nome, c.telefone, c.email FROM cliente c ORDER BY nome";
 		try {
@@ -112,6 +126,8 @@ public class ClienteDAO extends GenericDAO {
 		} catch (SQLException se) {
 			System.out.println("[ClienteDAO] - Erro ao listar Cliente.\n"
 					+ se.getMessage());
+		} finally {
+			con.close();
 		}
 		return listaClientes;
 	}
@@ -126,6 +142,7 @@ public class ClienteDAO extends GenericDAO {
 	 */
 	public List<Entidade> getListClientesPorNome(String clientePesquisar)
 			throws Exception {
+		con = Conexao.getConnection();
 		Cliente cliente = null;
 		List<Entidade> listCliente = new ArrayList<Entidade>();
 		String sql = "SELECT c.id, c.nome, c.telefone, c.email FROM cliente c WHERE UPPER(nome) LIKE UPPER('%"
@@ -149,12 +166,16 @@ public class ClienteDAO extends GenericDAO {
 			System.out
 					.println("[ClienteDAO] - Erro ao listar Cliente por Nome.\n"
 							+ se.getMessage());
+		} finally {
+			con.close();
 		}
 		return listCliente;
 	}
 
 	@Override
 	public Entidade getPorId(int id) throws Exception {
+
+		con = Conexao.getConnection();
 
 		Cliente cliente = null;
 		String sql = "SELECT c.id, c.nome, c.telefone, c.email FROM cliente c WHERE id=?";
@@ -176,6 +197,8 @@ public class ClienteDAO extends GenericDAO {
 			System.out
 					.println("[ClienteDAO] - Erro ao listar Cliente por ID.\n"
 							+ se.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return cliente;
@@ -191,6 +214,8 @@ public class ClienteDAO extends GenericDAO {
 	 */
 	public Entidade getNomeSelecionado(String clientePesquisar)
 			throws Exception {
+
+		con = Conexao.getConnection();
 		Cliente cliente = null;
 		String sql = "SELECT c.id, c.nome, c.telefone, c.email FROM cliente c WHERE UPPER(nome) LIKE UPPER('"
 				+ clientePesquisar + "')";
@@ -212,6 +237,8 @@ public class ClienteDAO extends GenericDAO {
 			System.out
 					.println("[ClienteDAO] - Erro ao buscar cliente por nome selecionado.\n"
 							+ se.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return cliente;
@@ -226,6 +253,8 @@ public class ClienteDAO extends GenericDAO {
 	 * @throws Exception
 	 */
 	public List<Entidade> getPorNome(String clientePesquisar) throws Exception {
+
+		con = Conexao.getConnection();
 		List<Entidade> listClientes = new ArrayList<Entidade>();
 		Cliente cliente = null;
 		String sql = "SELECT c.id, c.nome, c.telefone, c.email FROM cliente c WHERE UPPER(nome) LIKE UPPER('%"
@@ -250,6 +279,8 @@ public class ClienteDAO extends GenericDAO {
 			System.out
 					.println("[ClienteDAO] - Erro ao buscar cliente por Nome.\n"
 							+ se.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return listClientes;
@@ -258,6 +289,7 @@ public class ClienteDAO extends GenericDAO {
 	public Entidade buscaCompleta(String nome, String telefone, String email)
 			throws SQLException {
 
+		con = Conexao.getConnection();
 		Cliente cliente = null;
 		String sql = "SELECT c.id, c.nome, c.telefone, c.email FROM cliente c WHERE UPPER(nome) LIKE UPPER('"
 				+ nome
@@ -283,6 +315,8 @@ public class ClienteDAO extends GenericDAO {
 			System.out
 					.println("[ClienteDAO] - Erro ao buscar cliente por nome selecionado./n"
 							+ se.getMessage());
+		} finally {
+			con.close();
 		}
 
 		return cliente;
