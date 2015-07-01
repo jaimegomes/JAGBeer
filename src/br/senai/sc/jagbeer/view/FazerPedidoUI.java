@@ -75,7 +75,7 @@ public class FazerPedidoUI extends JInternalFrame {
 
 		setTitle("Fazer Pedido");
 		setClosable(true);
-		setBounds(550, 150, 839, 509);
+		setBounds(520, 150, 839, 509);
 
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED,

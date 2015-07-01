@@ -194,7 +194,7 @@ public class PrincipalUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FiltroRelatorioUI configRelFat = new FiltroRelatorioUI();
+				FiltroRelatorioUI configRelFat = new FiltroRelatorioUI("fat");
 				configRelFat.requestFocus(true);
 				configRelFat.setFocusable(true);
 				configRelFat.moveToFront();
@@ -203,6 +203,21 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 		mnRelatorio.add(mntmFaturamento);
+		
+		JMenuItem mntmProdutosMaisVendido = new JMenuItem("Produtos Mais Vendidos");
+		mntmFaturamento.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FiltroRelatorioUI configRelFat = new FiltroRelatorioUI("prod");
+				configRelFat.requestFocus(true);
+				configRelFat.setFocusable(true);
+				configRelFat.moveToFront();
+				getContentPane().add(configRelFat, 0);
+				configRelFat.setVisible(true);
+			}
+		});
+		mnRelatorio.add(mntmProdutosMaisVendido);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

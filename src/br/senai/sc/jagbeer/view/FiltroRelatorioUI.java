@@ -35,7 +35,7 @@ public class FiltroRelatorioUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FiltroRelatorioUI() {
+	public FiltroRelatorioUI(final String flag) {
 		setClosable(true);
 		setTitle("Configurar Relatório");
 		setBounds(550, 180, 446, 155);
@@ -108,6 +108,8 @@ public class FiltroRelatorioUI extends JInternalFrame {
 
 				Date dataIni = null;
 				Date dataFim = null;
+
+				if(flag.equals("fat")){
 				try {
 
 					try {
@@ -140,7 +142,9 @@ public class FiltroRelatorioUI extends JInternalFrame {
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				}
-
+				}else if (flag.equals("prod")){
+					
+				}
 			}
 		});
 
