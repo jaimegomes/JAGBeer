@@ -354,22 +354,20 @@ public class ConsultaProdutoUI extends JInternalFrame {
 		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-							.addComponent(lblClassificacao)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(cmbClassificacao, 0, 181, Short.MAX_VALUE))
-						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-							.addComponent(lblNome)
-							.addPreferredGap(ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-							.addComponent(jtfNome, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)))
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNome)
+						.addComponent(lblClassificacao))
+					.addPreferredGap(ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(cmbClassificacao, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(jtfNome, GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
 					.addGap(28)
 					.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(btnLimpar, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
-				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
+				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)

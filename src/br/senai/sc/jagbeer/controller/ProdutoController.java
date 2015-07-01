@@ -29,9 +29,10 @@ public class ProdutoController implements IController {
 		if (produto.getNome().trim().equals(""))
 			throw new Exception("Nome do produto obrigatório.");
 
-		if (dao.getPorNome(produto.getNome().trim()) != null)
+		if (dao.getPorNomeClassificacao(produto.getNome(),
+				produto.getClassificacao()).size() > 0)
 			throw new Exception(
-					"Produto já cadastro, nesse caso você deve editá-lo.");
+					"Já existe um produto com este nome e classificação, nesse caso você deve editá-lo.");
 
 		if (produto.getPrecoVenda() == null || produto.getPrecoVenda() == 0)
 			throw new Exception(
@@ -66,11 +67,6 @@ public class ProdutoController implements IController {
 
 		if (produto.getNome().trim().equals(""))
 			throw new Exception("Nome do produto obrigatório.");
-
-		if (dao.getPorNomeClassificacao(produto.getNome().trim(),
-				produto.getClassificacao().trim()).size() > 0)
-			throw new Exception(
-					"Produto já cadastro, nesse caso você deve editá-lo.");
 
 		if (produto.getPrecoVenda() == null || produto.getPrecoVenda() == 0)
 			throw new Exception(

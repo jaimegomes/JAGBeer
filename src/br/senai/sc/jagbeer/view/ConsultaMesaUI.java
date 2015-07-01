@@ -102,16 +102,32 @@ public class ConsultaMesaUI extends JInternalFrame {
 
 						try {
 
-							Mesa excluirMesa = new MesaTableModel(new MesaController()
-									.listar()).get(tableMesa.getSelectedRow());
+							int linhaSelecionada = tableMesa.getSelectedRow();
 
-							new MesaController().excluir(excluirMesa);
-							JOptionPane.showMessageDialog(null,
-									"Mesa excluída com Sucesso! ");
+							if (linhaSelecionada > -1) {
+
+								int opcao = JOptionPane.showConfirmDialog(null,
+										"Deseja excluir?");
+
+								if (opcao == 0) {
+									
+									int numeroMesa = (int) tableMesa.getValueAt(
+											linhaSelecionada, 0);
+									
+									Mesa excluirMesa = (Mesa) new MesaController().getPorNumeroMesa(numeroMesa);
+									
+									new MesaController().excluir(excluirMesa);
+									JOptionPane.showMessageDialog(null,
+											"Mesa excluída com Sucesso! ");
+								}
+							
+
+							
 
 							// Atualiza tabela
 							tableMesa.setModel(new MesaTableModel(new MesaController()
 									.listar()));
+							}
 
 						} catch (Exception ex) {
 							JOptionPane.showMessageDialog(null, ex.getMessage());
