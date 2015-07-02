@@ -1,7 +1,7 @@
 package br.senai.sc.jagbeer.abstracts;
 
 /**
- * Classe abstrata Entidade, toda classe model deve estender estÃ¡ classe.
+ * Classe abstrata Entidade, toda classe model deve estender está classe.
  * 
  * @author Jaime Gomes
  * 

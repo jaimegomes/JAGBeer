@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -290,40 +289,91 @@ public class ProdutoPedidoDAO extends GenericDAO {
 		return produtoPedido;
 	}
 
-	public List<Entidade> buscaProdMaisVend(Date dataInicio, Date dataFim)
-			throws Exception {
-		con = Conexao.getConnection();
-		List<Entidade> listProdMaisVend = new ArrayList<Entidade>();
+	/**
+	 * Método que seleciona todos os produtos pedidos em um determinado período.
+	 * 
+	 * @param dataInicio
+	 * @param dataFim
+	 * @return listProdMaisVend
+	 * @throws Exception
+	 */
+	public List<Integer> getIdProdutosPedidoPorPeriodo(Date dataInicio,
+			Date dataFim) throws Exception {
 
-		String sql = "SELECT prod.nomeProduto, SUM(pp.quantidade)FROM produtopedido pp "
+		con = Conexao.getConnection();
+
+		List<Integer> listProdutosPedidos = new ArrayList<Integer>();
+
+		String sql = "SELECT DISTINCT pp.idProduto FROM produtopedido pp "
 				+ "JOIN pedido ped ON pp.idPedido = ped.id JOIN produto prod ON pp.idProduto = prod.id "
-				+ "WHERE ped.dataPedido BETWEEN '"
-				+ dataInicio
-				+ "' AND '"
-				+ dataFim + "' GROUP BY prod.nomeProduto";
+				+ "WHERE ped.dataPedido BETWEEN ? AND ? ";
 		try {
 
-			Statement pstm = con.createStatement();
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setDate(1, new java.sql.Date(dataInicio.getTime()));
+			pstm.setDate(2, new java.sql.Date(dataFim.getTime()));
 
-			ResultSet result = pstm.executeQuery(sql);
+			ResultSet result = pstm.executeQuery();
 
 			while (result.next()) {
+				listProdutosPedidos.add(result.getInt("idProduto"));
 
-				ProdutoPedido produtoPedido = new ProdutoPedido(
-						result.getInt("id"), result.getInt("idProduto"),
-						result.getInt("idPedido"));
-				listProdMaisVend.add(produtoPedido);
 			}
+
 			pstm.close();
 
-		} catch (SQLException se) {
+		} catch (Exception se) {
 			System.out
 					.println("[PodutoPedidoDAO] - Erro ao buscar produto mais vendido.\n"
 							+ se.getMessage());
+			se.printStackTrace();
 		} finally {
 			con.close();
 		}
 
-		return listProdMaisVend;
+		return listProdutosPedidos;
 	}
+
+	/**
+	 * Método que retorna a soma do total de produtos pedidos de acordo com o id
+	 * do produto passado como parâmetro.
+	 * 
+	 * @param idProduto
+	 * @return qtde total de produtos
+	 * @throws Exception
+	 */
+	public int getQtdeProduto(int idProduto) throws Exception {
+
+		int qtde = 0;
+
+		con = Conexao.getConnection();
+
+		String sql = "SELECT SUM(pp.quantidade) AS quantidade FROM produtopedido pp WHERE pp.idProduto = ? ORDER BY quantidade";
+
+		try {
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, idProduto);
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+
+				qtde = result.getInt("quantidade");
+			}
+
+			pstm.close();
+
+		} catch (Exception se) {
+			System.out
+					.println("[PodutoPedidoDAO] - Erro ao buscar quantidade do produto.\n"
+							+ se.getMessage());
+			se.printStackTrace();
+		} finally {
+			con.close();
+		}
+
+		return qtde;
+	}
+
 }

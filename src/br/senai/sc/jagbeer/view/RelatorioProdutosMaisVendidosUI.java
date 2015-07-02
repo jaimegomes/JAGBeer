@@ -3,6 +3,7 @@ package br.senai.sc.jagbeer.view;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -16,12 +17,8 @@ import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 
-import br.senai.sc.jagbeer.abstracts.Entidade;
-import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
-import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.ProdutoPedido;
 import br.senai.sc.jagbeer.model.ProdutosMaisVendidosTableModel;
 
@@ -47,8 +44,7 @@ public class RelatorioProdutosMaisVendidosUI extends JInternalFrame {
 	private JLabel lblTotalDePedidos;
 	private JLabel lblQtdPedidos;
 
-	private List<Entidade> listProdutoPedido = new ArrayList<Entidade>();
-	private List<Entidade> listPedidos = new ArrayList<Entidade>();
+	private List<ProdutoPedido> listProdutoPedido = new ArrayList<ProdutoPedido>();
 
 	public RelatorioProdutosMaisVendidosUI(Date dataInicio, Date dataFinal)
 			throws Exception {
@@ -78,7 +74,7 @@ public class RelatorioProdutosMaisVendidosUI extends JInternalFrame {
 
 		lblTotalDePedidos = new JLabel("Total de Produtos Listados:");
 
-		lblQtdPedidos = new JLabel("" + listPedidos.size());
+		lblQtdPedidos = new JLabel();
 		lblQtdPedidos.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		groupLayout = new GroupLayout(getContentPane());
@@ -195,11 +191,34 @@ public class RelatorioProdutosMaisVendidosUI extends JInternalFrame {
 
 		table = new JTable();
 
-		listPedidos = new ProdutoPedidoController().buscaProdMaisVend(
-		dataInicio, dataFinal);
-		
-		table.setModel(new ProdutosMaisVendidosTableModel(listPedidos));
-		
+		// aqui eu tenho uma lista de ids de produtos consumidos no período
+		// passado como parâmetro
+		List<Integer> listIdProdutos = new ProdutoPedidoController()
+				.getIdProdutosPedidoPorPeriodo(dataInicio, dataFinal);
+
+		// faz a iteração nessa lista e cria objetos que vão popular a lista que
+		// vai ser passada para preencher o table model, nesse caso vai criar
+		// Objetos ProdutoPedido somente com id e quantidade que é o que vc
+		// precisa
+		for (Integer idProduto : listIdProdutos) {
+
+			ProdutoPedido pp = new ProdutoPedido();
+			pp.setIdProduto(idProduto);
+			pp.setQtde(new ProdutoPedidoController().getQtdeProduto(idProduto));
+
+			listProdutoPedido.add(pp);
+
+		}
+
+		lblQtdPedidos.setText("" + listProdutoPedido.size());
+
+		try {
+			Collections.sort(listProdutoPedido);
+			table.setModel(new ProdutosMaisVendidosTableModel(listProdutoPedido));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		scrollPane.setViewportView(table);
 
 		panel.setLayout(gl_panel);

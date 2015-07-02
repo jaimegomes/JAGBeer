@@ -50,93 +50,44 @@ public class ConsultaClienteUI extends JInternalFrame {
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Consulta Cliente",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		
-				JButton btnExcluir = new JButton("Excluir");
-				btnExcluir.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
 
-						int opcao = JOptionPane.showConfirmDialog(null,
-								"Deseja excluir cliente?");
-						if (opcao == 0) {
-							try {
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
-								int linhaSelecionada = tableConsultaCliente
-										.getSelectedRow();
+				int opcao = JOptionPane.showConfirmDialog(null,
+						"Deseja excluir cliente?");
+				if (opcao == 0) {
+					try {
 
-								String nome = tableConsultaCliente.getValueAt(
-										linhaSelecionada, 0).toString();
+						int linhaSelecionada = tableConsultaCliente
+								.getSelectedRow();
 
-								String telefone = tableConsultaCliente.getValueAt(
-										linhaSelecionada, 1).toString();
+						String nome = tableConsultaCliente.getValueAt(
+								linhaSelecionada, 0).toString();
 
-								String email = tableConsultaCliente.getValueAt(
-										linhaSelecionada, 2).toString();
+						String telefone = tableConsultaCliente.getValueAt(
+								linhaSelecionada, 1).toString();
 
-								Cliente clienteExcluir = (Cliente) new ClienteController()
-										.buscaCompleta(nome, telefone, email);
+						String email = tableConsultaCliente.getValueAt(
+								linhaSelecionada, 2).toString();
 
-								Pedido pedido = (Pedido) new PedidoController()
-										.getPorIdCliente(clienteExcluir.getId());
+						Cliente clienteExcluir = (Cliente) new ClienteController()
+								.buscaCompleta(nome, telefone, email);
 
-								if (pedido.getStatus() == 0) {
-									
-									new ClienteController().excluir(clienteExcluir);
+						Pedido pedido = (Pedido) new PedidoController()
+								.getPorIdCliente(clienteExcluir.getId());
 
-									JOptionPane.showMessageDialog(null,
-											"Cliente excluído com Sucesso! ");
+						if (pedido.getStatus() == 0) {
 
-									tableConsultaCliente
-											.setModel(new ClienteTableModel(
-													new ClienteController().listar()));
+							new ClienteController().excluir(clienteExcluir);
 
-									PrincipalUI
-											.getInstancia()
-											.getTablePedidoAberto()
-											.setModel(
-													new PrincipalTableModel(
-															new PedidoController()
-																	.getListPedidosEmAberto()));
-								} else {
-									JOptionPane
-											.showMessageDialog(null,
-													"Não é possível excluir clientes com pedido em aberto.");
-								}
-							} catch (Exception e2) {
-								JOptionPane.showMessageDialog(null, e2.getMessage());
-							}
-						}
-					}
-				});
-		
-				JButton btnEditar = new JButton("Editar / Inserir");
-				btnEditar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+							JOptionPane.showMessageDialog(null,
+									"Cliente excluído com Sucesso! ");
 
-						CadastroClienteUI cadClienteUI;
-						try {
-							int linhaSelecionada = tableConsultaCliente
-									.getSelectedRow();
-
-							if (linhaSelecionada > -1) {
-
-								String nome = tableConsultaCliente.getValueAt(
-										linhaSelecionada, 0).toString();
-
-								Cliente clienteEditar = (Cliente) new ClienteController()
-										.getNomeSelecionado(nome);
-
-								cadClienteUI = new CadastroClienteUI(clienteEditar,
-										tableConsultaCliente);
-
-							} else {
-								cadClienteUI = new CadastroClienteUI(null,
-										tableConsultaCliente);
-
-							}
-
-							PrincipalUI.getInstancia().getContentPane()
-									.add(cadClienteUI, 0);
-							cadClienteUI.setVisible(true);
+							tableConsultaCliente
+									.setModel(new ClienteTableModel(
+											new ClienteController().listar()));
 
 							PrincipalUI
 									.getInstancia()
@@ -145,40 +96,90 @@ public class ConsultaClienteUI extends JInternalFrame {
 											new PrincipalTableModel(
 													new PedidoController()
 															.getListPedidosEmAberto()));
-
-						} catch (Exception e1) {
-							JOptionPane.showMessageDialog(null,
-									"[ConsultaClienteUI] - Erro ao editar cliente."
-											+ e1.getMessage());
+						} else {
+							JOptionPane
+									.showMessageDialog(null,
+											"Não é possível excluir clientes com pedido em aberto.");
 						}
-
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, e2.getMessage());
 					}
-				});
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(330, Short.MAX_VALUE)
-					.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
-					.addGap(18))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 616, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 322, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnExcluir)
-						.addComponent(btnEditar))
-					.addGap(17))
-		);
+				}
+			}
+		});
+
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				CadastroClienteUI cadClienteUI;
+				try {
+					int linhaSelecionada = tableConsultaCliente
+							.getSelectedRow();
+
+					if (linhaSelecionada > -1) {
+
+						String nome = tableConsultaCliente.getValueAt(
+								linhaSelecionada, 0).toString();
+
+						Cliente clienteEditar = (Cliente) new ClienteController()
+								.getNomeSelecionado(nome);
+
+						cadClienteUI = new CadastroClienteUI(clienteEditar,
+								tableConsultaCliente);
+
+						PrincipalUI.getInstancia().getContentPane()
+								.add(cadClienteUI, 0);
+						cadClienteUI.setVisible(true);
+
+						PrincipalUI
+								.getInstancia()
+								.getTablePedidoAberto()
+								.setModel(
+										new PrincipalTableModel(
+												new PedidoController()
+														.getListPedidosEmAberto()));
+
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Você deve selecionar um cliente da lista.");
+					}
+
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null,
+							"[ConsultaClienteUI] - Erro ao editar cliente."
+									+ e1.getMessage());
+				}
+
+			}
+		});
+
+		JButton btnInserir = new JButton("Inserir");
+		btnInserir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				try {
+					CadastroClienteUI cadClienteUI = new CadastroClienteUI(
+							null, tableConsultaCliente);
+
+					PrincipalUI.getInstancia().getContentPane()
+							.add(cadClienteUI, 0);
+
+					cadClienteUI.setVisible(true);
+
+					PrincipalUI
+							.getInstancia()
+							.getTablePedidoAberto()
+							.setModel(
+									new PrincipalTableModel(
+											new PedidoController()
+													.getListPedidosEmAberto()));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+		});
 
 		JLabel lblNome = new JLabel("Nome:");
 
@@ -212,31 +213,94 @@ public class ConsultaClienteUI extends JInternalFrame {
 			}
 		});
 
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(groupLayout
+				.createParallelGroup(Alignment.TRAILING)
+				.addGroup(
+						groupLayout
+								.createSequentialGroup()
+								.addContainerGap(182, Short.MAX_VALUE)
+								.addComponent(btnInserir,
+										GroupLayout.PREFERRED_SIZE, 134,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addComponent(btnEditar,
+										GroupLayout.PREFERRED_SIZE, 135,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addComponent(btnExcluir,
+										GroupLayout.PREFERRED_SIZE, 135,
+										GroupLayout.PREFERRED_SIZE).addGap(18))
+				.addGroup(
+						groupLayout
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(panel,
+										GroupLayout.PREFERRED_SIZE, 616,
+										GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING)
+				.addGroup(
+						groupLayout
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(panel,
+										GroupLayout.PREFERRED_SIZE, 322,
+										GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addGroup(
+										groupLayout
+												.createParallelGroup(
+														Alignment.BASELINE)
+												.addComponent(btnExcluir)
+												.addComponent(btnEditar)
+												.addComponent(btnInserir))
+								.addGap(17)));
+
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(lblNome)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(jtfNomeCliente, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
-					.addGap(28)
-					.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(btnLimpar, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
-				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNome)
-						.addComponent(jtfNomeCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnLimpar)
-						.addComponent(btnPesquisar))
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE))
-		);
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addComponent(lblNome)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(jtfNomeCliente,
+										GroupLayout.DEFAULT_SIZE, 253,
+										Short.MAX_VALUE)
+								.addGap(28)
+								.addComponent(btnPesquisar,
+										GroupLayout.PREFERRED_SIZE, 135,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addComponent(btnLimpar,
+										GroupLayout.PREFERRED_SIZE, 135,
+										GroupLayout.PREFERRED_SIZE))
+				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 604,
+						Short.MAX_VALUE));
+		gl_panel.setVerticalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(lblNome)
+												.addComponent(
+														jtfNomeCliente,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(btnLimpar)
+												.addComponent(btnPesquisar))
+								.addPreferredGap(ComponentPlacement.RELATED,
+										GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.addComponent(scrollPane,
+										GroupLayout.PREFERRED_SIZE, 259,
+										GroupLayout.PREFERRED_SIZE)));
 
 		tableConsultaCliente = new JTable();
 		try {

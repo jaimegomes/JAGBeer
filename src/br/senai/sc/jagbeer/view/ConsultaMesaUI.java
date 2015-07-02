@@ -58,115 +58,158 @@ public class ConsultaMesaUI extends JInternalFrame {
 				.getBorder("TitledBorder.border"), "Consulta de Mesa",
 				TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
-		
-				JButton btnEditar = new JButton("Editar / Inserir");
-				btnEditar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
 
-						CadastroMesaUI cadMesaUI;
-						try {
-							int linhaSelecionada = tableMesa.getSelectedRow();
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
-							if (linhaSelecionada > -1) {
+				CadastroMesaUI cadMesaUI;
+				try {
+					int linhaSelecionada = tableMesa.getSelectedRow();
 
-								int numeroMesa = Integer.parseInt(tableMesa.getValueAt(
-										linhaSelecionada, 0).toString());
+					if (linhaSelecionada > -1) {
 
-								Mesa editarMesa = (Mesa) new MesaController()
-										.getPorNumeroMesa(numeroMesa);
+						int numeroMesa = Integer.parseInt(tableMesa.getValueAt(
+								linhaSelecionada, 0).toString());
 
-								cadMesaUI = new CadastroMesaUI(editarMesa, tableMesa);
+						Mesa editarMesa = (Mesa) new MesaController()
+								.getPorNumeroMesa(numeroMesa);
 
-								PrincipalUI.getInstancia().getContentPane()
-										.add(cadMesaUI, 0);
+						cadMesaUI = new CadastroMesaUI(editarMesa, tableMesa);
 
-								cadMesaUI.setVisible(true);
-							} else {
-								cadMesaUI = new CadastroMesaUI(null, tableMesa);
-							}
+						PrincipalUI.getInstancia().getContentPane()
+								.add(cadMesaUI, 0);
 
-							PrincipalUI.getInstancia().getContentPane()
-									.add(cadMesaUI, 0);
-							cadMesaUI.setVisible(true);
+						cadMesaUI.setVisible(true);
 
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Você deve selecionar uma mesa da lista.");
 
 					}
-				});
-		
-				JButton btnExcluir = new JButton("Excluir");
-				btnExcluir.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
 
-						try {
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 
-							int linhaSelecionada = tableMesa.getSelectedRow();
+			}
+		});
 
-							if (linhaSelecionada > -1) {
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
-								int opcao = JOptionPane.showConfirmDialog(null,
-										"Deseja excluir?");
+				try {
 
-								if (opcao == 0) {
-									
-									int numeroMesa = (int) tableMesa.getValueAt(
-											linhaSelecionada, 0);
-									
-									Mesa excluirMesa = (Mesa) new MesaController().getPorNumeroMesa(numeroMesa);
-									
-									new MesaController().excluir(excluirMesa);
-									JOptionPane.showMessageDialog(null,
-											"Mesa excluída com Sucesso! ");
-								}
-							
+					int linhaSelecionada = tableMesa.getSelectedRow();
 
-							
+					if (linhaSelecionada > -1) {
 
-							// Atualiza tabela
-							tableMesa.setModel(new MesaTableModel(new MesaController()
-									.listar()));
-							}
+						int opcao = JOptionPane.showConfirmDialog(null,
+								"Deseja excluir?");
 
-						} catch (Exception ex) {
-							JOptionPane.showMessageDialog(null, ex.getMessage());
+						if (opcao == 0) {
+
+							int numeroMesa = (int) tableMesa.getValueAt(
+									linhaSelecionada, 0);
+
+							Mesa excluirMesa = (Mesa) new MesaController()
+									.getPorNumeroMesa(numeroMesa);
+
+							new MesaController().excluir(excluirMesa);
+							JOptionPane.showMessageDialog(null,
+									"Mesa excluída com Sucesso! ");
 						}
 
+						// Atualiza tabela
+						tableMesa.setModel(new MesaTableModel(
+								new MesaController().listar()));
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Você deve selecionar uma mesa da lista.");
 					}
-				});
+
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage());
+				}
+
+			}
+		});
+
+		JButton btnInserir = new JButton("Inserir");
+		btnInserir.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					CadastroMesaUI cadMesaUI = new CadastroMesaUI(null,
+							tableMesa);
+
+					PrincipalUI.getInstancia().getContentPane()
+							.add(cadMesaUI, 0);
+					cadMesaUI.setVisible(true);
+					tableMesa.setModel(new MesaTableModel(new MesaController()
+							.listar()));
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
-							.addGap(20))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(panel, GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
-							.addContainerGap())))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 325, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnEditar)
-						.addComponent(btnExcluir)))
-		);
+		groupLayout.setHorizontalGroup(groupLayout
+				.createParallelGroup(Alignment.TRAILING)
+				.addGroup(
+						groupLayout
+								.createSequentialGroup()
+								.addContainerGap(182, Short.MAX_VALUE)
+								.addComponent(btnInserir,
+										GroupLayout.PREFERRED_SIZE, 134,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addComponent(btnEditar,
+										GroupLayout.PREFERRED_SIZE, 135,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addComponent(btnExcluir,
+										GroupLayout.PREFERRED_SIZE, 135,
+										GroupLayout.PREFERRED_SIZE).addGap(18))
+				.addGroup(
+						groupLayout
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(panel,
+										GroupLayout.PREFERRED_SIZE, 616,
+										GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING)
+				.addGroup(
+						groupLayout
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(panel,
+										GroupLayout.PREFERRED_SIZE, 322,
+										GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addGroup(
+										groupLayout
+												.createParallelGroup(
+														Alignment.BASELINE)
+												.addComponent(btnExcluir)
+												.addComponent(btnEditar)
+												.addComponent(btnInserir))
+								.addGap(17)));
 
 		JLabel lblNome = new JLabel("Número Mesa:");
 
 		numeroMesa = new JTextField();
 		numeroMesa.setColumns(10);
-		
-		//Apenas numeros na consulta
+
+		// Apenas numeros na consulta
 		numeroMesa.addKeyListener(new KeyAdapter() {
 
 			@Override
@@ -228,30 +271,48 @@ public class ConsultaMesaUI extends JInternalFrame {
 		});
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(lblNome)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-					.addComponent(btnPesquisar, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(btnLimpar, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
-				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNome)
-						.addComponent(numeroMesa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnLimpar)
-						.addComponent(btnPesquisar))
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 262, GroupLayout.PREFERRED_SIZE))
-		);
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addComponent(lblNome)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(numeroMesa,
+										GroupLayout.PREFERRED_SIZE, 206,
+										GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED,
+										35, Short.MAX_VALUE)
+								.addComponent(btnPesquisar,
+										GroupLayout.PREFERRED_SIZE, 135,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addComponent(btnLimpar,
+										GroupLayout.PREFERRED_SIZE, 135,
+										GroupLayout.PREFERRED_SIZE))
+				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 602,
+						Short.MAX_VALUE));
+		gl_panel.setVerticalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(lblNome)
+												.addComponent(
+														numeroMesa,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(btnLimpar)
+												.addComponent(btnPesquisar))
+								.addPreferredGap(ComponentPlacement.RELATED,
+										GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.addComponent(scrollPane,
+										GroupLayout.PREFERRED_SIZE, 262,
+										GroupLayout.PREFERRED_SIZE)));
 
 		tableMesa = new JTable();
 		tableMesa.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

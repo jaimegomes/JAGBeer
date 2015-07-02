@@ -46,20 +46,67 @@ public class ProdutoPedidoController implements IController {
 		return dao.getPorId(id);
 	}
 
+	/**
+	 * Método que retorna uma lista de ProdutoPedido de acordo com o id do
+	 * pedido passado como parâmetro.
+	 * 
+	 * @param idPedido
+	 * @return List<Entidade> listProdutosPedido
+	 * @throws Exception
+	 */
 	public List<Entidade> getPorIdPedido(int idPedido) throws Exception {
 		return dao.getPorIdPedido(idPedido);
 	}
 
+	/**
+	 * Método que retorna uma lista de ProdutoPedido de acordo com o id do
+	 * produto passado como parâmetro.
+	 * 
+	 * @param idPedido
+	 * @return List<Entidade> listProdutosPedido
+	 * @throws Exception
+	 */
 	public List<Entidade> getPorIdProduto(int idProduto) throws Exception {
 		return dao.getPorIdProduto(idProduto);
 	}
 
+	/**
+	 * Retorna um produtopedido referente ao id, qtde e idPedido passados como
+	 * parâmetro
+	 * 
+	 * @param idProduto
+	 * @param qtde
+	 * @param idPedido
+	 * @return produto
+	 * @throws Exception
+	 */
 	public Entidade buscaCompleta(int idProduto, int qtde, int idPedido)
 			throws Exception {
 		return dao.buscaCompleta(idProduto, qtde, idPedido);
 	}
 
-	public List<Entidade> buscaProdMaisVend(Date dataInicio, Date dataFim) throws Exception {
-		return dao.buscaProdMaisVend(dataInicio, dataFim);
+	/**
+	 * Método que seleciona todos os produtos pedidos em um determinado período.
+	 * 
+	 * @param dataInicio
+	 * @param dataFim
+	 * @return listProdMaisVend
+	 * @throws Exception
+	 */
+	public List<Integer> getIdProdutosPedidoPorPeriodo(Date dataInicio,
+			Date dataFim) throws Exception {
+		return dao.getIdProdutosPedidoPorPeriodo(dataInicio, dataFim);
+	}
+
+	/**
+	 * Método que retorna a soma do total de produtos pedidos de acordo com o id
+	 * do produto passado como parâmetro.
+	 * 
+	 * @param idProduto
+	 * @return qtde total de produtos
+	 * @throws Exception
+	 */
+	public int getQtdeProduto(int idProduto) throws Exception {
+		return dao.getQtdeProduto(idProduto);
 	}
 }

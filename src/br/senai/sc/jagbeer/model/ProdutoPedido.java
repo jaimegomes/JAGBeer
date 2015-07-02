@@ -8,7 +8,8 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
  * @author Jaime Gomes
  * 
  */
-public class ProdutoPedido extends Entidade {
+public class ProdutoPedido extends Entidade implements
+		Comparable<ProdutoPedido> {
 
 	private int id;
 	private Integer idProduto;
@@ -42,6 +43,17 @@ public class ProdutoPedido extends Entidade {
 		this.idProduto = idProduto;
 		this.idPedido = idPedido;
 		this.qtde = qtde;
+	}
+
+	/**
+	 * Construtor que recebe como parâmetro o id do produto, id do pedido
+	 * 
+	 * @param idProduto
+	 * @param idPedido
+	 */
+	public ProdutoPedido(Integer idProduto, Integer idPedido) {
+		this.idProduto = idProduto;
+		this.idPedido = idPedido;
 	}
 
 	/**
@@ -115,6 +127,18 @@ public class ProdutoPedido extends Entidade {
 	 */
 	public void setQtde(Integer qtde) {
 		this.qtde = qtde;
+	}
+
+	@Override
+	public int compareTo(ProdutoPedido pp) {
+
+		if (this.qtde < pp.getQtde())
+			return 1;
+
+		if (this.qtde > pp.getQtde())
+			return -1;
+
+		return 0;
 	}
 
 }

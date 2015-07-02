@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.ProdutoController;
 
 /**
@@ -20,10 +19,10 @@ public class ProdutosMaisVendidosTableModel extends AbstractTableModel {
 	private static final int COL_PRODUTO = 0;
 	private static final int COL_QUANTIDADE = 1;
 
-	private List<Entidade> valores;
+	private List<ProdutoPedido> valores;
 
-	public ProdutosMaisVendidosTableModel(List<Entidade> list) {
-		this.valores = new ArrayList<Entidade>(list);
+	public ProdutosMaisVendidosTableModel(List<ProdutoPedido> list) {
+		this.valores = new ArrayList<ProdutoPedido>(list);
 	}
 
 	/**
@@ -38,10 +37,10 @@ public class ProdutosMaisVendidosTableModel extends AbstractTableModel {
 	/**
 	 * Retorna a quantidade de Colunas, deve ser setado manualmente
 	 * 
-	 * @return 4
+	 * @return 2
 	 */
 	public int getColumnCount() {
-		return 4;
+		return 2;
 	}
 
 	public String getColumnName(int column) {
@@ -67,15 +66,17 @@ public class ProdutosMaisVendidosTableModel extends AbstractTableModel {
 			try {
 				Produto p = (Produto) new ProdutoController()
 						.getPorId(idProduto);
+
 				return p.getNome();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			if (columnIndex == COL_QUANTIDADE) {
-				return produtoPedido.getQtde();
-			}
 		}
-		return null;
+
+		if (columnIndex == COL_QUANTIDADE) {
+			return produtoPedido.getQtde();
+		}
+		return "";
 	}
 
 	/**
@@ -87,14 +88,7 @@ public class ProdutosMaisVendidosTableModel extends AbstractTableModel {
 	 * @param columnIndex
 	 */
 	public void setValuesAt(Object aValue, int rowIndex, int columnIndex) {
-		ProdutoPedido produtoPedido = (ProdutoPedido) valores.get(rowIndex);
-		Produto produto = (Produto) valores.get(rowIndex);
-
-		if (columnIndex == COL_PRODUTO) {
-			produto.setNome(aValue.toString());
-		} else if (columnIndex == COL_QUANTIDADE) {
-			produtoPedido.setQtde(Integer.parseInt(aValue.toString()));
-		}
+		// não utilizado
 	}
 
 }
