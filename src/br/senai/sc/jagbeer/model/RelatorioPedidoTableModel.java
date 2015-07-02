@@ -14,7 +14,7 @@ import br.senai.sc.jagbeer.abstracts.Entidade;
  * @author Jaime Gomes
  *
  */
-public class RelatorioFaturamentoTableModel extends AbstractTableModel {
+public class RelatorioPedidoTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
 	private static final int COL_PEDIDO = 0;
@@ -25,7 +25,7 @@ public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	private List<Entidade> valores;
 
-	public RelatorioFaturamentoTableModel(List<Entidade> list) {
+	public RelatorioPedidoTableModel(List<Entidade> list) {
 		this.valores = new ArrayList<Entidade>(list);
 	}
 
@@ -42,7 +42,7 @@ public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 	/**
 	 * Retorna a quantidade de colunas, deve ser setado manualmente.
 	 * 
-	 * @return 3
+	 * @return 4
 	 */
 	@Override
 	public int getColumnCount() {
@@ -83,15 +83,14 @@ public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 				return pedido.getValor();
 			else if (column == COL_DATA)
 				return sdf.format(pedido.getDataPedido());
-			else if (column == COL_STATUS){
-				if(pedido.getStatus() == 1)						
+			else if (column == COL_STATUS) {
+				if (pedido.getStatus() == 1) {
 					return "Aberto";
-				else 
+				} else {
 					return "Fechado";
+				}
 			}
-				
-				
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -190,12 +190,12 @@ public class PrincipalUI extends JFrame {
 		JMenu mnRelatorio = new JMenu("Relatório");
 		menuBar.add(mnRelatorio);
 
-		JMenuItem mntmFaturamento = new JMenuItem("Faturamento");
+		JMenuItem mntmFaturamento = new JMenuItem("Pedidos");
 		mntmFaturamento.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FiltroRelatorioUI configRelFat = new FiltroRelatorioUI("fat");
+				FiltroRelatorioUI configRelFat = new FiltroRelatorioUI("ped");
 				configRelFat.requestFocus(true);
 				configRelFat.setFocusable(true);
 				configRelFat.moveToFront();

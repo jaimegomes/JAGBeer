@@ -19,7 +19,7 @@ import javax.swing.border.TitledBorder;
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.model.Pedido;
-import br.senai.sc.jagbeer.model.RelatorioFaturamentoTableModel;
+import br.senai.sc.jagbeer.model.RelatorioPedidoTableModel;
 import javax.swing.SwingConstants;
 
 /**
@@ -28,7 +28,7 @@ import javax.swing.SwingConstants;
  * @author Jaime Gomes
  *
  */
-public class RelatorioFaturamentoUI extends JInternalFrame {
+public class RelatorioPedidosUI extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JLabel lblRelatrioDeFaturamento;
@@ -47,15 +47,15 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 	private JLabel lblTotalDePedidos;
 	private JLabel lblQtdPedidos;
 
-	public RelatorioFaturamentoUI(Date dataInicio, Date dataFinal, int status) {
+	public RelatorioPedidosUI(Date dataInicio, Date dataFinal, int status) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		List<Entidade> listPedidos = new ArrayList<Entidade>();
 
 		try {
-			listPedidos = new PedidoController().getPorData(dataInicio,
-					dataFinal);
+			listPedidos = new PedidoController().getPorDataStatus(dataInicio,
+					dataFinal, status);
 
 			for (Entidade e : listPedidos) {
 				Pedido pedido = (Pedido) e;
@@ -75,7 +75,7 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 
-		lblRelatrioDeFaturamento = new JLabel("Relatório de Faturamento");
+		lblRelatrioDeFaturamento = new JLabel("Relat\u00F3rio de Pedidos");
 		lblRelatrioDeFaturamento.setFont(new Font("Dialog", Font.BOLD, 24));
 
 		lblPeriodo = new JLabel("Período de");
@@ -98,7 +98,7 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 
 		groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -113,18 +113,17 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 							.addComponent(lblQtdPedidos, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(144)
-							.addComponent(lblPeriodo)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblDataInicio)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblAte)
-							.addGap(18)
-							.addComponent(lblDataFim, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblRelatrioDeFaturamento, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(lblPeriodo)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblDataInicio)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblAte)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblDataFim, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)))))
 					.addContainerGap())
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(138, Short.MAX_VALUE)
-					.addComponent(lblRelatrioDeFaturamento, GroupLayout.PREFERRED_SIZE, 367, GroupLayout.PREFERRED_SIZE)
-					.addGap(135))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -132,10 +131,10 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 					.addComponent(lblRelatrioDeFaturamento, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblDataFim)
-						.addComponent(lblAte)
 						.addComponent(lblDataInicio)
-						.addComponent(lblPeriodo))
+						.addComponent(lblPeriodo)
+						.addComponent(lblAte)
+						.addComponent(lblDataFim))
 					.addGap(18)
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 442, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -161,7 +160,7 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 						.addContainerGap(35, Short.MAX_VALUE)));
 
 		table = new JTable();
-		table.setModel(new RelatorioFaturamentoTableModel(listPedidos));
+		table.setModel(new RelatorioPedidoTableModel(listPedidos));
 		scrollPane.setViewportView(table);
 
 		panel.setLayout(gl_panel);

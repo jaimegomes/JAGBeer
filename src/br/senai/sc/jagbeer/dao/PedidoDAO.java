@@ -241,14 +241,16 @@ public class PedidoDAO extends GenericDAO {
 	public List<Entidade> getListPedidosEmAberto() throws Exception {
 
 		List<Entidade> listPedidosEmAberto = new ArrayList<Entidade>();
-		
-		//Temos que trazer os pedidos em aberto sem a data pois se virar a meia noite vai dar problema!
-		//String sql = "SELECT * FROM pedido WHERE status = 1 AND dataPedido = ?";
+
+		// Temos que trazer os pedidos em aberto sem a data pois se virar a meia
+		// noite vai dar problema!
+		// String sql =
+		// "SELECT * FROM pedido WHERE status = 1 AND dataPedido = ?";
 		String sql = "SELECT * FROM pedido WHERE status = 1";
 		try {
 
 			PreparedStatement pstm = con.prepareStatement(sql);
-			//pstm.setDate(1, new java.sql.Date(new Date().getTime()));
+			// pstm.setDate(1, new java.sql.Date(new Date().getTime()));
 
 			ResultSet result = pstm.executeQuery();
 
@@ -319,6 +321,51 @@ public class PedidoDAO extends GenericDAO {
 			while (result.next()) {
 				Pedido pedido = new Pedido(result.getInt("id"),
 						result.getDate("dataPedido"), result.getDouble("valor"));
+
+				listPedidos.add(pedido);
+
+			}
+
+			pstm.close();
+
+		} catch (Exception e) {
+			con.rollback();
+			e.printStackTrace();
+
+		} finally {
+			con.close();
+		}
+
+		return listPedidos;
+
+	}
+
+	/**
+	 * Retorna uma lista de pedidos realizados entre as datas passadas como
+	 * parâmetro.
+	 * 
+	 * @param dataInicio
+	 * @param dataFim
+	 * @return pedido
+	 * @throws Exception
+	 */
+	public List<Entidade> getPorDataStatus(Date dataInicio, Date dataFim,
+			int status) throws Exception {
+
+		List<Entidade> listPedidos = new ArrayList<Entidade>();
+		String sql = "SELECT * FROM pedido WHERE status = ? AND dataPedido BETWEEN ? AND ? ORDER BY id";
+		try {
+
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, status);
+			pstm.setDate(2, new java.sql.Date(dataInicio.getTime()));
+			pstm.setDate(3, new java.sql.Date(dataFim.getTime()));
+
+			ResultSet result = pstm.executeQuery();
+
+			while (result.next()) {
+				Pedido pedido = new Pedido(result.getInt("id"),
+						result.getDate("dataPedido"), result.getDouble("valor"), result.getInt("status"));
 
 				listPedidos.add(pedido);
 

@@ -34,6 +34,23 @@ public class Pedido extends Entidade {
 	 *            dataPedido
 	 * @param Double
 	 *            valor
+	 * @param int status
+	 */
+	public Pedido(int id, Date dataPedido, Double valor, int status) {
+		this.id = id;
+		this.dataPedido = dataPedido;
+		this.valor = valor;
+		this.status = status;
+	}
+
+	/**
+	 * Construtor que recebe como parâmetro o id, a data e o valor
+	 * 
+	 * @param int id
+	 * @param Date
+	 *            dataPedido
+	 * @param Double
+	 *            valor
 	 */
 	public Pedido(int id, Date dataPedido, Double valor) {
 		this.id = id;

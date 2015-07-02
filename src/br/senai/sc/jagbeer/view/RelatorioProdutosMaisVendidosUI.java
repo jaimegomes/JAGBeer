@@ -78,103 +78,50 @@ public class RelatorioProdutosMaisVendidosUI extends JInternalFrame {
 		lblQtdPedidos.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		groupLayout = new GroupLayout(getContentPane());
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addGap(18)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																panel,
-																GroupLayout.DEFAULT_SIZE,
-																606,
-																Short.MAX_VALUE)
-														.addGroup(
-																Alignment.TRAILING,
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				lblTotalDePedidos)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				lblQtdPedidos,
-																				GroupLayout.PREFERRED_SIZE,
-																				41,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addGap(144)
-																		.addComponent(
-																				lblPeriodo)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				lblDataInicio)
-																		.addPreferredGap(
-																				ComponentPlacement.UNRELATED)
-																		.addComponent(
-																				lblAte)
-																		.addGap(18)
-																		.addComponent(
-																				lblDataFim,
-																				GroupLayout.PREFERRED_SIZE,
-																				81,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap())
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap(89, Short.MAX_VALUE)
-										.addComponent(lblRelatrioDeFaturamento,
-												GroupLayout.PREFERRED_SIZE,
-												410, GroupLayout.PREFERRED_SIZE)
-										.addGap(135)));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addComponent(lblRelatrioDeFaturamento,
-												GroupLayout.PREFERRED_SIZE, 45,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												ComponentPlacement.RELATED,
-												GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																lblDataFim)
-														.addComponent(lblAte)
-														.addComponent(
-																lblDataInicio)
-														.addComponent(
-																lblPeriodo))
-										.addGap(18)
-										.addComponent(panel,
-												GroupLayout.PREFERRED_SIZE,
-												442, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																lblQtdPedidos)
-														.addComponent(
-																lblTotalDePedidos))
-										.addGap(36)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblTotalDePedidos)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblQtdPedidos, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(95, Short.MAX_VALUE)
+					.addComponent(lblRelatrioDeFaturamento, GroupLayout.PREFERRED_SIZE, 483, GroupLayout.PREFERRED_SIZE)
+					.addGap(62))
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGap(172)
+					.addComponent(lblPeriodo)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblDataInicio)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(lblAte)
+					.addGap(18)
+					.addComponent(lblDataFim, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(172, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(lblRelatrioDeFaturamento, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblDataFim)
+						.addComponent(lblAte)
+						.addComponent(lblDataInicio)
+						.addComponent(lblPeriodo))
+					.addGap(18)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 442, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblQtdPedidos)
+						.addComponent(lblTotalDePedidos))
+					.addGap(36))
+		);
 
 		scrollPane = new JScrollPane();
 
