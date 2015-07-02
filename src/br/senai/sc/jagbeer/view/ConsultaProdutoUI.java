@@ -262,7 +262,7 @@ public class ConsultaProdutoUI extends JInternalFrame {
 				"Bebidas", "Drinks", "Lanches", "Porções" }));
 		cmbClassificacao.setMaximumRowCount(5);
 
-		btnEditar = new JButton("Editar / Inserir");
+		btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
