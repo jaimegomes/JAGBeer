@@ -35,6 +35,7 @@ import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.model.Cliente;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.PrincipalTableModel;
+import javax.swing.JRadioButton;
 
 /**
  * Classe que contém a tela principal do sistema
@@ -205,7 +206,7 @@ public class PrincipalUI extends JFrame {
 		mnRelatorio.add(mntmFaturamento);
 		
 		JMenuItem mntmProdutosMaisVendido = new JMenuItem("Produtos Mais Vendidos");
-		mntmFaturamento.addActionListener(new ActionListener() {
+		mntmProdutosMaisVendido.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -247,7 +248,7 @@ public class PrincipalUI extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblJagbeer)
 						.addComponent(lblNewLabel))
-					.addContainerGap(621, Short.MAX_VALUE))
+					.addContainerGap(458, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -261,7 +262,7 @@ public class PrincipalUI extends JFrame {
 							.addComponent(lblJagbeer)
 							.addGap(38)
 							.addComponent(lblNewLabel)))
-					.addContainerGap(69, Short.MAX_VALUE))
+					.addContainerGap(22, Short.MAX_VALUE))
 		);
 
 		JScrollPane scrollPane = new JScrollPane();
