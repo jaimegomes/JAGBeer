@@ -20,6 +20,7 @@ public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 	private static final int COL_PEDIDO = 0;
 	private static final int COL_DATA = 1;
 	private static final int COL_VALOR = 2;
+	private static final int COL_STATUS = 3;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	private List<Entidade> valores;
@@ -45,7 +46,7 @@ public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 	 */
 	@Override
 	public int getColumnCount() {
-		return 3;
+		return 4;
 	}
 
 	/**
@@ -60,6 +61,8 @@ public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 			return "Data";
 		if (column == COL_VALOR)
 			return "Valor";
+		if (column == COL_STATUS)
+			return "Status";
 		return "";
 	}
 
@@ -80,7 +83,15 @@ public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 				return pedido.getValor();
 			else if (column == COL_DATA)
 				return sdf.format(pedido.getDataPedido());
-
+			else if (column == COL_STATUS){
+				if(pedido.getStatus() == 1)						
+					return "Aberto";
+				else 
+					return "Fechado";
+			}
+				
+				
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -107,6 +118,8 @@ public class RelatorioFaturamentoTableModel extends AbstractTableModel {
 				pedido.setValor(Double.parseDouble(aValue.toString()));
 			else if (columnIndex == COL_DATA)
 				pedido.setDataPedido(sdf.parse(aValue.toString()));
+			else if (columnIndex == COL_STATUS)
+				pedido.setStatus(Integer.parseInt(aValue.toString()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -16,6 +16,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
@@ -31,6 +32,8 @@ public class FiltroRelatorioUI extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JFormattedTextField jtfDataInicio;
 	private JFormattedTextField jtfDataFim;
+	private JRadioButton rbtnAberto;
+	private JRadioButton rbtnEncerrado;
 
 	/**
 	 * Create the frame.
@@ -38,29 +41,10 @@ public class FiltroRelatorioUI extends JInternalFrame {
 	public FiltroRelatorioUI(final String flag) {
 		setClosable(true);
 		setTitle("Configurar Relatório");
-		setBounds(550, 180, 446, 155);
+		setBounds(550, 180, 389, 198);
 
 		final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		sdf.setLenient(false);
-
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Filtro de Relatório",
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 412, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(59, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
 
 		JLabel lblDataInicio = new JLabel("Período de");
 
@@ -102,6 +86,30 @@ public class FiltroRelatorioUI extends JInternalFrame {
 			}
 		});
 
+		if (flag.equals("fat")) {
+			rbtnAberto = new JRadioButton("Aberto");
+			rbtnAberto.setSelected(true);
+
+			rbtnEncerrado = new JRadioButton("Encerrado");
+
+			rbtnAberto.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					rbtnEncerrado.setSelected(false);
+				}
+			});
+
+			rbtnEncerrado.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					rbtnAberto.setSelected(false);	
+				}
+			});
+
+		}
+
 		JButton btnGerarRelatorio = new JButton("Gerar Relatório");
 		btnGerarRelatorio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -109,8 +117,7 @@ public class FiltroRelatorioUI extends JInternalFrame {
 				Date dataIni = null;
 				Date dataFim = null;
 
-				if(flag.equals("fat")){
-				try {
+				if (flag.equals("fat")) {
 
 					try {
 						dataIni = sdf
@@ -119,32 +126,40 @@ public class FiltroRelatorioUI extends JInternalFrame {
 
 						if (dataIni.before(dataFim)) {
 
-							RelatorioFaturamentoUI relatorioFaturamentoUI = new RelatorioFaturamentoUI(
-									dataIni, dataFim);
+							if (rbtnAberto.isSelected()) {
 
-							PrincipalUI.getInstancia().getContentPane()
-									.add(relatorioFaturamentoUI, 0);
-							relatorioFaturamentoUI.setVisible(true);
+								RelatorioFaturamentoUI relatorioFaturamentoUI = new RelatorioFaturamentoUI(
+										dataIni, dataFim, 1);
 
-							dispose();
+								PrincipalUI.getInstancia().getContentPane()
+										.add(relatorioFaturamentoUI, 0);
+								relatorioFaturamentoUI.setVisible(true);
+
+							} else if (rbtnEncerrado.isSelected()) {
+
+								RelatorioFaturamentoUI relatorioFaturamentoUI = new RelatorioFaturamentoUI(
+										dataIni, dataFim, 1);
+
+								PrincipalUI.getInstancia().getContentPane()
+										.add(relatorioFaturamentoUI, 0);
+								relatorioFaturamentoUI.setVisible(true);
+
+							}
 
 						} else {
 							JOptionPane
 									.showMessageDialog(null,
 											"A data inicial deve ser menor que a data final.");
-
 						}
 
 					} catch (Exception e2) {
 						JOptionPane.showMessageDialog(null, "Data inválida.");
 					}
+				} else if (flag.equals("prod")) {
+					// ALEXANDRRE
+				}
+				dispose();
 
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-				}else if (flag.equals("prod")){
-					
-				}
 			}
 		});
 
@@ -154,26 +169,55 @@ public class FiltroRelatorioUI extends JInternalFrame {
 				dispose();
 			}
 		});
+
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(null, "Filtro de Relatório",
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(22, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+		JRadioButton rdbtnAberto = new JRadioButton("Aberto");
+		
+		JRadioButton rdbtnEncerrado = new JRadioButton("Encerrado");
+		
+		JLabel lblStatus = new JLabel("Status");
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
 						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-							.addGap(63)
-							.addComponent(btnGerarRelatorio)
-							.addPreferredGap(ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE))
+							.addComponent(lblStatus)
+							.addGap(18)
+							.addComponent(rdbtnAberto))
 						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblDataInicio, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+							.addComponent(lblDataInicio, GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(jtfDataInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(jtfDataInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnGerarRelatorio))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(lblDataFim)
-							.addGap(12)
-							.addComponent(jtfDataFim, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(56))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(jtfDataFim, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(rdbtnEncerrado)
+						.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE))
+					.addGap(126))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -182,13 +226,17 @@ public class FiltroRelatorioUI extends JInternalFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblDataInicio)
 						.addComponent(jtfDataInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jtfDataFim, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDataFim))
+						.addComponent(lblDataFim)
+						.addComponent(jtfDataFim, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblStatus)
+						.addComponent(rdbtnAberto)
+						.addComponent(rdbtnEncerrado))
+					.addGap(9)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnGerarRelatorio)
-						.addComponent(btnCancelar))
-					.addContainerGap())
+						.addComponent(btnCancelar)))
 		);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);

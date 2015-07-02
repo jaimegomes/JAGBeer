@@ -59,7 +59,9 @@ public class RelatorioProdutosMaisVendidosUI extends JInternalFrame {
 			listPedidos = new PedidoController().getPorData(dataInicio,
 					dataFinal);
 			for (Entidade entidade : listPedidos) {
+				//Transforma a variavel entidade em um objeto pedido
 				Pedido pedido = (Pedido) entidade;
+				//Procura o id do pedido
 				ProdutoPedido produtoPedido = (ProdutoPedido) new ProdutoPedidoController()
 						.getPorIdPedido(pedido.getId());
 				listProdutoPedido.add(produtoPedido);

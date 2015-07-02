@@ -47,7 +47,7 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 	private JLabel lblTotalDePedidos;
 	private JLabel lblQtdPedidos;
 
-	public RelatorioFaturamentoUI(Date dataInicio, Date dataFinal) {
+	public RelatorioFaturamentoUI(Date dataInicio, Date dataFinal, int status) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -67,7 +67,7 @@ public class RelatorioFaturamentoUI extends JInternalFrame {
 			e.printStackTrace();
 		}
 
-		setTitle("Relatório Faturamento");
+		setTitle("Relatório Pedido");
 		setClosable(true);
 		setBounds(660, 0, 650, 600);
 
