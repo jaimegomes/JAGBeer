@@ -16,11 +16,11 @@ import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
 import br.senai.sc.jagbeer.controller.PedidoController;
 import br.senai.sc.jagbeer.controller.ProdutoPedidoController;
-import br.senai.sc.jagbeer.dao.ProdutoPedidoDAO;
 import br.senai.sc.jagbeer.model.Pedido;
 import br.senai.sc.jagbeer.model.ProdutoPedido;
 import br.senai.sc.jagbeer.model.ProdutosMaisVendidosTableModel;
@@ -44,34 +44,19 @@ public class RelatorioProdutosMaisVendidosUI extends JInternalFrame {
 	private JLabel lblDataFim;
 	private JTable table;
 	private JScrollPane scrollPane;
-	private double valorTotal = 0;
 	private JLabel lblTotalDePedidos;
 	private JLabel lblQtdPedidos;
 
 	private List<Entidade> listProdutoPedido = new ArrayList<Entidade>();
 	private List<Entidade> listPedidos = new ArrayList<Entidade>();
 
-	public RelatorioProdutosMaisVendidosUI(Date dataInicio, Date dataFinal) {
+	public RelatorioProdutosMaisVendidosUI(Date dataInicio, Date dataFinal)
+			throws Exception {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-		try {
-			listPedidos = new PedidoController().getPorData(dataInicio,
-					dataFinal);
-			for (Entidade entidade : listPedidos) {
-				//Transforma a variavel entidade em um objeto pedido
-				Pedido pedido = (Pedido) entidade;
-				//Procura o id do pedido
-				ProdutoPedido produtoPedido = (ProdutoPedido) new ProdutoPedidoController()
-						.getPorIdPedido(pedido.getId());
-				listProdutoPedido.add(produtoPedido);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 		setTitle("Relatório Mais Vendidos");
+
 		setClosable(true);
 		setBounds(660, 0, 650, 600);
 
@@ -91,7 +76,7 @@ public class RelatorioProdutosMaisVendidosUI extends JInternalFrame {
 
 		lblDataFim = new JLabel(sdf.format(dataFinal));
 
-		lblTotalDePedidos = new JLabel("Total de Pedidos Listados:");
+		lblTotalDePedidos = new JLabel("Total de Produtos Listados:");
 
 		lblQtdPedidos = new JLabel("" + listPedidos.size());
 		lblQtdPedidos.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -209,7 +194,12 @@ public class RelatorioProdutosMaisVendidosUI extends JInternalFrame {
 						.addContainerGap(35, Short.MAX_VALUE)));
 
 		table = new JTable();
-		table.setModel(new ProdutosMaisVendidosTableModel(listProdutoPedido));
+
+		listPedidos = new ProdutoPedidoController().buscaProdMaisVend(
+		dataInicio, dataFinal);
+		
+		table.setModel(new ProdutosMaisVendidosTableModel(listPedidos));
+		
 		scrollPane.setViewportView(table);
 
 		panel.setLayout(gl_panel);

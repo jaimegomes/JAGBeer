@@ -1,5 +1,6 @@
 package br.senai.sc.jagbeer.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
@@ -58,4 +59,7 @@ public class ProdutoPedidoController implements IController {
 		return dao.buscaCompleta(idProduto, qtde, idPedido);
 	}
 
+	public List<Entidade> buscaProdMaisVend(Date dataInicio, Date dataFim) throws Exception {
+		return dao.buscaProdMaisVend(dataInicio, dataFim);
+	}
 }

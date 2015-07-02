@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.senai.sc.jagbeer.abstracts.Entidade;
@@ -14,12 +16,12 @@ import br.senai.sc.jagbeer.model.ProdutoPedido;
 
 public class ProdutoPedidoDAO extends GenericDAO {
 
-	private Connection con = Conexao.getConnection();
+	private Connection con = null;
 	private ProdutoPedido produtoPedido = null;
 
 	@Override
 	public void salvar(Entidade entidade) throws Exception {
-
+		con = Conexao.getConnection();
 		String sql = "INSERT INTO produtopedido (idproduto, idpedido, quantidade) values(?,?,?)";
 
 		try {
@@ -47,7 +49,7 @@ public class ProdutoPedidoDAO extends GenericDAO {
 
 	@Override
 	public void excluir(Entidade entidade) throws Exception {
-
+		con = Conexao.getConnection();
 		String sql = "DELETE FROM produtopedido WHERE id=?";
 		try {
 
@@ -71,6 +73,7 @@ public class ProdutoPedidoDAO extends GenericDAO {
 
 	@Override
 	public void editar(Entidade entidade) throws Exception {
+		con = Conexao.getConnection();
 		String sql = "UPDATE produtopedido SET idproduto = ? , idpedido = ?, quantidade = ? WHERE id=?";
 		try {
 			produtoPedido = (ProdutoPedido) entidade;
@@ -96,7 +99,7 @@ public class ProdutoPedidoDAO extends GenericDAO {
 
 	@Override
 	public List<Entidade> listar() throws Exception {
-
+		con = Conexao.getConnection();
 		List<Entidade> listaProdutosPedido = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM produtopedido";
 		try {
@@ -129,6 +132,7 @@ public class ProdutoPedidoDAO extends GenericDAO {
 
 	@Override
 	public Entidade getPorId(int id) throws Exception {
+		con = Conexao.getConnection();
 		String sql = "SELECT * FROM produtopedido WHERE id = ?";
 		try {
 
@@ -167,7 +171,7 @@ public class ProdutoPedidoDAO extends GenericDAO {
 	 * @throws Exception
 	 */
 	public List<Entidade> getPorIdPedido(int idPedido) throws Exception {
-
+		con = Conexao.getConnection();
 		List<Entidade> listProdutosPedido = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM produtopedido WHERE idpedido = ?";
 		try {
@@ -209,7 +213,7 @@ public class ProdutoPedidoDAO extends GenericDAO {
 	 * @throws Exception
 	 */
 	public List<Entidade> getPorIdProduto(int idProduto) throws Exception {
-
+		con = Conexao.getConnection();
 		List<Entidade> listProdutosPedido = new ArrayList<Entidade>();
 		String sql = "SELECT * FROM produtopedido WHERE idProduto = ?";
 		try {
@@ -254,7 +258,7 @@ public class ProdutoPedidoDAO extends GenericDAO {
 	 */
 	public Entidade buscaCompleta(int idProduto, int qtde, int idPedido)
 			throws Exception {
-
+		con = Conexao.getConnection();
 		String sql = "SELECT * FROM produtopedido WHERE idProduto = ? AND quantidade = ? AND idPedido = ?";
 		try {
 
@@ -286,4 +290,40 @@ public class ProdutoPedidoDAO extends GenericDAO {
 		return produtoPedido;
 	}
 
+	public List<Entidade> buscaProdMaisVend(Date dataInicio, Date dataFim)
+			throws Exception {
+		con = Conexao.getConnection();
+		List<Entidade> listProdMaisVend = new ArrayList<Entidade>();
+
+		String sql = "SELECT prod.nomeProduto, SUM(pp.quantidade)FROM produtopedido pp "
+				+ "JOIN pedido ped ON pp.idPedido = ped.id JOIN produto prod ON pp.idProduto = prod.id "
+				+ "WHERE ped.dataPedido BETWEEN '"
+				+ dataInicio
+				+ "' AND '"
+				+ dataFim + "' GROUP BY prod.nomeProduto";
+		try {
+
+			Statement pstm = con.createStatement();
+
+			ResultSet result = pstm.executeQuery(sql);
+
+			while (result.next()) {
+
+				ProdutoPedido produtoPedido = new ProdutoPedido(
+						result.getInt("id"), result.getInt("idProduto"),
+						result.getInt("idPedido"));
+				listProdMaisVend.add(produtoPedido);
+			}
+			pstm.close();
+
+		} catch (SQLException se) {
+			System.out
+					.println("[PodutoPedidoDAO] - Erro ao buscar produto mais vendido.\n"
+							+ se.getMessage());
+		} finally {
+			con.close();
+		}
+
+		return listProdMaisVend;
+	}
 }
