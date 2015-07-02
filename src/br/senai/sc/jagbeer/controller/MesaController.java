@@ -25,10 +25,11 @@ public class MesaController implements IController {
 		if (mesa == null)
 			throw new Exception("Mesa não pode ser nula.");
 
-		if (mesa.getNumeroMesa() == null || mesa.getNumeroMesa() < 0)
+		if (mesa.getNumeroMesa() == null || mesa.getNumeroMesa() <= 0)
 			throw new Exception(
 					"Número da mesa obrigatório e deve ser maior que zero.");
 
+		
 		if (dao.getPorNumeroMesa(mesa.getNumeroMesa()) != null)
 			throw new Exception(
 					"Mesa já cadastrada, neste caso você deve editar.");
